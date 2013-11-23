@@ -7,6 +7,7 @@
 //
 
 #import "VLMViewController.h"
+#import <objc/runtime.h>
 
 // Views
 #import "VLMCollectionViewCell.h"
@@ -158,6 +159,19 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     CGPoint contentOffset = scrollView.contentOffset;
     CGFloat page = contentOffset.y/scrollView.frame.size.height;
     [self setCurrentpage:page];
+
+    if (page == 2) {
+        NSLog(@"%f", page);
+        [self.capture enableHorizontalPan:YES];
+    } else {
+        [self.capture enableHorizontalPan:NO];
+    }
+    /*
+    UICollectionViewCell *cell = [self collectionView:self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:page]];
+    if ([cell isKindOfClass:[VLMCollectionViewCellWithChoices class]]) {
+        
+    }
+    */
 }
 
 #pragma mark - UICollectionViewDataSource

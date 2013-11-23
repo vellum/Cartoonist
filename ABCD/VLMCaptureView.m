@@ -8,7 +8,7 @@
 
 #import "VLMCaptureView.h"
 
-#define DEAD_ZONE CGSizeMake(27.0f, 15.0f)
+#define DEAD_ZONE CGSizeMake(15.0f, 15.0f)
 #define FUCKING_UNKNOWN 0
 #define FUCKING_VERTICAL 1
 #define FUCKING_HORIZONTAL 2
@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UIPanGestureRecognizer *horizontalPanGestureRecognizer;
 @property (nonatomic, strong) UIPanGestureRecognizer *verticalPanGestureRecognizer;
 @property NSInteger recognizedDirection;
+@property BOOL shouldRecognizeHorizontalPans;
 @end
 
 @implementation VLMCaptureView
@@ -25,6 +26,7 @@
 @synthesize horizontalPanGestureRecognizer;
 @synthesize verticalPanGestureRecognizer;
 @synthesize recognizedDirection;
+@synthesize shouldRecognizeHorizontalPans;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -35,6 +37,7 @@
         [self.topLevelPanGestureRecognizer setDelegate:self];
         [self addGestureRecognizer:self.topLevelPanGestureRecognizer];
         [self setRecognizedDirection:FUCKING_UNKNOWN];
+        [self setShouldRecognizeHorizontalPans:YES];
     }
     return self;
 }
@@ -104,6 +107,14 @@
             
             if (self.horizontalPanGestureRecognizer) {
                 [self.horizontalPanGestureRecognizer setTranslation:CGPointZero inView:self];
+                NSLog(@"111");
+                if (!self.shouldRecognizeHorizontalPans) {
+                    NSLog(@"noshouldrecco");
+                    [self.horizontalPanGestureRecognizer setEnabled:NO];
+                    [self.horizontalPanGestureRecognizer setEnabled:YES];
+                } else {
+                    NSLog(@"shouldrecco");
+                }
             }
             
             // cancel the recognizer and restart it for capturing the next pan
@@ -160,6 +171,10 @@
         [self removeGestureRecognizer:self.horizontalPanGestureRecognizer];
         [self setHorizontalPanGestureRecognizer:nil];
     }
+}
+
+- (void)enableHorizontalPan:(BOOL)shouldEnable{
+    [self setShouldRecognizeHorizontalPans:shouldEnable];
 }
 
 #pragma mark - UIGestureRecognizerDelegate

@@ -13,5 +13,5 @@
 - (void)addHorizontalGestureRecognizer:(UIPanGestureRecognizer *)panGestureRecognizer;
 - (void)addVerticalGestureRecognizer:(UIPanGestureRecognizer *)panGestureRecognizer;
 - (void)removeAnyHorizontalGestureRecognizers;
-
+- (void)enableHorizontalPan:(BOOL)shouldEnable;
 @end

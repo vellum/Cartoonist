@@ -25,7 +25,7 @@
         [self.scrollview setAutoresizesSubviews:NO];
         [self.scrollview setBackgroundColor:[UIColor whiteColor]];
         [self.scrollview setClipsToBounds:NO];
-        [self.scrollview setContentSize:CGSizeMake(kItemSize.width*2 + kItemPadding, kItemSize.height)];
+        [self.scrollview setContentSize:CGSizeMake(kItemSize.width*2, kItemSize.height)];
         [self.scrollview setPagingEnabled:YES];
         [self.contentView addSubview:self.scrollview];
         
