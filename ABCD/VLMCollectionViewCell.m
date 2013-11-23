@@ -8,50 +8,42 @@
 
 #import "VLMCollectionViewCell.h"
 
-@implementation VLMCollectionViewCell
-{
-    UIImageView *imageView;
-}
+@interface VLMCollectionViewCell()
+@end
 
+@implementation VLMCollectionViewCell
+@synthesize label;
 
 - (id)initWithFrame:(CGRect)frame
 {
     if (!(self = [super initWithFrame:frame])) return nil;
 
-    //imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-    //imageView.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1.0f];
-    //imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    //[self.contentView addSubview:imageView];
-    
     CGFloat pad = kItemPadding;
+
     UIView *v = [[UIView alloc] initWithFrame:CGRectMake(pad, pad, kItemSize.width-pad*2, kItemSize.height-kItemPaddingBottom)];
     [v setBackgroundColor:[UIColor colorWithWhite:0.9f alpha:1.0f]];
-    v.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    //[v.layer setCornerRadius:4.0f];
-    //[v.layer setShouldRasterize:YES];
+    [v setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
     [self.contentView addSubview:v];
     [self.contentView setBackgroundColor:[UIColor clearColor]];
     
+    
+    [self setLabel:[[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)]];
+    [self.label setTextColor:[UIColor blackColor]];
+    [self.label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:36.0f]];
+    [self.label setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
+    [self.label setTextAlignment:NSTextAlignmentCenter];
+    [self.contentView addSubview:self.label];
     return self;
 }
 
-
-
 -(void)prepareForReuse
 {
+    [self.label setText:@""];
     [super prepareForReuse];
-    [self setImage:nil];
 }
 
 -(void)layoutSubviews
 {
-    //imageView.frame = CGRectInset(self.bounds, 10, 10);
-}
-
--(void)setImage:(UIImage *)image
-{
-    _image = image;
-    imageView.image = image;
 }
 
 /*

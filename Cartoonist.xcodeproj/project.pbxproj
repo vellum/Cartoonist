@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD8FD83918401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */; };
+		BD8FD83C18402F5D00C8B9C6 /* VLMCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83B18402F5D00C8B9C6 /* VLMCaptureView.m */; };
 		BDD0AE03183D479900BF0CE6 /* VLMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD0AE02183D479900BF0CE6 /* VLMViewController.m */; };
 		BDD0AE08183D4A0200BF0CE6 /* VLMCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD0AE07183D4A0200BF0CE6 /* VLMCollectionViewCell.m */; };
 		BDD0AE0B183D51E800BF0CE6 /* VLMFrameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD0AE0A183D51E800BF0CE6 /* VLMFrameModel.m */; };
@@ -22,7 +24,6 @@
 		BDD899D9183C4C39002E089C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD899D8183C4C39002E089C /* XCTest.framework */; };
 		BDD899DA183C4C39002E089C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD899BF183C4C39002E089C /* Foundation.framework */; };
 		BDD899DB183C4C39002E089C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD899C3183C4C39002E089C /* UIKit.framework */; };
-		BDFFD877184005D400B1A024 /* Cartoonist-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BDFFD876184005D400B1A024 /* Cartoonist-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BD8FD83718401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCollectionViewCellWithChoices.h; sourceTree = "<group>"; };
+		BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCollectionViewCellWithChoices.m; sourceTree = "<group>"; };
+		BD8FD83A18402F5D00C8B9C6 /* VLMCaptureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCaptureView.h; sourceTree = "<group>"; };
+		BD8FD83B18402F5D00C8B9C6 /* VLMCaptureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCaptureView.m; sourceTree = "<group>"; };
 		BDD0AE01183D479900BF0CE6 /* VLMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMViewController.h; sourceTree = "<group>"; };
 		BDD0AE02183D479900BF0CE6 /* VLMViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMViewController.m; sourceTree = "<group>"; };
 		BDD0AE06183D4A0200BF0CE6 /* VLMCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCollectionViewCell.h; sourceTree = "<group>"; };
@@ -99,6 +104,10 @@
 			children = (
 				BDD0AE06183D4A0200BF0CE6 /* VLMCollectionViewCell.h */,
 				BDD0AE07183D4A0200BF0CE6 /* VLMCollectionViewCell.m */,
+				BD8FD83718401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.h */,
+				BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */,
+				BD8FD83A18402F5D00C8B9C6 /* VLMCaptureView.h */,
+				BD8FD83B18402F5D00C8B9C6 /* VLMCaptureView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -260,7 +269,6 @@
 			files = (
 				BDD899CA183C4C39002E089C /* InfoPlist.strings in Resources */,
 				BDD899D2183C4C39002E089C /* Images.xcassets in Resources */,
-				BDFFD877184005D400B1A024 /* Cartoonist-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +287,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDD0AE12183EBFB100BF0CE6 /* VLMGenericFlowLayout.m in Sources */,
+				BD8FD83C18402F5D00C8B9C6 /* VLMCaptureView.m in Sources */,
+				BD8FD83918401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m in Sources */,
 				BDD0AE0B183D51E800BF0CE6 /* VLMFrameModel.m in Sources */,
 				BDD0AE08183D4A0200BF0CE6 /* VLMCollectionViewCell.m in Sources */,
 				BDD0AE0E183D520300BF0CE6 /* VLMSelectionModel.m in Sources */,
