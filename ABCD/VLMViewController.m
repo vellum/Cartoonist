@@ -13,6 +13,7 @@
 #import "VLMCollectionViewCell.h"
 #import "VLMCollectionViewCellWithChoices.h"
 #import "VLMCaptureView.h"
+#import "VLMGradient.h"
 
 // Models
 #import "VLMFrameModel.h"
@@ -24,6 +25,7 @@
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowB;
 @property (nonatomic, strong) VLMCaptureView *capture;
 @property (nonatomic, strong) UIScrollView *secretScrollview;
+@property (nonatomic, strong) VLMGradient *overlay;
 @property CGFloat currentpage;
 - (void)setupModel;
 @end
@@ -33,6 +35,7 @@
 @synthesize capture;
 @synthesize secretScrollview;
 @synthesize currentpage;
+@synthesize overlay;
 
 //Static identifiers for cells and supplementary views
 static NSString *CellIdentifier = @"CellIdentifier";
@@ -65,13 +68,18 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     [cv registerClass:[VLMCollectionViewCell class] forCellWithReuseIdentifier:CellIdentifier];
     [cv registerClass:[VLMCollectionViewCellWithChoices class] forCellWithReuseIdentifier:CellChoiceIdentifier];
 
-    [cv setBackgroundColor:[UIColor redColor]];
+    [cv setBackgroundColor:[UIColor clearColor]];
+    
     
     //Finally, set our collectionView (since we are a collection view controller, this also sets self.view)
     [self setCollectionView:cv];
 }
 
 - (void)viewDidLoad{
+    
+    [self setOverlay:[[VLMGradient alloc] initWithFrame:self.view.frame]];
+    [self.overlay setAlpha:0.0f];
+    [self.view addSubview:self.overlay];
     
     [self setSecretScrollview:[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kItemSize.width, kItemSize.height)]];
     [self.secretScrollview setContentSize:CGSizeMake(kItemSize.width, kItemSize.height * [self numberOfSectionsInCollectionView:self.collectionView])];
@@ -83,9 +91,8 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     [self.collectionView setContentInset:UIEdgeInsetsMake(kItemPaddingBottom+3, 0, kItemPaddingBottom, 0)];
     
     [self setCapture:[[VLMCaptureView alloc] initWithFrame:self.view.frame]];
-    [self.capture setBackgroundColor:[UIColor colorWithRed:1 green:0 blue:0 alpha:0.5]];
+    [self.capture setBackgroundColor:[UIColor clearColor]];
     [self.capture addVerticalGestureRecognizer:secretScrollview.panGestureRecognizer];
-
     [self.view addSubview:self.capture];
 }
 
@@ -111,6 +118,9 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
                         if ( s < 0.9f ) s = 0.9f;
                         if ( s > 1.0f ) s = 1.0f;
                         [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
+                        
+                        [self.overlay setAlpha:delta];
+
                     }
                 } else {
                     if (!nextPageIsZoomedOut){
@@ -118,6 +128,9 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
                         if ( s < 0.9f ) s = 0.9f;
                         if ( s > 1.0f ) s = 1.0f;
                         [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
+
+                        [self.overlay setAlpha:1-delta];
+
                     }
                 }
                 
@@ -134,12 +147,18 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
                         CGFloat s = 0.9f + 0.1f * (1-fabs(delta));
                         CATransform3D t = CATransform3DScale(CATransform3DIdentity, s, s, 1.0f);
                         [self.collectionView.layer setTransform:t];
+
+                        [self.overlay setAlpha:fabs(delta)];
+
                     }
                 } else {
                     if (!nextPageIsZoomedOut){
                         CGFloat s = 0.9f + 0.1f * (fabs(delta));
                         CATransform3D t = CATransform3DScale(CATransform3DIdentity, s, s, 1.0f);
                         [self.collectionView.layer setTransform:t];
+
+                        [self.overlay setAlpha:1-fabs(delta)];
+
                     }
                 }
 

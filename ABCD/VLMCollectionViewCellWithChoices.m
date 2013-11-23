@@ -19,22 +19,22 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-
         [self setScrollview:[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kItemSize.width, kItemSize.height)]];
         [self.scrollview setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
         [self.scrollview setAutoresizesSubviews:NO];
-        [self.scrollview setBackgroundColor:[UIColor whiteColor]];
+        [self.scrollview setBackgroundColor:[UIColor clearColor]];
         [self.scrollview setClipsToBounds:NO];
         [self.scrollview setContentSize:CGSizeMake(kItemSize.width*2, kItemSize.height)];
         [self.scrollview setPagingEnabled:YES];
+        [self.scrollview setShowsHorizontalScrollIndicator:NO];
         [self.contentView addSubview:self.scrollview];
         
         UIView *A = [[UIView alloc] initWithFrame:CGRectMake(kItemPadding, kItemPadding, kItemSize.width-kItemPadding*2, kItemSize.height-kItemPaddingBottom)];
-        [A setBackgroundColor:[UIColor blackColor]];
+        [A setBackgroundColor:[UIColor colorWithWhite:0.9f alpha:1.0f]];
         [self.scrollview addSubview:A];
         
         UIView *B = [[UIView alloc] initWithFrame:CGRectMake(kItemSize.width+kItemPadding, kItemPadding, kItemSize.width-kItemPadding*2, kItemSize.height-kItemPaddingBottom)];
-        [B setBackgroundColor:[UIColor blackColor]];
+        [B setBackgroundColor:[UIColor colorWithWhite:0.9f alpha:1.0f]];
         [self.scrollview addSubview:B];
     }
     return self;

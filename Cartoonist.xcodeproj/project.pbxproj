@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BD8FD83918401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */; };
 		BD8FD83C18402F5D00C8B9C6 /* VLMCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83B18402F5D00C8B9C6 /* VLMCaptureView.m */; };
+		BD8FD83F1840877C00C8B9C6 /* VLMGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83E1840877C00C8B9C6 /* VLMGradient.m */; };
 		BDD0AE03183D479900BF0CE6 /* VLMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD0AE02183D479900BF0CE6 /* VLMViewController.m */; };
 		BDD0AE08183D4A0200BF0CE6 /* VLMCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD0AE07183D4A0200BF0CE6 /* VLMCollectionViewCell.m */; };
 		BDD0AE0B183D51E800BF0CE6 /* VLMFrameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD0AE0A183D51E800BF0CE6 /* VLMFrameModel.m */; };
@@ -41,6 +42,8 @@
 		BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCollectionViewCellWithChoices.m; sourceTree = "<group>"; };
 		BD8FD83A18402F5D00C8B9C6 /* VLMCaptureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCaptureView.h; sourceTree = "<group>"; };
 		BD8FD83B18402F5D00C8B9C6 /* VLMCaptureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCaptureView.m; sourceTree = "<group>"; };
+		BD8FD83D1840877C00C8B9C6 /* VLMGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMGradient.h; sourceTree = "<group>"; };
+		BD8FD83E1840877C00C8B9C6 /* VLMGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMGradient.m; sourceTree = "<group>"; };
 		BDD0AE01183D479900BF0CE6 /* VLMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMViewController.h; sourceTree = "<group>"; };
 		BDD0AE02183D479900BF0CE6 /* VLMViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMViewController.m; sourceTree = "<group>"; };
 		BDD0AE06183D4A0200BF0CE6 /* VLMCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCollectionViewCell.h; sourceTree = "<group>"; };
@@ -108,6 +111,8 @@
 				BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */,
 				BD8FD83A18402F5D00C8B9C6 /* VLMCaptureView.h */,
 				BD8FD83B18402F5D00C8B9C6 /* VLMCaptureView.m */,
+				BD8FD83D1840877C00C8B9C6 /* VLMGradient.h */,
+				BD8FD83E1840877C00C8B9C6 /* VLMGradient.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -287,6 +292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDD0AE12183EBFB100BF0CE6 /* VLMGenericFlowLayout.m in Sources */,
+				BD8FD83F1840877C00C8B9C6 /* VLMGradient.m in Sources */,
 				BD8FD83C18402F5D00C8B9C6 /* VLMCaptureView.m in Sources */,
 				BD8FD83918401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m in Sources */,
 				BDD0AE0B183D51E800BF0CE6 /* VLMFrameModel.m in Sources */,
