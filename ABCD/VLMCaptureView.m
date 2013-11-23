@@ -107,13 +107,9 @@
             
             if (self.horizontalPanGestureRecognizer) {
                 [self.horizontalPanGestureRecognizer setTranslation:CGPointZero inView:self];
-                NSLog(@"111");
                 if (!self.shouldRecognizeHorizontalPans) {
-                    NSLog(@"noshouldrecco");
                     [self.horizontalPanGestureRecognizer setEnabled:NO];
                     [self.horizontalPanGestureRecognizer setEnabled:YES];
-                } else {
-                    NSLog(@"shouldrecco");
                 }
             }
             

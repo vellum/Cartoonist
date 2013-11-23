@@ -155,13 +155,12 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-    NSLog(@"did end decel");
     CGPoint contentOffset = scrollView.contentOffset;
     CGFloat page = contentOffset.y/scrollView.frame.size.height;
     [self setCurrentpage:page];
 
+    
     if (page == 2) {
-        NSLog(@"%f", page);
         [self.capture enableHorizontalPan:YES];
     } else {
         [self.capture enableHorizontalPan:NO];
