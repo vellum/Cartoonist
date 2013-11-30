@@ -89,8 +89,9 @@
     
 }
 
-- (void)configureImage:(NSString *)filename{
-    [self configureImage:filename];
+- (void)configureImage:(UIImage *)image
+{
+    [self.imageview setImage:image];
 }
 
 @end

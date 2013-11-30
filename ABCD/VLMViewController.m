@@ -48,7 +48,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     
     CollectionViewCellConfigureBlock configureCellBlock = ^(VLMCollectionViewCell *cell, VLMPanelModel *photo)
     {
-        //[cell configureImage:photo.name];
+        [cell configureImage:photo.image];
     };
     
     CollectionViewCellConfigureBlock configureCellChoiceBlock = ^(VLMCollectionViewCellWithChoices *cell, VLMPanelModel *photo)

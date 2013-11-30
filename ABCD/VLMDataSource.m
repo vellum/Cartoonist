@@ -47,10 +47,10 @@
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath
 {
-    //NSInteger remainder = indexPath.section % 3;
-    //NSString *name = [NSString stringWithFormat:@"%i", remainder];
-    //return [VLMPanelModel frameModelWithName:name image:[UIImage imageNamed:name]];
-    return nil;
+    NSInteger remainder = indexPath.section % 3;
+    NSString *name = [NSString stringWithFormat:@"%i", remainder];
+    return [VLMPanelModel frameModelWithName:name image:[UIImage imageNamed:name]];
+    //return nil;
 }
 
 - (BOOL)isItemAtIndexPathChoice:(NSIndexPath *)indexPath{

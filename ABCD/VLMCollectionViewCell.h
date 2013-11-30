@@ -19,6 +19,6 @@
 @property (nonatomic, strong) NSString *imagename;
 @property (nonatomic, strong) UIView *base;
 
-- (void)configureImage:(NSString *)filename;
+- (void)configureImage:(UIImage *)image;
 
 @end
