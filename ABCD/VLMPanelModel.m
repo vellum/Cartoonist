@@ -6,13 +6,13 @@
 //  Copyright (c) 2013 David Lu. All rights reserved.
 //
 
-#import "VLMFrameModel.h"
+#import "VLMPanelModel.h"
 
-@implementation VLMFrameModel
+@implementation VLMPanelModel
 
 +(instancetype)frameModelWithName:(NSString *)name image:(UIImage *)image
 {
-    VLMFrameModel *model = [[VLMFrameModel alloc] init];
+    VLMPanelModel *model = [[VLMPanelModel alloc] init];
     
     model.name = name;
     model.image = image;

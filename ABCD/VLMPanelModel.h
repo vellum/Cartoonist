@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface VLMFrameModel : NSObject
+@interface VLMPanelModel : NSObject
 
 +(instancetype)frameModelWithName:(NSString *)name image:(UIImage *)image;
 

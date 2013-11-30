@@ -10,11 +10,12 @@
 		BD8FD83918401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */; };
 		BD8FD83C18402F5D00C8B9C6 /* VLMCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83B18402F5D00C8B9C6 /* VLMCaptureView.m */; };
 		BD8FD83F1840877C00C8B9C6 /* VLMGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83E1840877C00C8B9C6 /* VLMGradient.m */; };
+		BDB3BB8E1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB3BB8D1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m */; };
+		BDB3BB921849B6C600F59AE1 /* VLMDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB3BB911849B6C600F59AE1 /* VLMDataSource.m */; };
 		BDD0AE03183D479900BF0CE6 /* VLMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD0AE02183D479900BF0CE6 /* VLMViewController.m */; };
 		BDD0AE08183D4A0200BF0CE6 /* VLMCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD0AE07183D4A0200BF0CE6 /* VLMCollectionViewCell.m */; };
-		BDD0AE0B183D51E800BF0CE6 /* VLMFrameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD0AE0A183D51E800BF0CE6 /* VLMFrameModel.m */; };
-		BDD0AE0E183D520300BF0CE6 /* VLMSelectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD0AE0D183D520300BF0CE6 /* VLMSelectionModel.m */; };
-		BDD0AE12183EBFB100BF0CE6 /* VLMGenericFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD0AE11183EBFB100BF0CE6 /* VLMGenericFlowLayout.m */; };
+		BDD0AE0B183D51E800BF0CE6 /* VLMPanelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD0AE0A183D51E800BF0CE6 /* VLMPanelModel.m */; };
+		BDD0AE12183EBFB100BF0CE6 /* VLMSinglePanelFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD0AE11183EBFB100BF0CE6 /* VLMSinglePanelFlowLayout.m */; };
 		BDD899C0183C4C39002E089C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD899BF183C4C39002E089C /* Foundation.framework */; };
 		BDD899C2183C4C39002E089C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD899C1183C4C39002E089C /* CoreGraphics.framework */; };
 		BDD899C4183C4C39002E089C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD899C3183C4C39002E089C /* UIKit.framework */; };
@@ -44,16 +45,18 @@
 		BD8FD83B18402F5D00C8B9C6 /* VLMCaptureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCaptureView.m; sourceTree = "<group>"; };
 		BD8FD83D1840877C00C8B9C6 /* VLMGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMGradient.h; sourceTree = "<group>"; };
 		BD8FD83E1840877C00C8B9C6 /* VLMGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMGradient.m; sourceTree = "<group>"; };
+		BDB3BB8C1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCollectionViewLayoutAttributes.h; sourceTree = "<group>"; };
+		BDB3BB8D1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCollectionViewLayoutAttributes.m; sourceTree = "<group>"; };
+		BDB3BB901849B6C600F59AE1 /* VLMDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMDataSource.h; sourceTree = "<group>"; };
+		BDB3BB911849B6C600F59AE1 /* VLMDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMDataSource.m; sourceTree = "<group>"; };
 		BDD0AE01183D479900BF0CE6 /* VLMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMViewController.h; sourceTree = "<group>"; };
 		BDD0AE02183D479900BF0CE6 /* VLMViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMViewController.m; sourceTree = "<group>"; };
 		BDD0AE06183D4A0200BF0CE6 /* VLMCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCollectionViewCell.h; sourceTree = "<group>"; };
 		BDD0AE07183D4A0200BF0CE6 /* VLMCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCollectionViewCell.m; sourceTree = "<group>"; };
-		BDD0AE09183D51E800BF0CE6 /* VLMFrameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMFrameModel.h; sourceTree = "<group>"; };
-		BDD0AE0A183D51E800BF0CE6 /* VLMFrameModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMFrameModel.m; sourceTree = "<group>"; };
-		BDD0AE0C183D520300BF0CE6 /* VLMSelectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLMSelectionModel.h; path = ../VLMSelectionModel.h; sourceTree = "<group>"; };
-		BDD0AE0D183D520300BF0CE6 /* VLMSelectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLMSelectionModel.m; path = ../VLMSelectionModel.m; sourceTree = "<group>"; };
-		BDD0AE10183EBFB100BF0CE6 /* VLMGenericFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMGenericFlowLayout.h; sourceTree = "<group>"; };
-		BDD0AE11183EBFB100BF0CE6 /* VLMGenericFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMGenericFlowLayout.m; sourceTree = "<group>"; };
+		BDD0AE09183D51E800BF0CE6 /* VLMPanelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMPanelModel.h; sourceTree = "<group>"; };
+		BDD0AE0A183D51E800BF0CE6 /* VLMPanelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMPanelModel.m; sourceTree = "<group>"; };
+		BDD0AE10183EBFB100BF0CE6 /* VLMSinglePanelFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMSinglePanelFlowLayout.h; sourceTree = "<group>"; };
+		BDD0AE11183EBFB100BF0CE6 /* VLMSinglePanelFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMSinglePanelFlowLayout.m; sourceTree = "<group>"; };
 		BDD899BC183C4C39002E089C /* Cartoonist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cartoonist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDD899BF183C4C39002E089C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BDD899C1183C4C39002E089C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -93,6 +96,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BDB3BB93184A62D300F59AE1 /* Data Source */ = {
+			isa = PBXGroup;
+			children = (
+				BDB3BB901849B6C600F59AE1 /* VLMDataSource.h */,
+				BDB3BB911849B6C600F59AE1 /* VLMDataSource.m */,
+			);
+			name = "Data Source";
+			sourceTree = "<group>";
+		};
 		BDD0AE00183D437700BF0CE6 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,10 +132,8 @@
 		BDD0AE05183D491900BF0CE6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				BDD0AE0C183D520300BF0CE6 /* VLMSelectionModel.h */,
-				BDD0AE0D183D520300BF0CE6 /* VLMSelectionModel.m */,
-				BDD0AE09183D51E800BF0CE6 /* VLMFrameModel.h */,
-				BDD0AE0A183D51E800BF0CE6 /* VLMFrameModel.m */,
+				BDD0AE09183D51E800BF0CE6 /* VLMPanelModel.h */,
+				BDD0AE0A183D51E800BF0CE6 /* VLMPanelModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -131,8 +141,10 @@
 		BDD0AE0F183EBF4200BF0CE6 /* Layout */ = {
 			isa = PBXGroup;
 			children = (
-				BDD0AE10183EBFB100BF0CE6 /* VLMGenericFlowLayout.h */,
-				BDD0AE11183EBFB100BF0CE6 /* VLMGenericFlowLayout.m */,
+				BDD0AE10183EBFB100BF0CE6 /* VLMSinglePanelFlowLayout.h */,
+				BDD0AE11183EBFB100BF0CE6 /* VLMSinglePanelFlowLayout.m */,
+				BDB3BB8C1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.h */,
+				BDB3BB8D1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m */,
 			);
 			name = Layout;
 			sourceTree = "<group>";
@@ -171,10 +183,11 @@
 			children = (
 				BDD899CE183C4C39002E089C /* VLMAppDelegate.h */,
 				BDD899CF183C4C39002E089C /* VLMAppDelegate.m */,
+				BDB3BB93184A62D300F59AE1 /* Data Source */,
+				BDD0AE05183D491900BF0CE6 /* Model */,
 				BDD0AE00183D437700BF0CE6 /* Controller */,
 				BDD0AE0F183EBF4200BF0CE6 /* Layout */,
 				BDD0AE04183D490500BF0CE6 /* View */,
-				BDD0AE05183D491900BF0CE6 /* Model */,
 				BDD899D1183C4C39002E089C /* Images.xcassets */,
 				BDD899C6183C4C39002E089C /* Supporting Files */,
 			);
@@ -291,16 +304,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDD0AE12183EBFB100BF0CE6 /* VLMGenericFlowLayout.m in Sources */,
+				BDD0AE12183EBFB100BF0CE6 /* VLMSinglePanelFlowLayout.m in Sources */,
 				BD8FD83F1840877C00C8B9C6 /* VLMGradient.m in Sources */,
 				BD8FD83C18402F5D00C8B9C6 /* VLMCaptureView.m in Sources */,
 				BD8FD83918401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m in Sources */,
-				BDD0AE0B183D51E800BF0CE6 /* VLMFrameModel.m in Sources */,
+				BDB3BB921849B6C600F59AE1 /* VLMDataSource.m in Sources */,
+				BDD0AE0B183D51E800BF0CE6 /* VLMPanelModel.m in Sources */,
 				BDD0AE08183D4A0200BF0CE6 /* VLMCollectionViewCell.m in Sources */,
-				BDD0AE0E183D520300BF0CE6 /* VLMSelectionModel.m in Sources */,
 				BDD899D0183C4C39002E089C /* VLMAppDelegate.m in Sources */,
 				BDD899CC183C4C39002E089C /* main.m in Sources */,
 				BDD0AE03183D479900BF0CE6 /* VLMViewController.m in Sources */,
+				BDB3BB8E1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

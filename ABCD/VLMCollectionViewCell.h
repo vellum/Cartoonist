@@ -7,12 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#define kItemPadding 10.0f
-#define kItemPaddingBottom 10.0f
-#define kItemSize CGSizeMake(320, 568-36)
+#define kItemPadding 5.0f
+#define kItemPaddingBottom 5.0f
+#define kItemSize CGSizeMake(320, 568-20)
 
 @interface VLMCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, strong) UILabel *label;
+@property (nonatomic, strong) UIImageView *imageview;
+@property (nonatomic, strong) UIView *caption;
+@property (nonatomic, strong) NSString *imagename;
+@property (nonatomic, strong) UIView *base;
+
+- (void)configureImage:(NSString *)filename;
 
 @end

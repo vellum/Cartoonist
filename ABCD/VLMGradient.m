@@ -8,7 +8,12 @@
 
 #import "VLMGradient.h"
 
+@interface VLMGradient()
+@property (nonatomic,strong) UILabel *label;
+@end
+
 @implementation VLMGradient
+@synthesize label;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -16,6 +21,12 @@
     if (self) {
         [self setUserInteractionEnabled:NO];
         [self setBackgroundColor:[UIColor clearColor]];
+        [self setLabel:[[UILabel alloc] initWithFrame:CGRectMake(0, 50, 320, 100)]];
+        [self.label setText:@"something"];
+        [self.label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:36.0f]];
+        [self.label setTextColor:[UIColor whiteColor]];
+        [self.label setTextAlignment:NSTextAlignmentCenter];
+        [self addSubview:self.label];
     }
     return self;
 }
@@ -40,4 +51,8 @@
     CGGradientRelease(gradient);
 }
 
+- (void)setAlpha:(CGFloat)alpha{
+    [self.label setAlpha:alpha];
+    [super setAlpha:alpha];
+}
 @end

@@ -9,35 +9,18 @@
 #import "VLMViewController.h"
 #import <objc/runtime.h>
 
-// Views
-#import "VLMCollectionViewCell.h"
-#import "VLMCollectionViewCellWithChoices.h"
-#import "VLMCaptureView.h"
-#import "VLMGradient.h"
-
-// Models
-#import "VLMFrameModel.h"
-#import "VLMSelectionModel.h"
-
-//
 @interface VLMViewController ()
-@property (nonatomic, strong) UICollectionViewFlowLayout *flowA;
-@property (nonatomic, strong) UICollectionViewFlowLayout *flowB;
-@property (nonatomic, strong) VLMCaptureView *capture;
-@property (nonatomic, strong) UIScrollView *secretScrollview;
-@property (nonatomic, strong) VLMGradient *overlay;
-@property CGFloat currentpage;
-- (void)setupModel;
 @end
 
 @implementation VLMViewController
-@synthesize flowA;
-@synthesize capture;
-@synthesize secretScrollview;
-@synthesize currentpage;
-@synthesize overlay;
 
-//Static identifiers for cells and supplementary views
+@synthesize capture;
+@synthesize currentPage;
+@synthesize dataSource;
+@synthesize overlay;
+@synthesize secretScrollview;
+@synthesize singlePanelFlow;
+
 static NSString *CellIdentifier = @"CellIdentifier";
 static NSString *HeaderIdentifier = @"HeaderIdentifier";
 static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
@@ -47,53 +30,67 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     return YES;
 }
 
-- (void)loadView{
-
-    [self setCurrentpage:0];
+- (void)loadView
+{
     [self setNeedsStatusBarAppearanceUpdate];
-
-    [self setFlowA:[[UICollectionViewFlowLayout alloc] init]];
-    [self.flowA setSectionInset: UIEdgeInsetsMake(0, 0, 0, 0)];
-    [self.flowA setMinimumInteritemSpacing:0.0f];
-    [self.flowA setMinimumLineSpacing:0.0f];
-    [self.flowA setItemSize:kItemSize];
-    
-    //Create a new collection view with our flow layout and set ourself as delegate and data source
-    UICollectionView *cv = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.flowA];
-    [cv setDataSource:self];
-    [cv setDelegate:self];
-    [cv setContentOffset:CGPointMake(0, kItemPaddingBottom)];
-    
-    //Register our classes so we can use our custom subclassed cell and header
-    [cv registerClass:[VLMCollectionViewCell class] forCellWithReuseIdentifier:CellIdentifier];
-    [cv registerClass:[VLMCollectionViewCellWithChoices class] forCellWithReuseIdentifier:CellChoiceIdentifier];
-
-    [cv setBackgroundColor:[UIColor clearColor]];
-    
-    
-    //Finally, set our collectionView (since we are a collection view controller, this also sets self.view)
-    [self setCollectionView:cv];
 }
 
-- (void)viewDidLoad{
+- (void)viewDidLoad
+{
+    [self setCurrentPage:0];
     
-    [self setOverlay:[[VLMGradient alloc] initWithFrame:self.view.frame]];
-    [self.overlay setAlpha:0.0f];
-    [self.view addSubview:self.overlay];
+    VLMSinglePanelFlowLayout *flow = [[VLMSinglePanelFlowLayout alloc] init];
+    [flow setSectionInset: UIEdgeInsetsMake(0, 0, 0, 0)];
+    [flow setMinimumInteritemSpacing:0.0f];
+    [flow setMinimumLineSpacing:0.0f];
+    [flow setItemSize:kItemSize];
+    [self setSinglePanelFlow:flow];
     
-    [self setSecretScrollview:[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kItemSize.width, kItemSize.height)]];
-    [self.secretScrollview setContentSize:CGSizeMake(kItemSize.width, kItemSize.height * [self numberOfSectionsInCollectionView:self.collectionView])];
-    [self.secretScrollview setPagingEnabled:YES];
-    [self.secretScrollview setDelegate:self];
+    CollectionViewCellConfigureBlock configureCellBlock = ^(VLMCollectionViewCell *cell, VLMPanelModel *photo)
+    {
+        //[cell configureImage:photo.name];
+    };
     
-    [self.collectionView.panGestureRecognizer setEnabled:NO];
-    [self.collectionView setClipsToBounds:NO];
-    [self.collectionView setContentInset:UIEdgeInsetsMake(kItemPaddingBottom+3, 0, kItemPaddingBottom, 0)];
+    CollectionViewCellConfigureBlock configureCellChoiceBlock = ^(VLMCollectionViewCellWithChoices *cell, VLMPanelModel *photo)
+    {
+        [self.capture addHorizontalGestureRecognizer:cell.scrollview.panGestureRecognizer];
+        NSLog(@"here");
+    };
+
+    VLMDataSource *ds = [[VLMDataSource alloc] initWithItems:nil cellIdentifier:CellIdentifier cellChoiceIdentifier:CellChoiceIdentifier configureCellBlock:configureCellBlock configureCellChoiceBlock:configureCellChoiceBlock];
+    [self setDataSource:ds];
+
+    UICollectionView *cv = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.singlePanelFlow];
+    [cv setDataSource:ds];
+    //[cv setDelegate:self];
+    [cv setContentOffset:CGPointMake(0, kItemPaddingBottom)];
+    [cv registerClass:[VLMCollectionViewCell class] forCellWithReuseIdentifier:CellIdentifier];
+    [cv registerClass:[VLMCollectionViewCellWithChoices class] forCellWithReuseIdentifier:CellChoiceIdentifier];
+    [cv setBackgroundColor:[UIColor clearColor]];
+    [cv.panGestureRecognizer setEnabled:NO];
+    [cv setClipsToBounds:NO];
+    [cv setContentInset:UIEdgeInsetsMake(kItemPaddingBottom+3, 0, kItemPaddingBottom, 0)];
+    [self setCollectionView:cv];
+
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kItemSize.width, kItemSize.height)];
+    [scrollView setContentSize:CGSizeMake(kItemSize.width, kItemSize.height * [self.dataSource numberOfSectionsInCollectionView:self.collectionView])];
+    [scrollView setPagingEnabled:YES];
+    [scrollView setDelegate:self];
+    [self setSecretScrollview:scrollView];
     
-    [self setCapture:[[VLMCaptureView alloc] initWithFrame:self.view.frame]];
-    [self.capture setBackgroundColor:[UIColor clearColor]];
-    [self.capture addVerticalGestureRecognizer:secretScrollview.panGestureRecognizer];
-    [self.view addSubview:self.capture];
+    VLMGradient *gradient = [[VLMGradient alloc] initWithFrame:self.view.frame];
+    [gradient setAlpha:0.0f];
+    [gradient setUserInteractionEnabled:NO];
+    [self.view addSubview:gradient];
+    [self setOverlay:gradient];
+
+    VLMCaptureView *cap = [[VLMCaptureView alloc] initWithFrame:self.view.frame];
+    [cap setBackgroundColor:[UIColor clearColor]];
+    [cap addVerticalGestureRecognizer:secretScrollview.panGestureRecognizer];
+    [self.view addSubview:cap];
+    [self setCapture:cap];
+    
+    
 }
 
 #pragma mark - secret scrollview delegate
@@ -104,18 +101,21 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     
     CGPoint contentOffset = scrollView.contentOffset;
     CGFloat page = contentOffset.y/scrollView.frame.size.height;
-    CGFloat delta = page - self.currentpage;
-    BOOL currentPageIsZoomedOut = (self.currentpage==2);
+    CGFloat delta = page - self.currentPage;
+    BOOL currentPageIsZoomedOut = (self.currentPage==2);
     BOOL nextPageIsZoomedOut = NO;
+    
+    CGFloat zoomedoutscale = 0.875f;
+    
     
     if ( delta > 0 ){
             
             if ( fabs(delta) < 1 ) {
-                nextPageIsZoomedOut = ( currentpage+1 == 2 );
+                nextPageIsZoomedOut = ( currentPage+1 == 2 );
                 if (!currentPageIsZoomedOut) {
                     if (nextPageIsZoomedOut){
-                        CGFloat s = 0.9f + 0.1f * (1 - delta);
-                        if ( s < 0.9f ) s = 0.9f;
+                        CGFloat s = zoomedoutscale + (1-zoomedoutscale) * (1 - delta);
+                        if ( s < zoomedoutscale ) s = zoomedoutscale;
                         if ( s > 1.0f ) s = 1.0f;
                         [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
                         
@@ -124,8 +124,8 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
                     }
                 } else {
                     if (!nextPageIsZoomedOut){
-                        CGFloat s = 0.9f + 0.1f * (delta);
-                        if ( s < 0.9f ) s = 0.9f;
+                        CGFloat s = zoomedoutscale + (1-zoomedoutscale) * (delta);
+                        if ( s < zoomedoutscale ) s = zoomedoutscale;
                         if ( s > 1.0f ) s = 1.0f;
                         [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
 
@@ -135,116 +135,56 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
                 }
                 
             } else {
-                [self setCurrentpage:floorf(page)];
+                [self setCurrentPage:floorf(page)];
             }
             
         } else {
             
-            if (fabs(delta) < 1) {
-                nextPageIsZoomedOut = ( self.currentpage-1 == 2 );
-                if ( !currentPageIsZoomedOut ){
-                    if ( nextPageIsZoomedOut ){
-                        CGFloat s = 0.9f + 0.1f * (1-fabs(delta));
+            if (fabs(delta) < 1)
+            {
+                nextPageIsZoomedOut = ( self.currentPage-1 == 2 );
+                if ( !currentPageIsZoomedOut )
+                {
+                    if ( nextPageIsZoomedOut )
+                    {
+                        CGFloat s = zoomedoutscale + (1-zoomedoutscale) * (1-fabs(delta));
                         CATransform3D t = CATransform3DScale(CATransform3DIdentity, s, s, 1.0f);
                         [self.collectionView.layer setTransform:t];
-
                         [self.overlay setAlpha:fabs(delta)];
-
-                    }
-                } else {
-                    if (!nextPageIsZoomedOut){
-                        CGFloat s = 0.9f + 0.1f * (fabs(delta));
-                        CATransform3D t = CATransform3DScale(CATransform3DIdentity, s, s, 1.0f);
-                        [self.collectionView.layer setTransform:t];
-
-                        [self.overlay setAlpha:1-fabs(delta)];
-
                     }
                 }
-
-            } else {
-                [self setCurrentpage:floorf(page)];
+                else
+                {
+                    if (!nextPageIsZoomedOut)
+                    {
+                        CGFloat s = zoomedoutscale + (1-zoomedoutscale) * (fabs(delta));
+                        CATransform3D t = CATransform3DScale(CATransform3DIdentity, s, s, 1.0f);
+                        [self.collectionView.layer setTransform:t];
+                        [self.overlay setAlpha:1-fabs(delta)];
+                    }
+                }
+            }
+            else
+            {
+                [self setCurrentPage:floorf(page)];
             }
         }
         contentOffset.y = contentOffset.y - self.collectionView.contentInset.top;
         [self.collectionView setContentOffset:contentOffset];
 }
 
-- (void) scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-    CGPoint contentOffset = scrollView.contentOffset;
-    CGFloat page = contentOffset.y/scrollView.frame.size.height;
-    [self setCurrentpage:page];
-
-    
-    if (page == 2) {
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self setCurrentPage:scrollView.contentOffset.y/scrollView.frame.size.height];
+    if (self.currentPage == 2)
+    {
         [self.capture enableHorizontalPan:YES];
-    } else {
+    }
+    else
+    {
         [self.capture enableHorizontalPan:NO];
     }
-    /*
-    UICollectionViewCell *cell = [self collectionView:self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:page]];
-    if ([cell isKindOfClass:[VLMCollectionViewCellWithChoices class]]) {
-        
-    }
-    */
 }
-
-#pragma mark - UICollectionViewDataSource
-
--(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 10;
-    //Return the smallest of either our curent model index plus one, or our total number of sections.
-    //This will show 1 section when we only want to display section zero, etc.
-    //It will prevent us from returning 11 when we only have 10 sections.
-    //return MIN(currentModelArrayIndex + 1, selectionModelArray.count);
-}
-
--(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    
-    return 1;
-    //Return the number of photos in the section model
-    //return [[selectionModelArray[currentModelArrayIndex] models] count];
-}
-
--(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.section != 2) {
-
-        VLMCollectionViewCell *cell = (VLMCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-        [self configureCell:cell forIndexPath:indexPath];
-        [cell.label setText:[NSString stringWithFormat:@"%i", indexPath.section]];
-        return cell;
-
-    }
-
-    VLMCollectionViewCellWithChoices *cell = (VLMCollectionViewCellWithChoices *)[collectionView dequeueReusableCellWithReuseIdentifier:CellChoiceIdentifier forIndexPath:indexPath];
-    [self.capture addHorizontalGestureRecognizer:cell.scrollview.panGestureRecognizer];
-    return cell;
-}
-
-
-#pragma mark - Private Custom Methods
-
-//A handy method to implement — returns the photo model at any index path
--(VLMFrameModel *)photoModelForIndexPath:(NSIndexPath *)indexPath
-{
-    return nil;
-}
-
-//Configures a cell for a given index path
--(void)configureCell:(VLMCollectionViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
-{
-}
-
-- (void)setupModel
-{
-}
-
 
 - (void)didReceiveMemoryWarning
 {

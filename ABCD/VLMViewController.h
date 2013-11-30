@@ -8,6 +8,27 @@
 
 #import <UIKit/UIKit.h>
 
+// Data
+#import "VLMDataSource.h"
+
+// Views
+#import "VLMCaptureView.h"
+#import "VLMCollectionViewCell.h"
+#import "VLMCollectionViewCellWithChoices.h"
+#import "VLMGradient.h"
+
+// Models
+#import "VLMPanelModel.h"
+
+// Layout
+#import "VLMSinglePanelFlowLayout.h"
+
 @interface VLMViewController : UICollectionViewController
+@property (nonatomic, strong) VLMCaptureView *capture;
+@property (nonatomic, strong) VLMDataSource *dataSource;
+@property (nonatomic, strong) VLMGradient *overlay;
+@property (nonatomic, strong) UIScrollView *secretScrollview;
+@property (nonatomic, strong) VLMSinglePanelFlowLayout *singlePanelFlow;
+@property CGFloat currentPage;
 
 @end

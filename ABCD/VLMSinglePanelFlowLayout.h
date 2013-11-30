@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface VLMGenericFlowLayout : UICollectionViewFlowLayout
+@interface VLMSinglePanelFlowLayout : UICollectionViewFlowLayout
 
 @end
