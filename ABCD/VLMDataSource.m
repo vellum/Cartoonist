@@ -49,7 +49,7 @@
 {
     NSInteger remainder = indexPath.section % 3;
     NSString *name = [NSString stringWithFormat:@"%i", remainder];
-    return [VLMPanelModel frameModelWithName:name image:[UIImage imageNamed:name]];
+    return [VLMPanelModel panelModelWithName:name image:[UIImage imageNamed:name]];
     //return nil;
 }
 

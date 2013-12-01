@@ -10,7 +10,7 @@
 
 @implementation VLMPanelModel
 
-+(instancetype)frameModelWithName:(NSString *)name image:(UIImage *)image
++(instancetype)panelModelWithName:(NSString *)name image:(UIImage *)image
 {
     VLMPanelModel *model = [[VLMPanelModel alloc] init];
     

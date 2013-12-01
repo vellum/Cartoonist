@@ -89,8 +89,6 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     [cap addVerticalGestureRecognizer:secretScrollview.panGestureRecognizer];
     [self.view addSubview:cap];
     [self setCapture:cap];
-    
-    
 }
 
 #pragma mark - secret scrollview delegate

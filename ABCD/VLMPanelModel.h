@@ -10,7 +10,7 @@
 
 @interface VLMPanelModel : NSObject
 
-+(instancetype)frameModelWithName:(NSString *)name image:(UIImage *)image;
++(instancetype)panelModelWithName:(NSString *)name image:(UIImage *)image;
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, strong) UIImage *image;
