@@ -8,9 +8,9 @@
 
 #import "VLMCollectionViewCell.h"
 #import "VLMCollectionViewLayoutAttributes.h"
+#import "VLMPanelModel.h"
 
 @interface VLMCollectionViewCell()
-
 @end
 
 @implementation VLMCollectionViewCell
@@ -47,7 +47,6 @@
     [self.label setTextAlignment:NSTextAlignmentCenter];
     [self.contentView addSubview:self.label];
 
-    pad = 5;
     UIView *vvvv = [[UIView alloc] initWithFrame:CGRectMake(pad, pad, v.frame.size.width-pad*2, 50.0f)];
     [self setCaption:vvvv];
     [self.caption setBackgroundColor:[UIColor colorWithHue:54.0f/360.0f saturation:0.96f brightness:0.98f alpha:1.0f]];
@@ -65,10 +64,7 @@
     [super prepareForReuse];
 }
 
--(void)layoutSubviews
-{
-}
-
+-(void)layoutSubviews{}
 
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes{
 
@@ -86,12 +82,12 @@
     if (transition > 1) transition = 1;
     transition = 1 - transition;
     [self.caption setAlpha:transition];
-    
 }
 
-- (void)configureImage:(UIImage *)image
-{
-    [self.imageview setImage:image];
+- (void)configureWithModel:(VLMPanelModel *)model{
+    [self.imageview setImage:model.image];
+    [self.label setText:model.name];
 }
+
 
 @end

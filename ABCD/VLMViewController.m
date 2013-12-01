@@ -46,15 +46,14 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     [flow setItemSize:kItemSize];
     [self setSinglePanelFlow:flow];
     
-    CollectionViewCellConfigureBlock configureCellBlock = ^(VLMCollectionViewCell *cell, VLMPanelModel *photo)
+    CollectionViewCellConfigureBlock configureCellBlock = ^(VLMCollectionViewCell *cell, VLMPanelModel *panelModel)
     {
-        [cell configureImage:photo.image];
+        [cell configureWithModel:panelModel];
     };
     
-    CollectionViewCellConfigureBlock configureCellChoiceBlock = ^(VLMCollectionViewCellWithChoices *cell, VLMPanelModel *photo)
+    CollectionViewCellConfigureBlock configureCellChoiceBlock = ^(VLMCollectionViewCellWithChoices *cell, VLMPanelModel *panelModel)
     {
         [self.capture addHorizontalGestureRecognizer:cell.scrollview.panGestureRecognizer];
-        NSLog(@"here");
     };
 
     VLMDataSource *ds = [[VLMDataSource alloc] initWithItems:nil cellIdentifier:CellIdentifier cellChoiceIdentifier:CellChoiceIdentifier configureCellBlock:configureCellBlock configureCellChoiceBlock:configureCellChoiceBlock];

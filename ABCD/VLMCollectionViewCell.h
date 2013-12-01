@@ -11,6 +11,8 @@
 #define kItemPaddingBottom 5.0f
 #define kItemSize CGSizeMake(320, 568-20)
 
+@class VLMPanelModel;
+
 @interface VLMCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, strong) UILabel *label;
@@ -19,6 +21,7 @@
 @property (nonatomic, strong) NSString *imagename;
 @property (nonatomic, strong) UIView *base;
 
-- (void)configureImage:(UIImage *)image;
+- (void)configureWithModel:(VLMPanelModel *)model;
+
 
 @end

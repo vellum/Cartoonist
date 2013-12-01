@@ -13,10 +13,8 @@
 +(instancetype)panelModelWithName:(NSString *)name image:(UIImage *)image
 {
     VLMPanelModel *model = [[VLMPanelModel alloc] init];
-    
     model.name = name;
     model.image = image;
-    
     return model;
 }
 

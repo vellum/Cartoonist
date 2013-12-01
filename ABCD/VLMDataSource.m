@@ -29,10 +29,10 @@
 }
 
 - (id)initWithItems:(NSArray *)anItems
-     cellIdentifier:(NSString *)aCellIdentifier
-     cellChoiceIdentifier:(NSString *)aCellChoiceIdentifier
- configureCellBlock:(CollectionViewCellConfigureBlock)aConfigureCellBlock
- configureCellChoiceBlock:(CollectionViewCellConfigureBlock)aConfigureCellChoiceBlock
+        cellIdentifier:(NSString *)aCellIdentifier
+        cellChoiceIdentifier:(NSString *)aCellChoiceIdentifier
+        configureCellBlock:(CollectionViewCellConfigureBlock)aConfigureCellBlock
+        configureCellChoiceBlock:(CollectionViewCellConfigureBlock)aConfigureCellChoiceBlock
 {
     self = [super init];
     if (self) {
@@ -48,26 +48,22 @@
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger remainder = indexPath.section % 3;
-    NSString *name = [NSString stringWithFormat:@"%i", remainder];
-    return [VLMPanelModel panelModelWithName:name image:[UIImage imageNamed:name]];
+    NSString *imagename = [NSString stringWithFormat:@"%i", remainder];
+    NSString *namename = [NSString stringWithFormat:@"%i", indexPath.section];
+    return [VLMPanelModel panelModelWithName:namename image:[UIImage imageNamed:imagename]];
     //return nil;
 }
 
 - (BOOL)isItemAtIndexPathChoice:(NSIndexPath *)indexPath{
-    if (indexPath.section == 2) {
-        return YES;
-    }
-    return NO;
+    return [self isItemAtIndexChoice:indexPath.section];
 }
 
 - (BOOL)isItemAtIndexChoice:(NSInteger)index{
-    if (index==2) {
-        return YES;
-    }
-    return NO;
+    return (index==2);
 }
 
-#pragma mark DataSource
+#pragma mark - DataSource
+
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     return 10;
@@ -91,7 +87,7 @@
         return nil;
     }
 
-    if (indexPath.section != 2)
+    if (![self isItemAtIndexPathChoice:indexPath])
     {
         VLMCollectionViewCell *cell = (VLMCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:indexPath];
         id item = [self itemAtIndexPath:indexPath];
