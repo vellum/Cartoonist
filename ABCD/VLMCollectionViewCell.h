@@ -7,19 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#define kItemPadding 5.0f
-#define kItemPaddingBottom 5.0f
-#define kItemSize CGSizeMake(320, 568-20)
+#define kItemPadding 9.0f
+#define kItemPaddingBottom 9.0f
+#define kItemSize CGSizeMake(320, 568.0f-2.0f*(9.0f+9.0f))
 
 @class VLMPanelModel;
 
 @interface VLMCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic, strong) UILabel *label;
-@property (nonatomic, strong) UIImageView *imageview;
+@property (nonatomic, strong) UIView *base;
 @property (nonatomic, strong) UIView *caption;
 @property (nonatomic, strong) NSString *imagename;
-@property (nonatomic, strong) UIView *base;
+@property (nonatomic, strong) UIImageView *imageview;
+@property (nonatomic, strong) UILabel *label;
 
 - (void)configureWithModel:(VLMPanelModel *)model;
 

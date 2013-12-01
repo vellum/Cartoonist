@@ -6,6 +6,13 @@
 //  Copyright (c) 2013 David Lu. All rights reserved.
 //
 
+//
+// A mobile-first comic book with choose-your-own-adventure influences
+// A way for me to draw and write and perhaps do those full time
+//
+//
+
+
 #import "VLMViewController.h"
 #import <objc/runtime.h>
 
@@ -88,6 +95,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     [cap addVerticalGestureRecognizer:secretScrollview.panGestureRecognizer];
     [self.view addSubview:cap];
     [self setCapture:cap];
+    
 }
 
 #pragma mark - secret scrollview delegate
@@ -189,5 +197,6 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 @end
 

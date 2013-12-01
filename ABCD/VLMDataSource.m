@@ -47,7 +47,7 @@
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger remainder = indexPath.section % 3;
+    NSInteger remainder = 2;//indexPath.section % 3;
     NSString *imagename = [NSString stringWithFormat:@"%i", remainder];
     NSString *namename = [NSString stringWithFormat:@"%i", indexPath.section];
     return [VLMPanelModel panelModelWithName:namename image:[UIImage imageNamed:imagename]];
@@ -93,7 +93,6 @@
         id item = [self itemAtIndexPath:indexPath];
         self.configureCellBlock(cell, item);
         return cell;
-    
     }
     else
     {

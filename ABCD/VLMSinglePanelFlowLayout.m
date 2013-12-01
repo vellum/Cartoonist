@@ -24,7 +24,6 @@
 
 -(NSArray*)layoutAttributesForElementsInRect:(CGRect)rect
 {
-    
     NSArray* layoutAttributesArray = [super layoutAttributesForElementsInRect:rect];
     
     // We're going to calculate the rect of the collection view visible to the user.
@@ -62,4 +61,5 @@
     [(VLMCollectionViewLayoutAttributes *)attributes setTransitionValue:normalized];
 
 }
+
 @end

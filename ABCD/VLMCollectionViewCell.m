@@ -24,21 +24,24 @@
 {
     if (!(self = [super initWithFrame:frame])) return nil;
 
+    [self.contentView setBackgroundColor:[UIColor clearColor]];
+    [self setBackgroundColor:[UIColor clearColor]];
+
     CGFloat pad = kItemPadding;
 
-    UIView *v = [[UIView alloc] initWithFrame:CGRectMake(pad, pad, kItemSize.width-pad*2, kItemSize.height-kItemPaddingBottom)];
-    [v setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:1.0f]];
-    [v setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
-    [self.contentView addSubview:v];
-    [self.contentView setBackgroundColor:[UIColor clearColor]];
-    [v setAutoresizesSubviews:NO];
-    self.base = v;
+    UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(pad, pad, kItemSize.width-pad*2, kItemSize.height-kItemPaddingBottom)];
+    [baseView setBackgroundColor:[UIColor clearColor]];
+    [baseView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
+    [baseView setAutoresizesSubviews:NO];
+    [baseView setUserInteractionEnabled:NO];
+    [baseView setClipsToBounds:YES];
+    [self.contentView addSubview:baseView];
+    [self setBase:baseView];
     
-    [self setImageview:[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, v.frame.size.width, v.frame.size.height)]];
-    [self setBackgroundColor:[UIColor clearColor]];
+    [self setImageview:[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, baseView.frame.size.width, baseView.frame.size.height)]];
     [self.imageview setContentMode:UIViewContentModeScaleAspectFill];
     [self.imageview setClipsToBounds:YES];
-    [v addSubview:self.imageview];
+    [baseView addSubview:self.imageview];
     
     [self setLabel:[[UILabel alloc] initWithFrame:CGRectMake(0, frame.size.height-50, frame.size.width, 50)]];
     [self.label setTextColor:[UIColor whiteColor]];
@@ -47,13 +50,13 @@
     [self.label setTextAlignment:NSTextAlignmentCenter];
     [self.contentView addSubview:self.label];
 
-    UIView *vvvv = [[UIView alloc] initWithFrame:CGRectMake(pad, pad, v.frame.size.width-pad*2, 50.0f)];
+    UIView *vvvv = [[UIView alloc] initWithFrame:CGRectMake(pad, pad, baseView.frame.size.width-pad*2, 50.0f)];
     [self setCaption:vvvv];
     [self.caption setBackgroundColor:[UIColor colorWithHue:54.0f/360.0f saturation:0.96f brightness:0.98f alpha:1.0f]];
-    [self.caption setAlpha:1];
+    [self.caption setAlpha:0];
     [self.caption setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
 
-    [v addSubview:self.caption];
+    [baseView addSubview:self.caption];
     
     self.imagename = @"<not set yet>";
     return self;
@@ -66,7 +69,8 @@
 
 -(void)layoutSubviews{}
 
-- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes{
+- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
+{
 
     [super applyLayoutAttributes:layoutAttributes];
     
@@ -79,12 +83,51 @@
     
     VLMCollectionViewLayoutAttributes *castedLayoutAttributes = (VLMCollectionViewLayoutAttributes *)layoutAttributes;
     CGFloat transition = fabsf(castedLayoutAttributes.transitionValue);
+    
+    // debug text
+    [self.label setText:[NSString stringWithFormat:@"%f", transition]];
+    
+    /*
+    // notes:
+    // 0 to 1 - panel is scrolling between center and off top edge of screen
+    // 0 to -1 - panel is scrolling between center and off bottom edge of screen
+    */
+    BOOL isLeaving = roundf(castedLayoutAttributes.transitionValue*100.0f)/100.0f > 0;
+    BOOL isArriving = roundf(castedLayoutAttributes.transitionValue*100.0f)/100.0f < 0;
+    
     if (transition > 1) transition = 1;
     transition = 1 - transition;
-    [self.caption setAlpha:transition];
+    transition = roundf(transition*100.0f)/100.0f; // this makes for jaggy animation
+    if (isLeaving) {
+
+        // map 0 to 0.1 to 1 and 0
+        CGFloat mapped = castedLayoutAttributes.transitionValue;
+        if (mapped>0.1)
+        {
+            mapped = 0.1;
+        }
+        mapped = 1.0f - (mapped/0.1f);
+        [self.caption setAlpha:mapped];
+    } else {
+        [self.caption setAlpha:transition];
+    }
+    
+    //transition = roundf(transition*100.0f)/100.0f; // this makes for jaggy animation
+    //[self.imageview setAlpha:transition];
+    /*
+    // this is how transitions work if you're scrolling between identical panels
+    if (isLeaving) {
+        [self.imageview setFrame:CGRectMake(0, (1 - transition) * self.base.frame.size.height, self.base.frame.size.width, self.base.frame.size.height)];
+    } else {
+        [self.imageview setFrame:CGRectMake(0, -(1-transition) * self.base.frame.size.height, self.base.frame.size.width, self.base.frame.size.height)];
+    }
+    //*/
+    
+
 }
 
-- (void)configureWithModel:(VLMPanelModel *)model{
+- (void)configureWithModel:(VLMPanelModel *)model
+{
     [self.imageview setImage:model.image];
     [self.label setText:model.name];
 }
