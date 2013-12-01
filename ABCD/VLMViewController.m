@@ -102,7 +102,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     CGPoint contentOffset = scrollView.contentOffset;
     CGFloat page = contentOffset.y/scrollView.frame.size.height;
     CGFloat delta = page - self.currentPage;
-    BOOL currentPageIsZoomedOut = (self.currentPage==2);
+    BOOL currentPageIsZoomedOut = [self.dataSource isItemAtIndexChoice:self.currentPage];
     BOOL nextPageIsZoomedOut = NO;
     
     CGFloat zoomedoutscale = 0.875f;
@@ -111,7 +111,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     if ( delta > 0 ){
             
             if ( fabs(delta) < 1 ) {
-                nextPageIsZoomedOut = ( currentPage+1 == 2 );
+                nextPageIsZoomedOut = [self.dataSource isItemAtIndexChoice:currentPage+1];
                 if (!currentPageIsZoomedOut) {
                     if (nextPageIsZoomedOut){
                         CGFloat s = zoomedoutscale + (1-zoomedoutscale) * (1 - delta);
@@ -142,7 +142,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
             
             if (fabs(delta) < 1)
             {
-                nextPageIsZoomedOut = ( self.currentPage-1 == 2 );
+                nextPageIsZoomedOut = [self.dataSource isItemAtIndexChoice:currentPage-1];
                 if ( !currentPageIsZoomedOut )
                 {
                     if ( nextPageIsZoomedOut )
@@ -176,7 +176,8 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [self setCurrentPage:scrollView.contentOffset.y/scrollView.frame.size.height];
-    if (self.currentPage == 2)
+
+    if ([self.dataSource isItemAtIndexChoice:self.currentPage])
     {
         [self.capture enableHorizontalPan:YES];
     }
