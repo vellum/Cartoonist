@@ -43,7 +43,7 @@
     [self.imageview setClipsToBounds:YES];
     [baseView addSubview:self.imageview];
     
-    [self setLabel:[[UILabel alloc] initWithFrame:CGRectMake(0, frame.size.height-50, frame.size.width, 50)]];
+    [self setLabel:[[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)]];
     [self.label setTextColor:[UIColor whiteColor]];
     [self.label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:36.0f]];
     [self.label setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
@@ -98,6 +98,7 @@
     if (transition > 1) transition = 1;
     transition = 1 - transition;
     transition = roundf(transition*100.0f)/100.0f; // this makes for jaggy animation
+    CGFloat duration = 0.4f;
     if (isLeaving) {
 
         // map 0 to 0.1 to 1 and 0
@@ -107,9 +108,40 @@
             mapped = 0.1;
         }
         mapped = 1.0f - (mapped/0.1f);
+        if (mapped>0.9)
+        {
+            mapped = 0.9;
+        }
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDelay:0.0f];
+		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationDuration:duration];
         [self.caption setAlpha:mapped];
+        [UIView commitAnimations];
+        
+        
     } else {
-        [self.caption setAlpha:transition];
+        
+        CGFloat threshold = 0.5f;
+        CGFloat mapped = (transition - threshold)/(1-threshold);
+        if (mapped < 0)
+        {
+            mapped = 0;
+        }
+        if (mapped > 0.9f)
+        {
+            mapped = 1.0f;
+        }
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDelay:0.0f];
+		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationDuration:duration];
+        [self.caption setAlpha:mapped];
+        //CATransform3D t = CATransform3DScale(CATransform3DIdentity, transition, transition, 1.0f);
+        //[self.caption.layer setTransform:t];
+        [UIView commitAnimations];
     }
     
     //transition = roundf(transition*100.0f)/100.0f; // this makes for jaggy animation
