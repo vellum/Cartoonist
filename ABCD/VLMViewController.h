@@ -23,7 +23,7 @@
 // Layout
 #import "VLMSinglePanelFlowLayout.h"
 
-@interface VLMViewController : UICollectionViewController
+@interface VLMViewController : UICollectionViewController<UIScrollViewDelegate>
 @property (nonatomic, strong) VLMCaptureView *capture;
 @property (nonatomic, strong) VLMDataSource *dataSource;
 @property (nonatomic, strong) VLMGradient *overlay;

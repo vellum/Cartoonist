@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^ChoosePageBlock)(CGFloat page, NSString *text);
 
-@interface VLMCollectionViewCellWithChoices : UICollectionViewCell
+@interface VLMCollectionViewCellWithChoices : UICollectionViewCell<UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollview;
+@property (nonatomic, copy) ChoosePageBlock choosePageBlock;
+
+- (void)setDelegate:(id)scrollViewDelegate;
 
 @end

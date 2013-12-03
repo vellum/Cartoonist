@@ -61,6 +61,14 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     CollectionViewCellConfigureBlock configureCellChoiceBlock = ^(VLMCollectionViewCellWithChoices *cell, VLMPanelModel *panelModel)
     {
         [self.capture addHorizontalGestureRecognizer:cell.scrollview.panGestureRecognizer];
+        //[cell setDelegate:self];
+        ChoosePageBlock choosePageBlock = ^(CGFloat page, NSString *text){
+            [self.overlay setText:text];
+        };
+        // tbd: restore cell state
+        // tbd:
+        [self.overlay setText:@"restored text"];
+        [cell setChoosePageBlock:choosePageBlock];
     };
 
     VLMDataSource *ds = [[VLMDataSource alloc] initWithItems:nil cellIdentifier:CellIdentifier cellChoiceIdentifier:CellChoiceIdentifier configureCellBlock:configureCellBlock configureCellChoiceBlock:configureCellChoiceBlock];
@@ -68,11 +76,10 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
     UICollectionView *cv = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.singlePanelFlow];
     [cv setDataSource:ds];
-    //[cv setDelegate:self];
     [cv setContentOffset:CGPointMake(0, kItemPaddingBottom)];
     [cv registerClass:[VLMCollectionViewCell class] forCellWithReuseIdentifier:CellIdentifier];
     [cv registerClass:[VLMCollectionViewCellWithChoices class] forCellWithReuseIdentifier:CellChoiceIdentifier];
-    [cv setBackgroundColor:[UIColor clearColor]];
+    [cv setBackgroundColor:[UIColor whiteColor]];
     [cv.panGestureRecognizer setEnabled:NO];
     [cv setClipsToBounds:NO];
     [cv setContentInset:UIEdgeInsetsMake(kItemPaddingBottom+3, 0, kItemPaddingBottom, 0)];
@@ -110,7 +117,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     BOOL currentPageIsZoomedOut = [self.dataSource isItemAtIndexChoice:self.currentPage];
     BOOL nextPageIsZoomedOut = NO;
     
-    CGFloat zoomedoutscale = 0.875f;
+    CGFloat zoomedoutscale = 0.9f;//0.875f;
     
     
     if ( delta > 0 ){

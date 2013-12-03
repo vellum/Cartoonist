@@ -14,30 +14,60 @@
 
 @implementation VLMCollectionViewCellWithChoices
 @synthesize scrollview;
+@synthesize choosePageBlock;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self setScrollview:[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kItemSize.width, kItemSize.height)]];
+        
+        
+        [self setScrollview:[[UIScrollView alloc] initWithFrame:CGRectMake(kItemPadding, 0, kItemSize.width-kItemPadding, kItemSize.height)]];
         [self.scrollview setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
         [self.scrollview setAutoresizesSubviews:NO];
         [self.scrollview setBackgroundColor:[UIColor clearColor]];
         [self.scrollview setClipsToBounds:NO];
-        [self.scrollview setContentSize:CGSizeMake(kItemSize.width*2, kItemSize.height)];
         [self.scrollview setPagingEnabled:YES];
         [self.scrollview setShowsHorizontalScrollIndicator:NO];
+        [self.scrollview setTag:1000];
+        [self.scrollview setDelegate:self];
         [self.contentView addSubview:self.scrollview];
         
-        UIView *A = [[UIView alloc] initWithFrame:CGRectMake(kItemPadding, kItemPadding, kItemSize.width-kItemPadding*2, kItemSize.height-kItemPaddingBottom)];
-        [A setBackgroundColor:[UIColor colorWithWhite:0.9f alpha:1.0f]];
-        [self.scrollview addSubview:A];
+        NSInteger numPages = 3;
+        [self.scrollview setContentSize:CGSizeMake((kItemSize.width-kItemPadding)*numPages, kItemSize.height)];
+        for (NSInteger i = 0; i < numPages; i++)
+        {
+            UIView *B = [[UIView alloc] initWithFrame:CGRectMake((kItemSize.width-kItemPadding)*i, kItemPadding, kItemSize.width-kItemPadding*2, kItemSize.height-kItemPaddingBottom)];
+            [B setBackgroundColor:[UIColor colorWithWhite:0.9f alpha:1.0f]];
+            [self.scrollview addSubview:B];
+        }
         
-        UIView *B = [[UIView alloc] initWithFrame:CGRectMake(kItemSize.width+kItemPadding, kItemPadding, kItemSize.width-kItemPadding*2, kItemSize.height-kItemPaddingBottom)];
-        [B setBackgroundColor:[UIColor colorWithWhite:0.9f alpha:1.0f]];
-        [self.scrollview addSubview:B];
     }
     return self;
+}
+
+- (void)setDelegate:(id)scrollViewDelegate
+{
+    //[self.scrollview setDelegate:scrollViewDelegate];
+}
+
+
+#pragma mark - ScrollView Delegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    NSLog(@"%f", scrollView.contentOffset.x);
+    CGFloat page = scrollview.contentOffset.x / scrollview.frame.size.width;
+    NSLog(@"%f", page);
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    NSLog(@"scrollviewdidend");
+    CGFloat page = scrollview.contentOffset.x / scrollview.frame.size.width;
+    if ( self.choosePageBlock ){
+        self.choosePageBlock(page,[NSString stringWithFormat:@"%f", page]);
+    }
 }
 
 /*

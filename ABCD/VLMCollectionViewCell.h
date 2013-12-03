@@ -12,11 +12,12 @@
 #define kItemSize CGSizeMake(320, 568.0f-2.0f*(9.0f+9.0f))
 
 @class VLMPanelModel;
+@class VLMNarrationCaption;
 
 @interface VLMCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIView *base;
-@property (nonatomic, strong) UIView *caption;
+@property (nonatomic, strong) VLMNarrationCaption *caption;
 @property (nonatomic, strong) NSString *imagename;
 @property (nonatomic, strong) UIImageView *imageview;
 @property (nonatomic, strong) UILabel *label;

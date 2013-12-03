@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface VLMGradient : UIView
-
+- (void)setText:(NSString *)text;
 @end
