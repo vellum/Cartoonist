@@ -10,6 +10,7 @@
 #import "VLMCollectionViewCell.h"
 #import "VLMCollectionViewCellWithChoices.h"
 #import "VLMPanelModel.h"
+#import "VLMPanelModels.h"
 
 @interface VLMDataSource ()
 
@@ -47,11 +48,21 @@
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath
 {
+    if ( indexPath.section == 2)
+    {
+        VLMPanelModels *models = [[VLMPanelModels alloc] init];
+        for (NSInteger i = 0; i < 3; i++ )
+        {
+            NSString *text = [NSString stringWithFormat:@"Action %i", i];
+            VLMPanelModel *model = [VLMPanelModel panelModelWithName:text image:[UIImage imageNamed:@"0"]];
+            [models.models addObject:model];
+        }
+        return models;
+    }
     NSInteger remainder = 2;//indexPath.section % 3;
     NSString *imagename = [NSString stringWithFormat:@"%i", remainder];
     NSString *namename = [NSString stringWithFormat:@"%i", indexPath.section];
     return [VLMPanelModel panelModelWithName:namename image:[UIImage imageNamed:imagename]];
-    //return nil;
 }
 
 - (BOOL)isItemAtIndexPathChoice:(NSIndexPath *)indexPath{

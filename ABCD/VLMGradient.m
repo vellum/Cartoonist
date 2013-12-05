@@ -62,6 +62,7 @@
 - (void)setAlpha:(CGFloat)alpha
 {
     [self.current setAlpha:alpha];
+    [self.next setAlpha:0];
     [super setAlpha:alpha];
 }
 
@@ -86,7 +87,14 @@
             [self setNext:temp];
         }
      ];
-    
 }
 
+- (void)setAlpha:(CGFloat)alpha forText:(NSString *)text andAlpha:(CGFloat)alpha2 forText2:(NSString *)text2
+{
+    [self.next setText:text];
+    [self.next setAlpha:alpha];
+    
+    [self.current setText:text2];
+    [self.current setAlpha:alpha2];
+}
 @end

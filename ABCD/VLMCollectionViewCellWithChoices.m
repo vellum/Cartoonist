@@ -8,75 +8,151 @@
 
 #import "VLMCollectionViewCellWithChoices.h"
 #import "VLMCollectionViewCell.h"
+#import "VLMPanelModels.h"
+#import "VLMPanelModel.h"
 
-@interface VLMCollectionViewCellWithChoices()
+@interface VLMCollectionViewCellWithChoices ()
+@property (nonatomic, strong) NSMutableArray *subviews;
+@property (nonatomic, strong) VLMPanelModels *panels; // this should be a weak reference
 @end
 
 @implementation VLMCollectionViewCellWithChoices
 @synthesize scrollview;
 @synthesize choosePageBlock;
+@synthesize scrollPageBlock;
+@synthesize subviews;
+@synthesize panels;
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        
-        
-        [self setScrollview:[[UIScrollView alloc] initWithFrame:CGRectMake(kItemPadding, 0, kItemSize.width-kItemPadding, kItemSize.height)]];
-        [self.scrollview setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
-        [self.scrollview setAutoresizesSubviews:NO];
-        [self.scrollview setBackgroundColor:[UIColor clearColor]];
-        [self.scrollview setClipsToBounds:NO];
-        [self.scrollview setPagingEnabled:YES];
-        [self.scrollview setShowsHorizontalScrollIndicator:NO];
-        [self.scrollview setTag:1000];
-        [self.scrollview setDelegate:self];
-        [self.contentView addSubview:self.scrollview];
-        
-        NSInteger numPages = 3;
-        [self.scrollview setContentSize:CGSizeMake((kItemSize.width-kItemPadding)*numPages, kItemSize.height)];
-        for (NSInteger i = 0; i < numPages; i++)
-        {
-            UIView *B = [[UIView alloc] initWithFrame:CGRectMake((kItemSize.width-kItemPadding)*i, kItemPadding, kItemSize.width-kItemPadding*2, kItemSize.height-kItemPaddingBottom)];
-            [B setBackgroundColor:[UIColor colorWithWhite:0.9f alpha:1.0f]];
-            [self.scrollview addSubview:B];
-        }
-        
-    }
-    return self;
+	self = [super initWithFrame:frame];
+	if (self)
+	{
+		[self setScrollview:[[UIScrollView alloc] initWithFrame:CGRectMake(kItemPadding, 0, kItemSize.width - kItemPadding, kItemSize.height)]];
+		[self.scrollview setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
+		[self.scrollview setAutoresizesSubviews:NO];
+		[self.scrollview setBackgroundColor:[UIColor clearColor]];
+		[self.scrollview setClipsToBounds:NO];
+		[self.scrollview setPagingEnabled:YES];
+		[self.scrollview setShowsHorizontalScrollIndicator:NO];
+		[self.scrollview setTag:1000];
+		[self.scrollview setDelegate:self];
+		[self.contentView addSubview:self.scrollview];
+
+		[self setSubviews:[[NSMutableArray alloc] init]];
+	}
+	return self;
 }
 
 - (void)setDelegate:(id)scrollViewDelegate
 {
-    //[self.scrollview setDelegate:scrollViewDelegate];
+	// [self.scrollview setDelegate:scrollViewDelegate];
 }
 
+- (void)configureWithModel:(VLMPanelModels *)models
+{
+	NSInteger numPages = [models.models count];
+
+	[self.scrollview setContentSize:CGSizeMake((kItemSize.width - kItemPadding) * numPages, kItemSize.height)];
+
+	[self setPanels:models];
+
+	// TBD: query data for the *selected* item and make sure the scrollview presents this as centered
+
+
+	// remove all children
+	//
+	for (NSInteger i = 0; i < [self.subviews count]; i++)
+	{
+		UIView *subview = (UIView *)[self.subviews objectAtIndex:i];
+		[subview removeFromSuperview];
+	}
+	[self.subviews removeAllObjects];
+
+	// add as many as makes sense
+	for (NSInteger i = 0; i < numPages; i++)
+	{
+		VLMPanelModel *model = (VLMPanelModel *)[models.models objectAtIndex:i];
+		CGRect rect = CGRectMake((kItemSize.width - kItemPadding) * i, kItemPadding, kItemSize.width - kItemPadding * 2, kItemSize.height - kItemPaddingBottom);
+
+		UIImageView *imageview = [[UIImageView alloc] initWithFrame:rect];
+		[imageview setContentMode:UIViewContentModeScaleAspectFill];
+		[imageview setClipsToBounds:YES];
+		[imageview setImage:model.image];
+		[self.scrollview addSubview:imageview];
+		[self.subviews addObject:imageview];
+	}
+	// FIXME: update with restored page
+	[self updatePage:0];
+}
 
 #pragma mark - ScrollView Delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSLog(@"%f", scrollView.contentOffset.x);
-    CGFloat page = scrollview.contentOffset.x / scrollview.frame.size.width;
-    NSLog(@"%f", page);
+	//NSLog(@"%f", scrollView.contentOffset.x);
+	CGFloat page = scrollview.contentOffset.x / scrollview.frame.size.width;
+	//NSLog(@"%f", page);
+
+	if (self.scrollPageBlock)
+	{
+		NSInteger lowerbound = floor(page);
+		NSInteger upperbound = ceil(page);
+		if (lowerbound < 0)
+		{
+			lowerbound = 0;
+		}
+		if (lowerbound > [self.panels.models count] - 1)
+		{
+			lowerbound = [self.panels.models count] - 1;
+		}
+		if (upperbound < 0)
+		{
+			upperbound = 0;
+		}
+		if (upperbound > [self.panels.models count] - 1)
+		{
+			upperbound = [self.panels.models count] - 1;
+		}
+
+		// object at lowerbound is displayed at
+		CGFloat alpha1 = 1 - (page - lowerbound);
+		VLMPanelModel *model1 = [self.panels.models objectAtIndex:lowerbound];
+
+		// object at upperbound is displayed at
+		CGFloat alpha2 = page - lowerbound;
+		VLMPanelModel *model2 = [self.panels.models objectAtIndex:upperbound];
+
+		self.scrollPageBlock(alpha1, model1.name, alpha2, model2.name);
+	}
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    NSLog(@"scrollviewdidend");
-    CGFloat page = scrollview.contentOffset.x / scrollview.frame.size.width;
-    if ( self.choosePageBlock ){
-        self.choosePageBlock(page,[NSString stringWithFormat:@"%f", page]);
-    }
+	//NSLog(@"scrollviewdidend");
+	CGFloat page = scrollview.contentOffset.x / scrollview.frame.size.width;
+	NSInteger pageAsInt = floor(page);
+	[self updatePage:pageAsInt];
+}
+
+- (void)updatePage:(NSInteger)page
+{
+	if (self.choosePageBlock)
+	{
+		VLMPanelModel *model = [self.panels.models objectAtIndex:page];
+		self.choosePageBlock(page, model.name);
+	}
 }
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
+ * // Only override drawRect: if you perform custom drawing.
+ * // An empty implementation adversely affects performance during animation.
+ * - (void)drawRect:(CGRect)rect
+ * {
+ *  // Drawing code
+ * }
+ */
+
+
 
 @end

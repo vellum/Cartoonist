@@ -10,4 +10,5 @@
 
 @interface VLMGradient : UIView
 - (void)setText:(NSString *)text;
+- (void)setAlpha:(CGFloat)alpha forText:(NSString *)text andAlpha:(CGFloat)alpha2 forText2:(NSString *)text2;
 @end

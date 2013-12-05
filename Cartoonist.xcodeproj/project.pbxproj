@@ -10,6 +10,7 @@
 		BD8FD83918401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */; };
 		BD8FD83C18402F5D00C8B9C6 /* VLMCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83B18402F5D00C8B9C6 /* VLMCaptureView.m */; };
 		BD8FD83F1840877C00C8B9C6 /* VLMGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83E1840877C00C8B9C6 /* VLMGradient.m */; };
+		BDA1F987184E69F500C4AC57 /* VLMPanelModels.m in Sources */ = {isa = PBXBuildFile; fileRef = BDA1F986184E69F500C4AC57 /* VLMPanelModels.m */; };
 		BDB3BB8E1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB3BB8D1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m */; };
 		BDB3BB921849B6C600F59AE1 /* VLMDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB3BB911849B6C600F59AE1 /* VLMDataSource.m */; };
 		BDB3BB96184D484200F59AE1 /* VLMNarrationCaption.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB3BB95184D484200F59AE1 /* VLMNarrationCaption.m */; };
@@ -24,20 +25,7 @@
 		BDD899CC183C4C39002E089C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD899CB183C4C39002E089C /* main.m */; };
 		BDD899D0183C4C39002E089C /* VLMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD899CF183C4C39002E089C /* VLMAppDelegate.m */; };
 		BDD899D2183C4C39002E089C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDD899D1183C4C39002E089C /* Images.xcassets */; };
-		BDD899D9183C4C39002E089C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD899D8183C4C39002E089C /* XCTest.framework */; };
-		BDD899DA183C4C39002E089C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD899BF183C4C39002E089C /* Foundation.framework */; };
-		BDD899DB183C4C39002E089C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD899C3183C4C39002E089C /* UIKit.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		BDD899DC183C4C39002E089C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BDD899B4183C4C39002E089C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BDD899BB183C4C39002E089C;
-			remoteInfo = ABCD;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		BD8FD83718401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCollectionViewCellWithChoices.h; sourceTree = "<group>"; };
@@ -46,6 +34,8 @@
 		BD8FD83B18402F5D00C8B9C6 /* VLMCaptureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCaptureView.m; sourceTree = "<group>"; };
 		BD8FD83D1840877C00C8B9C6 /* VLMGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMGradient.h; sourceTree = "<group>"; };
 		BD8FD83E1840877C00C8B9C6 /* VLMGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMGradient.m; sourceTree = "<group>"; };
+		BDA1F985184E69F500C4AC57 /* VLMPanelModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMPanelModels.h; sourceTree = "<group>"; };
+		BDA1F986184E69F500C4AC57 /* VLMPanelModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMPanelModels.m; sourceTree = "<group>"; };
 		BDB3BB8C1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCollectionViewLayoutAttributes.h; sourceTree = "<group>"; };
 		BDB3BB8D1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCollectionViewLayoutAttributes.m; sourceTree = "<group>"; };
 		BDB3BB901849B6C600F59AE1 /* VLMDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMDataSource.h; sourceTree = "<group>"; };
@@ -70,7 +60,6 @@
 		BDD899CE183C4C39002E089C /* VLMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VLMAppDelegate.h; sourceTree = "<group>"; };
 		BDD899CF183C4C39002E089C /* VLMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VLMAppDelegate.m; sourceTree = "<group>"; };
 		BDD899D1183C4C39002E089C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		BDD899D7183C4C39002E089C /* CartoonistTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CartoonistTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDD899D8183C4C39002E089C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		BDFFD876184005D400B1A024 /* Cartoonist-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Cartoonist-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,16 +72,6 @@
 				BDD899C2183C4C39002E089C /* CoreGraphics.framework in Frameworks */,
 				BDD899C4183C4C39002E089C /* UIKit.framework in Frameworks */,
 				BDD899C0183C4C39002E089C /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BDD899D4183C4C39002E089C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BDD899D9183C4C39002E089C /* XCTest.framework in Frameworks */,
-				BDD899DB183C4C39002E089C /* UIKit.framework in Frameworks */,
-				BDD899DA183C4C39002E089C /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +118,8 @@
 			children = (
 				BDD0AE09183D51E800BF0CE6 /* VLMPanelModel.h */,
 				BDD0AE0A183D51E800BF0CE6 /* VLMPanelModel.m */,
+				BDA1F985184E69F500C4AC57 /* VLMPanelModels.h */,
+				BDA1F986184E69F500C4AC57 /* VLMPanelModels.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -167,7 +148,6 @@
 			isa = PBXGroup;
 			children = (
 				BDD899BC183C4C39002E089C /* Cartoonist.app */,
-				BDD899D7183C4C39002E089C /* CartoonistTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -221,6 +201,7 @@
 				BDD899B8183C4C39002E089C /* Sources */,
 				BDD899B9183C4C39002E089C /* Frameworks */,
 				BDD899BA183C4C39002E089C /* Resources */,
+				BD680318184DC033005A2E0D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -230,24 +211,6 @@
 			productName = ABCD;
 			productReference = BDD899BC183C4C39002E089C /* Cartoonist.app */;
 			productType = "com.apple.product-type.application";
-		};
-		BDD899D6183C4C39002E089C /* CartoonistTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BDD899EB183C4C39002E089C /* Build configuration list for PBXNativeTarget "CartoonistTests" */;
-			buildPhases = (
-				BDD899D3183C4C39002E089C /* Sources */,
-				BDD899D4183C4C39002E089C /* Frameworks */,
-				BDD899D5183C4C39002E089C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				BDD899DD183C4C39002E089C /* PBXTargetDependency */,
-			);
-			name = CartoonistTests;
-			productName = ABCDTests;
-			productReference = BDD899D7183C4C39002E089C /* CartoonistTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -261,9 +224,6 @@
 				TargetAttributes = {
 					BDD899BB183C4C39002E089C = {
 						DevelopmentTeam = ARA52RY8JW;
-					};
-					BDD899D6183C4C39002E089C = {
-						TestTargetID = BDD899BB183C4C39002E089C;
 					};
 				};
 			};
@@ -280,7 +240,6 @@
 			projectRoot = "";
 			targets = (
 				BDD899BB183C4C39002E089C /* Cartoonist */,
-				BDD899D6183C4C39002E089C /* CartoonistTests */,
 			);
 		};
 /* End PBXProject section */
@@ -295,20 +254,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BDD899D5183C4C39002E089C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		BD680318184DC033005A2E0D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
 			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "sh CodeFormatter/scripts/formatOpenedSources.sh";
 		};
-/* End PBXResourcesBuildPhase section */
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BDD899B8183C4C39002E089C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDA1F987184E69F500C4AC57 /* VLMPanelModels.m in Sources */,
 				BDD0AE12183EBFB100BF0CE6 /* VLMSinglePanelFlowLayout.m in Sources */,
 				BD8FD83F1840877C00C8B9C6 /* VLMGradient.m in Sources */,
 				BD8FD83C18402F5D00C8B9C6 /* VLMCaptureView.m in Sources */,
@@ -324,22 +293,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BDD899D3183C4C39002E089C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		BDD899DD183C4C39002E089C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BDD899BB183C4C39002E089C /* Cartoonist */;
-			targetProxy = BDD899DC183C4C39002E089C /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		BDD899C8183C4C39002E089C /* InfoPlist.strings */ = {
@@ -455,48 +409,6 @@
 			};
 			name = Release;
 		};
-		BDD899EC183C4C39002E089C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ABCD.app/ABCD";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ABCD/ABCD-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "ABCDTests/CartoonistTests-Info.plist";
-				PRODUCT_NAME = CartoonistTests;
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		BDD899ED183C4C39002E089C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ABCD.app/ABCD";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ABCD/ABCD-Prefix.pch";
-				INFOPLIST_FILE = "ABCDTests/CartoonistTests-Info.plist";
-				PRODUCT_NAME = CartoonistTests;
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -514,15 +426,6 @@
 			buildConfigurations = (
 				BDD899E9183C4C39002E089C /* Debug */,
 				BDD899EA183C4C39002E089C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		BDD899EB183C4C39002E089C /* Build configuration list for PBXNativeTarget "CartoonistTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BDD899EC183C4C39002E089C /* Debug */,
-				BDD899ED183C4C39002E089C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
