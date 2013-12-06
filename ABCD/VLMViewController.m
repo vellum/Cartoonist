@@ -64,6 +64,14 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		[self.capture addHorizontalGestureRecognizer:cell.scrollview.panGestureRecognizer];
 		ChoosePageBlock choosePageBlock = ^(CGFloat page, NSString *text) {
 			[self.overlay setText:text];
+            
+            // TBD: update the decision tree, then update the next cells
+            // update
+            if ( page+1 < [self.collectionView numberOfSections]-1 )
+            {
+                // update the next cell
+                //
+            }
 		};
 
 		ScrollPageBlock scrollPageBlock = ^(CGFloat primaryAlpha, NSString *primary, CGFloat secondaryAlpha, NSString *secondary) {
@@ -126,7 +134,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	BOOL currentPageIsZoomedOut = [self.dataSource isItemAtIndexChoice:self.currentPage];
 	BOOL nextPageIsZoomedOut = NO;
 
-	CGFloat zoomedoutscale = 0.9f;                                                                                                 // 0.875f;
+	CGFloat zoomedoutscale = 0.9f;                                                                                                                     // 0.875f;
 
 
 	if (delta > 0)

@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#define kItemPadding 9.0f
+#define kItemPadding       9.0f
 #define kItemPaddingBottom 9.0f
-#define kItemSize CGSizeMake(320, 568.0f-2.0f*(9.0f+9.0f))
+#define kItemSize          [VLMCollectionViewCell idealItemSize]
+#define kItemSizeIphone    CGSizeMake(320, 568.0f - 2.0f * (9.0f + 9.0f))
+#define kItemSizeIpad      CGSizeMake(768.0f, 1024.0f - 2.0f * (9.0f + 9.0f))
 
 @class VLMPanelModel;
 @class VLMNarrationCaption;
@@ -23,6 +25,6 @@
 @property (nonatomic, strong) UILabel *label;
 
 - (void)configureWithModel:(VLMPanelModel *)model;
-
++ (CGSize)idealItemSize;
 
 @end
