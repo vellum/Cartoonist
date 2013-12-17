@@ -91,18 +91,27 @@
 
 - (void)configureWithModel:(VLMPanelModel *)model
 {
-	[self.imageview setImage:model.image];
-	[self.label setText:model.name];
+	if (model.image)
+	{
+		[self.imageview setImage:model.image];
+	}
+	if ([model.name length] > 0)
+	{
+		[self.label setText:model.name];
+	}
+	/*
+	 *  [self.imageview setImage:model.image];
+	 *  [self.label setText:model.name];
+	 */
 }
 
-+ (CGSize)idealItemSize{
-    if ((UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)) {
-        return kItemSizeIphone;
-    }
-    return kItemSizeIpad;
++ (CGSize)idealItemSize
+{
+	if ((UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad))
+	{
+		return kItemSizeIphone;
+	}
+	return kItemSizeIpad;
 }
-
-
-
 
 @end

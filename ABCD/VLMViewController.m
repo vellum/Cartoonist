@@ -56,6 +56,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 	CollectionViewCellConfigureBlock configureCellBlock = ^(VLMCollectionViewCell *cell, VLMPanelModel *panelModel)
 	{
+		// FIXME: uncomment and debug
 		[cell configureWithModel:panelModel];
 	};
 
@@ -64,14 +65,14 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		[self.capture addHorizontalGestureRecognizer:cell.scrollview.panGestureRecognizer];
 		ChoosePageBlock choosePageBlock = ^(CGFloat page, NSString *text) {
 			[self.overlay setText:text];
-            
-            // TBD: update the decision tree, then update the next cells
-            // update
-            if ( page+1 < [self.collectionView numberOfSections]-1 )
-            {
-                // update the next cell
-                //
-            }
+
+			// TBD: update the decision tree, then update the next cells
+			// update
+			if (page + 1 < [self.collectionView numberOfSections] - 1)
+			{
+				// update the next cell
+				//
+			}
 		};
 
 		ScrollPageBlock scrollPageBlock = ^(CGFloat primaryAlpha, NSString *primary, CGFloat secondaryAlpha, NSString *secondary) {
@@ -83,10 +84,12 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		// tbd:
 		[cell setChoosePageBlock:choosePageBlock];
 		[cell setScrollPageBlock:scrollPageBlock];
+
+		// FIXME: uncomment and debug
 		[cell configureWithModel:panelModels];
 	};
 
-	VLMDataSource *ds = [[VLMDataSource alloc] initWithItems:nil cellIdentifier:CellIdentifier cellChoiceIdentifier:CellChoiceIdentifier configureCellBlock:configureCellBlock configureCellChoiceBlock:configureCellChoiceBlock];
+	VLMDataSource *ds = [[VLMDataSource alloc] initWithCellIdentifier:CellIdentifier cellChoiceIdentifier:CellChoiceIdentifier configureCellBlock:configureCellBlock configureCellChoiceBlock:configureCellChoiceBlock];
 	[self setDataSource:ds];
 
 	UICollectionView *cv = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.singlePanelFlow];
@@ -117,6 +120,25 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	[cap addVerticalGestureRecognizer:secretScrollview.panGestureRecognizer];
 	[self.view addSubview:cap];
 	[self setCapture:cap];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(needsUpdateContent:)
+												 name:@"decisionTreeUpdated"
+											   object:nil];
+}
+
+- (void)dealloc
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)needsUpdateContent:(NSNotification *)notification
+{
+	NSLog(@"here");
+    //self.collectionView.dataSource = Nil;
+    //self.collectionView.dataSource = self.dataSource;
+	[self.collectionView reloadData];
 }
 
 #pragma mark - secret scrollview delegate
@@ -134,7 +156,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	BOOL currentPageIsZoomedOut = [self.dataSource isItemAtIndexChoice:self.currentPage];
 	BOOL nextPageIsZoomedOut = NO;
 
-	CGFloat zoomedoutscale = 0.9f;                                                                                                                     // 0.875f;
+	CGFloat zoomedoutscale = 0.9f;                                                                                                                                                                                                                                                                                                                                                                                                                                                                     // 0.875f;
 
 
 	if (delta > 0)

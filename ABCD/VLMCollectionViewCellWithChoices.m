@@ -54,11 +54,10 @@
 	NSInteger numPages = [models.models count];
 
 	[self.scrollview setContentSize:CGSizeMake((kItemSize.width - kItemPadding) * numPages, kItemSize.height)];
-
 	[self setPanels:models];
 
-	// TBD: query data for the *selected* item and make sure the scrollview presents this as centered
 
+	// TBD: query data for the *selected* item and make sure the scrollview presents this as centered
 
 	// remove all children
 	//
@@ -82,17 +81,19 @@
 		[self.scrollview addSubview:imageview];
 		[self.subviews addObject:imageview];
 	}
-	// FIXME: update with restored page
-	[self updatePage:0];
+	NSInteger selected = [[models.sourceNode objectForKey:@"selected"] integerValue];
+	[self.scrollview setContentOffset:CGPointMake(selected * (kItemSize.width - kItemPadding), 0)];
+	[self updatePage:selected];
 }
 
 #pragma mark - ScrollView Delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-	//NSLog(@"%f", scrollView.contentOffset.x);
+	// NSLog(@"%f", scrollView.contentOffset.x);
 	CGFloat page = scrollview.contentOffset.x / scrollview.frame.size.width;
-	//NSLog(@"%f", page);
+
+	// NSLog(@"%f", page);
 
 	if (self.scrollPageBlock)
 	{
@@ -129,19 +130,22 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-	//NSLog(@"scrollviewdidend");
+	// NSLog(@"scrollviewdidend");
 	CGFloat page = scrollview.contentOffset.x / scrollview.frame.size.width;
 	NSInteger pageAsInt = floor(page);
+
 	[self updatePage:pageAsInt];
 }
 
 - (void)updatePage:(NSInteger)page
 {
+	NSLog(@"updatePage");
 	if (self.choosePageBlock)
 	{
 		VLMPanelModel *model = [self.panels.models objectAtIndex:page];
 		self.choosePageBlock(page, model.name);
 	}
+	[self.panels setSelectedIndex:page];
 }
 
 /*

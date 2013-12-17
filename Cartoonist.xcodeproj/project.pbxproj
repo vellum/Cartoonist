@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD47DFD9185A71150048925D /* VLMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BD47DFD8185A71150048925D /* VLMParser.m */; };
+		BD8C6E01185969ED005FA217 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = BD8C6E00185969ED005FA217 /* data.json */; };
 		BD8FD83918401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */; };
 		BD8FD83C18402F5D00C8B9C6 /* VLMCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83B18402F5D00C8B9C6 /* VLMCaptureView.m */; };
 		BD8FD83F1840877C00C8B9C6 /* VLMGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83E1840877C00C8B9C6 /* VLMGradient.m */; };
@@ -28,6 +30,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BD47DFD7185A71150048925D /* VLMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMParser.h; sourceTree = "<group>"; };
+		BD47DFD8185A71150048925D /* VLMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMParser.m; sourceTree = "<group>"; };
+		BD8C6E00185969ED005FA217 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		BD8FD83718401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCollectionViewCellWithChoices.h; sourceTree = "<group>"; };
 		BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCollectionViewCellWithChoices.m; sourceTree = "<group>"; };
 		BD8FD83A18402F5D00C8B9C6 /* VLMCaptureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCaptureView.h; sourceTree = "<group>"; };
@@ -78,11 +83,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BD8C6E02185969F4005FA217 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				BD8C6E00185969ED005FA217 /* data.json */,
+			);
+			name = Data;
+			path = ABCD;
+			sourceTree = "<group>";
+		};
 		BDB3BB93184A62D300F59AE1 /* Data Source */ = {
 			isa = PBXGroup;
 			children = (
 				BDB3BB901849B6C600F59AE1 /* VLMDataSource.h */,
 				BDB3BB911849B6C600F59AE1 /* VLMDataSource.m */,
+				BD47DFD7185A71150048925D /* VLMParser.h */,
+				BD47DFD8185A71150048925D /* VLMParser.m */,
 			);
 			name = "Data Source";
 			sourceTree = "<group>";
@@ -138,6 +154,7 @@
 		BDD899B3183C4C39002E089C = {
 			isa = PBXGroup;
 			children = (
+				BD8C6E02185969F4005FA217 /* Data */,
 				BDD899C5183C4C39002E089C /* Cartoonist */,
 				BDD899BE183C4C39002E089C /* Frameworks */,
 				BDD899BD183C4C39002E089C /* Products */,
@@ -250,6 +267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDD899CA183C4C39002E089C /* InfoPlist.strings in Resources */,
+				BD8C6E01185969ED005FA217 /* data.json in Resources */,
 				BDD899D2183C4C39002E089C /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,6 +303,7 @@
 				BDB3BB921849B6C600F59AE1 /* VLMDataSource.m in Sources */,
 				BDD0AE0B183D51E800BF0CE6 /* VLMPanelModel.m in Sources */,
 				BDD0AE08183D4A0200BF0CE6 /* VLMCollectionViewCell.m in Sources */,
+				BD47DFD9185A71150048925D /* VLMParser.m in Sources */,
 				BDD899D0183C4C39002E089C /* VLMAppDelegate.m in Sources */,
 				BDD899CC183C4C39002E089C /* main.m in Sources */,
 				BDD0AE03183D479900BF0CE6 /* VLMViewController.m in Sources */,

@@ -1,0 +1,89 @@
+{
+	"type" : "sequence",
+	"nodes":[
+		{
+			"type" : "frame",
+			"image": "0.png",
+			"caption": "one"
+		},
+		{
+			"type" : "frame",
+			"image": "0.png",
+			"caption": "two",
+		},
+		{
+            "type" : "joint",
+            "selected": 0,
+			"children": [
+				{
+					"type" : "sequence",
+					"image": "0.png",
+					"caption": "three A",
+					"nodes": [
+						{
+							"type" : "frame",
+							"image": "0.png",
+							"caption": "three A one",
+						},
+						{
+							"type" : "frame",
+							"image": "0.png",
+							"caption": "three A two",
+						},
+						{
+							"type" : "frame",
+							"image": "0.png",
+							"caption": "three A three",
+						}
+					]
+				},
+				{
+					"type" : "sequence",
+					"image": "0.png",
+					"caption": "three B",
+					"nodes": [
+						{
+							"type" : "frame",
+							"image": "0.png",
+							"caption": "three B one",
+						},
+						{
+							"type" : "frame",
+							"image": "0.png",
+							"caption": "three B two",
+						},
+						{
+							"type" : "frame",
+							"image": "0.png",
+							"caption": "three B three",
+						}
+					]
+				},
+				{
+					"type" : "sequence",
+					"image": "0.png",
+					"caption": "three C",
+					"nodes": [
+						{
+							"type" : "frame",
+							"image": "0.png",
+							"caption": "three C one",
+						},
+						{
+							"type" : "frame",
+							"image": "0.png",
+							"caption": "three C two",
+						},
+						{
+							"type" : "frame",
+							"image": "0.png",
+							"caption": "three C three",
+						}
+					]
+				}
+				
+			],
+			"nodes": null	
+		}
+	]
+}

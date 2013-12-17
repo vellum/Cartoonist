@@ -12,8 +12,7 @@ typedef void (^CollectionViewCellConfigureBlock)(id cell, id item);
 
 @interface VLMDataSource : NSObject<UICollectionViewDataSource>
 
-- (id)initWithItems:(NSArray *)anItems
-        cellIdentifier:(NSString *)aCellIdentifier
+- (id)initWithCellIdentifier:(NSString *)aCellIdentifier
         cellChoiceIdentifier:(NSString *)aCellChoiceIdentifier
         configureCellBlock:(CollectionViewCellConfigureBlock)aConfigureCellBlock
         configureCellChoiceBlock:(CollectionViewCellConfigureBlock)aConfigureCellChoiceBlock;

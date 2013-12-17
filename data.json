@@ -1,0 +1,88 @@
+{
+	"type" : "sequence",
+	"nodes":[
+		{
+			"type" : "frame",
+			"image": "0.png",
+			"caption": null
+		},
+		{
+			"type" : "frame",
+			"image": "0.png",
+			"caption": null,
+		},
+		{
+			"type" : "joint",
+			"children": [
+				{
+					"type" : "sequence",
+					"image": "0.png",
+					"caption": null,
+					"nodes": [
+						{
+							"type" : "frame",
+							"image": "0.png",
+							"caption": null,
+						},
+						{
+							"type" : "frame",
+							"image": "0.png",
+							"caption": null,
+						},
+						{
+							"type" : "frame",
+							"image": "0.png",
+							"caption": null,
+						}
+					]
+				},
+				{
+					"type" : "sequence",
+					"image": "0.png",
+					"caption": null,
+					"nodes": [
+						{
+							"type" : "frame",
+							"image": "0.png",
+							"caption": null,
+						},
+						{
+							"type" : "frame",
+							"image": "0.png",
+							"caption": null,
+						},
+						{
+							"type" : "frame",
+							"image": "0.png",
+							"caption": null,
+						}
+					]
+				},
+				{
+					"type" : "sequence",
+					"image": "0.png",
+					"caption": null,
+					"nodes": [
+						{
+							"type" : "frame",
+							"image": "0.png",
+							"caption": null,
+						},
+						{
+							"type" : "frame",
+							"image": "0.png",
+							"caption": null,
+						},
+						{
+							"type" : "frame",
+							"image": "0.png",
+							"caption": null,
+						}
+					]
+				}
+				
+			],
+			"nodes": null	
+		}
+	]
+}

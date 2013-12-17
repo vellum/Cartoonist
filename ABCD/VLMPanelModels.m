@@ -11,10 +11,26 @@
 @implementation VLMPanelModels
 @synthesize models;
 
--(VLMPanelModels *)init
+- (VLMPanelModels *)init
 {
-    self.models = [[NSMutableArray alloc] init];
-    return self;
+	self.models = [[NSMutableArray alloc] init];
+	self.selectedIndex = 0;
+	// NSLog(@"creating panelmodels");
+	return self;
+}
+
+- (void)setSelectedIndex:(NSInteger)index
+{
+	if (self.sourceNode)
+	{
+		NSInteger current = [[self.sourceNode objectForKey:@"selected"] integerValue];
+		NSLog(@"cur %i    update %i", current, index);
+		if (current != index)
+		{
+			[self.sourceNode setObject:[NSNumber numberWithInteger:index] forKey:@"selected"];
+			 [[NSNotificationCenter defaultCenter] postNotificationName:@"selectedNewBranch" object:nil];
+		}
+	}
 }
 
 @end

@@ -10,12 +10,14 @@
 
 @implementation VLMPanelModel
 
-+(instancetype)panelModelWithName:(NSString *)name image:(UIImage *)image
++ (instancetype)panelModelWithName:(NSString *)name image:(UIImage *)image
 {
-    VLMPanelModel *model = [[VLMPanelModel alloc] init];
-    model.name = name;
-    model.image = image;
-    return model;
+	VLMPanelModel *model = [[VLMPanelModel alloc] init];
+
+	model.name = name;
+	model.image = image;
+	//NSLog(@"creating panelmodel %@\t%@", name, image);
+	return model;
 }
 
 @end
