@@ -121,7 +121,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	[self.view addSubview:cap];
 	[self setCapture:cap];
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(needsUpdateContent:)
 												 name:@"decisionTreeUpdated"
@@ -136,9 +136,11 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 - (void)needsUpdateContent:(NSNotification *)notification
 {
 	NSLog(@"here");
-    //self.collectionView.dataSource = Nil;
-    //self.collectionView.dataSource = self.dataSource;
+	// self.collectionView.dataSource = Nil;
+	// self.collectionView.dataSource = self.dataSource;
 	[self.collectionView reloadData];
+
+    [self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView]*self.secretScrollview.frame.size.height)];
 }
 
 #pragma mark - secret scrollview delegate
@@ -156,7 +158,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	BOOL currentPageIsZoomedOut = [self.dataSource isItemAtIndexChoice:self.currentPage];
 	BOOL nextPageIsZoomedOut = NO;
 
-	CGFloat zoomedoutscale = 0.9f;                                                                                                                                                                                                                                                                                                                                                                                                                                                                     // 0.875f;
+	CGFloat zoomedoutscale = 0.9f;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         // 0.875f;
 
 
 	if (delta > 0)
