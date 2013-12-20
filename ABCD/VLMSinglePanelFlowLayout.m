@@ -78,10 +78,10 @@
 {
 	self.scalevalue = value;
 
-	//CGSize normalSize = kItemSize;
-	//CGSize scaledSize = CGSizeMake(normalSize.width, normalSize.height * self.scalevalue);
-	//self.itemSize = scaledSize;
-	//[self invalidateLayout];
+	 CGSize normalSize = kItemSize;
+	 CGSize scaledSize = CGSizeMake(normalSize.width, normalSize.height * self.scalevalue);
+	 self.itemSize = scaledSize;
+	 [self invalidateLayout];
 }
 
 #pragma mark - Private Custom Methods

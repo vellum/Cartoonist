@@ -29,8 +29,8 @@
 	}
 
 	[self.contentView setBackgroundColor:[UIColor clearColor]];
-    [self.contentView setClipsToBounds:YES];
-    
+	[self.contentView setClipsToBounds:YES];
+
 	[self setBackgroundColor:[UIColor clearColor]];
 
 	CGFloat pad = kItemPadding;
@@ -93,7 +93,7 @@
 
 	[self.caption transitionAtValue:castedLayoutAttributes.transitionValue];
 
-	NSLog(@"%@", NSStringFromCGRect(self.frame));
+	//NSLog(@"%@", NSStringFromCGRect(self.frame));
 }
 
 - (void)configureWithModel:(VLMPanelModel *)model

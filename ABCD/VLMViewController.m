@@ -17,7 +17,24 @@
 #import "VLMViewController.h"
 #import "VLMPanelModels.h"
 
+#import "PRTween.h"
+
+typedef enum
+{
+	kZoomNormal,
+	kZoomZoomedOut
+} ZoomMode;
+
 @interface VLMViewController ()
+
+@property (nonatomic, strong) VLMCaptureView *capture;
+@property (nonatomic, strong) VLMDataSource *dataSource;
+@property (nonatomic, strong) VLMGradient *overlay;
+@property (nonatomic, strong) UIScrollView *secretScrollview;
+@property (nonatomic, strong) VLMSinglePanelFlowLayout *singlePanelFlow;
+@property ZoomMode zoomMode;
+@property CGFloat currentPage;
+
 @end
 
 @implementation VLMViewController
@@ -28,6 +45,7 @@
 @synthesize overlay;
 @synthesize secretScrollview;
 @synthesize singlePanelFlow;
+@synthesize zoomMode;
 
 static NSString *CellIdentifier = @"CellIdentifier";
 static NSString *HeaderIdentifier = @"HeaderIdentifier";
@@ -46,6 +64,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 - (void)viewDidLoad
 {
 	[self setCurrentPage:0];
+	[self setZoomMode:kZoomNormal];
 
 	VLMSinglePanelFlowLayout *flow = [[VLMSinglePanelFlowLayout alloc] init];
 
@@ -61,18 +80,18 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	{
 		[self.capture addHorizontalGestureRecognizer:cell.scrollview.panGestureRecognizer];
 		ChoosePageBlock choosePageBlock = ^(CGFloat page, NSString *text) {
-			[self.overlay setText:text];
-
-			// TBD: update the decision tree, then update the next cells
-			// update
-			if (page + 1 < [self.collectionView numberOfSections] - 1)
+			if (self.zoomMode != kZoomNormal)
 			{
-				// update the next cell
-				//
+				return;
 			}
+			[self.overlay setText:text];
 		};
 
 		ScrollPageBlock scrollPageBlock = ^(CGFloat primaryAlpha, NSString *primary, CGFloat secondaryAlpha, NSString *secondary) {
+			if (self.zoomMode != kZoomNormal)
+			{
+				return;
+			}
 			[self.overlay setAlpha:primaryAlpha forText:primary andAlpha:secondaryAlpha forText2:secondary];
 		};
 
@@ -119,13 +138,132 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	[cap addVerticalGestureRecognizer:secretScrollview.panGestureRecognizer];
 	[self.view addSubview:cap];
 	[self setCapture:cap];
-	ZoomPageBlock zoomPageBlock = ^(CGFloat zoomAmount)
+	ZoomPageBlock zoomPageBlock = ^(CGFloat zoomAmount, BOOL ended)
 	{
-		NSLog(@"zoompageblock %f", zoomAmount);
-		// [self.singlePanelFlow setScale:zoomAmount];
-		// [self.collectionView setCollectionViewLayout:self.singlePanelFlow animated:YES];
-		CGFloat s = zoomAmount;
-		[self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
+		// NSLog(@"zoompageblock %f", zoomAmount);
+		CGFloat lb = 0.5f;
+		switch (self.zoomMode)
+		{
+			case kZoomNormal :
+				if (!ended)
+				{
+					CGFloat s = zoomAmount;
+					if (s < lb)
+					{
+						s = lb;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                // + (s - lb) * lb;
+					}
+					if (s > 1.0f)
+					{
+						s = 1.0f;
+					}
+					[self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
+
+					// [self.singlePanelFlow setScale:s];
+				}
+				else
+				{
+					CGFloat s = zoomAmount;
+					if (s < lb)
+					{
+						s = lb;
+					}
+					if (s > 1.0f)
+					{
+						s = 1.0f;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                // + (s - 1.0f) * 0.0001f;
+					}
+					CGFloat end;
+					if (zoomAmount < 1)
+					{
+						end = lb;
+						[self setZoomMode:kZoomZoomedOut];
+						[self.secretScrollview setPagingEnabled:NO];
+						[self.overlay show];
+					}
+					else
+					{
+						end = 1.0f;
+						[self setZoomMode:kZoomNormal];
+						[self performSelector:@selector(resetPage) withObject:Nil afterDelay:0];
+						// [self.secretScrollview setPagingEnabled:YES];
+
+						[self.overlay hide];
+					}
+					PRTweenPeriod *period = [PRTweenPeriod periodWithStartValue:s endValue:end duration:0.375f];
+					PRTweenOperation *operation = [PRTweenOperation new];
+					operation.period = period;
+					operation.target = self;
+					operation.timingFunction = &PRTweenTimingFunctionQuadInOut;
+					operation.updateSelector = @selector(update:);
+					[[PRTween sharedInstance] addTweenOperation:operation];
+				}
+				break;
+
+			case kZoomZoomedOut :
+				if (!ended)
+				{
+					CGFloat s = lb + (zoomAmount - 1);
+
+
+					// NSLog(@"%f", s);
+					if (s < lb)
+					{
+						s = lb;
+					}
+					if (s > 1.0f)
+					{
+						s = 1.0f;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                // + (s - 1.0f) * lb;
+					}
+					[self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
+
+					// [self.singlePanelFlow setScale:s];
+				}
+				else
+				{
+					CGFloat end;
+					if (zoomAmount < 1)
+					{
+						end = lb;
+						[self setZoomMode:kZoomZoomedOut];
+						[self.secretScrollview setPagingEnabled:NO];
+						[self.overlay show];
+					}
+					else
+					{
+						end = 1.0f;
+						[self setZoomMode:kZoomNormal];
+						// [self.secretScrollview setPagingEnabled:YES];
+						[self performSelector:@selector(resetPage) withObject:Nil afterDelay:0];
+
+						[self.overlay hide];
+					}
+					CGFloat s = lb + (zoomAmount - 1);
+
+
+					NSLog(@"%f", s);
+					if (s < lb)
+					{
+						s = lb;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               // + (s - lb) * 0.05f;
+						[self.overlay show];
+					}
+					if (s > 1.0f)
+					{
+						s = 1.0f;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             // + (s - 1.0f) * lb;
+						[self.overlay hide];
+					}
+					PRTweenPeriod *period = [PRTweenPeriod periodWithStartValue:s endValue:end duration:0.375f];
+					PRTweenOperation *operation = [PRTweenOperation new];
+					operation.period = period;
+					operation.target = self;
+					operation.timingFunction = &PRTweenTimingFunctionQuadInOut;
+					operation.updateSelector = @selector(update:);
+					[[PRTween sharedInstance] addTweenOperation:operation];
+					[self setZoomMode:kZoomNormal];
+				}
+				break;
+
+			default :
+				break;
+		}
 	};
 	[self.capture setZoomPageBlock:zoomPageBlock];
 
@@ -148,6 +286,36 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)resetPage
+{
+	[self.secretScrollview setPagingEnabled:YES];
+	// [self.singlePanelFlow invalidateLayout];
+	CGPoint contentOffset = self.secretScrollview.contentOffset;
+	CGFloat page = contentOffset.y / self.secretScrollview.frame.size.height;
+
+	[UIView animateWithDuration:0.4f
+						  delay:0.0f
+						options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
+					 animations:^{
+		 [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * self.secretScrollview.frame.size.height) animated:YES];
+	 }
+
+					 completion:^(BOOL completed) {
+	 }
+
+	];
+}
+
+- (void)update:(PRTweenPeriod *)period
+{
+	// NSLog(@"%f", period.tweenedValue);
+	// [self.singlePanelFlow setScale:period.tweenedValue];
+	CGFloat s = period.tweenedValue;
+
+
+	[self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
+}
+
 - (void)needsUpdateContent:(NSNotification *)notification
 {
 	NSLog(@"here");
@@ -159,14 +327,21 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 }
 
 #pragma mark - secret scrollview delegate
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
 	if (scrollView != self.secretScrollview)
 	{
 		return;
 	}
-	
+
+	if (self.zoomMode != kZoomNormal)
+	{
+		CGPoint contentOffset = scrollView.contentOffset;
+		contentOffset.y = contentOffset.y - self.collectionView.contentInset.top;
+		[self.collectionView setContentOffset:contentOffset];
+		return;
+	}
+
 
 	CGPoint contentOffset = scrollView.contentOffset;
 	CGFloat page = contentOffset.y / scrollView.frame.size.height;
@@ -174,7 +349,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	BOOL currentPageIsZoomedOut = [self.dataSource isItemAtIndexChoice:self.currentPage];
 	BOOL nextPageIsZoomedOut = NO;
 
-	CGFloat zoomedoutscale = 0.9f;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         // 0.875f;
+	CGFloat zoomedoutscale = 0.9f;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         // 0.875f;
 
 
 	if (delta > 0)
@@ -257,6 +432,32 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	}
 	contentOffset.y = contentOffset.y - self.collectionView.contentInset.top;
 	[self.collectionView setContentOffset:contentOffset];
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+{
+	if (scrollView != self.secretScrollview)
+	{
+		return;
+	}
+	if (self.zoomMode != kZoomZoomedOut)
+	{
+		return;
+	}
+	//CGPoint contentOffset = self.secretScrollview.contentOffset;
+	CGFloat page = targetContentOffset->y / self.secretScrollview.frame.size.height;
+    if (fabsf(velocity.y)>5) {
+        page = roundf(page);
+        if (targetContentOffset->y>self.secretScrollview.contentOffset.y) {
+            page++;
+            targetContentOffset->y = page * self.secretScrollview.frame.size.height;
+        } else if(roundf(page)<page) {
+            page--;
+            targetContentOffset->y = page * self.secretScrollview.frame.size.height;
+        }
+    } else {
+        targetContentOffset->y = roundf(page) * self.secretScrollview.frame.size.height;
+    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView

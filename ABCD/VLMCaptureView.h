@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^ZoomPageBlock)(CGFloat zoomBy);
+typedef void (^ZoomPageBlock)(CGFloat zoomBy, BOOL ended);
 
-@interface VLMCaptureView:UIView <UIGestureRecognizerDelegate>
+@interface VLMCaptureView : UIView <UIGestureRecognizerDelegate>
 
 @property (nonatomic, copy) ZoomPageBlock zoomPageBlock;
 

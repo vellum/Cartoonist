@@ -8,9 +8,9 @@
 
 #import "VLMGradient.h"
 
-@interface VLMGradient()
-@property (nonatomic,strong) UILabel *current;
-@property (nonatomic,strong) UILabel *next;
+@interface VLMGradient ()
+@property (nonatomic, strong) UILabel *current;
+@property (nonatomic, strong) UILabel *next;
 @end
 
 @implementation VLMGradient
@@ -19,82 +19,120 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self setUserInteractionEnabled:NO];
-        [self setBackgroundColor:[UIColor clearColor]];
+	self = [super initWithFrame:frame];
+	if (self)
+	{
+		[self setUserInteractionEnabled:NO];
+		[self setBackgroundColor:[UIColor clearColor]];
 
-        [self setCurrent:[[UILabel alloc] initWithFrame:CGRectMake(0, 50, 320, 100)]];
-        [self.current setText:@""];
-        [self.current setFont:[UIFont fontWithName:@"Helvetica-Bold" size:36.0f]];
-        [self.current setTextColor:[UIColor whiteColor]];
-        [self.current setTextAlignment:NSTextAlignmentCenter];
-        [self addSubview:self.current];
+		[self setCurrent:[[UILabel alloc] initWithFrame:CGRectMake(0, 50, 320, 100)]];
+		[self.current setText:@""];
+		[self.current setFont:[UIFont fontWithName:@"Helvetica-Bold" size:36.0f]];
+		[self.current setTextColor:[UIColor whiteColor]];
+		[self.current setTextAlignment:NSTextAlignmentCenter];
+		[self addSubview:self.current];
 
-        [self setNext:[[UILabel alloc] initWithFrame:CGRectMake(0, 50, 320, 100)]];
-        [self.next setText:@""];
-        [self.next setFont:[UIFont fontWithName:@"Helvetica-Bold" size:36.0f]];
-        [self.next setTextColor:[UIColor whiteColor]];
-        [self.next setTextAlignment:NSTextAlignmentCenter];
-        [self.next setAlpha:0.0f];
-        [self addSubview:self.next];
-    }
-    return self;
+		[self setNext:[[UILabel alloc] initWithFrame:CGRectMake(0, 50, 320, 100)]];
+		[self.next setText:@""];
+		[self.next setFont:[UIFont fontWithName:@"Helvetica-Bold" size:36.0f]];
+		[self.next setTextColor:[UIColor whiteColor]];
+		[self.next setTextAlignment:NSTextAlignmentCenter];
+		[self.next setAlpha:0.0f];
+		[self addSubview:self.next];
+	}
+	return self;
 }
 
 - (void)drawRect:(CGRect)rect
 {
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    NSArray *gradientColors = [NSArray arrayWithObjects:(id) [UIColor clearColor].CGColor, [UIColor blackColor].CGColor, nil];
-    
-    CGFloat gradientLocations[] = {0, 0.75, 1};
-    CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef) gradientColors, gradientLocations);
-    
-    CGPoint midPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
-    
-    CGContextDrawRadialGradient(context, gradient, midPoint, 0, midPoint, rect.size.height*2.0f, kCGGradientDrawsAfterEndLocation);
-    
-    CGGradientRelease(gradient);
+	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+	CGContextRef context = UIGraphicsGetCurrentContext();
+
+	NSArray *gradientColors = [NSArray arrayWithObjects:(id) [UIColor clearColor].CGColor, [UIColor blackColor].CGColor, nil];
+
+	CGFloat gradientLocations[] = { 0, 0.75, 1 };
+	CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)gradientColors, gradientLocations);
+
+	CGPoint midPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
+
+	CGContextDrawRadialGradient(context, gradient, midPoint, 0, midPoint, rect.size.height * 2.0f, kCGGradientDrawsAfterEndLocation);
+
+	CGGradientRelease(gradient);
 }
 
 - (void)setAlpha:(CGFloat)alpha
 {
-    [self.current setAlpha:alpha];
-    [self.next setAlpha:0];
-    [super setAlpha:alpha];
+	[self.current setAlpha:alpha];
+	[self.next setAlpha:0];
+	[super setAlpha:alpha];
 }
 
 - (void)setText:(NSString *)text
 {
-    [self.next setText:text];
-    
-    // fade up next
-    // fade down cur
-    // oncomplete: cur -> next, next->cur
-    
-    [UIView animateWithDuration:0.4f
-        delay:0.0f
-        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
-        animations:^{
-            [self.current setAlpha:0.0f];
-            [self.next setAlpha:1.0f];
-        }
-        completion:^(BOOL completed){
-            UILabel *temp = self.current;
-            [self setCurrent:self.next];
-            [self setNext:temp];
-        }
-     ];
+	[self.next setText:text];
+
+	// fade up next
+	// fade down cur
+	// oncomplete: cur -> next, next->cur
+
+	[UIView animateWithDuration:0.4f
+						  delay:0.0f
+						options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
+					 animations:^{
+		 [self.current setAlpha:0.0f];
+		 [self.next setAlpha:1.0f];
+	 }
+
+					 completion:^(BOOL completed) {
+		 UILabel *temp = self.current;
+		 [self setCurrent:self.next];
+		 [self setNext:temp];
+	 }
+
+	];
 }
 
 - (void)setAlpha:(CGFloat)alpha forText:(NSString *)text andAlpha:(CGFloat)alpha2 forText2:(NSString *)text2
 {
-    [self.next setText:text];
-    [self.next setAlpha:alpha];
-    
-    [self.current setText:text2];
-    [self.current setAlpha:alpha2];
+	[self.next setText:text];
+	[self.next setAlpha:alpha];
+
+	[self.current setText:text2];
+	[self.current setAlpha:alpha2];
 }
+
+- (void)hide
+{
+	[self.next setText:@""];
+	[self.current setText:@""];
+	[UIView animateWithDuration:0.4f
+						  delay:0.0f
+						options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
+					 animations:^{
+		 [self setAlpha:0.0f];
+	 }
+
+					 completion:^(BOOL completed) {
+	 }
+
+	];
+}
+
+- (void)show
+{
+	[self.next setText:@""];
+	[self.current setText:@""];
+	[UIView animateWithDuration:0.4f
+						  delay:0.0f
+						options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
+					 animations:^{
+		 [self setAlpha:1.0f];
+	 }
+
+					 completion:^(BOOL completed) {
+	 }
+
+	];
+}
+
 @end
