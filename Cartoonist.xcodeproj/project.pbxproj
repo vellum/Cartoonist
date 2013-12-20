@@ -27,8 +27,6 @@
 		BDD899CC183C4C39002E089C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD899CB183C4C39002E089C /* main.m */; };
 		BDD899D0183C4C39002E089C /* VLMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD899CF183C4C39002E089C /* VLMAppDelegate.m */; };
 		BDD899D2183C4C39002E089C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDD899D1183C4C39002E089C /* Images.xcassets */; };
-		BDF148E518642083001EF828 /* PRTween.m in Sources */ = {isa = PBXBuildFile; fileRef = BDF148E218642083001EF828 /* PRTween.m */; };
-		BDF148E618642083001EF828 /* PRTweenTimingFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = BDF148E418642083001EF828 /* PRTweenTimingFunctions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,10 +66,6 @@
 		BDD899CF183C4C39002E089C /* VLMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VLMAppDelegate.m; sourceTree = "<group>"; };
 		BDD899D1183C4C39002E089C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		BDD899D8183C4C39002E089C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		BDF148E118642083001EF828 /* PRTween.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRTween.h; sourceTree = "<group>"; };
-		BDF148E218642083001EF828 /* PRTween.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRTween.m; sourceTree = "<group>"; };
-		BDF148E318642083001EF828 /* PRTweenTimingFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PRTweenTimingFunctions.h; sourceTree = "<group>"; };
-		BDF148E418642083001EF828 /* PRTweenTimingFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PRTweenTimingFunctions.m; sourceTree = "<group>"; };
 		BDFFD876184005D400B1A024 /* Cartoonist-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Cartoonist-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -196,7 +190,6 @@
 				BDD0AE00183D437700BF0CE6 /* Controller */,
 				BDD0AE0F183EBF4200BF0CE6 /* Layout */,
 				BDD0AE04183D490500BF0CE6 /* View */,
-				BDF148E718642089001EF828 /* PRTween */,
 				BDD899D1183C4C39002E089C /* Images.xcassets */,
 				BDD899C6183C4C39002E089C /* Supporting Files */,
 			);
@@ -213,17 +206,6 @@
 				BDD899CD183C4C39002E089C /* Cartoonist-Prefix.pch */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		BDF148E718642089001EF828 /* PRTween */ = {
-			isa = PBXGroup;
-			children = (
-				BDF148E118642083001EF828 /* PRTween.h */,
-				BDF148E218642083001EF828 /* PRTween.m */,
-				BDF148E318642083001EF828 /* PRTweenTimingFunctions.h */,
-				BDF148E418642083001EF828 /* PRTweenTimingFunctions.m */,
-			);
-			name = PRTween;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,9 +304,7 @@
 				BDD0AE0B183D51E800BF0CE6 /* VLMPanelModel.m in Sources */,
 				BDD0AE08183D4A0200BF0CE6 /* VLMCollectionViewCell.m in Sources */,
 				BD47DFD9185A71150048925D /* VLMParser.m in Sources */,
-				BDF148E618642083001EF828 /* PRTweenTimingFunctions.m in Sources */,
 				BDD899D0183C4C39002E089C /* VLMAppDelegate.m in Sources */,
-				BDF148E518642083001EF828 /* PRTween.m in Sources */,
 				BDD899CC183C4C39002E089C /* main.m in Sources */,
 				BDD0AE03183D479900BF0CE6 /* VLMViewController.m in Sources */,
 				BDB3BB8E1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m in Sources */,

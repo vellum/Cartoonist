@@ -52,17 +52,24 @@
 - (void)handlePinch:(UIPinchGestureRecognizer *)pgr
 {
 	// NSLog(@"pinch %f    %f", [pgr scale], [pgr velocity]);
-    BOOL ended = NO;
+	BOOL ended = NO;
+
 	switch (pgr.state)
 	{
 		case UIGestureRecognizerStateEnded :
 		case UIGestureRecognizerStateCancelled :
-            ended = YES;
+			ended = YES;
 			break;
 		default :
 			break;
 	}
-
+	CGFloat threshold = 0.1f;
+	if ([pgr scale] < 1 - threshold || [pgr scale] > 1 + threshold)
+	{
+		[pgr setEnabled:NO];
+		[pgr setEnabled:YES];
+		ended = YES;
+	}
 	if (self.zoomPageBlock)
 	{
 		self.zoomPageBlock([pgr scale], ended);
@@ -91,7 +98,7 @@
 			break;
 		default :
 			break;
-	}                                                                                                                                                                                                                             // end switch
+	}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             // end switch
 
 	if (self.recognizedDirection == FUCKING_UNKNOWN)
 	{

@@ -24,7 +24,7 @@
 	if (self.sourceNode)
 	{
 		NSInteger current = [[self.sourceNode objectForKey:@"selected"] integerValue];
-		NSLog(@"cur %i    update %i", current, index);
+		//NSLog(@"cur %i    update %i", current, index);
 		if (current != index)
 		{
 			[self.sourceNode setObject:[NSNumber numberWithInteger:index] forKey:@"selected"];
