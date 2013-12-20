@@ -48,10 +48,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	[self setCurrentPage:0];
 
 	VLMSinglePanelFlowLayout *flow = [[VLMSinglePanelFlowLayout alloc] init];
-	[flow setSectionInset:UIEdgeInsetsMake(0, 0, 0, 0)];
-	[flow setMinimumInteritemSpacing:0.0f];
-	[flow setMinimumLineSpacing:0.0f];
-	[flow setItemSize:kItemSize];
+
 	[self setSinglePanelFlow:flow];
 
 	CollectionViewCellConfigureBlock configureCellBlock = ^(VLMCollectionViewCell *cell, VLMPanelModel *panelModel)
@@ -79,7 +76,6 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 			[self.overlay setAlpha:primaryAlpha forText:primary andAlpha:secondaryAlpha forText2:secondary];
 		};
 
-
 		// tbd: restore cell state
 		// tbd:
 		[cell setChoosePageBlock:choosePageBlock];
@@ -94,13 +90,16 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 	UICollectionView *cv = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.singlePanelFlow];
 	[cv setDataSource:ds];
+
+	CGRect frame = UIScreen.mainScreen.bounds;
 	[cv setContentOffset:CGPointMake(0, kItemPaddingBottom)];
+
 	[cv registerClass:[VLMCollectionViewCell class] forCellWithReuseIdentifier:CellIdentifier];
 	[cv registerClass:[VLMCollectionViewCellWithChoices class] forCellWithReuseIdentifier:CellChoiceIdentifier];
 	[cv setBackgroundColor:[UIColor whiteColor]];
 	[cv.panGestureRecognizer setEnabled:NO];
 	[cv setClipsToBounds:NO];
-	[cv setContentInset:UIEdgeInsetsMake(kItemPaddingBottom + 3, 0, kItemPaddingBottom, 0)];
+	[cv setContentInset:UIEdgeInsetsMake(kItemPaddingBottom + 3 + frame.size.height / 2, 0, kItemPaddingBottom, 0)];
 	[self setCollectionView:cv];
 
 	UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kItemSize.width, kItemSize.height)];
@@ -120,12 +119,28 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	[cap addVerticalGestureRecognizer:secretScrollview.panGestureRecognizer];
 	[self.view addSubview:cap];
 	[self setCapture:cap];
+	ZoomPageBlock zoomPageBlock = ^(CGFloat zoomAmount)
+	{
+		NSLog(@"zoompageblock %f", zoomAmount);
+		// [self.singlePanelFlow setScale:zoomAmount];
+		// [self.collectionView setCollectionViewLayout:self.singlePanelFlow animated:YES];
+		CGFloat s = zoomAmount;
+		[self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
+	};
+	[self.capture setZoomPageBlock:zoomPageBlock];
+
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(needsUpdateContent:)
 												 name:@"decisionTreeUpdated"
 											   object:nil];
+
+	self.collectionView.frame = CGRectMake(
+			0,
+			-frame.size.height / 2,
+			frame.size.width,
+			frame.size.height * 2);
 }
 
 - (void)dealloc
@@ -140,7 +155,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	// self.collectionView.dataSource = self.dataSource;
 	[self.collectionView reloadData];
 
-    [self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView]*self.secretScrollview.frame.size.height)];
+	[self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * self.secretScrollview.frame.size.height)];
 }
 
 #pragma mark - secret scrollview delegate
@@ -151,6 +166,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	{
 		return;
 	}
+	
 
 	CGPoint contentOffset = scrollView.contentOffset;
 	CGFloat page = contentOffset.y / scrollView.frame.size.height;
@@ -158,7 +174,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	BOOL currentPageIsZoomedOut = [self.dataSource isItemAtIndexChoice:self.currentPage];
 	BOOL nextPageIsZoomedOut = NO;
 
-	CGFloat zoomedoutscale = 0.9f;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         // 0.875f;
+	CGFloat zoomedoutscale = 0.9f;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         // 0.875f;
 
 
 	if (delta > 0)

@@ -29,6 +29,8 @@
 	}
 
 	[self.contentView setBackgroundColor:[UIColor clearColor]];
+    [self.contentView setClipsToBounds:YES];
+    
 	[self setBackgroundColor:[UIColor clearColor]];
 
 	CGFloat pad = kItemPadding;
@@ -45,6 +47,9 @@
 	[self setImageview:[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, baseView.frame.size.width, baseView.frame.size.height)]];
 	[self.imageview setContentMode:UIViewContentModeScaleAspectFill];
 	[self.imageview setClipsToBounds:YES];
+	[self.imageview setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin
+	 | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin];
+
 	[baseView addSubview:self.imageview];
 
 	[self setLabel:[[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)]];
@@ -87,6 +92,8 @@
 	// [self.label setText:[NSString stringWithFormat:@"%f", transition]];
 
 	[self.caption transitionAtValue:castedLayoutAttributes.transitionValue];
+
+	NSLog(@"%@", NSStringFromCGRect(self.frame));
 }
 
 - (void)configureWithModel:(VLMPanelModel *)model

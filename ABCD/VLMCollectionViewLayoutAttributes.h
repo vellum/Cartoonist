@@ -11,5 +11,6 @@
 @interface VLMCollectionViewLayoutAttributes : UICollectionViewLayoutAttributes
 
 @property (nonatomic, assign) CGFloat transitionValue;
+@property (nonatomic, assign) CGFloat scaleValue;
 
 @end

@@ -16,9 +16,11 @@
     VLMCollectionViewLayoutAttributes *attributes = [super copyWithZone:zone];
     
     attributes.transitionValue = self.transitionValue;
+    attributes.scaleValue = self.scaleValue;
     
     return attributes;
 }
+
 - (BOOL)isEqual:(id)other {
     if (other == self) {
         return YES;
@@ -27,6 +29,9 @@
         return NO;
     }
     if ([((VLMCollectionViewLayoutAttributes *) other) transitionValue] != [self transitionValue]) {
+        return NO;
+    }
+    if ([(VLMCollectionViewLayoutAttributes *) other scaleValue] != [self scaleValue]) {
         return NO;
     }
     

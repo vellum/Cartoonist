@@ -10,4 +10,7 @@
 
 @interface VLMSinglePanelFlowLayout : UICollectionViewFlowLayout
 
+- (CGFloat)scale;
+- (void)setScale:(CGFloat)value;
+
 @end

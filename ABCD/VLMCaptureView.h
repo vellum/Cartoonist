@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^ZoomPageBlock)(CGFloat zoomBy);
+
 @interface VLMCaptureView:UIView <UIGestureRecognizerDelegate>
+
+@property (nonatomic, copy) ZoomPageBlock zoomPageBlock;
 
 - (void)addHorizontalGestureRecognizer:(UIPanGestureRecognizer *)panGestureRecognizer;
 - (void)addVerticalGestureRecognizer:(UIPanGestureRecognizer *)panGestureRecognizer;

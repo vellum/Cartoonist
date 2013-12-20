@@ -23,6 +23,7 @@
 // Layout
 #import "VLMSinglePanelFlowLayout.h"
 
+
 @interface VLMViewController : UICollectionViewController<UIScrollViewDelegate>
 @property (nonatomic, strong) VLMCaptureView *capture;
 @property (nonatomic, strong) VLMDataSource *dataSource;
@@ -30,5 +31,7 @@
 @property (nonatomic, strong) UIScrollView *secretScrollview;
 @property (nonatomic, strong) VLMSinglePanelFlowLayout *singlePanelFlow;
 @property CGFloat currentPage;
+
+
 
 @end
