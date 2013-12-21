@@ -36,6 +36,8 @@
 	{
 		// Initialization code
 		[self setTopLevelPanGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleTopLevelPans:)]];
+        [self.topLevelPanGestureRecognizer setMaximumNumberOfTouches:1];
+        [self.topLevelPanGestureRecognizer setMinimumNumberOfTouches:1];
 		[self.topLevelPanGestureRecognizer setDelegate:self];
 		[self addGestureRecognizer:self.topLevelPanGestureRecognizer];
 		[self setRecognizedDirection:FUCKING_UNKNOWN];
@@ -51,7 +53,6 @@
 
 - (void)handlePinch:(UIPinchGestureRecognizer *)pgr
 {
-	// NSLog(@"pinch %f    %f", [pgr scale], [pgr velocity]);
 	BOOL ended = NO;
 
 	switch (pgr.state)
@@ -63,7 +64,7 @@
 		default :
 			break;
 	}
-	CGFloat threshold = 0.125f;
+	CGFloat threshold = 1;                                                                                    // 0.125f;
 	if ([pgr scale] < 1 - threshold || [pgr scale] > 1 + threshold)
 	{
 		[pgr setEnabled:NO];
@@ -74,12 +75,10 @@
 	{
 		self.zoomPageBlock([pgr scale], ended);
 	}
-	// NSLog(@"pinch %@", [pgr scale] > 1 ? @"in" : @"out");
 }
 
 - (void)handleTopLevelPans:(UIPanGestureRecognizer *)pgr
 {
-    NSLog(@"pannnnnn");
 	switch (pgr.state)
 	{
 		// when the pan starts or ends, make sure we reset the state
@@ -99,7 +98,7 @@
 			break;
 		default :
 			break;
-	}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         // end switch
+	}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     // end switch
 
 	if (self.recognizedDirection == FUCKING_UNKNOWN)
 	{
@@ -145,15 +144,11 @@
 			// so that translationinview: reports a delta from last event
 			[self setRecognizedDirection:FUCKING_HORIZONTAL];
 
-			NSLog(@"horizontal");
-
 			if (self.horizontalPanGestureRecognizer)
 			{
-				NSLog(@"hgr exists");
 				[self.horizontalPanGestureRecognizer setTranslation:CGPointZero inView:self];
 				if (!self.shouldRecognizeHorizontalPans)
 				{
-					NSLog(@"resetting hgr");
 					[self.horizontalPanGestureRecognizer setEnabled:NO];
 					[self.horizontalPanGestureRecognizer setEnabled:YES];
 				}

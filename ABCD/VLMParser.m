@@ -122,13 +122,13 @@ static inline BOOL IsEmpty(id thing)
 			if ([pm.sourceNode objectForKey:@"selected"])
 			{
 				index = [[pm.sourceNode objectForKey:@"selected"] integerValue];
-				NSLog(@"found existing index: %i", index);
+				// NSLog(@"found existing index: %i", index);
 			}
 			else
 			{
 				[sequence setObject:[NSNumber numberWithInteger:index] forKey:@"selected"];
 			}
-			NSLog(@"selected index is %i", index);
+			//NSLog(@"selected index is %i", index);
 			NSMutableDictionary *selectedChild = [children objectAtIndex:index];
 			[self parseSequence:selectedChild intoArray:array];
 		}

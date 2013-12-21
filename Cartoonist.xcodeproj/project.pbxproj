@@ -27,9 +27,12 @@
 		BDD899CC183C4C39002E089C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD899CB183C4C39002E089C /* main.m */; };
 		BDD899D0183C4C39002E089C /* VLMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD899CF183C4C39002E089C /* VLMAppDelegate.m */; };
 		BDD899D2183C4C39002E089C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDD899D1183C4C39002E089C /* Images.xcassets */; };
+		C67DEC8A67C1421CA3419DFD /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4987A15EBCA94D2E935D6AC9 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4987A15EBCA94D2E935D6AC9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD3451C0186623B800D6B6A4 /* VLMConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMConstants.h; sourceTree = "<group>"; };
 		BD47DFD7185A71150048925D /* VLMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMParser.h; sourceTree = "<group>"; };
 		BD47DFD8185A71150048925D /* VLMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMParser.m; sourceTree = "<group>"; };
 		BD8C6E00185969ED005FA217 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
@@ -67,6 +70,7 @@
 		BDD899D1183C4C39002E089C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		BDD899D8183C4C39002E089C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		BDFFD876184005D400B1A024 /* Cartoonist-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Cartoonist-Info.plist"; sourceTree = "<group>"; };
+		D42BBAE8274241A9B97AD6EE /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,7 @@
 				BDD899C2183C4C39002E089C /* CoreGraphics.framework in Frameworks */,
 				BDD899C4183C4C39002E089C /* UIKit.framework in Frameworks */,
 				BDD899C0183C4C39002E089C /* Foundation.framework in Frameworks */,
+				C67DEC8A67C1421CA3419DFD /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,6 +163,7 @@
 				BDD899C5183C4C39002E089C /* Cartoonist */,
 				BDD899BE183C4C39002E089C /* Frameworks */,
 				BDD899BD183C4C39002E089C /* Products */,
+				D42BBAE8274241A9B97AD6EE /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -176,6 +182,7 @@
 				BDD899C1183C4C39002E089C /* CoreGraphics.framework */,
 				BDD899C3183C4C39002E089C /* UIKit.framework */,
 				BDD899D8183C4C39002E089C /* XCTest.framework */,
+				4987A15EBCA94D2E935D6AC9 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -183,6 +190,7 @@
 		BDD899C5183C4C39002E089C /* Cartoonist */ = {
 			isa = PBXGroup;
 			children = (
+				BD3451C0186623B800D6B6A4 /* VLMConstants.h */,
 				BDD899CE183C4C39002E089C /* VLMAppDelegate.h */,
 				BDD899CF183C4C39002E089C /* VLMAppDelegate.m */,
 				BDB3BB93184A62D300F59AE1 /* Data Source */,
@@ -215,10 +223,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BDD899E8183C4C39002E089C /* Build configuration list for PBXNativeTarget "Cartoonist" */;
 			buildPhases = (
+				D88D2424B9224F0BACB1B995 /* Check Pods Manifest.lock */,
 				BDD899B8183C4C39002E089C /* Sources */,
 				BDD899B9183C4C39002E089C /* Frameworks */,
 				BDD899BA183C4C39002E089C /* Resources */,
 				BD680318184DC033005A2E0D /* ShellScript */,
+				1FC92367879F4410AE9CC1F9 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -275,6 +285,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1FC92367879F4410AE9CC1F9 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+		};
 		BD680318184DC033005A2E0D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -287,6 +311,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "sh CodeFormatter/scripts/formatOpenedSources.sh";
+		};
+		D88D2424B9224F0BACB1B995 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sanbox is not in sync with the Podfile.lock. Run 'pod install'.\nEOM\n    exit 1\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -402,6 +440,7 @@
 		};
 		BDD899E9183C4C39002E089C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D42BBAE8274241A9B97AD6EE /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -416,6 +455,7 @@
 		};
 		BDD899EA183C4C39002E089C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D42BBAE8274241A9B97AD6EE /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

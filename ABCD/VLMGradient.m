@@ -7,6 +7,7 @@
 //
 
 #import "VLMGradient.h"
+#import "VLMConstants.h"
 
 @interface VLMGradient ()
 @property (nonatomic, strong) UILabel *current;
@@ -60,7 +61,7 @@
 	CGContextDrawRadialGradient(context, gradient, midPoint, 0, midPoint, rect.size.height * 2.0f, kCGGradientDrawsAfterEndLocation);
 
 	CGGradientRelease(gradient);
-    CGColorSpaceRelease(colorSpace);
+	CGColorSpaceRelease(colorSpace);
 }
 
 - (void)setAlpha:(CGFloat)alpha
@@ -78,9 +79,9 @@
 	// fade down cur
 	// oncomplete: cur -> next, next->cur
 
-	[UIView animateWithDuration:0.4f
+	[UIView animateWithDuration:GENERIC_DURATION
 						  delay:0.0f
-						options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
+						options:GENERIC_OPTIONS
 					 animations:^{
 		 [self.current setAlpha:0.0f];
 		 [self.next setAlpha:1.0f];
@@ -114,9 +115,9 @@
 	self.restoreAlphaCurrent = self.current.alpha;
 	self.restoreAlphaNext = self.next.alpha;
 
-	[UIView animateWithDuration:0.4f
+	[UIView animateWithDuration:ZOOM_DURATION
 						  delay:0.0f
-						options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
+						options:ZOOM_OPTIONS
 					 animations:^{
 		 [self setAlpha:0.0f];
 		 [self.next setAlpha:0.0f];
@@ -131,9 +132,9 @@
 
 - (void)show
 {
-	[UIView animateWithDuration:0.4f
+	[UIView animateWithDuration:ZOOM_DURATION
 						  delay:0.0f
-						options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
+						options:ZOOM_OPTIONS
 					 animations:^{
 		 [self setAlpha:1.0f];
 		 [self.next setAlpha:self.restoreAlphaNext];

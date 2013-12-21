@@ -1,0 +1,10 @@
+PODS:
+  - JazzHands (0.0.2)
+
+DEPENDENCIES:
+  - JazzHands
+
+SPEC CHECKSUMS:
+  JazzHands: ca4100a7ec6ee35858cb1c61ac7f63077010bb6c
+
+COCOAPODS: 0.18.1

@@ -68,25 +68,25 @@
 
 - (void)receiveSelectedBranchNotification:(NSNotification *)notification
 {
-	NSLog(@"Successfully received the test notification!");
 	NSMutableDictionary *dictionary = self.parser.rootNode;
+
 	self.items = [self.parser parseRootNode:dictionary keepReference:NO];
 
 	// debug
 	for (id item in self.items)
 	{
-		NSLog(@"%@", item);
+		// NSLog(@"%@", item);
 		if ([item isKindOfClass:[VLMPanelModels class]])
 		{
 			VLMPanelModels *p = (VLMPanelModels *)item;
-			NSLog(@"\t%i", [[p.sourceNode objectForKey:@"selected"] integerValue]);
+			// NSLog(@"\t%i", [[p.sourceNode objectForKey:@"selected"] integerValue]);
 		}
 		else
 		{
 			VLMPanelModel *p = (VLMPanelModel *)item;
-			NSLog(@"\t%@", p.name);
+			// NSLog(@"\t%@", p.name);
 		}
-	}                                                                 // data looks ok
+	}                                                                                                                                         // data looks ok
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"decisionTreeUpdated" object:nil];
 }
@@ -112,16 +112,16 @@
 	else
 	{
 		// NSLog(@"contents:%@", contents);
-		NSLog(@"parsing");
+		// NSLog(@"parsing");
 		NSError *e = nil;
 		NSMutableDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&e];
 		if (e)
 		{
-			NSLog(@"e");
+			NSLog(@"error parsing json");
 		}
 		else
 		{
-			NSLog(@"loaded");
+			//NSLog(@"loaded");
 			self.items = [self.parser parseRootNode:dictionary keepReference:YES];
 		}
 		self.isDataLoaded = YES;
