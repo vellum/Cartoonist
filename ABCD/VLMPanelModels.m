@@ -13,9 +13,11 @@
 
 - (VLMPanelModels *)init
 {
-	self.models = [[NSMutableArray alloc] init];
-	self.selectedIndex = 0;
-	// NSLog(@"creating panelmodels");
+    self = [super init];
+    if (self) {
+        self.models = [[NSMutableArray alloc] init];
+        self.selectedIndex = 0;
+    }
 	return self;
 }
 

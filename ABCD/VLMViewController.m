@@ -34,7 +34,10 @@ typedef enum
 @property BOOL zoomEnabled;
 @property CGFloat screensizeMultiplier;
 @property CGPoint lastKnownContentOffset;
-@property (nonatomic, strong) CollectionViewCellConfigureBlock configureCellChoiceBlock;
+// @property (nonatomic, strong) CollectionViewCellConfigureBlock configureCellChoiceBlock;
+// @property (nonatomic, strong) ChoosePageBlock choosePageBlock;
+// @property (nonatomic, strong) ScrollPageBlock scrollPageBlock;
+
 @end
 
 @implementation VLMViewController
@@ -136,7 +139,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		}
 
 		CGFloat lb = 1 / self.screensizeMultiplier;
-		CGFloat page = floorf(self.secretScrollview.contentOffset.y / kItemSize.height);
+		CGFloat page = roundf(self.secretScrollview.contentOffset.y / kItemSize.height);
 
 		switch (self.zoomMode)
 		{
@@ -256,36 +259,40 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		[cell configureWithModel:panelModel];
 	};
 
+	ChoosePageBlock choosePageBlock = ^(CGFloat page, NSString *text) {
+		if (self.zoomMode != kZoomNormal)
+		{
+			[self.overlay setTextNoAnimation:text];
+		}
+		else
+		{
+			[self.overlay setText:text];
+		}
+	};
+
+	// self.choosePageBlock = choosePageBlock;
+
+	ScrollPageBlock scrollPageBlock = ^(CGFloat primaryAlpha, NSString *primary, CGFloat secondaryAlpha, NSString *secondary) {
+		if (self.zoomMode != kZoomNormal)
+		{
+		}
+		else
+		{
+			[self.overlay setAlpha:primaryAlpha forText:primary andAlpha:secondaryAlpha forText2:secondary];
+		}
+	};
+	// self.scrollPageBlock = scrollPageBlock;
+
 	CollectionViewCellConfigureBlock configureCellChoiceBlock = ^(VLMCollectionViewCellWithChoices *cell, VLMPanelModels *panelModels)
 	{
+		NSLog(@"configurecellchoiceblock %@", cell.scrollview.panGestureRecognizer ? @"exists" : @"notexists");
+		[self.capture removeAnyHorizontalGestureRecognizers];
 		[self.capture addHorizontalGestureRecognizer:cell.scrollview.panGestureRecognizer];
-		ChoosePageBlock choosePageBlock = ^(CGFloat page, NSString *text) {
-			if (self.zoomMode != kZoomNormal)
-			{
-				[self.overlay setTextNoAnimation:text];
-			}
-			else
-			{
-				[self.overlay setText:text];
-			}
-		};
-
-		ScrollPageBlock scrollPageBlock = ^(CGFloat primaryAlpha, NSString *primary, CGFloat secondaryAlpha, NSString *secondary) {
-			if (self.zoomMode != kZoomNormal)
-			{
-			}
-			else
-			{
-				[self.overlay setAlpha:primaryAlpha forText:primary andAlpha:secondaryAlpha forText2:secondary];
-			}
-		};
-
 		[cell setChoosePageBlock:choosePageBlock];
 		[cell setScrollPageBlock:scrollPageBlock];
 		[cell configureWithModel:panelModels];
 	};
-
-	self.configureCellChoiceBlock = configureCellChoiceBlock;
+	// self.configureCellChoiceBlock = configureCellChoiceBlock;
 
 	VLMDataSource *ds = [[VLMDataSource alloc] initWithCellIdentifier:CellIdentifier cellChoiceIdentifier:CellChoiceIdentifier configureCellBlock:configureCellBlock configureCellChoiceBlock:configureCellChoiceBlock];
 
@@ -308,16 +315,34 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 	if (self.zoomMode == kZoomNormal)
 	{
+		[self.capture enableHorizontalPan:NO];
 		if ([self.dataSource isItemAtIndexChoice:page])
 		{
-			[self.overlay show];
-			//          [self.dataSource item]
-//            VLMPanelModels *pms = [self.dataSource itemAtIndexPath:[NSInde]
-			// do somekindofsetup on overlay
-			// do setup on the cell
+			[self.capture enableHorizontalPan:YES];
 
+			// get selected child's name
+			// and apply to the gradient text
+			NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:page];
+			VLMPanelModels *model = (VLMPanelModels *)[self.dataSource itemAtIndexPath:path];
 
-//            self.configureCellChoiceBlock  (VLMCollectionViewCell *cell, VLMPanelModel *panelModel)
+			NSInteger selectedind = [[model.sourceNode objectForKey:@"selected"] integerValue];
+
+			VLMPanelModel *m = (VLMPanelModel *)[model.models objectAtIndex:selectedind];
+			[self.overlay setText:m.name];
+			// [self.overlay show];
+			/*
+			 *
+			 *
+			 *          VLMCollectionViewCellWithChoices *cell = (VLMCollectionViewCellWithChoices *)[self.dataSource collectionView:self.collectionView cellForItemAtIndexPath:path];
+			 */
+			// self.configureCellChoiceBlock(cell, model);
+			// [self.capture removeAnyHorizontalGestureRecognizers];
+			//
+			// [cell setChoosePageBlock:self.choosePageBlock];
+			// [cell setScrollPageBlock:self.scrollPageBlock];
+			// [cell configureWithModel:model];
+			// [self.capture addHorizontalGestureRecognizer:cell.scrollview.panGestureRecognizer];
+			// [self.singlePanelFlow invalidateLayout];
 
 
 			[self.secretScrollview.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f, 1.0f, 1.0f)];
@@ -477,7 +502,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		}
 		else
 		{
-			[self setCurrentPage:floorf(page)];
+			[self setCurrentPage:roundf(page)];
 		}
 	}
 	else
@@ -508,7 +533,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		}
 		else
 		{
-			[self setCurrentPage:floorf(page)];
+			[self setCurrentPage:roundf(page)];
 		}
 	}
 	contentOffset.y = contentOffset.y - self.collectionView.contentInset.top;
@@ -555,6 +580,10 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+	if (self.zoomMode != kZoomNormal)
+	{
+		return;
+	}
 	[self setCurrentPage:scrollView.contentOffset.y / scrollView.frame.size.height];
 	if ([self.dataSource isItemAtIndexChoice:self.currentPage])
 	{

@@ -79,6 +79,7 @@
 
 - (void)handleTopLevelPans:(UIPanGestureRecognizer *)pgr
 {
+    NSLog(@"pannnnnn");
 	switch (pgr.state)
 	{
 		// when the pan starts or ends, make sure we reset the state
@@ -98,7 +99,7 @@
 			break;
 		default :
 			break;
-	}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 // end switch
+	}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         // end switch
 
 	if (self.recognizedDirection == FUCKING_UNKNOWN)
 	{
@@ -144,11 +145,15 @@
 			// so that translationinview: reports a delta from last event
 			[self setRecognizedDirection:FUCKING_HORIZONTAL];
 
+			NSLog(@"horizontal");
+
 			if (self.horizontalPanGestureRecognizer)
 			{
+				NSLog(@"hgr exists");
 				[self.horizontalPanGestureRecognizer setTranslation:CGPointZero inView:self];
 				if (!self.shouldRecognizeHorizontalPans)
 				{
+					NSLog(@"resetting hgr");
 					[self.horizontalPanGestureRecognizer setEnabled:NO];
 					[self.horizontalPanGestureRecognizer setEnabled:YES];
 				}

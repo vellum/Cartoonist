@@ -60,6 +60,7 @@
 	CGContextDrawRadialGradient(context, gradient, midPoint, 0, midPoint, rect.size.height * 2.0f, kCGGradientDrawsAfterEndLocation);
 
 	CGGradientRelease(gradient);
+    CGColorSpaceRelease(colorSpace);
 }
 
 - (void)setAlpha:(CGFloat)alpha
@@ -96,8 +97,9 @@
 
 - (void)setTextNoAnimation:(NSString *)text
 {
-    [self.next setText:text];
+	[self.next setText:text];
 }
+
 - (void)setAlpha:(CGFloat)alpha forText:(NSString *)text andAlpha:(CGFloat)alpha2 forText2:(NSString *)text2
 {
 	[self.next setText:text];

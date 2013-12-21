@@ -139,7 +139,7 @@
 
 - (void)updatePage:(NSInteger)page
 {
-	NSLog(@"updatePage");
+	// NSLog(@"updatePage");
 	if (self.choosePageBlock)
 	{
 		VLMPanelModel *model = [self.panels.models objectAtIndex:page];
