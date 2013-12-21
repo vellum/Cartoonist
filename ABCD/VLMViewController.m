@@ -356,6 +356,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		else
 		{
 			[self.capture enableHorizontalPan:NO];
+			[self.overlay setTextNoAnimation:@""];
 			[self.overlay hide];
 			[self.secretScrollview.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f, 1.0f, 1.0f)];
 			[self.secretScrollview setFrame:CGRectMake(0, 0, kItemSize.width, kItemSize.height)];
@@ -379,8 +380,9 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	}
 	else
 	{
-        [self.capture enableHorizontalPan:NO];
+		[self.capture enableHorizontalPan:NO];
 		[self.secretScrollview setPagingEnabled:NO];
+        [self.overlay setTextNoAnimation:@""];
 		[self.overlay show];
 
 		CGSize desiredSize = CGSizeMake(frame.size.width, frame.size.height * self.screensizeMultiplier);
@@ -417,7 +419,14 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 - (void)handleTap:(id)sender
 {
-	[self switchZoom:kZoomNormal];
+	if (self.zoomMode == kZoomNormal)
+	{
+		[self switchZoom:kZoomZoomedOut];
+	}
+	else
+	{
+		[self switchZoom:kZoomNormal];
+	}
 }
 
 - (void)needsUpdateContent:(NSNotification *)notification
