@@ -289,7 +289,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 		[UIView animateWithDuration:0.375f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
 						 animations:^{
-			 [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * self.secretScrollview.frame.size.height)];
+			 [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * kItemSize.height)];
 			 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f, 1.0f, 1.0f)];
 		 } completion:^(BOOL completed) {
 			 [self.secretScrollview setPagingEnabled:YES];
@@ -333,30 +333,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 - (void)handleTap:(id)sender
 {
-	if (self.zoomMode == kZoomZoomedOut)
-	{
-	}
-}
-
-- (void)resetPage
-{
-	// [self.secretScrollview setPagingEnabled:YES];
-	/*
-	 *  CGPoint contentOffset = self.secretScrollview.contentOffset;
-	 *  CGFloat page = contentOffset.y / self.secretScrollview.frame.size.height;
-	 *
-	 *  [UIView animateWithDuration:0.375f
-	 *                                            delay:0.0f
-	 *                                          options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
-	 *                                   animations:^{
-	 *           [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * self.secretScrollview.frame.size.height) animated:YES];
-	 *   }
-	 *
-	 *                                   completion:^(BOOL completed) {
-	 *   }
-	 *
-	 *  ];
-	 */
+    [self switchZoom:kZoomNormal];
 }
 
 - (void)needsUpdateContent:(NSNotification *)notification
@@ -481,11 +458,13 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	{
 		return;
 	}
+
 	if (self.zoomMode == kZoomZoomedOut)
 	{
 		CGFloat currentpage = roundf(scrollView.contentOffset.y / kItemSize.height);
 		CGFloat targetpage = roundf(targetContentOffset->y / kItemSize.height);
-		if (targetpage == currentpage && fabsf(velocity.y) > 2.5f)
+
+		if (targetpage == currentpage && fabsf(velocity.y) > 1.0f)
 		{
 			if (targetContentOffset->y > scrollView.contentOffset.y)
 			{
@@ -496,30 +475,17 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 				targetpage--;
 			}
 		}
+		if (targetpage < 0)
+		{
+			targetpage = 0;
+		}
+		if (targetpage > [self.dataSource numberOfSectionsInCollectionView:self.collectionView] - 1)
+		{
+			targetpage = [self.dataSource numberOfSectionsInCollectionView:self.collectionView] - 1;
+		}
 		targetContentOffset->y = roundf(targetpage) * kItemSize.height;
 		return;
 	}
-	/*
-	 *  CGFloat page = targetContentOffset->y / self.secretScrollview.frame.size.height;
-	 *  if (fabsf(velocity.y) > 5)
-	 *  {
-	 *          page = roundf(page);
-	 *          if (targetContentOffset->y > self.secretScrollview.contentOffset.y)
-	 *          {
-	 *                  page++;
-	 *                  targetContentOffset->y = page * self.secretScrollview.frame.size.height;
-	 *          }
-	 *          else if (roundf(page) < page)
-	 *          {
-	 *                  page--;
-	 *                  targetContentOffset->y = page * self.secretScrollview.frame.size.height;
-	 *          }
-	 *  }
-	 *  else
-	 *  {
-	 *          targetContentOffset->y = roundf(page) * self.secretScrollview.frame.size.height;
-	 *  }
-	 */
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView

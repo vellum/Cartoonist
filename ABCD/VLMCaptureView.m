@@ -63,7 +63,7 @@
 		default :
 			break;
 	}
-	CGFloat threshold = 0.1f;
+	CGFloat threshold = 0.125f;
 	if ([pgr scale] < 1 - threshold || [pgr scale] > 1 + threshold)
 	{
 		[pgr setEnabled:NO];
@@ -98,7 +98,7 @@
 			break;
 		default :
 			break;
-	}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             // end switch
+	}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 // end switch
 
 	if (self.recognizedDirection == FUCKING_UNKNOWN)
 	{
