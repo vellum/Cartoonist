@@ -13,4 +13,5 @@
 - (void)setAlpha:(CGFloat)alpha forText:(NSString *)text andAlpha:(CGFloat)alpha2 forText2:(NSString *)text2;
 - (void)hide;
 - (void)show;
+- (void)setTextNoAnimation:(NSString *)text;
 @end

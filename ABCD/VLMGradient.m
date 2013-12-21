@@ -11,6 +11,8 @@
 @interface VLMGradient ()
 @property (nonatomic, strong) UILabel *current;
 @property (nonatomic, strong) UILabel *next;
+@property CGFloat restoreAlphaCurrent;
+@property CGFloat restoreAlphaNext;
 @end
 
 @implementation VLMGradient
@@ -92,6 +94,10 @@
 	];
 }
 
+- (void)setTextNoAnimation:(NSString *)text
+{
+    [self.next setText:text];
+}
 - (void)setAlpha:(CGFloat)alpha forText:(NSString *)text andAlpha:(CGFloat)alpha2 forText2:(NSString *)text2
 {
 	[self.next setText:text];
@@ -103,13 +109,16 @@
 
 - (void)hide
 {
-	[self.next setText:@""];
-	[self.current setText:@""];
+	self.restoreAlphaCurrent = self.current.alpha;
+	self.restoreAlphaNext = self.next.alpha;
+
 	[UIView animateWithDuration:0.4f
 						  delay:0.0f
 						options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
 					 animations:^{
 		 [self setAlpha:0.0f];
+		 [self.next setAlpha:0.0f];
+		 [self.current setAlpha:0.0f];
 	 }
 
 					 completion:^(BOOL completed) {
@@ -120,13 +129,13 @@
 
 - (void)show
 {
-	[self.next setText:@""];
-	[self.current setText:@""];
 	[UIView animateWithDuration:0.4f
 						  delay:0.0f
 						options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
 					 animations:^{
 		 [self setAlpha:1.0f];
+		 [self.next setAlpha:self.restoreAlphaNext];
+		 [self.current setAlpha:self.restoreAlphaCurrent];
 	 }
 
 					 completion:^(BOOL completed) {
