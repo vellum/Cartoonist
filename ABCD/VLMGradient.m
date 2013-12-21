@@ -99,6 +99,7 @@
 - (void)setTextNoAnimation:(NSString *)text
 {
 	[self.next setText:text];
+	[self.current setText:text];
 }
 
 - (void)setAlpha:(CGFloat)alpha forText:(NSString *)text andAlpha:(CGFloat)alpha2 forText2:(NSString *)text2
