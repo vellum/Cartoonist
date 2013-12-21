@@ -11,8 +11,6 @@
 // A way for me to draw and write and perhaps do those full time
 //
 //
-
-
 #import <objc/runtime.h>
 #import "VLMViewController.h"
 #import "VLMPanelModels.h"
@@ -32,6 +30,8 @@ typedef enum
 @property ZoomMode zoomMode;
 @property CGFloat currentPage;
 @property BOOL zoomEnabled;
+@property CGFloat screensizeMultiplier;
+@property CGPoint lastKnownContentOffset;
 @end
 
 @implementation VLMViewController
@@ -43,6 +43,7 @@ typedef enum
 @synthesize singlePanelFlow;
 @synthesize zoomMode;
 @synthesize zoomEnabled;
+@synthesize screensizeMultiplier;
 
 static NSString *CellIdentifier = @"CellIdentifier";
 static NSString *HeaderIdentifier = @"HeaderIdentifier";
@@ -61,6 +62,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	[self setCurrentPage:0];
 	[self setZoomMode:kZoomNormal];
 	[self setZoomEnabled:YES];
+	[self setScreensizeMultiplier:2.0f];
 }
 
 - (void)viewDidLoad
@@ -129,7 +131,8 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		{
 			return;
 		}
-		CGFloat lb = 0.5f;
+
+		CGFloat lb = 1 / self.screensizeMultiplier;
 		switch (self.zoomMode)
 		{
 			case kZoomNormal :
@@ -168,6 +171,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 						[self setZoomMode:kZoomZoomedOut];
 						[self.secretScrollview setPagingEnabled:NO];
 						[self.overlay show];
+						[self updateCaptureView];
 					}
 					else
 					{
@@ -179,6 +183,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 						[self setZoomMode:kZoomNormal];
 						[self performSelector:@selector(resetPage) withObject:Nil afterDelay:0];
 						[self.overlay hide];
+						[self updateCaptureView];
 					}
 
 					[self setZoomEnabled:NO];
@@ -226,6 +231,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 						[self setZoomMode:kZoomZoomedOut];
 						[self.secretScrollview setPagingEnabled:NO];
 						[self.overlay show];
+						[self updateCaptureView];
 					}
 					else
 					{
@@ -237,6 +243,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 						[self setZoomMode:kZoomNormal];
 						[self performSelector:@selector(resetPage) withObject:Nil afterDelay:0];
 						[self.overlay hide];
+						[self updateCaptureView];
 					}
 					CGFloat s = lb + (zoomAmount - 1);
 
@@ -292,8 +299,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	[cv setClipsToBounds:NO];
 	[cv setContentInset:UIEdgeInsetsMake(kItemPaddingBottom + 3 + frame.size.height / 2, 0, kItemPaddingBottom, 0)];
 	[self setCollectionView:cv];
-	CGFloat multiplier = 2.0f;
-	CGSize desiredSize = CGSizeMake(frame.size.width, frame.size.height * multiplier);
+	CGSize desiredSize = CGSizeMake(frame.size.width, frame.size.height * self.screensizeMultiplier);
 	CGFloat insetY = (desiredSize.height - frame.size.height) / 2.0f;
 	self.collectionView.frame = CGRectMake(
 			0,
@@ -341,45 +347,79 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 #pragma mark - Event Handling
 
+- (void)updateCaptureView
+{
+	CGRect frame = UIScreen.mainScreen.bounds;
+
+	if (self.zoomMode == kZoomNormal)
+	{
+		[self.secretScrollview.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f, 1.0f, 1.0f)];
+		[self.secretScrollview setFrame:CGRectMake(0, 0, kItemSize.width, kItemSize.height)];
+		[self.secretScrollview setContentSize:CGSizeMake(kItemSize.width, kItemSize.height * [self.dataSource numberOfSectionsInCollectionView:self.collectionView])];
+		[self.secretScrollview setContentInset:UIEdgeInsetsZero];
+
+		CGFloat page = self.secretScrollview.contentOffset.y / kItemSize.height;
+
+
+		[UIView animateWithDuration:0.375f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
+						 animations:^{
+			 [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * self.secretScrollview.frame.size.height)];
+		 } completion:^(BOOL completed) {
+			 [self.secretScrollview setPagingEnabled:YES];
+		 }
+
+		];
+	}
+	else
+	{
+		CGSize desiredSize = CGSizeMake(frame.size.width, frame.size.height * self.screensizeMultiplier);
+		CGFloat insetY = (desiredSize.height - frame.size.height) / 2.0f;
+		self.secretScrollview.frame = CGRectMake(
+				0,
+				-insetY,
+				desiredSize.width,
+				desiredSize.height);
+		[self.secretScrollview.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f / self.screensizeMultiplier, 1.0f / self.screensizeMultiplier, 1.0f)];
+
+		CGFloat h = kItemSize.height;
+		h *= [self.dataSource numberOfSectionsInCollectionView:self.collectionView];
+		h += insetY * 2;
+
+		[self.secretScrollview setContentSize:CGSizeMake(kItemSize.width,  h)];
+
+		// [self.secretScrollview setContentInset:self.collectionView.contentInset];
+	}
+}
+
 - (void)handleTap:(id)sender
 {
 	if (self.zoomMode == kZoomZoomedOut)
 	{
 		[self setZoomMode:kZoomNormal];
-		[self performSelector:@selector(resetPage) withObject:Nil afterDelay:0];
+		[self updateCaptureView];
 		[self.overlay hide];
-
-		[UIView animateWithDuration:0.375f
-							  delay:0.0f
-							options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
-						 animations:^{
-			 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1, 1, 1.0f)];
-		 }
-
-						 completion:^(BOOL completed) {
-		 }
-
-		];
 	}
 }
 
 - (void)resetPage
 {
-	[self.secretScrollview setPagingEnabled:YES];
-	CGPoint contentOffset = self.secretScrollview.contentOffset;
-	CGFloat page = contentOffset.y / self.secretScrollview.frame.size.height;
-
-	[UIView animateWithDuration:0.375f
-						  delay:0.0f
-						options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
-					 animations:^{
-		 [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * self.secretScrollview.frame.size.height) animated:YES];
-	 }
-
-					 completion:^(BOOL completed) {
-	 }
-
-	];
+	// [self.secretScrollview setPagingEnabled:YES];
+	/*
+	 *  CGPoint contentOffset = self.secretScrollview.contentOffset;
+	 *  CGFloat page = contentOffset.y / self.secretScrollview.frame.size.height;
+	 *
+	 *  [UIView animateWithDuration:0.375f
+	 *                                            delay:0.0f
+	 *                                          options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
+	 *                                   animations:^{
+	 *           [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * self.secretScrollview.frame.size.height) animated:YES];
+	 *   }
+	 *
+	 *                                   completion:^(BOOL completed) {
+	 *   }
+	 *
+	 *  ];
+	 */
 }
 
 - (void)needsUpdateContent:(NSNotification *)notification
@@ -397,8 +437,15 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		return;
 	}
 
+	if (!self.zoomEnabled)
+	{
+		// do nothing if we're in the middle of a zoom transition
+		// return;
+	}
+
 	if (self.zoomMode != kZoomNormal)
 	{
+		NSLog(@"didscroll, zoom not normal");
 		CGPoint contentOffset = scrollView.contentOffset;
 		contentOffset.y = contentOffset.y - self.collectionView.contentInset.top;
 		[self.collectionView setContentOffset:contentOffset];
@@ -406,6 +453,8 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	}
 
 	CGPoint contentOffset = scrollView.contentOffset;
+	self.lastKnownContentOffset = contentOffset;
+
 	CGFloat page = contentOffset.y / scrollView.frame.size.height;
 	CGFloat delta = page - self.currentPage;
 	BOOL currentPageIsZoomedOut = [self.dataSource isItemAtIndexChoice:self.currentPage];
@@ -504,25 +553,27 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	{
 		return;
 	}
-	CGFloat page = targetContentOffset->y / self.secretScrollview.frame.size.height;
-	if (fabsf(velocity.y) > 5)
-	{
-		page = roundf(page);
-		if (targetContentOffset->y > self.secretScrollview.contentOffset.y)
-		{
-			page++;
-			targetContentOffset->y = page * self.secretScrollview.frame.size.height;
-		}
-		else if (roundf(page) < page)
-		{
-			page--;
-			targetContentOffset->y = page * self.secretScrollview.frame.size.height;
-		}
-	}
-	else
-	{
-		targetContentOffset->y = roundf(page) * self.secretScrollview.frame.size.height;
-	}
+	/*
+	 *  CGFloat page = targetContentOffset->y / self.secretScrollview.frame.size.height;
+	 *  if (fabsf(velocity.y) > 5)
+	 *  {
+	 *          page = roundf(page);
+	 *          if (targetContentOffset->y > self.secretScrollview.contentOffset.y)
+	 *          {
+	 *                  page++;
+	 *                  targetContentOffset->y = page * self.secretScrollview.frame.size.height;
+	 *          }
+	 *          else if (roundf(page) < page)
+	 *          {
+	 *                  page--;
+	 *                  targetContentOffset->y = page * self.secretScrollview.frame.size.height;
+	 *          }
+	 *  }
+	 *  else
+	 *  {
+	 *          targetContentOffset->y = roundf(page) * self.secretScrollview.frame.size.height;
+	 *  }
+	 */
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
