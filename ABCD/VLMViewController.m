@@ -382,11 +382,13 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	{
 		[self.capture enableHorizontalPan:NO];
 		[self.secretScrollview setPagingEnabled:NO];
-        if ([self.dataSource isItemAtIndexChoice:page])
+		if ([self.dataSource isItemAtIndexChoice:page])
 		{
-        } else {
-            [self.overlay setTextNoAnimation:@""];
-        }
+		}
+		else
+		{
+			[self.overlay setTextNoAnimation:@""];
+		}
 		[self.overlay show];
 
 		CGSize desiredSize = CGSizeMake(frame.size.width, frame.size.height * self.screensizeMultiplier);
@@ -450,11 +452,6 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 	if (self.zoomMode == kZoomZoomedOut)
 	{
-		if (self.secretScrollview.isTracking && self.isArtificiallyScrolling)
-		{
-			[self setIsArtificiallyScrolling:NO];
-		}
-
 		CGPoint contentOffset = scrollView.contentOffset;
 		contentOffset.y = contentOffset.y - self.collectionView.contentInset.top;
 		[self.collectionView setContentOffset:contentOffset];
@@ -566,20 +563,9 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	if (self.zoomMode == kZoomZoomedOut)
 	{
 		CGFloat targetpage = roundf(targetContentOffset->y / kItemSize.height);
-		NSLog(@"velo %f", velocity.y);
-
 		if (velocity.y == 0)
 		{
-			[self setIsArtificiallyScrolling:YES];
-			[UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
-							 animations:^{
-				 [self.secretScrollview setContentOffset:CGPointMake(0, roundf(targetpage) * kItemSize.height)];
-			 } completion:^(BOOL completed) {
-				 [self setIsArtificiallyScrolling:NO];
-			 }
-
-			];
-
+			[self performSelector:@selector(mew) withObject:self afterDelay:0.001f];
 			return;
 		}
 		targetContentOffset->y = roundf(targetpage) * kItemSize.height;
@@ -603,6 +589,19 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	{
 		[self.capture enableHorizontalPan:NO];
 	}
+}
+
+- (void)mew
+{
+	CGFloat targetpage = roundf(self.secretScrollview.contentOffset.y / kItemSize.height);
+	[self setIsArtificiallyScrolling:YES];
+	[UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
+					 animations:^{
+		 [self.secretScrollview setContentOffset:CGPointMake(0, roundf(targetpage) * kItemSize.height)];
+	 } completion:^(BOOL completed) {
+		 [self setIsArtificiallyScrolling:NO];
+	 }
+	];
 }
 
 @end

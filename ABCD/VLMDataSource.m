@@ -73,20 +73,20 @@
 	self.items = [self.parser parseRootNode:dictionary keepReference:NO];
 
 	// debug
-	for (id item in self.items)
-	{
-		// NSLog(@"%@", item);
-		if ([item isKindOfClass:[VLMPanelModels class]])
-		{
-			VLMPanelModels *p = (VLMPanelModels *)item;
-			// NSLog(@"\t%i", [[p.sourceNode objectForKey:@"selected"] integerValue]);
-		}
-		else
-		{
-			VLMPanelModel *p = (VLMPanelModel *)item;
-			// NSLog(@"\t%@", p.name);
-		}
-	}                                                                                                                                         // data looks ok
+	// for (id item in self.items)
+	// {
+	// NSLog(@"%@", item);
+	// if ([item isKindOfClass:[VLMPanelModels class]])
+	// {
+	// VLMPanelModels *p = (VLMPanelModels *)item;
+	// NSLog(@"\t%i", [[p.sourceNode objectForKey:@"selected"] integerValue]);
+	// }
+	// else
+	// {
+	// VLMPanelModel *p = (VLMPanelModel *)item;
+	// NSLog(@"\t%@", p.name);
+	// }
+	// }                                                                                                                                         // data looks ok
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"decisionTreeUpdated" object:nil];
 }
@@ -121,7 +121,7 @@
 		}
 		else
 		{
-			//NSLog(@"loaded");
+			// NSLog(@"loaded");
 			self.items = [self.parser parseRootNode:dictionary keepReference:YES];
 		}
 		self.isDataLoaded = YES;
