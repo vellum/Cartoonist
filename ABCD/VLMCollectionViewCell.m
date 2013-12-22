@@ -14,6 +14,7 @@
 @interface VLMCollectionViewCell ()
 @property (nonatomic) CGRect coverFrame;
 @property (nonatomic) CGRect normalFrame;
+@property (nonatomic) CellType cellType;
 @end
 
 @implementation VLMCollectionViewCell
@@ -24,6 +25,7 @@
 @synthesize imagename;
 @synthesize coverFrame;
 @synthesize normalFrame;
+@synthesize cellType;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -69,6 +71,8 @@
 	[baseView addSubview:self.caption];
 
 	self.imagename = @"<not set yet>";
+    
+    self.cellType = kCellTypeNoCaption;
 	return self;
 }
 
@@ -95,9 +99,21 @@
 	VLMCollectionViewLayoutAttributes *castedLayoutAttributes = (VLMCollectionViewLayoutAttributes *)layoutAttributes;
 	// debug text
 	// [self.label setText:[NSString stringWithFormat:@"%f", transition]];
-
-	[self.caption transitionAtValue:castedLayoutAttributes.transitionValue];
-
+    
+    switch (self.cellType) {
+        case kCellTypeCaption:
+            [self.caption transitionAtValue:castedLayoutAttributes.transitionValue];
+            break;
+            
+        case kCellTypeNoCaption:
+            break;
+            
+        case kCellTypeWireframe:
+            break;
+            
+        default:
+            break;
+    }
 	// NSLog(@"%@", NSStringFromCGRect(self.frame));
 }
 
@@ -120,8 +136,25 @@
 	}
 	if ([model.name length] > 0)
 	{
-		 [self.label setText:model.name];
+		[self.label setText:model.name];
 	}
+    self.cellType = model.cellType;
+    switch (self.cellType) {
+        case kCellTypeCaption:
+            self.caption.hidden = NO;
+            break;
+
+        case kCellTypeNoCaption:
+            self.caption.hidden = YES;
+            break;
+            
+        case kCellTypeWireframe:
+            self.caption.hidden = YES;
+            break;
+            
+        default:
+            break;
+    }
 }
 
 + (CGSize)idealItemSize

@@ -8,11 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum
+{
+	kCellTypeWireframe,
+	kCellTypeCaption,
+    kCellTypeNoCaption
+} CellType;
+
+
 @interface VLMPanelModel : NSObject
 
-+(instancetype)panelModelWithName:(NSString *)name image:(UIImage *)image;
++ (instancetype)panelModelWithName:(NSString *)name image:(UIImage *)image;
 
 @property (nonatomic) NSInteger index;
+@property (nonatomic) CellType cellType;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, strong) UIImage *image;
 

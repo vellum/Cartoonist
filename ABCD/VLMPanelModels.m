@@ -13,12 +13,13 @@
 
 - (VLMPanelModels *)init
 {
-    self = [super init];
-    if (self) {
-        self.models = [[NSMutableArray alloc] init];
-        self.selectedIndex = 0;
-        self.index = -1000;
-    }
+	self = [super init];
+	if (self)
+	{
+		self.models = [[NSMutableArray alloc] init];
+		self.selectedIndex = 0;
+		self.index = -1000;
+	}
 	return self;
 }
 
@@ -27,11 +28,10 @@
 	if (self.sourceNode)
 	{
 		NSInteger current = [[self.sourceNode objectForKey:@"selected"] integerValue];
-		//NSLog(@"cur %i    update %i", current, index);
 		if (current != index)
 		{
 			[self.sourceNode setObject:[NSNumber numberWithInteger:index] forKey:@"selected"];
-			 [[NSNotificationCenter defaultCenter] postNotificationName:@"selectedNewBranch" object:nil];
+			[[NSNotificationCenter defaultCenter] postNotificationName:@"selectedNewBranch" object:nil];
 		}
 	}
 }

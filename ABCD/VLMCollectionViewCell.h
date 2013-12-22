@@ -13,6 +13,7 @@
 #define kItemSizeIphone    CGSizeMake(320, 568.0f - 2.0f * (9.0f + 9.0f))
 #define kItemSizeIpad      CGSizeMake(768.0f, 1024.0f - 2.0f * (9.0f + 9.0f))
 
+
 @class VLMPanelModel;
 @class VLMNarrationCaption;
 
