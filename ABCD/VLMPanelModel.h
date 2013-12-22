@@ -12,6 +12,7 @@
 
 +(instancetype)panelModelWithName:(NSString *)name image:(UIImage *)image;
 
+@property (nonatomic) NSInteger index;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, strong) UIImage *image;
 

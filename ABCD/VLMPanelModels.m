@@ -17,6 +17,7 @@
     if (self) {
         self.models = [[NSMutableArray alloc] init];
         self.selectedIndex = 0;
+        self.index = -1000;
     }
 	return self;
 }

@@ -12,6 +12,8 @@
 #import "VLMPanelModel.h"
 
 @interface VLMCollectionViewCell ()
+@property (nonatomic) CGRect coverFrame;
+@property (nonatomic) CGRect normalFrame;
 @end
 
 @implementation VLMCollectionViewCell
@@ -20,6 +22,8 @@
 @synthesize caption;
 @synthesize base;
 @synthesize imagename;
+@synthesize coverFrame;
+@synthesize normalFrame;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -29,15 +33,17 @@
 	}
 
 	[self.contentView setBackgroundColor:[UIColor clearColor]];
-	[self.contentView setClipsToBounds:YES];
+	[self.contentView setClipsToBounds:NO];
 
 	[self setBackgroundColor:[UIColor clearColor]];
 
 	CGFloat pad = kItemPadding;
+	self.coverFrame = CGRectMake(pad, -3.0f, kItemSize.width - pad * 2, kItemSize.height - kItemPaddingBottom + pad + 3.0f);
+	self.normalFrame = CGRectMake(pad, pad, kItemSize.width - pad * 2, kItemSize.height - kItemPaddingBottom);
 
-	UIView *baseView = [[UIView alloc] initWithFrame:CGRectMake(pad, pad, kItemSize.width - pad * 2, kItemSize.height - kItemPaddingBottom)];
+	UIView *baseView = [[UIView alloc] initWithFrame:self.normalFrame];
 	[baseView setBackgroundColor:[UIColor clearColor]];
-	[baseView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
+	// [baseView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
 	[baseView setAutoresizesSubviews:NO];
 	[baseView setUserInteractionEnabled:NO];
 	[baseView setClipsToBounds:YES];
@@ -47,8 +53,7 @@
 	[self setImageview:[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, baseView.frame.size.width, baseView.frame.size.height)]];
 	[self.imageview setContentMode:UIViewContentModeScaleAspectFill];
 	[self.imageview setClipsToBounds:YES];
-	[self.imageview setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin
-	 | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin];
+	[self.imageview setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin];
 
 	[baseView addSubview:self.imageview];
 
@@ -93,23 +98,30 @@
 
 	[self.caption transitionAtValue:castedLayoutAttributes.transitionValue];
 
-	//NSLog(@"%@", NSStringFromCGRect(self.frame));
+	// NSLog(@"%@", NSStringFromCGRect(self.frame));
 }
 
 - (void)configureWithModel:(VLMPanelModel *)model
 {
+	NSLog(@"configurewithmodel %i", model.index);
 	if (model.image)
 	{
 		[self.imageview setImage:model.image];
+		if (model.index == 0)
+		{
+			[self.base setFrame:self.coverFrame];
+			[self.imageview setFrame:CGRectMake(0, 0, self.base.frame.size.width, self.base.frame.size.height)];
+		}
+		else
+		{
+			[self.base setFrame:self.normalFrame];
+			[self.imageview setFrame:CGRectMake(0, 0, self.base.frame.size.width, self.base.frame.size.height)];
+		}
 	}
 	if ([model.name length] > 0)
 	{
-		[self.label setText:model.name];
+		 [self.label setText:model.name];
 	}
-	/*
-	 *  [self.imageview setImage:model.image];
-	 *  [self.label setText:model.name];
-	 */
 }
 
 + (CGSize)idealItemSize

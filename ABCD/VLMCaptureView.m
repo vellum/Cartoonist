@@ -36,8 +36,8 @@
 	{
 		// Initialization code
 		[self setTopLevelPanGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleTopLevelPans:)]];
-        [self.topLevelPanGestureRecognizer setMaximumNumberOfTouches:1];
-        [self.topLevelPanGestureRecognizer setMinimumNumberOfTouches:1];
+		[self.topLevelPanGestureRecognizer setMaximumNumberOfTouches:1];
+		[self.topLevelPanGestureRecognizer setMinimumNumberOfTouches:1];
 		[self.topLevelPanGestureRecognizer setDelegate:self];
 		[self addGestureRecognizer:self.topLevelPanGestureRecognizer];
 		[self setRecognizedDirection:FUCKING_UNKNOWN];
@@ -64,7 +64,7 @@
 		default :
 			break;
 	}
-	CGFloat threshold = 1;                                                                                    // 0.125f;
+	CGFloat threshold = 1;                                                                                                                                                                                // 0.125f;
 	if ([pgr scale] < 1 - threshold || [pgr scale] > 1 + threshold)
 	{
 		[pgr setEnabled:NO];
@@ -98,7 +98,7 @@
 			break;
 		default :
 			break;
-	}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     // end switch
+	}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 // end switch
 
 	if (self.recognizedDirection == FUCKING_UNKNOWN)
 	{

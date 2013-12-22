@@ -382,7 +382,11 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	{
 		[self.capture enableHorizontalPan:NO];
 		[self.secretScrollview setPagingEnabled:NO];
-        [self.overlay setTextNoAnimation:@""];
+        if ([self.dataSource isItemAtIndexChoice:page])
+		{
+        } else {
+            [self.overlay setTextNoAnimation:@""];
+        }
 		[self.overlay show];
 
 		CGSize desiredSize = CGSizeMake(frame.size.width, frame.size.height * self.screensizeMultiplier);

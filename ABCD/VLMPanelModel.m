@@ -13,7 +13,7 @@
 + (instancetype)panelModelWithName:(NSString *)name image:(UIImage *)image
 {
 	VLMPanelModel *model = [[VLMPanelModel alloc] init];
-
+    model.index = -1000;
 	model.name = name;
 	model.image = image;
 	//NSLog(@"creating panelmodel %@\t%@", name, image);

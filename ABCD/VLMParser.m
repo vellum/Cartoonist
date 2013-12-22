@@ -111,6 +111,7 @@ static inline BOOL IsEmpty(id thing)
 			// NSLog(@"joint");
 			// add node to list
 			VLMPanelModels *pm = [self panelModelsFromNode:node];
+            [pm setIndex:array.count];
 			[array addObject:pm];
 
 			// recursively parse child sequences
@@ -128,7 +129,7 @@ static inline BOOL IsEmpty(id thing)
 			{
 				[sequence setObject:[NSNumber numberWithInteger:index] forKey:@"selected"];
 			}
-			//NSLog(@"selected index is %i", index);
+			// NSLog(@"selected index is %i", index);
 			NSMutableDictionary *selectedChild = [children objectAtIndex:index];
 			[self parseSequence:selectedChild intoArray:array];
 		}
@@ -136,7 +137,9 @@ static inline BOOL IsEmpty(id thing)
 		{
 			// NSLog(@"not joint");
 			// add node to list
-			[array addObject:[self panelModelFromNode:node]];
+            VLMPanelModel *mod = [self panelModelFromNode:node];
+            [mod setIndex:array.count];
+			[array addObject:mod];
 		}
 		// NSLog(@"array count: %i", [array count]);
 		// get selection state,
