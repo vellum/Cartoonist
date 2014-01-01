@@ -33,6 +33,7 @@
 		[self.current setFont:[UIFont fontWithName:@"Helvetica-Bold" size:36.0f]];
 		[self.current setTextColor:[UIColor whiteColor]];
 		[self.current setTextAlignment:NSTextAlignmentCenter];
+		[self.current setAdjustsFontSizeToFitWidth:YES];
 		[self addSubview:self.current];
 
 		[self setNext:[[UILabel alloc] initWithFrame:CGRectMake(0, 50, 320, 100)]];
@@ -41,6 +42,7 @@
 		[self.next setTextColor:[UIColor whiteColor]];
 		[self.next setTextAlignment:NSTextAlignmentCenter];
 		[self.next setAlpha:0.0f];
+		[self.next setAdjustsFontSizeToFitWidth:YES];
 		[self addSubview:self.next];
 	}
 	return self;

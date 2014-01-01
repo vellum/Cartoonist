@@ -16,6 +16,8 @@
 #import "VLMPanelModels.h"
 #import "VLMConstants.h"
 
+#define FUCKTARDMOFO 1
+
 typedef enum
 {
 	kZoomNormal,
@@ -437,8 +439,29 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 - (void)needsUpdateContent:(NSNotification *)notification
 {
+	// NSDate *beginMillis = [NSDate date];
+
+#ifdef FUCKTARDMOFO
+
+	// to do this in the background, the number of sections should always be the same
+
+	[self.collectionView performBatchUpdates:^{
+		 //[self.collectionView reloadData];
+        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.collectionView.numberOfSections)]];
+	 } completion:^(BOOL finished) {
+		 [self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * self.secretScrollview.frame.size.height)];
+	 }];
+
+#else
 	[self.collectionView reloadData];
 	[self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * self.secretScrollview.frame.size.height)];
+#endif
+
+/*
+ *  NSDate *endMillis = [NSDate date];
+ *  NSTimeInterval executionTime = [endMillis timeIntervalSinceDate:beginMillis];
+ *  NSLog(@"updatecontent executiontime: %f", executionTime);
+ */
 }
 
 #pragma mark - Secret Scrollview Delegate
@@ -594,6 +617,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 - (void)mew
 {
 	CGFloat targetpage = roundf(self.secretScrollview.contentOffset.y / kItemSize.height);
+
 	[self setIsArtificiallyScrolling:YES];
 	[UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
 					 animations:^{
@@ -601,6 +625,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	 } completion:^(BOOL completed) {
 		 [self setIsArtificiallyScrolling:NO];
 	 }
+
 	];
 }
 

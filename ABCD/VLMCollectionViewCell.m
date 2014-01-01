@@ -59,11 +59,13 @@
 
 	[baseView addSubview:self.imageview];
 
-	[self setLabel:[[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)]];
+	[self setLabel:[[UILabel alloc] initWithFrame:self.normalFrame]];
 	[self.label setTextColor:[UIColor whiteColor]];
 	[self.label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:36.0f]];
 	[self.label setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
 	[self.label setTextAlignment:NSTextAlignmentCenter];
+	[self.label setAdjustsFontSizeToFitWidth:YES];
+    [self.label setNumberOfLines:100];
 	[self.contentView addSubview:self.label];
 
 	VLMNarrationCaption *vvvv = [[VLMNarrationCaption alloc] initWithFrame:CGRectMake(pad, pad, baseView.frame.size.width - pad * 2, 50.0f)];
@@ -71,8 +73,8 @@
 	[baseView addSubview:self.caption];
 
 	self.imagename = @"<not set yet>";
-    
-    self.cellType = kCellTypeNoCaption;
+
+	self.cellType = kCellTypeNoCaption;
 	return self;
 }
 
@@ -99,62 +101,77 @@
 	VLMCollectionViewLayoutAttributes *castedLayoutAttributes = (VLMCollectionViewLayoutAttributes *)layoutAttributes;
 	// debug text
 	// [self.label setText:[NSString stringWithFormat:@"%f", transition]];
-    
-    switch (self.cellType) {
-        case kCellTypeCaption:
-            [self.caption transitionAtValue:castedLayoutAttributes.transitionValue];
-            break;
-            
-        case kCellTypeNoCaption:
-            break;
-            
-        case kCellTypeWireframe:
-            break;
-            
-        default:
-            break;
-    }
+
+	switch (self.cellType)
+	{
+		case kCellTypeCaption :
+			[self.caption transitionAtValue:castedLayoutAttributes.transitionValue];
+			break;
+
+		case kCellTypeNoCaption :
+			break;
+
+		case kCellTypeWireframe :
+			break;
+
+		default :
+			break;
+	}
 	// NSLog(@"%@", NSStringFromCGRect(self.frame));
 }
 
 - (void)configureWithModel:(VLMPanelModel *)model
 {
-	NSLog(@"configurewithmodel %i", model.index);
-	if (model.image)
+	// NSLog(@"configurewithmodel %i", model.index);
+
+	if (model.index == 0)
 	{
-		[self.imageview setImage:model.image];
-		if (model.index == 0)
-		{
-			[self.base setFrame:self.coverFrame];
-			[self.imageview setFrame:CGRectMake(0, 0, self.base.frame.size.width, self.base.frame.size.height)];
-		}
-		else
-		{
-			[self.base setFrame:self.normalFrame];
-			[self.imageview setFrame:CGRectMake(0, 0, self.base.frame.size.width, self.base.frame.size.height)];
-		}
+		[self.base setFrame:self.coverFrame];
+		[self.imageview setFrame:CGRectMake(0, 0, self.base.frame.size.width, self.base.frame.size.height)];
 	}
+	else
+	{
+		[self.base setFrame:self.normalFrame];
+		[self.imageview setFrame:CGRectMake(0, 0, self.base.frame.size.width, self.base.frame.size.height)];
+	}
+
 	if ([model.name length] > 0)
 	{
 		[self.label setText:model.name];
 	}
-    self.cellType = model.cellType;
-    switch (self.cellType) {
-        case kCellTypeCaption:
-            self.caption.hidden = NO;
-            break;
+	self.cellType = model.cellType;
 
-        case kCellTypeNoCaption:
-            self.caption.hidden = YES;
-            break;
-            
-        case kCellTypeWireframe:
-            self.caption.hidden = YES;
-            break;
-            
-        default:
-            break;
-    }
+	switch (self.cellType)
+	{
+		case kCellTypeCaption :
+			[self.label setBackgroundColor:[UIColor clearColor]];
+			self.caption.hidden = NO;
+			self.imageview.hidden = NO;
+			if (model.image)
+			{
+				[self.imageview setImage:model.image];
+			}
+			break;
+
+		case kCellTypeNoCaption :
+			[self.label setBackgroundColor:[UIColor clearColor]];
+			self.caption.hidden = YES;
+			self.imageview.hidden = NO;
+			if (model.image)
+			{
+				[self.imageview setImage:model.image];
+			}
+			break;
+
+		case kCellTypeWireframe :
+			[self.label setBackgroundColor:[UIColor blackColor]];
+			self.caption.hidden = YES;
+			self.imageview.hidden = YES;
+			break;
+
+		default :
+			break;
+	}
 }
 
 + (CGSize)idealItemSize

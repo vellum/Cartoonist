@@ -10,15 +10,18 @@
 
 @implementation VLMPanelModel
 
-+ (instancetype)panelModelWithName:(NSString *)name image:(UIImage *)image
++ (instancetype)panelModelWithName:(NSString *)name image:(UIImage *)image{
+    return [VLMPanelModel panelModelWithName:name image:image type:kCellTypeNoCaption];
+}
+
++ (instancetype)panelModelWithName:(NSString *)name image:(UIImage *)image type:(CellType)type
 {
 	VLMPanelModel *model = [[VLMPanelModel alloc] init];
-
 	model.index = -1000;
 	model.name = name;
 	model.image = image;
-	// NSLog(@"creating panelmodel %@\t%@", name, image);
-    model.cellType = kCellTypeNoCaption;
+	model.cellType = type;
+    // NSLog(@"creating panelmodel %@\t%@", name, image);
 	return model;
 }
 

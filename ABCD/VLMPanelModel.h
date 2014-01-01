@@ -12,13 +12,16 @@ typedef enum
 {
 	kCellTypeWireframe,
 	kCellTypeCaption,
-    kCellTypeNoCaption
+	kCellTypeNoCaption
 } CellType;
 
 
 @interface VLMPanelModel : NSObject
 
+
 + (instancetype)panelModelWithName:(NSString *)name image:(UIImage *)image;
+
++ (instancetype)panelModelWithName:(NSString *)name image:(UIImage *)image type:(CellType)type;
 
 @property (nonatomic) NSInteger index;
 @property (nonatomic) CellType cellType;

@@ -35,6 +35,7 @@ static inline BOOL IsEmpty(id thing)
 {
 	NSString *caption = (NSString *)[node objectForKey:@"caption"];
 	NSString *imageName = (NSString *)[node objectForKey:@"image"];
+	id typepettytype = [node objectForKey:@"celltype"];
 
 	if (IsEmpty(caption))
 	{
@@ -47,9 +48,28 @@ static inline BOOL IsEmpty(id thing)
 
 
 	// FIXME: i think it's wasteful to load image at outset. it should be lazy loaded.
-	UIImage *image = [UIImage imageNamed:imageName];
+	UIImage *image;
 
-	return [VLMPanelModel panelModelWithName:caption image:image];
+	CellType type = kCellTypeNoCaption;
+	if (typepettytype)
+	{
+		NSString *typestring = (NSString *)typepettytype;
+		if ([typestring isEqualToString:@"wireframe"])
+		{
+			type = kCellTypeWireframe;
+		}
+		else if ([typestring isEqualToString:@"nocaption"])
+		{
+			type = kCellTypeNoCaption;
+			image = [UIImage imageNamed:imageName];
+		}
+		else if ([typestring isEqualToString:@"caption"])
+		{
+			type = kCellTypeCaption;
+			image = [UIImage imageNamed:imageName];
+		}
+	}
+	return [VLMPanelModel panelModelWithName:caption image:image type:type];
 }
 
 - (VLMPanelModels *)panelModelsFromNode:(NSMutableDictionary *)node
@@ -72,7 +92,31 @@ static inline BOOL IsEmpty(id thing)
 			imagename = @"";
 		}
 
-		VLMPanelModel *model = [VLMPanelModel panelModelWithName:caption image:[UIImage imageNamed:imagename]];
+
+		CellType type = kCellTypeNoCaption;
+		id typepettytype = [node objectForKey:@"celltype"];
+        
+        UIImage *image;
+		if (typepettytype)
+		{
+			NSString *typestring = (NSString *)typepettytype;
+			if ([typestring isEqualToString:@"wireframe"])
+			{
+				type = kCellTypeWireframe;
+			}
+			else if ([typestring isEqualToString:@"nocaption"])
+			{
+				type = kCellTypeNoCaption;
+                image = [UIImage imageNamed:imagename];
+			}
+			else if ([typestring isEqualToString:@"caption"])
+			{
+				type = kCellTypeCaption;
+                image = [UIImage imageNamed:imagename];
+			}
+		}
+
+		VLMPanelModel *model = [VLMPanelModel panelModelWithName:caption image:image type:type];
 		[models.models addObject:model];
 		[models setSourceNode:node];
 	}
@@ -83,6 +127,7 @@ static inline BOOL IsEmpty(id thing)
 {
 	// NSLog(@"%@", root);
 
+	NSDate *beginMillis = [NSDate date];
 	NSMutableArray *list = [NSMutableArray array];
 
 	[self parseSequence:root intoArray:list];
@@ -94,6 +139,9 @@ static inline BOOL IsEmpty(id thing)
 		self.rootNode = root;
 	}
 
+	NSDate *endMillis = [NSDate date];
+	NSTimeInterval executionTime = [endMillis timeIntervalSinceDate:beginMillis];
+	NSLog(@"parseRootNode execution time: %f", executionTime);
 	return list;
 }
 
@@ -111,7 +159,7 @@ static inline BOOL IsEmpty(id thing)
 			// NSLog(@"joint");
 			// add node to list
 			VLMPanelModels *pm = [self panelModelsFromNode:node];
-            [pm setIndex:array.count];
+			[pm setIndex:array.count];
 			[array addObject:pm];
 
 			// recursively parse child sequences
@@ -137,8 +185,8 @@ static inline BOOL IsEmpty(id thing)
 		{
 			// NSLog(@"not joint");
 			// add node to list
-            VLMPanelModel *mod = [self panelModelFromNode:node];
-            [mod setIndex:array.count];
+			VLMPanelModel *mod = [self panelModelFromNode:node];
+			[mod setIndex:array.count];
 			[array addObject:mod];
 		}
 		// NSLog(@"array count: %i", [array count]);

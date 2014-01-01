@@ -7,11 +7,7 @@
 //
 
 #import "VLMCaptureView.h"
-
-#define DEAD_ZONE          CGSizeMake(15.0f, 15.0f)
-#define FUCKING_UNKNOWN    0
-#define FUCKING_VERTICAL   1
-#define FUCKING_HORIZONTAL 2
+#import "VLMConstants.h"
 
 @interface VLMCaptureView ()
 @property (nonatomic, strong) UIPanGestureRecognizer *topLevelPanGestureRecognizer;
@@ -64,7 +60,7 @@
 		default :
 			break;
 	}
-	CGFloat threshold = 1;                                                                                                                                                                                // 0.125f;
+	CGFloat threshold = 1;                                                                                                                                                                                                                                            // 0.125f;
 	if ([pgr scale] < 1 - threshold || [pgr scale] > 1 + threshold)
 	{
 		[pgr setEnabled:NO];
@@ -83,8 +79,6 @@
 	{
 		// when the pan starts or ends, make sure we reset the state
 		case UIGestureRecognizerStateBegan :
-		case UIGestureRecognizerStateEnded :
-		case UIGestureRecognizerStateCancelled :
 			[self setRecognizedDirection:FUCKING_UNKNOWN];
 			if (self.horizontalPanGestureRecognizer && !self.horizontalPanGestureRecognizer.enabled)
 			{
@@ -96,9 +90,21 @@
 			}
 			[self setRecognizedDirection:FUCKING_UNKNOWN];
 			break;
+		case UIGestureRecognizerStateChanged :
+			NSLog(@"ch");
+			break;
+		case UIGestureRecognizerStateEnded :
+			NSLog(@"end");
+			break;
+		case UIGestureRecognizerStateCancelled :
+			NSLog(@"cancel");
+			break;
+		case UIGestureRecognizerStateFailed :
+			NSLog(@"failed");
+			break;
 		default :
 			break;
-	}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 // end switch
+	}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             // end switch
 
 	if (self.recognizedDirection == FUCKING_UNKNOWN)
 	{
@@ -168,6 +174,9 @@
 
 			// NSLog(@"recognized horizontal pan");
 		}
+	}
+	else
+	{
 	}
 }
 

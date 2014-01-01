@@ -74,12 +74,23 @@
 		VLMPanelModel *model = (VLMPanelModel *)[models.models objectAtIndex:i];
 		CGRect rect = CGRectMake((kItemSize.width - kItemPadding) * i, kItemPadding, kItemSize.width - kItemPadding * 2, kItemSize.height - kItemPaddingBottom);
 
-		UIImageView *imageview = [[UIImageView alloc] initWithFrame:rect];
-		[imageview setContentMode:UIViewContentModeScaleAspectFill];
-		[imageview setClipsToBounds:YES];
-		[imageview setImage:model.image];
-		[self.scrollview addSubview:imageview];
-		[self.subviews addObject:imageview];
+		if (model.cellType != kCellTypeWireframe)
+		{
+			UIImageView *imageview = [[UIImageView alloc] initWithFrame:rect];
+			[imageview setContentMode:UIViewContentModeScaleAspectFill];
+			[imageview setClipsToBounds:YES];
+			[imageview setImage:model.image];
+			[imageview setBackgroundColor:[UIColor blackColor]];
+			[self.scrollview addSubview:imageview];
+			[self.subviews addObject:imageview];
+		}
+		else
+		{
+			UIView *placeholder = [[UIView alloc] initWithFrame:rect];
+			[placeholder setBackgroundColor:[UIColor blackColor]];
+			[self.scrollview addSubview:placeholder];
+			[self.subviews addObject:placeholder];
+		}
 	}
 	NSInteger selected = [[models.sourceNode objectForKey:@"selected"] integerValue];
 	[self.scrollview setContentOffset:CGPointMake(selected * (kItemSize.width - kItemPadding), 0)];
@@ -124,6 +135,7 @@
 		CGFloat alpha2 = page - lowerbound;
 		VLMPanelModel *model2 = [self.panels.models objectAtIndex:upperbound];
 
+		[NSObject cancelPreviousPerformRequestsWithTarget:self];
 		self.scrollPageBlock(alpha1, model1.name, alpha2, model2.name);
 	}
 }
@@ -139,13 +151,27 @@
 
 - (void)updatePage:(NSInteger)page
 {
-	// NSLog(@"updatePage");
+	/*
+	 *  // NSLog(@"updatePage");
+	 *  if (self.choosePageBlock)
+	 *  {
+	 *          VLMPanelModel *model = [self.panels.models objectAtIndex:page];
+	 *          self.choosePageBlock(page, model.name);
+	 *  }
+	 */
+	[NSObject cancelPreviousPerformRequestsWithTarget:self];
+	[self performSelector:@selector(notifyPageChange:) withObject:[NSNumber numberWithInteger:page] afterDelay:0.5f];
+}
+
+- (void)notifyPageChange:(NSNumber *)page
+{
 	if (self.choosePageBlock)
 	{
-		VLMPanelModel *model = [self.panels.models objectAtIndex:page];
-		self.choosePageBlock(page, model.name);
+		NSInteger p = [page integerValue];
+		VLMPanelModel *model = [self.panels.models objectAtIndex:p];
+		self.choosePageBlock(p, model.name);
+		[self.panels setSelectedIndex:p];
 	}
-	[self.panels setSelectedIndex:page];
 }
 
 /*
