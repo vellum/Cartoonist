@@ -1,28 +1,65 @@
 <html>
 <head>
+
+<script src="components/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="jquery.poshytip.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="components/x-editable/dist/jquery-editable/js/jquery-editable-poshytip.js" type="text/javascript" charset="utf-8"></script>
+
+<link rel="stylesheet" href="components/x-editable/dist/jquery-editable/css/jquery-editable.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
 	<style>
+		body{
+			margin:1em;
+		}
+		div.node {
+			margin:1em;
+		}
 		div.sequence {
 			background: rgba(0,0,0,0.1);
 			padding: 1em;
+			margin:0;
 		}
-		heading {
+		.heading {
 			font-size: 50%;
 			text-transform: uppercase;
+			margin-bottom: 1em;
 		}
-		div.node {
-			padding:1em;
+		.heading .delete{
+			padding-left:1em;
+			visibility:hidden;
 		}
+		.heading:hover .delete{
+			visibility:visible;
+		}
+		.editable-click {
+			border:none;
+		}
+		select {
+			margin-left:-0.4em;
+		}
+		.add {
+			text-transform:uppercase;
+			font-size:50%;
+			opacity:0.25;
+		}
+		.add:hover{
+			opacity:1;
+		}
+		
 	</style>
+
 </head>
 <body>
+	<div id="clippie">copy to clipboard</div>
 	<div id="main"></div>
-	<script src="../01 tool/backbone-master/test/vendor/jquery.js" type="text/javascript" charset="utf-8"></script>
 	<script src="main.js" type="text/javascript" charset="utf-8"></script>
 	<script language="javascript">
-$(document).ready(function() {
-	init();
-	render();
-});
+
+	$.fn.editable.defaults.mode = 'inline';
+		$(document).ready(function() {
+			init();
+			render();
+		});
 	</script>
 </body>
 </html>
