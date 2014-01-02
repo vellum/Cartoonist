@@ -118,6 +118,7 @@
 		if (e)
 		{
 			NSLog(@"error parsing json");
+            NSLog(@"%@",e);
 		}
 		else
 		{
