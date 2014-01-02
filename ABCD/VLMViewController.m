@@ -16,7 +16,7 @@
 #import "VLMPanelModels.h"
 #import "VLMConstants.h"
 
-#define FUCKTARDMOFO 1
+// #define FUCKTARDMOFO 1
 
 typedef enum
 {
@@ -36,6 +36,7 @@ typedef enum
 @property CGFloat screensizeMultiplier;
 @property CGPoint lastKnownContentOffset;
 @property BOOL isArtificiallyScrolling;
+@property BOOL shouldPreventZoomOut;
 
 @end
 
@@ -49,6 +50,7 @@ typedef enum
 @synthesize zoomMode;
 @synthesize zoomEnabled;
 @synthesize screensizeMultiplier;
+@synthesize shouldPreventZoomOut;
 
 static NSString *CellIdentifier = @"CellIdentifier";
 static NSString *HeaderIdentifier = @"HeaderIdentifier";
@@ -69,6 +71,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	[self setZoomEnabled:YES];
 	[self setScreensizeMultiplier:2.0f];
 	[self setIsArtificiallyScrolling:NO];
+	[self setShouldPreventZoomOut:NO];
 }
 
 - (void)viewDidLoad
@@ -137,19 +140,6 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		{
 			return;
 		}
-
-		/*if (zoomAmount < 1)
-		 * {
-		 *      CGFloat diff = 1 - zoomAmount;
-		 *      diff *= 0.5f;
-		 *      zoomAmount = 1 - diff;
-		 * }
-		 * else if (zoomAmount > 1)
-		 * {
-		 *      CGFloat diff = zoomAmount - 1;
-		 *      diff *= 0.5f;
-		 *      zoomAmount = 1 + diff;
-		 * }*/
 
 		CGFloat lb = 1 / self.screensizeMultiplier;
 		CGFloat page = roundf(self.secretScrollview.contentOffset.y / kItemSize.height);
@@ -289,6 +279,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		}
 		else
 		{
+			[self setShouldPreventZoomOut:YES];
 			[self.overlay setAlpha:primaryAlpha forText:primary andAlpha:secondaryAlpha forText2:secondary];
 		}
 	};
@@ -427,6 +418,10 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 - (void)handleTap:(id)sender
 {
+	if (self.shouldPreventZoomOut)
+	{
+		return;
+	}
 	if (self.zoomMode == kZoomNormal)
 	{
 		[self switchZoom:kZoomZoomedOut];
@@ -446,8 +441,8 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	// to do this in the background, the number of sections should always be the same
 
 	[self.collectionView performBatchUpdates:^{
-		 //[self.collectionView reloadData];
-        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.collectionView.numberOfSections)]];
+		 [self.collectionView reloadData];
+	     // [self.collectionView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.collectionView.numberOfSections)]];
 	 } completion:^(BOOL finished) {
 		 [self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * self.secretScrollview.frame.size.height)];
 	 }];
@@ -455,6 +450,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 #else
 	[self.collectionView reloadData];
 	[self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * self.secretScrollview.frame.size.height)];
+	[self setShouldPreventZoomOut:NO];
 #endif
 
 /*
