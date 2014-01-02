@@ -194,16 +194,60 @@ function insertNewFrameInSequenceAt(seq, index)
 	addNodeToSequenceAtIndex(node, seq, index);
 	render();
 }
+
+function parseAndIndex(node)
+{
+	if ( idlookup[node.id]== undefined )
+	{
+		idlookup[node.id] = node;
+	}
+	var type = node.type.toUpperCase();
+	if ( type == 'JOINT' )
+	{
+		console.log('parsing joint');
+		for ( var i = 0; i < node.children.length; i++ )
+		{
+			var c = node.children[i];
+			if ( idlookup[c.parentid] == undefined )
+			{
+				idlookup[c.parentid] = node;
+			}
+			idlookup[c.id] = c;
+			parseAndIndex(c);
+		}
+	} 
+	else if ( type == 'SEQUENCE' )
+	{
+		console.log('parsing sequence');
+		for ( var i = 0; i < node.nodes.length; i++ )
+		{
+			var c = node.nodes[i];
+			if ( idlookup[c.parentid] == undefined )
+			{
+				idlookup[c.parentid] = node;
+			}
+			idlookup[c.id] = c;
+			parseAndIndex(c);
+			
+		}
+	} else if ( type=='FRAME')
+	{
+		console.log('parsing frame');
+	}
+	
+}
 /////////////////////////////////
 
 var count = 0;
-var root = {"type":"sequence","nodes":[{"type":"frame","celltype":"wireframe","image":null,"caption":"Cover","id":"W9CCTJ738QCRRRT6FEUQEIAF9Q6YITO0","parentid":"F9GGN0J63TNCWLDTV565L0MT40F6FROH"},{"type":"frame","celltype":"wireframe","image":null,"caption":"Instructions","id":"LV69H2YEIM3V8M56G5TSE3UX2X8KJDCD","parentid":"F9GGN0J63TNCWLDTV565L0MT40F6FROH"},{"type":"frame","celltype":"wireframe","image":null,"caption":"Scene","id":"MAC3TG3MRXMDWETXJLADPJJ3CAQL5XTE","parentid":"F9GGN0J63TNCWLDTV565L0MT40F6FROH"},{"type":"frame","celltype":"wireframe","image":null,"caption":"Scene","id":"VSW9GGWSCH21FTF39D0EJSUKO7AF5SX0","parentid":"F9GGN0J63TNCWLDTV565L0MT40F6FROH"},{"type":"joint","selected":"2","children":[{"type":"sequence","nodes":[{"type":"frame","celltype":"wireframe","image":null,"caption":"Look","id":"WK0DOPPUDIQIMK08A11ETSLMF9YRW97A","parentid":"C6NX1IH0VASE6J1155IN9S56MC7TYMV9"}],"image":null,"caption":"empty_0","id":"M67U1JSLJT3JPVF3W47EBQXS83RPIYTW","parentid":"K2YBS1V07T1HMFH3N5TPY6E4GJXEENJU"},{"type":"sequence","nodes":[{"type":"frame","celltype":"wireframe","image":null,"caption":"Say something","id":"ID07PBU1LSL1GV80QR8W8P2AFN038VH2","parentid":"G19OY064CB0PC52GVUDFCJ2WC2AO06UY"}],"image":null,"caption":"empty_1","id":"Y7GSL0LVRLKC4UOX3UIV7KJNDCDQPKV5","parentid":"K2YBS1V07T1HMFH3N5TPY6E4GJXEENJU"},{"type":"sequence","nodes":[{"type":"frame","celltype":"wireframe","image":null,"caption":"Say some other thing","id":"PLA1HHJX8010L56E9HBY9CNLTDXXJ1DQ","parentid":"AP10QNWJUIXLPPL4EKCS50E7RDO2QECC"}],"image":null,"caption":"empty_2","id":"JX0U59WINUKQXYUNTYYGRYHFM4UO5JK3","parentid":"K2YBS1V07T1HMFH3N5TPY6E4GJXEENJU"}],"id":"W7CJTTLKP5GJGGNW6NSULDPXSXOU13QP","parentid":"F9GGN0J63TNCWLDTV565L0MT40F6FROH"}],"image":null,"caption":"root","id":"F9GGN0J63TNCWLDTV565L0MT40F6FROH"};
+var root={"type":"sequence","nodes":[{"type":"frame","celltype":"wireframe","image":null,"caption":"Covers","id":"C7CAFWLPIB4RDKKTBQBO1WX6Y634AJB4","parentid":"PL8V1OLXT3LAI0LSEA44MKJFVG7VRX9P"},{"type":"frame","celltype":"wireframe","image":null,"caption":"emptys","id":"NSFG06J5VEM3F0PSGTTGLIP5PR6AR66F","parentid":"PL8V1OLXT3LAI0LSEA44MKJFVG7VRX9P"},{"type":"frame","celltype":"wireframe","image":null,"caption":"emptys","id":"BFR3720M7E6K5FDRTJ8EUT6MIJT8A4D9","parentid":"PL8V1OLXT3LAI0LSEA44MKJFVG7VRX9P"},{"type":"joint","selected":"0","children":[{"type":"sequence","nodes":[{"type":"frame","celltype":"wireframe","image":null,"caption":"s","id":"IVFTIN60J25QRVKII9AF8FLT4WQY8F4B","parentid":"AYAU9ULRKJDCJ8FHHXAFDO1QENE5L1DU"},{"type":"frame","celltype":"wireframe","image":null,"caption":"empty","id":"H5GHE6J90EGS5L6U7K5OA3BLNSMIERLU","parentid":"HSCU7PGNOC3WKV4Y1V9MW3TAFA8B18KO"}],"image":null,"caption":"empty_0","id":"HSCU7PGNOC3WKV4Y1V9MW3TAFA8B18KO","parentid":"E9NHJUJIQ2DC7EM3VG5P3OWFDAAJD8WH"},{"type":"sequence","nodes":[{"type":"frame","celltype":"wireframe","image":null,"caption":"empty_2 / f0","id":"PIQSAUT6FDMMGY2U8AIEJRTSMMDCRSMM","parentid":"U3T8L0XT6QIW009WY5VF4BDO8SF704LU"}],"image":null,"caption":"empty_2","id":"RAV4OUJ4OC41AV7YE7YR6EY8R4FYCC7T","parentid":"E9NHJUJIQ2DC7EM3VG5P3OWFDAAJD8WH"}],"id":"LJ40P3NSN0Y2WIEHQPQ9IJDOLV9S431V","parentid":"PL8V1OLXT3LAI0LSEA44MKJFVG7VRX9P"}],"image":null,"caption":"root","id":"PL8V1OLXT3LAI0LSEA44MKJFVG7VRX9P"};
 var idcount = 0;
 function init()
 {
 	if ( root == null || root == undefined )
 	{
 		root = makeSequenceWith(0, 'root');
+	} else {
+		parseAndIndex(root);
 	}
 	
 	$('#clippie').click(function(){
@@ -235,7 +279,7 @@ function printjson(){
 	console.log(json);
 }
 function clipboard() {
-  window.prompt("Copy to clipboard: Ctrl+C, Enter", JSON.stringify(root));
+  window.prompt("Copy to clipboard: Ctrl+C, Enter", 'root=' + JSON.stringify(root) + ';');
 }
 function render()
 {
