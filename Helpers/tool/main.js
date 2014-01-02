@@ -21,6 +21,12 @@ function init()
 		root = makeSequenceWith(0, 'root');
 		localStorage.setItem("root", JSON.stringify(root));
 	}
+	$('#save').click(function(){
+		data = $('#fucker').val();
+		root = JSON.parse(data);
+		parseAndIndex(root);
+		render();
+	});
 }
 
 function render()
