@@ -1,8 +1,4 @@
-
-/////////////////////////////////
-
-var count = 0,
-	root,
+var root,
 	idcount = 0;
 
 $(document).ready(function() {

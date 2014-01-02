@@ -35,7 +35,6 @@ function makeSequence()
 
 function makeNode(caption)
 {
-	count++;
 	var a = {
         "type" : "frame",
         "celltype" : "wireframe",
@@ -230,7 +229,8 @@ function parseAndIndex(node)
 			parseAndIndex(c);
 			
 		}
-	} else if ( type=='FRAME')
+	} 
+	else if ( type=='FRAME')
 	{
 		console.log('parsing frame');
 	}
