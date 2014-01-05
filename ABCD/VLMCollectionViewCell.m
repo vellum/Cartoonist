@@ -10,6 +10,7 @@
 #import "VLMCollectionViewLayoutAttributes.h"
 #import "VLMNarrationCaption.h"
 #import "VLMPanelModel.h"
+#import "VLMPaddedLabel.h"
 
 @interface VLMCollectionViewCell ()
 @property (nonatomic) CGRect coverFrame;
@@ -59,13 +60,13 @@
 
 	[baseView addSubview:self.imageview];
 
-	[self setLabel:[[UILabel alloc] initWithFrame:self.normalFrame]];
+	[self setLabel:[[VLMPaddedLabel alloc] initWithFrame:self.normalFrame]];
 	[self.label setTextColor:[UIColor whiteColor]];
 	[self.label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:36.0f]];
 	[self.label setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
 	[self.label setTextAlignment:NSTextAlignmentCenter];
 	[self.label setAdjustsFontSizeToFitWidth:YES];
-    [self.label setNumberOfLines:100];
+	[self.label setNumberOfLines:100];
 	[self.contentView addSubview:self.label];
 
 	VLMNarrationCaption *vvvv = [[VLMNarrationCaption alloc] initWithFrame:CGRectMake(pad, pad, baseView.frame.size.width - pad * 2, 50.0f)];

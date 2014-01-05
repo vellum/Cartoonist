@@ -16,6 +16,7 @@
 
 @class VLMPanelModel;
 @class VLMNarrationCaption;
+@class VLMPaddedLabel;
 
 @interface VLMCollectionViewCell : UICollectionViewCell
 
@@ -23,7 +24,7 @@
 @property (nonatomic, strong) VLMNarrationCaption *caption;
 @property (nonatomic, strong) NSString *imagename;
 @property (nonatomic, strong) UIImageView *imageview;
-@property (nonatomic, strong) UILabel *label;
+@property (nonatomic, strong) VLMPaddedLabel *label;
 
 - (void)configureWithModel:(VLMPanelModel *)model;
 + (CGSize)idealItemSize;
