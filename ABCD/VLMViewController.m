@@ -445,6 +445,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	     // [self.collectionView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.collectionView.numberOfSections)]];
 	 } completion:^(BOOL finished) {
 		 [self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * self.secretScrollview.frame.size.height)];
+         [self setShouldPreventZoomOut:NO];
 	 }];
 
 #else
@@ -595,6 +596,9 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+    // hack! reset this flag. for some reason it isn't getting reset properly
+	[self setShouldPreventZoomOut:NO];
+
 	if (self.zoomMode != kZoomNormal)
 	{
 		return;
