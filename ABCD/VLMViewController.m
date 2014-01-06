@@ -337,7 +337,9 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 			NSInteger selectedind = [[model.sourceNode objectForKey:@"selected"] integerValue];
             
 			VLMPanelModel *m = (VLMPanelModel *)[model.models objectAtIndex:selectedind];
-			[self.overlay setText:m.name];
+			[self.overlay setTextNoAnimation:m.name];
+            [self.overlay setText:m.name];
+            
 			[self.secretScrollview.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f, 1.0f, 1.0f)];
 			[self.secretScrollview setFrame:CGRectMake(0, 0, kItemSize.width, kItemSize.height)];
 			[self.secretScrollview setContentSize:CGSizeMake(kItemSize.width, kItemSize.height * [self.dataSource numberOfSectionsInCollectionView:self.collectionView])];
