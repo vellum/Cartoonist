@@ -75,10 +75,16 @@
 
 - (void)handleTopLevelPans:(UIPanGestureRecognizer *)pgr
 {
+    
 	switch (pgr.state)
 	{
 		// when the pan starts or ends, make sure we reset the state
 		case UIGestureRecognizerStateBegan :
+        if(!self.shouldRecognizeHorizontalPans){
+            [self.topLevelPanGestureRecognizer setEnabled:NO];
+			[self.topLevelPanGestureRecognizer setEnabled:YES];
+
+        }
 			[self setRecognizedDirection:FUCKING_UNKNOWN];
 			if (self.horizontalPanGestureRecognizer && !self.horizontalPanGestureRecognizer.enabled)
 			{
@@ -104,7 +110,7 @@
 			break;
 		default :
 			break;
-	}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             // end switch
+	} // end switch
 
 	if (self.recognizedDirection == FUCKING_UNKNOWN)
 	{
