@@ -28,21 +28,24 @@
 		[self setUserInteractionEnabled:NO];
 		[self setBackgroundColor:[UIColor clearColor]];
 
-		[self setCurrent:[[UILabel alloc] initWithFrame:CGRectMake(0, 50, 320, 100)]];
+		CGFloat pad = 30.0f;
+		[self setCurrent:[[UILabel alloc] initWithFrame:CGRectMake(pad, 50 + pad, 320 - pad * 2, 100)]];
 		[self.current setText:@""];
 		[self.current setFont:[UIFont fontWithName:@"Helvetica-Bold" size:36.0f]];
 		[self.current setTextColor:[UIColor whiteColor]];
 		[self.current setTextAlignment:NSTextAlignmentCenter];
 		[self.current setAdjustsFontSizeToFitWidth:YES];
+		[self.current setNumberOfLines:3.0f];
 		[self addSubview:self.current];
 
-		[self setNext:[[UILabel alloc] initWithFrame:CGRectMake(0, 50, 320, 100)]];
+		[self setNext:[[UILabel alloc] initWithFrame:CGRectMake(pad, 50 + pad, 320 - pad * 2, 100)]];
 		[self.next setText:@""];
 		[self.next setFont:[UIFont fontWithName:@"Helvetica-Bold" size:36.0f]];
 		[self.next setTextColor:[UIColor whiteColor]];
 		[self.next setTextAlignment:NSTextAlignmentCenter];
 		[self.next setAlpha:0.0f];
 		[self.next setAdjustsFontSizeToFitWidth:YES];
+		[self.next setNumberOfLines:3.0f];
 		[self addSubview:self.next];
 	}
 	return self;

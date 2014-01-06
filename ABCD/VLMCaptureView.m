@@ -24,6 +24,7 @@
 @synthesize verticalPanGestureRecognizer;
 @synthesize recognizedDirection;
 @synthesize shouldRecognizeHorizontalPans;
+@synthesize checkOverviewBlock;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -116,6 +117,11 @@
 		// establish a deadzone of 50 x 24
 		// this is a generous allowance for which we ignore wiggly movement
 		CGSize deadzone = DEAD_ZONE;
+        
+        BOOL isZoomOverview = NO;
+        if (self.checkOverviewBlock) {
+            isZoomOverview = self.checkOverviewBlock();
+        }
 
 		// vertical pans will cancel this gesture recognizer
 		// and let the scrollview's recognizer to take over
@@ -146,7 +152,7 @@
 			// a little debugging
 			// NSLog(@"recognized vertical pan");
 		}
-		else if (p.x > deadzone.width / 2 || p.x < -deadzone.width / 2)
+		else if (!isZoomOverview && (p.x > deadzone.width / 2 || p.x < -deadzone.width / 2))
 		{
 			// horizontal pan resets the translation point
 			// so that translationinview: reports a delta from last event

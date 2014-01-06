@@ -160,7 +160,11 @@
 	 *  }
 	 */
 	[NSObject cancelPreviousPerformRequestsWithTarget:self];
-	[self performSelector:@selector(notifyPageChange:) withObject:[NSNumber numberWithInteger:page] afterDelay:0.5f];
+    
+    // we might be flipping back and forth between options, so wait half a second before requesting a reloaddata
+    // (while sections reload, horizontal pan gesture recognizers are torn down and reconstructed.
+	//[self performSelector:@selector(notifyPageChange:) withObject:[NSNumber numberWithInteger:page] afterDelay:0.5f];
+	[self performSelector:@selector(notifyPageChange:) withObject:[NSNumber numberWithInteger:page] afterDelay:0.001f];
 }
 
 - (void)notifyPageChange:(NSNumber *)page

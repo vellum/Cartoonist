@@ -9,13 +9,16 @@
 #import <UIKit/UIKit.h>
 
 typedef void (^ZoomPageBlock)(CGFloat zoomBy, BOOL ended);
+typedef BOOL (^CheckOverviewBlock)();
 
 @interface VLMCaptureView : UIView <UIGestureRecognizerDelegate>
 
 @property (nonatomic, copy) ZoomPageBlock zoomPageBlock;
+@property (nonatomic, copy) CheckOverviewBlock checkOverviewBlock;
 
 - (void)addHorizontalGestureRecognizer:(UIPanGestureRecognizer *)panGestureRecognizer;
 - (void)addVerticalGestureRecognizer:(UIPanGestureRecognizer *)panGestureRecognizer;
 - (void)removeAnyHorizontalGestureRecognizers;
 - (void)enableHorizontalPan:(BOOL)shouldEnable;
+
 @end

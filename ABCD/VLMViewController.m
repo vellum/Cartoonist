@@ -78,14 +78,14 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 {
 	// data source for collection view
 	[self setupDataSource];
-
+    
 	// flow layout with customizations
 	VLMSinglePanelFlowLayout *flow = [[VLMSinglePanelFlowLayout alloc] init];
 	[self setSinglePanelFlow:flow];
-
+    
 	// collection view
 	[self setupCollectionView];
-
+    
 	// offscreen scrollview used as a proxy for scrolling the collection view
 	// this is a hack so that adjacent items can be visible
 	UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kItemSize.width, kItemSize.height)];
@@ -93,17 +93,17 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	[scrollView setPagingEnabled:YES];
 	[scrollView setDelegate:self];
 	[self setSecretScrollview:scrollView];
-
+    
 	// overlay when we are zoomed out
 	VLMGradient *gradient = [[VLMGradient alloc] initWithFrame:self.view.frame];
 	[gradient setAlpha:0.0f];
 	[gradient setUserInteractionEnabled:NO];
 	[self.view addSubview:gradient];
 	[self setOverlay:gradient];
-
+    
 	// touch capture view detects kinds of gestures and decides what behavior to trigger
 	[self setupCaptureView];
-
+    
 	// listen for decision tree changes
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[[NSNotificationCenter defaultCenter] addObserver:self
@@ -128,114 +128,123 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 - (void)setupCaptureView
 {
 	VLMCaptureView *cap = [[VLMCaptureView alloc] initWithFrame:self.view.frame];
-
+    
 	[cap setBackgroundColor:[UIColor clearColor]];
 	[cap addVerticalGestureRecognizer:secretScrollview.panGestureRecognizer];
 	[self.view addSubview:cap];
 	[self setCapture:cap];
-
+    
+    CheckOverviewBlock checkOverviewBlock = ^()
+    {
+        if (self.zoomMode==kZoomZoomedOut) {
+            return YES;
+        }
+        return NO;
+    };
+    
 	ZoomPageBlock zoomPageBlock = ^(CGFloat zoomAmount, BOOL ended)
 	{
 		if (!self.zoomEnabled)
 		{
 			return;
 		}
-
+        
 		CGFloat lb = 1 / self.screensizeMultiplier;
 		CGFloat page = roundf(self.secretScrollview.contentOffset.y / kItemSize.height);
-
+        
 		switch (self.zoomMode)
 		{
 			case kZoomNormal :
-				if (!ended)
-				{
-					CGFloat s = zoomAmount;
-					if (s < lb)
-					{
-						s = lb;
-					}
-					if ([self.dataSource isItemAtIndexChoice:page])
-					{
-						if (s > CHOICE_SCALE)
-						{
-							s = CHOICE_SCALE;
-						}
-					}
-					else
-					{
-						if (s > 1.0f)
-						{
-							s = 1.0f;
-						}
-					}
-					[self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
-				}
-				else
-				{
-					if (zoomAmount < 1)
-					{
-						[self switchZoom:kZoomZoomedOut];
-					}
-					else
-					{
-						[self switchZoom:kZoomNormal];
-					}
-				}
-				break;
-
+            if (!ended)
+            {
+                CGFloat s = zoomAmount;
+                if (s < lb)
+                {
+                    s = lb;
+                }
+                if ([self.dataSource isItemAtIndexChoice:page])
+                {
+                    if (s > CHOICE_SCALE)
+                    {
+                        s = CHOICE_SCALE;
+                    }
+                }
+                else
+                {
+                    if (s > 1.0f)
+                    {
+                        s = 1.0f;
+                    }
+                }
+                [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
+            }
+            else
+            {
+                if (zoomAmount < 1)
+                {
+                    [self switchZoom:kZoomZoomedOut];
+                }
+                else
+                {
+                    [self switchZoom:kZoomNormal];
+                }
+            }
+            break;
+            
 			case kZoomZoomedOut :
-				if (!ended)
-				{
-					CGFloat s = lb + (zoomAmount - 1);
-					if (s < lb)
-					{
-						s = lb;
-					}
-					if ([self.dataSource isItemAtIndexChoice:page])
-					{
-						if (s > CHOICE_SCALE)
-						{
-							s = CHOICE_SCALE;
-						}
-					}
-					else
-					{
-						if (s > 1.0f)
-						{
-							s = 1.0f;
-						}
-					}
-
-					[self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
-				}
-				else
-				{
-					if (zoomAmount < 1)
-					{
-						[self switchZoom:kZoomZoomedOut];
-					}
-					else
-					{
-						[self switchZoom:kZoomNormal];
-					}
-				}
-				break;
-
+            if (!ended)
+            {
+                CGFloat s = lb + (zoomAmount - 1);
+                if (s < lb)
+                {
+                    s = lb;
+                }
+                if ([self.dataSource isItemAtIndexChoice:page])
+                {
+                    if (s > CHOICE_SCALE)
+                    {
+                        s = CHOICE_SCALE;
+                    }
+                }
+                else
+                {
+                    if (s > 1.0f)
+                    {
+                        s = 1.0f;
+                    }
+                }
+                
+                [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
+            }
+            else
+            {
+                if (zoomAmount < 1)
+                {
+                    [self switchZoom:kZoomZoomedOut];
+                }
+                else
+                {
+                    [self switchZoom:kZoomNormal];
+                }
+            }
+            break;
+            
 			default :
-				break;
+            break;
 		}
 	};
 	UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
 	[self.capture addGestureRecognizer:tgr];
 	[self.capture setZoomPageBlock:zoomPageBlock];
+    [self.capture setCheckOverviewBlock:checkOverviewBlock];
 }
 
 - (void)setupCollectionView
 {
 	UICollectionView *cv = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.singlePanelFlow];
-
+    
 	[cv setDataSource:self.dataSource];
-
+    
 	CGRect frame = UIScreen.mainScreen.bounds;
 	[cv setContentOffset:CGPointMake(0, kItemPaddingBottom)];
 	[cv registerClass:[VLMCollectionViewCell class] forCellWithReuseIdentifier:CellIdentifier];
@@ -248,10 +257,10 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	CGSize desiredSize = CGSizeMake(frame.size.width, frame.size.height * self.screensizeMultiplier);
 	CGFloat insetY = (desiredSize.height - frame.size.height) / 2.0f;
 	self.collectionView.frame = CGRectMake(
-			0,
-			-insetY,
-			desiredSize.width,
-			desiredSize.height);
+                                           0,
+                                           -insetY,
+                                           desiredSize.width,
+                                           desiredSize.height);
 	[self.collectionView setContentInset:UIEdgeInsetsMake(kItemPaddingBottom + 3 + insetY, 0, kItemPaddingBottom, 0)];
 }
 
@@ -261,7 +270,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	{
 		[cell configureWithModel:panelModel];
 	};
-
+    
 	ChoosePageBlock choosePageBlock = ^(CGFloat page, NSString *text) {
 		if (self.zoomMode != kZoomNormal)
 		{
@@ -272,7 +281,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 			[self.overlay setText:text];
 		}
 	};
-
+    
 	ScrollPageBlock scrollPageBlock = ^(CGFloat primaryAlpha, NSString *primary, CGFloat secondaryAlpha, NSString *secondary) {
 		if (self.zoomMode != kZoomNormal)
 		{
@@ -283,7 +292,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 			[self.overlay setAlpha:primaryAlpha forText:primary andAlpha:secondaryAlpha forText2:secondary];
 		}
 	};
-
+    
 	CollectionViewCellConfigureBlock configureCellChoiceBlock = ^(VLMCollectionViewCellWithChoices *cell, VLMPanelModels *panelModels)
 	{
 		// NSLog(@"configurecellchoiceblock %@", cell.scrollview.panGestureRecognizer ? @"exists" : @"notexists");
@@ -293,9 +302,9 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		[cell setScrollPageBlock:scrollPageBlock];
 		[cell configureWithModel:panelModels];
 	};
-
+    
 	VLMDataSource *ds = [[VLMDataSource alloc] initWithCellIdentifier:CellIdentifier cellChoiceIdentifier:CellChoiceIdentifier configureCellBlock:configureCellBlock configureCellChoiceBlock:configureCellChoiceBlock];
-
+    
 	[self setDataSource:ds];
 }
 
@@ -308,25 +317,25 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		return;
 	}
 	self.zoomMode = mode;
-
-
+    
+    
 	CGRect frame = UIScreen.mainScreen.bounds;
 	CGFloat page = roundf(self.secretScrollview.contentOffset.y / kItemSize.height);
-
+    
 	if (self.zoomMode == kZoomNormal)
 	{
 		[self.capture enableHorizontalPan:NO];
 		if ([self.dataSource isItemAtIndexChoice:page])
 		{
 			[self.capture enableHorizontalPan:YES];
-
+            
 			// get selected child's name
 			// and apply to the gradient text
 			NSIndexPath *path = [NSIndexPath indexPathForRow:0 inSection:page];
 			VLMPanelModels *model = (VLMPanelModels *)[self.dataSource itemAtIndexPath:path];
-
+            
 			NSInteger selectedind = [[model.sourceNode objectForKey:@"selected"] integerValue];
-
+            
 			VLMPanelModel *m = (VLMPanelModel *)[model.models objectAtIndex:selectedind];
 			[self.overlay setText:m.name];
 			[self.secretScrollview.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f, 1.0f, 1.0f)];
@@ -334,17 +343,17 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 			[self.secretScrollview setContentSize:CGSizeMake(kItemSize.width, kItemSize.height * [self.dataSource numberOfSectionsInCollectionView:self.collectionView])];
 			[self.secretScrollview setContentInset:UIEdgeInsetsZero];
 			[self setZoomEnabled:NO];
-
+            
 			[UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
 							 animations:^{
-				 [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * kItemSize.height)];
-				 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, CHOICE_SCALE, CHOICE_SCALE, 1.0f)];
-			 } completion:^(BOOL completed) {
-				 [self.secretScrollview setPagingEnabled:YES];
-				 [self setZoomEnabled:YES];
-			 }
-
-			];
+                                 [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * kItemSize.height)];
+                                 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, CHOICE_SCALE, CHOICE_SCALE, 1.0f)];
+                             } completion:^(BOOL completed) {
+                                 [self.secretScrollview setPagingEnabled:YES];
+                                 [self setZoomEnabled:YES];
+                             }
+             
+             ];
 		}
 		else
 		{
@@ -355,25 +364,25 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 			[self.secretScrollview setFrame:CGRectMake(0, 0, kItemSize.width, kItemSize.height)];
 			[self.secretScrollview setContentSize:CGSizeMake(kItemSize.width, kItemSize.height * [self.dataSource numberOfSectionsInCollectionView:self.collectionView])];
 			[self.secretScrollview setContentInset:UIEdgeInsetsZero];
-
-
+            
+            
 			[self setZoomEnabled:NO];
-
+            
 			[UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
 							 animations:^{
-				 [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * kItemSize.height)];
-				 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f, 1.0f, 1.0f)];
-			 } completion:^(BOOL completed) {
-				 [self.secretScrollview setPagingEnabled:YES];
-				 [self setZoomEnabled:YES];
-			 }
-
-			];
+                                 [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * kItemSize.height)];
+                                 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f, 1.0f, 1.0f)];
+                             } completion:^(BOOL completed) {
+                                 [self.secretScrollview setPagingEnabled:YES];
+                                 [self setZoomEnabled:YES];
+                             }
+             
+             ];
 		}
 	}
 	else
 	{
-		[self.capture enableHorizontalPan:NO];
+		[self.capture enableHorizontalPan:YES];
 		[self.secretScrollview setPagingEnabled:NO];
 		if ([self.dataSource isItemAtIndexChoice:page])
 		{
@@ -383,35 +392,35 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 			[self.overlay setTextNoAnimation:@""];
 		}
 		[self.overlay show];
-
+        
 		CGSize desiredSize = CGSizeMake(frame.size.width, frame.size.height * self.screensizeMultiplier);
 		CGFloat insetY = (desiredSize.height - frame.size.height) / 2.0f;
-
-
+        
+        
 		self.secretScrollview.frame = CGRectMake(
-				0,
-				-insetY,
-				desiredSize.width,
-				desiredSize.height);
-
+                                                 0,
+                                                 -insetY,
+                                                 desiredSize.width,
+                                                 desiredSize.height);
+        
 		[self.secretScrollview.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f / self.screensizeMultiplier, 1.0f / self.screensizeMultiplier, 1.0f)];
 		[self setZoomEnabled:NO];
-
+        
 		[UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
 						 animations:^{
-			 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f / self.screensizeMultiplier, 1.0f / self.screensizeMultiplier, 1.0f)];
-
-			 [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * kItemSize.height)];
-		 } completion:^(BOOL completed) {
-			 [self setZoomEnabled:YES];
-		 }
-
-		];
-
+                             [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f / self.screensizeMultiplier, 1.0f / self.screensizeMultiplier, 1.0f)];
+                             
+                             [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * kItemSize.height)];
+                         } completion:^(BOOL completed) {
+                             [self setZoomEnabled:YES];
+                         }
+         
+         ];
+        
 		CGFloat h = kItemSize.height;
 		h *= [self.dataSource numberOfSectionsInCollectionView:self.collectionView];
 		h += insetY * 2;
-
+        
 		[self.secretScrollview setContentSize:CGSizeMake(kItemSize.width, h)];
 	}
 }
@@ -434,31 +443,32 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 - (void)needsUpdateContent:(NSNotification *)notification
 {
-	// NSDate *beginMillis = [NSDate date];
+	[self setShouldPreventZoomOut:YES];
+    [self refresh];
+}
 
-#ifdef FUCKTARDMOFO
+- (void)refresh
+{
+    [self.collectionView performBatchUpdates:^{
+        [self.collectionView reloadData];
+        //[self.collectionView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.currentPage+1, [self.dataSource numberOfSectionsInCollectionView:self.collectionView])]];
+        
+        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:self.currentPage+1]];
 
-	// to do this in the background, the number of sections should always be the same
+        if (self.currentPage+2<[self.dataSource numberOfSectionsInCollectionView:self.collectionView]-1) {
+            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:self.currentPage+2]];
+        }
 
-	[self.collectionView performBatchUpdates:^{
-		 [self.collectionView reloadData];
-	     // [self.collectionView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.collectionView.numberOfSections)]];
-	 } completion:^(BOOL finished) {
-		 [self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * self.secretScrollview.frame.size.height)];
-		 [self setShouldPreventZoomOut:NO];
-	 }];
+    } completion:^(BOOL finished) {
+        [self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * self.secretScrollview.frame.size.height)];
+        [self ensureTapRestored];
+    }];
+}
 
-#else
-	[self.collectionView reloadData];
-	[self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * self.secretScrollview.frame.size.height)];
-	[self setShouldPreventZoomOut:NO];
-#endif
-
-/*
- *  NSDate *endMillis = [NSDate date];
- *  NSTimeInterval executionTime = [endMillis timeIntervalSinceDate:beginMillis];
- *  NSLog(@"updatecontent executiontime: %f", executionTime);
- */
+- (void)ensureTapRestored
+{
+    NSLog(@"ensure tap restored");
+    [self setShouldPreventZoomOut:NO];
 }
 
 #pragma mark - Secret Scrollview Delegate
@@ -469,7 +479,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	{
 		return;
 	}
-
+    
 	if (self.zoomMode == kZoomZoomedOut)
 	{
 		CGPoint contentOffset = scrollView.contentOffset;
@@ -477,25 +487,25 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		[self.collectionView setContentOffset:contentOffset];
 		return;
 	}
-
+    
 	CGPoint contentOffset = scrollView.contentOffset;
 	self.lastKnownContentOffset = contentOffset;
-
+    
 	CGFloat page = contentOffset.y / scrollView.frame.size.height;
 	CGFloat delta = page - self.currentPage;
 	BOOL currentPageIsZoomedOut = [self.dataSource isItemAtIndexChoice:self.currentPage];
 	BOOL nextPageIsZoomedOut = NO;
 	CGFloat zoomedoutscale = CHOICE_SCALE;
-
-
+    
+    
 	if (delta > 0)
 	{
 		if (fabs(delta) < 1)
 		{
 			nextPageIsZoomedOut = [self.dataSource isItemAtIndexChoice:currentPage + 1];
-
+            
 			NSString *nextLabel = [self.dataSource labelAtIndex:(self.currentPage + 1)];
-
+            
 			if (!currentPageIsZoomedOut)
 			{
 				if (nextPageIsZoomedOut)
@@ -528,7 +538,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 						s = 1.0f;
 					}
 					[self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
-
+                    
 					[self.overlay setAlpha:1 - delta];
 				}
 			}
@@ -548,12 +558,12 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 				if (nextPageIsZoomedOut)
 				{
 					NSString *nextLabel = [self.dataSource labelAtIndex:(self.currentPage - 1)];
-
+                    
 					CGFloat s = zoomedoutscale + (1 - zoomedoutscale) * (1 - fabs(delta));
 					CATransform3D t = CATransform3DScale(CATransform3DIdentity, s, s, 1.0f);
 					[self.collectionView.layer setTransform:t];
 					[self.overlay setAlpha:fabs(delta)];
-
+                    
 					[self.overlay setTextNoAnimation:nextLabel];
 				}
 			}
@@ -575,6 +585,9 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	}
 	contentOffset.y = contentOffset.y - self.collectionView.contentInset.top;
 	[self.collectionView setContentOffset:contentOffset];
+    
+    [self checkHorizontalPanEnabled];
+
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
@@ -583,12 +596,12 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	{
 		return;
 	}
-
+    
 	if (self.isArtificiallyScrolling)
 	{
 		return;
 	}
-
+    
 	if (self.zoomMode == kZoomZoomedOut)
 	{
 		CGFloat targetpage = roundf(targetContentOffset->y / kItemSize.height);
@@ -599,6 +612,9 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		}
 		targetContentOffset->y = roundf(targetpage) * kItemSize.height;
 		[self setCurrentPage:targetpage];
+
+        // FIXME: should there be a check here?
+        
 		return;
 	}
 }
@@ -607,35 +623,45 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 {
 	// hack! reset this flag. for some reason it isn't getting reset properly
 	[self setShouldPreventZoomOut:NO];
-
+    
 	if (self.zoomMode != kZoomNormal)
 	{
 		return;
 	}
 	[self setCurrentPage:scrollView.contentOffset.y / kItemSize.height];
-	if ([self.dataSource isItemAtIndexChoice:self.currentPage])
+    [self checkHorizontalPanEnabled];
+}
+
+- (void)checkHorizontalPanEnabled
+{
+	if (self.zoomMode == kZoomNormal)
 	{
-		[self.capture enableHorizontalPan:YES];
-	}
-	else
-	{
-		[self.capture enableHorizontalPan:NO];
-	}
+        if ([self.dataSource isItemAtIndexChoice:self.currentPage])
+        {
+            [self.capture enableHorizontalPan:YES];
+        }
+        else
+        {
+            [self.capture enableHorizontalPan:NO];
+        }
+    } else {
+        [self.capture enableHorizontalPan:YES];
+    }
 }
 
 - (void)mew
 {
 	CGFloat targetpage = roundf(self.secretScrollview.contentOffset.y / kItemSize.height);
-
+    
 	[self setIsArtificiallyScrolling:YES];
 	[UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
 					 animations:^{
-		 [self.secretScrollview setContentOffset:CGPointMake(0, roundf(targetpage) * kItemSize.height)];
-	 } completion:^(BOOL completed) {
-		 [self setIsArtificiallyScrolling:NO];
-	 }
-
-	];
+                         [self.secretScrollview setContentOffset:CGPointMake(0, roundf(targetpage) * kItemSize.height)];
+                     } completion:^(BOOL completed) {
+                         [self setIsArtificiallyScrolling:NO];
+                     }
+     
+     ];
 }
 
 @end

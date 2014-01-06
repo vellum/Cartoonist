@@ -232,7 +232,6 @@
 				BDD899B8183C4C39002E089C /* Sources */,
 				BDD899B9183C4C39002E089C /* Frameworks */,
 				BDD899BA183C4C39002E089C /* Resources */,
-				BD680318184DC033005A2E0D /* ShellScript */,
 				1FC92367879F4410AE9CC1F9 /* Copy Pods Resources */,
 			);
 			buildRules = (
@@ -303,19 +302,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
-		};
-		BD680318184DC033005A2E0D /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "sh CodeFormatter/scripts/formatOpenedSources.sh";
 		};
 		D88D2424B9224F0BACB1B995 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
