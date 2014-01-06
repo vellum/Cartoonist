@@ -240,4 +240,17 @@
 	}
 }
 
+- (NSString *)labelAtIndex:(NSInteger)index
+{
+    if (![self isItemAtIndexChoice:index]) {
+        return @"";
+    }
+    VLMPanelModels *o = (VLMPanelModels *)[self.items objectAtIndex:index];
+    NSInteger selectedind = [[o.sourceNode objectForKey:@"selected"] integerValue];
+    VLMPanelModel *m = (VLMPanelModel *)[o.models objectAtIndex:selectedind];
+    return m.name;
+}
+
+
+
 @end

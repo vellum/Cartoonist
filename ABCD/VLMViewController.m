@@ -445,7 +445,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	     // [self.collectionView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.collectionView.numberOfSections)]];
 	 } completion:^(BOOL finished) {
 		 [self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * self.secretScrollview.frame.size.height)];
-         [self setShouldPreventZoomOut:NO];
+		 [self setShouldPreventZoomOut:NO];
 	 }];
 
 #else
@@ -487,11 +487,15 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	BOOL nextPageIsZoomedOut = NO;
 	CGFloat zoomedoutscale = CHOICE_SCALE;
 
+
 	if (delta > 0)
 	{
 		if (fabs(delta) < 1)
 		{
 			nextPageIsZoomedOut = [self.dataSource isItemAtIndexChoice:currentPage + 1];
+
+			NSString *nextLabel = [self.dataSource labelAtIndex:(self.currentPage + 1)];
+
 			if (!currentPageIsZoomedOut)
 			{
 				if (nextPageIsZoomedOut)
@@ -506,6 +510,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 						s = 1.0f;
 					}
 					[self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
+					[self.overlay setTextNoAnimation:nextLabel];
 					[self.overlay setAlpha:delta];
 				}
 			}
@@ -542,10 +547,14 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 			{
 				if (nextPageIsZoomedOut)
 				{
+					NSString *nextLabel = [self.dataSource labelAtIndex:(self.currentPage - 1)];
+
 					CGFloat s = zoomedoutscale + (1 - zoomedoutscale) * (1 - fabs(delta));
 					CATransform3D t = CATransform3DScale(CATransform3DIdentity, s, s, 1.0f);
 					[self.collectionView.layer setTransform:t];
 					[self.overlay setAlpha:fabs(delta)];
+
+					[self.overlay setTextNoAnimation:nextLabel];
 				}
 			}
 			else
@@ -596,7 +605,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    // hack! reset this flag. for some reason it isn't getting reset properly
+	// hack! reset this flag. for some reason it isn't getting reset properly
 	[self setShouldPreventZoomOut:NO];
 
 	if (self.zoomMode != kZoomNormal)
