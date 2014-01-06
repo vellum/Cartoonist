@@ -37,7 +37,9 @@
 		[self.topLevelPanGestureRecognizer setDelegate:self];
 		[self addGestureRecognizer:self.topLevelPanGestureRecognizer];
 		[self setRecognizedDirection:FUCKING_UNKNOWN];
-		[self setShouldRecognizeHorizontalPans:YES];
+		
+        //[self setShouldRecognizeHorizontalPans:YES];
+        [self enableHorizontalPan:NO];
 
 		UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
 		[self addGestureRecognizer:pinch];
@@ -60,7 +62,7 @@
 		default :
 			break;
 	}
-	CGFloat threshold = 1;                                                                                                                                                                                                                                                                    // 0.125f;
+	CGFloat threshold = 1;                                                                                                                                                                                                                                                                            // 0.125f;
 	if ([pgr scale] < 1 - threshold || [pgr scale] > 1 + threshold)
 	{
 		[pgr setEnabled:NO];
@@ -104,7 +106,7 @@
 			break;
 		default :
 			break;
-	}                         // end switch
+	}                                 // end switch
 
 	if (self.recognizedDirection == FUCKING_UNKNOWN)
 	{
@@ -236,9 +238,10 @@
 		if (self.horizontalPanGestureRecognizer)
 		{
 			[self.horizontalPanGestureRecognizer setEnabled:YES];
-            if (![self.gestureRecognizers containsObject:self.horizontalPanGestureRecognizer]) {
-                [self addGestureRecognizer:self.horizontalPanGestureRecognizer];
-            }
+			if (![self.gestureRecognizers containsObject:self.horizontalPanGestureRecognizer])
+			{
+				[self addGestureRecognizer:self.horizontalPanGestureRecognizer];
+			}
 		}
 	}
 	else
@@ -247,9 +250,10 @@
 		if (self.horizontalPanGestureRecognizer)
 		{
 			[self.horizontalPanGestureRecognizer setEnabled:NO];
-            if ([self.gestureRecognizers containsObject:self.horizontalPanGestureRecognizer]) {
-                [self removeGestureRecognizer:self.horizontalPanGestureRecognizer];
-            }
+			if ([self.gestureRecognizers containsObject:self.horizontalPanGestureRecognizer])
+			{
+				[self removeGestureRecognizer:self.horizontalPanGestureRecognizer];
+			}
 		}
 	}
 }
