@@ -60,7 +60,7 @@
 		default :
 			break;
 	}
-	CGFloat threshold = 1;                                                                                                                                                                                                                                            // 0.125f;
+	CGFloat threshold = 1;                                                                                                                                                                                                                                                                    // 0.125f;
 	if ([pgr scale] < 1 - threshold || [pgr scale] > 1 + threshold)
 	{
 		[pgr setEnabled:NO];
@@ -75,16 +75,10 @@
 
 - (void)handleTopLevelPans:(UIPanGestureRecognizer *)pgr
 {
-    
 	switch (pgr.state)
 	{
 		// when the pan starts or ends, make sure we reset the state
 		case UIGestureRecognizerStateBegan :
-        if(!self.shouldRecognizeHorizontalPans){
-            [self.topLevelPanGestureRecognizer setEnabled:NO];
-			[self.topLevelPanGestureRecognizer setEnabled:YES];
-
-        }
 			[self setRecognizedDirection:FUCKING_UNKNOWN];
 			if (self.horizontalPanGestureRecognizer && !self.horizontalPanGestureRecognizer.enabled)
 			{
@@ -110,7 +104,7 @@
 			break;
 		default :
 			break;
-	} // end switch
+	}                         // end switch
 
 	if (self.recognizedDirection == FUCKING_UNKNOWN)
 	{
@@ -235,6 +229,29 @@
 - (void)enableHorizontalPan:(BOOL)shouldEnable
 {
 	[self setShouldRecognizeHorizontalPans:shouldEnable];
+	if (shouldEnable)
+	{
+		[self.topLevelPanGestureRecognizer setEnabled:NO];
+		[self.topLevelPanGestureRecognizer setEnabled:YES];
+		if (self.horizontalPanGestureRecognizer)
+		{
+			[self.horizontalPanGestureRecognizer setEnabled:YES];
+            if (![self.gestureRecognizers containsObject:self.horizontalPanGestureRecognizer]) {
+                [self addGestureRecognizer:self.horizontalPanGestureRecognizer];
+            }
+		}
+	}
+	else
+	{
+		[self.topLevelPanGestureRecognizer setEnabled:NO];
+		if (self.horizontalPanGestureRecognizer)
+		{
+			[self.horizontalPanGestureRecognizer setEnabled:NO];
+            if ([self.gestureRecognizers containsObject:self.horizontalPanGestureRecognizer]) {
+                [self removeGestureRecognizer:self.horizontalPanGestureRecognizer];
+            }
+		}
+	}
 }
 
 #pragma mark - UIGestureRecognizerDelegate
