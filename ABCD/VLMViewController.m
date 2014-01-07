@@ -36,7 +36,6 @@ typedef enum
 @property CGFloat screensizeMultiplier;
 @property CGPoint lastKnownContentOffset;
 @property BOOL isArtificiallyScrolling;
-@property BOOL shouldPreventZoomOut;
 @property NSInteger lastKnownChoicePage;
 @end
 
@@ -50,7 +49,6 @@ typedef enum
 @synthesize zoomMode;
 @synthesize zoomEnabled;
 @synthesize screensizeMultiplier;
-@synthesize shouldPreventZoomOut;
 
 static NSString *CellIdentifier = @"CellIdentifier";
 static NSString *HeaderIdentifier = @"HeaderIdentifier";
@@ -71,7 +69,6 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	[self setZoomEnabled:YES];
 	[self setScreensizeMultiplier:2.0f];
 	[self setIsArtificiallyScrolling:NO];
-	[self setShouldPreventZoomOut:NO];
 }
 
 - (void)viewDidLoad
@@ -289,7 +286,6 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		}
 		else
 		{
-			//[self setShouldPreventZoomOut:YES];
 			[self.overlay setAlpha:primaryAlpha forText:primary andAlpha:secondaryAlpha forText2:secondary];
 		}
 	};
@@ -433,10 +429,6 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 - (void)handleTap:(UITapGestureRecognizer *)sender
 {
-	if (self.shouldPreventZoomOut)
-	{
-		return;
-	}
 	if (self.zoomMode == kZoomNormal)
 	{
 		[self switchZoom:kZoomZoomedOut targetPage:-1];
@@ -462,53 +454,16 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 - (void)needsUpdateContent:(NSNotification *)notification
 {
-	//[self setShouldPreventZoomOut:YES];
     [self refresh];
 }
 
 - (void)refresh
 {
-    //[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(ensureTapRestored) object:nil];
-    //[self performSelector:@selector(ensureTapRestored) withObject:nil afterDelay:0.5f];
     [self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * self.secretScrollview.frame.size.height)];
     [self.collectionView reloadData];
-    [self ensureTapRestored];
     return;
-    
-    
-    // TRIED LOTS OF STUFF THAT SEEMED TO WORK EXCEPT WITH PROBS
-    [self.collectionView performBatchUpdates:^{
-        /*
-         [self.collectionView reloadData];
-         
-        for (NSInteger i = self.lastKnownChoicePage; i < [self.dataSource numberOfSectionsInCollectionView:self.collectionView]; i++) {
-            if (![self.dataSource isItemAtIndexChoice:i]) {
-                [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:i]];
-            }
-        }
-         //*/
-        //[self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
-        
-        
-        [self.collectionView reloadData];
-        for (NSIndexPath *path in [self.collectionView indexPathsForVisibleItems]) {
-            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:path.section]];
-        }
-        
-        //[self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
-
-
-    } completion:^(BOOL finished) {
-        [self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * self.secretScrollview.frame.size.height)];
-        [self ensureTapRestored];
-    }];
 }
 
-- (void)ensureTapRestored
-{
-    NSLog(@"ensure tap restored");
-    [self setShouldPreventZoomOut:NO];
-}
 
 #pragma mark - Secret Scrollview Delegate
 
@@ -660,9 +615,6 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-	// hack! reset this flag. for some reason it isn't getting reset properly
-	//[self setShouldPreventZoomOut:NO];
-    
 	if (self.zoomMode != kZoomNormal)
 	{
 		return;
