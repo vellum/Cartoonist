@@ -451,14 +451,14 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 - (void)refresh
 {
+    NSInteger choiceIndex = self.currentPage;
+    
     [self.collectionView performBatchUpdates:^{
         [self.collectionView reloadData];
-        //[self.collectionView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.currentPage+1, [self.dataSource numberOfSectionsInCollectionView:self.collectionView])]];
-        
-        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:self.currentPage+1]];
+        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:choiceIndex+1]];
 
-        if (self.currentPage+2<[self.dataSource numberOfSectionsInCollectionView:self.collectionView]-1) {
-            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:self.currentPage+2]];
+        if (choiceIndex+2<[self.dataSource numberOfSectionsInCollectionView:self.collectionView]-1) {
+            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:choiceIndex+2]];
         }
 
     } completion:^(BOOL finished) {
