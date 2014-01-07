@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD0213B1187BB63800E113DA /* VLMSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = BD0213B0187BB63800E113DA /* VLMSpinner.m */; };
 		BD47DFD9185A71150048925D /* VLMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BD47DFD8185A71150048925D /* VLMParser.m */; };
 		BD8C6E01185969ED005FA217 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = BD8C6E00185969ED005FA217 /* data.json */; };
 		BD8FD83918401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */; };
@@ -33,6 +34,8 @@
 
 /* Begin PBXFileReference section */
 		4987A15EBCA94D2E935D6AC9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD0213AF187BB63800E113DA /* VLMSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMSpinner.h; sourceTree = "<group>"; };
+		BD0213B0187BB63800E113DA /* VLMSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMSpinner.m; sourceTree = "<group>"; };
 		BD3451C0186623B800D6B6A4 /* VLMConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMConstants.h; sourceTree = "<group>"; };
 		BD47DFD7185A71150048925D /* VLMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMParser.h; sourceTree = "<group>"; };
 		BD47DFD8185A71150048925D /* VLMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMParser.m; sourceTree = "<group>"; };
@@ -135,6 +138,8 @@
 				BDB3BB95184D484200F59AE1 /* VLMNarrationCaption.m */,
 				BDB942511879D8E20010E350 /* VLMPaddedLabel.h */,
 				BDB942521879D8E20010E350 /* VLMPaddedLabel.m */,
+				BD0213AF187BB63800E113DA /* VLMSpinner.h */,
+				BD0213B0187BB63800E113DA /* VLMSpinner.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -329,6 +334,7 @@
 				BD8FD83F1840877C00C8B9C6 /* VLMGradient.m in Sources */,
 				BD8FD83C18402F5D00C8B9C6 /* VLMCaptureView.m in Sources */,
 				BD8FD83918401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m in Sources */,
+				BD0213B1187BB63800E113DA /* VLMSpinner.m in Sources */,
 				BDB942531879D8E20010E350 /* VLMPaddedLabel.m in Sources */,
 				BDB3BB921849B6C600F59AE1 /* VLMDataSource.m in Sources */,
 				BDD0AE0B183D51E800BF0CE6 /* VLMPanelModel.m in Sources */,

@@ -15,7 +15,7 @@
 #import "VLMViewController.h"
 #import "VLMPanelModels.h"
 #import "VLMConstants.h"
-
+#import "VLMSpinner.h"
 // #define FUCKTARDMOFO 1
 
 typedef enum
@@ -37,6 +37,10 @@ typedef enum
 @property CGPoint lastKnownContentOffset;
 @property BOOL isArtificiallyScrolling;
 @property NSInteger lastKnownChoicePage;
+@property (nonatomic, strong) VLMSpinner *spinner;
+
+@property CGRect fuckA;
+@property CGRect fuckB;
 @end
 
 @implementation VLMViewController
@@ -100,6 +104,15 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     
 	// touch capture view detects kinds of gestures and decides what behavior to trigger
 	[self setupCaptureView];
+    
+    CGFloat side = 36.0f;
+    CGRect spinframe = CGRectMake(self.capture.frame.size.width/2.0f-side/2.0f, self.capture.frame.size.height - side * 3.5f, side, side);
+
+    self.fuckA = spinframe;
+    self.fuckB = CGRectMake(spinframe.origin.x, self.capture.frame.size.height/2.0f + side/4 + kItemSize.height/8.0f, side, side);
+    self.spinner = [[VLMSpinner alloc] initWithFrame:spinframe];
+    
+    [self.view addSubview:self.spinner];
     
 	// listen for decision tree changes
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -350,6 +363,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 							 animations:^{
                                  [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * kItemSize.height)];
                                  [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, CHOICE_SCALE, CHOICE_SCALE, 1.0f)];
+                                 [self.spinner setFrame:self.fuckA];
                              } completion:^(BOOL completed) {
                                  [self.secretScrollview setPagingEnabled:YES];
                                  [self setZoomEnabled:YES];
@@ -374,6 +388,8 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 							 animations:^{
                                  [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * kItemSize.height)];
                                  [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f, 1.0f, 1.0f)];
+                                 [self.spinner setFrame:self.fuckA];
+
                              } completion:^(BOOL completed) {
                                  [self.secretScrollview setPagingEnabled:YES];
                                  [self setZoomEnabled:YES];
@@ -413,6 +429,8 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
                              [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f / self.screensizeMultiplier, 1.0f / self.screensizeMultiplier, 1.0f)];
                              
                              [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * kItemSize.height)];
+                             [self.spinner setFrame:self.fuckB];
+
                          } completion:^(BOOL completed) {
                              [self setZoomEnabled:YES];
                          }
@@ -437,7 +455,11 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	{
         CGPoint hit = [sender locationInView:self.collectionView];
         //NSLog(@"hit point %f, %f", hit.x, hit.y);
-        hit.x = self.collectionView.frame.size.width/2.0f;
+        
+        // uncomment to allow whitespace hits
+        //hit.x = self.collectionView.frame.size.width/2.0f;
+        
+        
         NSIndexPath *hitpath = [self.collectionView indexPathForItemAtPoint:hit];
         //NSLog(@"hit %d", hitpath.section);
         if (hitpath) {
@@ -454,13 +476,16 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 - (void)needsUpdateContent:(NSNotification *)notification
 {
-    [self refresh];
+    [self.spinner show];
+    [self performSelector:@selector(refresh) withObject:nil afterDelay:0.001f];
+    //[self refresh];
 }
 
 - (void)refresh
 {
     [self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * self.secretScrollview.frame.size.height)];
     [self.collectionView reloadData];
+    [self.spinner hideWithDelay:0.4f];
     return;
 }
 

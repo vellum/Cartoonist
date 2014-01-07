@@ -165,7 +165,7 @@
 			break;
 
 		case kCellTypeWireframe :
-			[self.label setBackgroundColor:[UIColor blackColor]];
+			[self.label setBackgroundColor:[UIColor lightGrayColor]];
 			self.caption.hidden = YES;
 			self.imageview.hidden = YES;
 			break;

@@ -122,6 +122,9 @@
         if (self.checkOverviewBlock) {
             isZoomOverview = self.checkOverviewBlock();
         }
+        if (isZoomOverview) {
+            //deadzone = CGSizeMake(1000.0f, 0);
+        }
 
 		// vertical pans will cancel this gesture recognizer
 		// and let the scrollview's recognizer to take over

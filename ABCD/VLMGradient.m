@@ -56,9 +56,9 @@
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 	CGContextRef context = UIGraphicsGetCurrentContext();
 
-	NSArray *gradientColors = [NSArray arrayWithObjects:(id) [UIColor clearColor].CGColor, [UIColor blackColor].CGColor, nil];
+	NSArray *gradientColors = [NSArray arrayWithObjects:(id) [UIColor clearColor].CGColor, [UIColor colorWithWhite:0.0f alpha:0.9f].CGColor, nil];
 
-	CGFloat gradientLocations[] = { 0, 0.75, 1 };
+	CGFloat gradientLocations[] = { 0, 0.3 };
 	CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)gradientColors, gradientLocations);
 
 	CGPoint midPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
