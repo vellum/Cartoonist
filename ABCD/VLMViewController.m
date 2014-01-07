@@ -289,7 +289,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		}
 		else
 		{
-			[self setShouldPreventZoomOut:YES];
+			//[self setShouldPreventZoomOut:YES];
 			[self.overlay setAlpha:primaryAlpha forText:primary andAlpha:secondaryAlpha forText2:secondary];
 		}
 	};
@@ -462,14 +462,16 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 - (void)needsUpdateContent:(NSNotification *)notification
 {
-	[self setShouldPreventZoomOut:YES];
+	//[self setShouldPreventZoomOut:YES];
     [self refresh];
 }
 
 - (void)refresh
 {
-    [self.collectionView reloadData];
+    //[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(ensureTapRestored) object:nil];
+    //[self performSelector:@selector(ensureTapRestored) withObject:nil afterDelay:0.5f];
     [self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * self.secretScrollview.frame.size.height)];
+    [self.collectionView reloadData];
     [self ensureTapRestored];
     return;
     
@@ -659,7 +661,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
 	// hack! reset this flag. for some reason it isn't getting reset properly
-	[self setShouldPreventZoomOut:NO];
+	//[self setShouldPreventZoomOut:NO];
     
 	if (self.zoomMode != kZoomNormal)
 	{
