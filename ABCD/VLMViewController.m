@@ -182,11 +182,11 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
             {
                 if (zoomAmount < 1)
                 {
-                    [self switchZoom:kZoomZoomedOut];
+                    [self switchZoom:kZoomZoomedOut targetPage:-1];
                 }
                 else
                 {
-                    [self switchZoom:kZoomNormal];
+                    [self switchZoom:kZoomNormal targetPage:-1];
                 }
             }
             break;
@@ -220,11 +220,11 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
             {
                 if (zoomAmount < 1)
                 {
-                    [self switchZoom:kZoomZoomedOut];
+                    [self switchZoom:kZoomZoomedOut targetPage:-1];
                 }
                 else
                 {
-                    [self switchZoom:kZoomNormal];
+                    [self switchZoom:kZoomNormal targetPage:-1];
                 }
             }
             break;
@@ -311,7 +311,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 #pragma mark - () & Event Handling
 
-- (void)switchZoom:(ZoomMode)mode
+- (void)switchZoom:(ZoomMode)mode targetPage:(NSInteger)targetPage
 {
 	if (mode == self.zoomMode)
 	{
@@ -323,6 +323,9 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	CGRect frame = UIScreen.mainScreen.bounds;
 	CGFloat page = roundf(self.secretScrollview.contentOffset.y / kItemSize.height);
     
+    if (targetPage > -1) {
+        page = targetPage;
+    }
 	if (self.zoomMode == kZoomNormal)
 	{
 		[self.capture enableHorizontalPan:NO];
@@ -428,7 +431,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	}
 }
 
-- (void)handleTap:(id)sender
+- (void)handleTap:(UITapGestureRecognizer *)sender
 {
 	if (self.shouldPreventZoomOut)
 	{
@@ -436,11 +439,24 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	}
 	if (self.zoomMode == kZoomNormal)
 	{
-		[self switchZoom:kZoomZoomedOut];
+		[self switchZoom:kZoomZoomedOut targetPage:-1];
 	}
 	else
 	{
-		[self switchZoom:kZoomNormal];
+        CGPoint hit = [sender locationInView:self.collectionView];
+        //NSLog(@"hit point %f, %f", hit.x, hit.y);
+        hit.x = self.collectionView.frame.size.width/2.0f;
+        NSIndexPath *hitpath = [self.collectionView indexPathForItemAtPoint:hit];
+        //NSLog(@"hit %d", hitpath.section);
+        if (hitpath) {
+            self.currentPage = hitpath.section;
+            if ([self.dataSource isItemAtIndexPathChoice:hitpath]) {
+                self.lastKnownChoicePage = hitpath.section;
+            }
+            [self switchZoom:kZoomNormal targetPage:hitpath.section];
+        } else {
+            //[self switchZoom:kZoomNormal targetPage:-1];
+        }
 	}
 }
 
@@ -452,14 +468,33 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 - (void)refresh
 {
+    [self.collectionView reloadData];
+    [self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * self.secretScrollview.frame.size.height)];
+    [self ensureTapRestored];
+    return;
+    
+    
+    // TRIED LOTS OF STUFF THAT SEEMED TO WORK EXCEPT WITH PROBS
     [self.collectionView performBatchUpdates:^{
-        [self.collectionView reloadData];
-
+        /*
+         [self.collectionView reloadData];
+         
         for (NSInteger i = self.lastKnownChoicePage; i < [self.dataSource numberOfSectionsInCollectionView:self.collectionView]; i++) {
             if (![self.dataSource isItemAtIndexChoice:i]) {
                 [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:i]];
             }
         }
+         //*/
+        //[self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
+        
+        
+        [self.collectionView reloadData];
+        for (NSIndexPath *path in [self.collectionView indexPathsForVisibleItems]) {
+            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:path.section]];
+        }
+        
+        //[self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
+
 
     } completion:^(BOOL finished) {
         [self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * self.secretScrollview.frame.size.height)];
