@@ -37,7 +37,7 @@ typedef enum
 @property CGPoint lastKnownContentOffset;
 @property BOOL isArtificiallyScrolling;
 @property BOOL shouldPreventZoomOut;
-
+@property NSInteger lastKnownChoicePage;
 @end
 
 @implementation VLMViewController
@@ -283,6 +283,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	};
     
 	ScrollPageBlock scrollPageBlock = ^(CGFloat primaryAlpha, NSString *primary, CGFloat secondaryAlpha, NSString *secondary) {
+        self.lastKnownChoicePage = self.currentPage;
 		if (self.zoomMode != kZoomNormal)
 		{
 		}
@@ -451,14 +452,13 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 - (void)refresh
 {
-    NSInteger choiceIndex = self.currentPage;
-    
     [self.collectionView performBatchUpdates:^{
         [self.collectionView reloadData];
-        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:choiceIndex+1]];
 
-        if (choiceIndex+2<[self.dataSource numberOfSectionsInCollectionView:self.collectionView]-1) {
-            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:choiceIndex+2]];
+        for (NSInteger i = self.lastKnownChoicePage; i < [self.dataSource numberOfSectionsInCollectionView:self.collectionView]; i++) {
+            if (![self.dataSource isItemAtIndexChoice:i]) {
+                [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:i]];
+            }
         }
 
     } completion:^(BOOL finished) {
