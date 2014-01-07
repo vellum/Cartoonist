@@ -400,7 +400,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	}
 	else
 	{
-		[self.capture enableHorizontalPan:YES];
+		[self.capture enableHorizontalPan:NO];
 		[self.secretScrollview setPagingEnabled:NO];
 		if ([self.dataSource isItemAtIndexChoice:page])
 		{
@@ -477,14 +477,15 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 - (void)needsUpdateContent:(NSNotification *)notification
 {
     [self.spinner show];
+    [self.capture resetHGR];
     [self performSelector:@selector(refresh) withObject:nil afterDelay:0.001f];
-    //[self refresh];
 }
 
 - (void)refresh
 {
     [self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * self.secretScrollview.frame.size.height)];
     [self.collectionView reloadData];
+    //[self checkHorizontalPanEnabled];
     [self.spinner hideWithDelay:0.4f];
     return;
 }
@@ -661,7 +662,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
             [self.capture enableHorizontalPan:NO];
         }
     } else {
-        [self.capture enableHorizontalPan:YES];
+        [self.capture enableHorizontalPan:NO];
     }
 }
 

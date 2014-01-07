@@ -78,10 +78,18 @@
 
 - (void)handleTopLevelPans:(UIPanGestureRecognizer *)pgr
 {
+    BOOL isZoomOverview = NO;
+    if (self.checkOverviewBlock) {
+        isZoomOverview = self.checkOverviewBlock();
+    }
+    
+
 	switch (pgr.state)
 	{
 		// when the pan starts or ends, make sure we reset the state
 		case UIGestureRecognizerStateBegan :
+            
+
 			[self setRecognizedDirection:FUCKING_UNKNOWN];
 			if (self.horizontalPanGestureRecognizer && !self.horizontalPanGestureRecognizer.enabled)
 			{
@@ -118,13 +126,6 @@
 		// this is a generous allowance for which we ignore wiggly movement
 		CGSize deadzone = DEAD_ZONE;
         
-        BOOL isZoomOverview = NO;
-        if (self.checkOverviewBlock) {
-            isZoomOverview = self.checkOverviewBlock();
-        }
-        if (isZoomOverview) {
-            //deadzone = CGSizeMake(1000.0f, 0);
-        }
 
 		// vertical pans will cancel this gesture recognizer
 		// and let the scrollview's recognizer to take over
@@ -266,7 +267,18 @@
 		}
 	}
 }
-
+- (void)resetHGR
+{
+    [self.topLevelPanGestureRecognizer setEnabled:NO];
+    [self.topLevelPanGestureRecognizer setEnabled:YES];
+    if (self.horizontalPanGestureRecognizer)
+    {
+        [self.horizontalPanGestureRecognizer setEnabled:NO];
+        [self.horizontalPanGestureRecognizer setEnabled:YES];
+        [self.horizontalPanGestureRecognizer setEnabled:NO];
+        [self removeAnyHorizontalGestureRecognizers];
+    }
+}
 #pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer

@@ -20,5 +20,5 @@ typedef BOOL (^CheckOverviewBlock)();
 - (void)addVerticalGestureRecognizer:(UIPanGestureRecognizer *)panGestureRecognizer;
 - (void)removeAnyHorizontalGestureRecognizers;
 - (void)enableHorizontalPan:(BOOL)shouldEnable;
-
+- (void)resetHGR;
 @end
