@@ -8,7 +8,8 @@
 
 #import "VLMAppDelegate.h"
 #import "VLMViewController.h"
-#define PRINT_AVAILABLE_FONT_NAMES 1
+//#define PRINT_AVAILABLE_FONT_NAMES 1
+
 @implementation VLMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

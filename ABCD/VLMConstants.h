@@ -18,8 +18,14 @@
 #define FUCKING_VERTICAL   1
 #define FUCKING_HORIZONTAL 2
 
-#define FONT_WIREFRAME [UIFont fontWithName:@"Draftsman" size:12.0f]
+#define FONT_WIREFRAME [UIFont fontWithName:@"Draftsman" size:14.0f]
 #define USE_ALL_CAPS YES
-
+#define FONT_LINE_SPACING 6.0f
 //#define FONT_WIREFRAME [UIFont fontWithName:@"Architect_Regular" size:18.0f]
 //#define USE_ALL_CAPS NO
+
+#define kItemPadding       9.0f
+#define kItemPaddingBottom 9.0f
+#define kItemSize          [VLMCollectionViewCell idealItemSize]
+#define kItemSizeIphone    CGSizeMake(320, 568.0f - 2.0f * (9.0f + 9.0f))
+#define kItemSizeIpad      CGSizeMake(768.0f, 1024.0f - 2.0f * (9.0f + 9.0f))

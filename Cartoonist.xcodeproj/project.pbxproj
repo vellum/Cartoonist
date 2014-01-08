@@ -11,6 +11,8 @@
 		BD47DFD9185A71150048925D /* VLMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BD47DFD8185A71150048925D /* VLMParser.m */; };
 		BD4F5C49187D0C9400BAD2AB /* Draftsman.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD4F5C47187D0C9400BAD2AB /* Draftsman.ttf */; };
 		BD4F5C4A187D0C9400BAD2AB /* ARCHITEC.TTF in Resources */ = {isa = PBXBuildFile; fileRef = BD4F5C48187D0C9400BAD2AB /* ARCHITEC.TTF */; };
+		BD4F5C4D187D488C00BAD2AB /* VLMAnimButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5C4C187D488C00BAD2AB /* VLMAnimButton.m */; };
+		BD4F5C50187D6A8800BAD2AB /* VLMInstructionControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5C4F187D6A8800BAD2AB /* VLMInstructionControllerViewController.m */; };
 		BD8C6E01185969ED005FA217 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = BD8C6E00185969ED005FA217 /* data.json */; };
 		BD8FD83918401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */; };
 		BD8FD83C18402F5D00C8B9C6 /* VLMCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83B18402F5D00C8B9C6 /* VLMCaptureView.m */; };
@@ -43,6 +45,10 @@
 		BD47DFD8185A71150048925D /* VLMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMParser.m; sourceTree = "<group>"; };
 		BD4F5C47187D0C9400BAD2AB /* Draftsman.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Draftsman.ttf; path = ABCD/Draftsman.ttf; sourceTree = "<group>"; };
 		BD4F5C48187D0C9400BAD2AB /* ARCHITEC.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = ARCHITEC.TTF; path = ABCD/ARCHITEC.TTF; sourceTree = "<group>"; };
+		BD4F5C4B187D488C00BAD2AB /* VLMAnimButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMAnimButton.h; sourceTree = "<group>"; };
+		BD4F5C4C187D488C00BAD2AB /* VLMAnimButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMAnimButton.m; sourceTree = "<group>"; };
+		BD4F5C4E187D6A8800BAD2AB /* VLMInstructionControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMInstructionControllerViewController.h; sourceTree = "<group>"; };
+		BD4F5C4F187D6A8800BAD2AB /* VLMInstructionControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMInstructionControllerViewController.m; sourceTree = "<group>"; };
 		BD8C6E00185969ED005FA217 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		BD8FD83718401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCollectionViewCellWithChoices.h; sourceTree = "<group>"; };
 		BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCollectionViewCellWithChoices.m; sourceTree = "<group>"; };
@@ -132,6 +138,8 @@
 			children = (
 				BDD0AE01183D479900BF0CE6 /* VLMViewController.h */,
 				BDD0AE02183D479900BF0CE6 /* VLMViewController.m */,
+				BD4F5C4E187D6A8800BAD2AB /* VLMInstructionControllerViewController.h */,
+				BD4F5C4F187D6A8800BAD2AB /* VLMInstructionControllerViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -153,6 +161,8 @@
 				BDB942521879D8E20010E350 /* VLMPaddedLabel.m */,
 				BD0213AF187BB63800E113DA /* VLMSpinner.h */,
 				BD0213B0187BB63800E113DA /* VLMSpinner.m */,
+				BD4F5C4B187D488C00BAD2AB /* VLMAnimButton.h */,
+				BD4F5C4C187D488C00BAD2AB /* VLMAnimButton.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -348,6 +358,7 @@
 				BDA1F987184E69F500C4AC57 /* VLMPanelModels.m in Sources */,
 				BDD0AE12183EBFB100BF0CE6 /* VLMSinglePanelFlowLayout.m in Sources */,
 				BD8FD83F1840877C00C8B9C6 /* VLMGradient.m in Sources */,
+				BD4F5C4D187D488C00BAD2AB /* VLMAnimButton.m in Sources */,
 				BD8FD83C18402F5D00C8B9C6 /* VLMCaptureView.m in Sources */,
 				BD8FD83918401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m in Sources */,
 				BD0213B1187BB63800E113DA /* VLMSpinner.m in Sources */,
@@ -361,6 +372,7 @@
 				BDD0AE03183D479900BF0CE6 /* VLMViewController.m in Sources */,
 				BDB3BB8E1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m in Sources */,
 				BDB3BB96184D484200F59AE1 /* VLMNarrationCaption.m in Sources */,
+				BD4F5C50187D6A8800BAD2AB /* VLMInstructionControllerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,6 +475,7 @@
 				GCC_PREFIX_HEADER = "ABCD/Cartoonist-Prefix.pch";
 				INFOPLIST_FILE = "ABCD/Cartoonist-Info.plist";
 				PRODUCT_NAME = Cartoonist;
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -478,6 +491,7 @@
 				GCC_PREFIX_HEADER = "ABCD/Cartoonist-Prefix.pch";
 				INFOPLIST_FILE = "ABCD/Cartoonist-Info.plist";
 				PRODUCT_NAME = Cartoonist;
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

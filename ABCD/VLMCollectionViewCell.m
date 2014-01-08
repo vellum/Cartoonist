@@ -48,6 +48,8 @@
 	self.coverFrame = CGRectMake(pad, -3.0f, kItemSize.width - pad * 2, kItemSize.height - kItemPaddingBottom + pad + 3.0f);
 	self.normalFrame = CGRectMake(pad, pad, kItemSize.width - pad * 2, kItemSize.height - kItemPaddingBottom);
 
+    NSLog(@"cover %f,%f", self.coverFrame.size.width, self.coverFrame.size.height);
+    
 	UIView *baseView = [[UIView alloc] initWithFrame:self.normalFrame];
 	[baseView setBackgroundColor:[UIColor clearColor]];
 	// [baseView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
@@ -147,12 +149,18 @@
 
 	if ([model.name length] > 0)
 	{
+        NSString *labelText;
         if (USE_ALL_CAPS) {
-            [self.label setText:[model.name uppercaseString]];
+            labelText = [model.name uppercaseString];
         } else {
-            [self.label setText:model.name];
+            labelText = model.name;
         }
-		
+        NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:labelText];
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        [paragraphStyle setLineSpacing:FONT_LINE_SPACING];
+        [paragraphStyle setAlignment:NSTextAlignmentCenter];
+        [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [labelText length])];
+        self.label.attributedText = attributedString;
 	}
 	self.cellType = model.cellType;
 
@@ -162,6 +170,7 @@
 			[self.label setBackgroundColor:[UIColor clearColor]];
 			self.caption.hidden = NO;
 			self.imageview.hidden = NO;
+            self.label.hidden = YES;
 			if (model.image)
 			{
 				[self.imageview setImage:model.image];
@@ -171,6 +180,7 @@
 		case kCellTypeNoCaption :
 			[self.label setBackgroundColor:[UIColor clearColor]];
 			self.caption.hidden = YES;
+            self.label.hidden = YES;
 			self.imageview.hidden = NO;
 			if (model.image)
 			{
@@ -182,6 +192,7 @@
 			[self.label setBackgroundColor:[UIColor blackColor]];
 			self.caption.hidden = YES;
 			self.imageview.hidden = YES;
+            self.label.hidden = NO;
 			break;
 
 		default :

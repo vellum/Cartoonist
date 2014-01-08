@@ -16,7 +16,7 @@
 #import "VLMPanelModels.h"
 #import "VLMConstants.h"
 #import "VLMSpinner.h"
-// #define FUCKTARDMOFO 1
+#import "VLMAnimButton.h"
 
 typedef enum
 {
@@ -38,6 +38,7 @@ typedef enum
 @property BOOL isArtificiallyScrolling;
 @property NSInteger lastKnownChoicePage;
 @property (nonatomic, strong) VLMSpinner *spinner;
+@property (nonatomic, strong) VLMAnimButton *qbutton;
 
 @property CGRect fuckA;
 @property CGRect fuckB;
@@ -57,6 +58,8 @@ typedef enum
 static NSString *CellIdentifier = @"CellIdentifier";
 static NSString *HeaderIdentifier = @"HeaderIdentifier";
 static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
+
+#define SHOULD_HIT_TEST_TAPS NO
 
 #pragma mark - Boilerplate
 
@@ -111,8 +114,20 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     self.fuckA = spinframe;
     self.fuckB = CGRectMake(spinframe.origin.x, self.capture.frame.size.height/2.0f + side/4 + kItemSize.height/8.0f, side, side);
     self.spinner = [[VLMSpinner alloc] initWithFrame:spinframe];
-    
     [self.view addSubview:self.spinner];
+    
+    
+    [self setQbutton:[[VLMAnimButton alloc] initWithFrame:
+                      CGRectMake(self.capture.frame.size.width/2.0f-25.0f,
+                                 self.capture.frame.size.height - (self.capture.frame.size.height-kItemSize.height) - 50.0f - kItemPadding*2,
+                                 50.0f,
+                                 50.0f)
+                      ]];
+    [self.qbutton setImage:[UIImage imageNamed:@"qbutton"] forState:UIControlStateNormal];
+    [self.view addSubview:self.qbutton];
+    
+
+    
     
 	// listen for decision tree changes
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -311,7 +326,10 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		[cell setChoosePageBlock:choosePageBlock];
 		[cell setScrollPageBlock:scrollPageBlock];
 		[cell configureWithModel:panelModels];
-        [self checkHorizontalPanEnabled];
+        
+        if (self.zoomMode != kZoomNormal) {
+            [self checkHorizontalPanEnabled];
+        }
 	};
     
 	VLMDataSource *ds = [[VLMDataSource alloc] initWithCellIdentifier:CellIdentifier cellChoiceIdentifier:CellChoiceIdentifier configureCellBlock:configureCellBlock configureCellChoiceBlock:configureCellChoiceBlock];
@@ -338,6 +356,11 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     }
 	if (self.zoomMode == kZoomNormal)
 	{
+        if (page<1.0f) {
+            [self.qbutton show];
+        }
+        
+        
 		[self.capture enableHorizontalPan:NO];
 		if ([self.dataSource isItemAtIndexChoice:page])
 		{
@@ -401,6 +424,9 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	}
 	else
 	{
+        if (page<1.0f) {
+            [self.qbutton hide];
+        }
 		[self.capture enableHorizontalPan:NO];
 		[self.secretScrollview setPagingEnabled:NO];
 		if ([self.dataSource isItemAtIndexChoice:page])
@@ -454,23 +480,28 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	}
 	else
 	{
-        CGPoint hit = [sender locationInView:self.collectionView];
-        //NSLog(@"hit point %f, %f", hit.x, hit.y);
-        
-        // uncomment to allow whitespace hits
-        //hit.x = self.collectionView.frame.size.width/2.0f;
-        
-        
-        NSIndexPath *hitpath = [self.collectionView indexPathForItemAtPoint:hit];
-        //NSLog(@"hit %d", hitpath.section);
-        if (hitpath) {
-            self.currentPage = hitpath.section;
-            if ([self.dataSource isItemAtIndexPathChoice:hitpath]) {
-                self.lastKnownChoicePage = hitpath.section;
+        if (SHOULD_HIT_TEST_TAPS) {
+            CGPoint hit = [sender locationInView:self.collectionView];
+            //NSLog(@"hit point %f, %f", hit.x, hit.y);
+            
+            // uncomment to allow whitespace hits
+            //hit.x = self.collectionView.frame.size.width/2.0f;
+            
+            
+            NSIndexPath *hitpath = [self.collectionView indexPathForItemAtPoint:hit];
+            //NSLog(@"hit %d", hitpath.section);
+            if (hitpath) {
+                self.currentPage = hitpath.section;
+                if ([self.dataSource isItemAtIndexPathChoice:hitpath]) {
+                    self.lastKnownChoicePage = hitpath.section;
+                }
+                [self switchZoom:kZoomNormal targetPage:hitpath.section];
+            } else {
+                //[self switchZoom:kZoomNormal targetPage:-1];
             }
-            [self switchZoom:kZoomNormal targetPage:hitpath.section];
+            
         } else {
-            //[self switchZoom:kZoomNormal targetPage:-1];
+            [self switchZoom:kZoomNormal targetPage:-1];
         }
 	}
 }
@@ -518,6 +549,20 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	BOOL nextPageIsZoomedOut = NO;
 	CGFloat zoomedoutscale = CHOICE_SCALE;
     
+    if (page<=0.125f) {
+
+        CGFloat qbuttonAlpha = 1 - 8*page;
+        if (qbuttonAlpha<0) {
+            qbuttonAlpha = 0;
+        } else if (qbuttonAlpha>1) {
+            qbuttonAlpha = 1;
+        }
+        [self.qbutton setAlpha:qbuttonAlpha];
+    
+    } else {
+        [self.qbutton setAlpha:0];
+        
+    }
     
 	if (delta > 0)
 	{
@@ -662,6 +707,8 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
         {
             [self.capture enableHorizontalPan:NO];
         }
+
+
     } else {
         [self.capture enableHorizontalPan:NO];
     }

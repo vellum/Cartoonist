@@ -7,12 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#define kItemPadding       9.0f
-#define kItemPaddingBottom 9.0f
-#define kItemSize          [VLMCollectionViewCell idealItemSize]
-#define kItemSizeIphone    CGSizeMake(320, 568.0f - 2.0f * (9.0f + 9.0f))
-#define kItemSizeIpad      CGSizeMake(768.0f, 1024.0f - 2.0f * (9.0f + 9.0f))
-
+#import "VLMConstants.h"
 
 @class VLMPanelModel;
 @class VLMNarrationCaption;
