@@ -311,6 +311,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		[cell setChoosePageBlock:choosePageBlock];
 		[cell setScrollPageBlock:scrollPageBlock];
 		[cell configureWithModel:panelModels];
+        [self checkHorizontalPanEnabled];
 	};
     
 	VLMDataSource *ds = [[VLMDataSource alloc] initWithCellIdentifier:CellIdentifier cellChoiceIdentifier:CellChoiceIdentifier configureCellBlock:configureCellBlock configureCellChoiceBlock:configureCellChoiceBlock];
