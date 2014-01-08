@@ -8,7 +8,7 @@
 
 #import "VLMAppDelegate.h"
 #import "VLMViewController.h"
-
+#define PRINT_AVAILABLE_FONT_NAMES 1
 @implementation VLMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -20,6 +20,16 @@
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+#ifdef PRINT_AVAILABLE_FONT_NAMES
+    for (NSString *family in [UIFont familyNames])
+    {
+        NSLog(@"%@", family);
+        for (NSString *name in [UIFont fontNamesForFamilyName:family]) {
+            NSLog(@"\t\t%@", name);
+        }
+    }
+#endif
     return YES;
 }
 

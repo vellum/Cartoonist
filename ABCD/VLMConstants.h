@@ -17,3 +17,9 @@
 #define FUCKING_UNKNOWN    0
 #define FUCKING_VERTICAL   1
 #define FUCKING_HORIZONTAL 2
+
+#define FONT_WIREFRAME [UIFont fontWithName:@"Draftsman" size:12.0f]
+#define USE_ALL_CAPS YES
+
+//#define FONT_WIREFRAME [UIFont fontWithName:@"Architect_Regular" size:18.0f]
+//#define USE_ALL_CAPS NO

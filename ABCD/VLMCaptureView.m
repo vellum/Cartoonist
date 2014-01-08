@@ -102,16 +102,16 @@
 			[self setRecognizedDirection:FUCKING_UNKNOWN];
 			break;
 		case UIGestureRecognizerStateChanged :
-			NSLog(@"ch");
+			//NSLog(@"ch");
 			break;
 		case UIGestureRecognizerStateEnded :
-			NSLog(@"end");
+			//NSLog(@"end");
 			break;
 		case UIGestureRecognizerStateCancelled :
-			NSLog(@"cancel");
+			//NSLog(@"cancel");
 			break;
 		case UIGestureRecognizerStateFailed :
-			NSLog(@"failed");
+			//NSLog(@"failed");
 			break;
 		default :
 			break;

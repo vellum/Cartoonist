@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		BD0213B1187BB63800E113DA /* VLMSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = BD0213B0187BB63800E113DA /* VLMSpinner.m */; };
 		BD47DFD9185A71150048925D /* VLMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BD47DFD8185A71150048925D /* VLMParser.m */; };
+		BD4F5C49187D0C9400BAD2AB /* Draftsman.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD4F5C47187D0C9400BAD2AB /* Draftsman.ttf */; };
+		BD4F5C4A187D0C9400BAD2AB /* ARCHITEC.TTF in Resources */ = {isa = PBXBuildFile; fileRef = BD4F5C48187D0C9400BAD2AB /* ARCHITEC.TTF */; };
 		BD8C6E01185969ED005FA217 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = BD8C6E00185969ED005FA217 /* data.json */; };
 		BD8FD83918401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */; };
 		BD8FD83C18402F5D00C8B9C6 /* VLMCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83B18402F5D00C8B9C6 /* VLMCaptureView.m */; };
@@ -39,6 +41,8 @@
 		BD3451C0186623B800D6B6A4 /* VLMConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMConstants.h; sourceTree = "<group>"; };
 		BD47DFD7185A71150048925D /* VLMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMParser.h; sourceTree = "<group>"; };
 		BD47DFD8185A71150048925D /* VLMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMParser.m; sourceTree = "<group>"; };
+		BD4F5C47187D0C9400BAD2AB /* Draftsman.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Draftsman.ttf; path = ABCD/Draftsman.ttf; sourceTree = "<group>"; };
+		BD4F5C48187D0C9400BAD2AB /* ARCHITEC.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = ARCHITEC.TTF; path = ABCD/ARCHITEC.TTF; sourceTree = "<group>"; };
 		BD8C6E00185969ED005FA217 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		BD8FD83718401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCollectionViewCellWithChoices.h; sourceTree = "<group>"; };
 		BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCollectionViewCellWithChoices.m; sourceTree = "<group>"; };
@@ -94,6 +98,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BD4F5C42187D0BE900BAD2AB /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				BD4F5C47187D0C9400BAD2AB /* Draftsman.ttf */,
+				BD4F5C48187D0C9400BAD2AB /* ARCHITEC.TTF */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		BD8C6E02185969F4005FA217 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +182,7 @@
 		BDD899B3183C4C39002E089C = {
 			isa = PBXGroup;
 			children = (
+				BD4F5C42187D0BE900BAD2AB /* Fonts */,
 				BD8C6E02185969F4005FA217 /* Data */,
 				BDD899C5183C4C39002E089C /* Cartoonist */,
 				BDD899BE183C4C39002E089C /* Frameworks */,
@@ -286,6 +300,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDD899CA183C4C39002E089C /* InfoPlist.strings in Resources */,
+				BD4F5C49187D0C9400BAD2AB /* Draftsman.ttf in Resources */,
+				BD4F5C4A187D0C9400BAD2AB /* ARCHITEC.TTF in Resources */,
 				BD8C6E01185969ED005FA217 /* data.json in Resources */,
 				BDD899D2183C4C39002E089C /* Images.xcassets in Resources */,
 			);

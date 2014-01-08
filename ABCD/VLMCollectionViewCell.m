@@ -11,6 +11,7 @@
 #import "VLMNarrationCaption.h"
 #import "VLMPanelModel.h"
 #import "VLMPaddedLabel.h"
+#import "VLMConstants.h"
 
 @interface VLMCollectionViewCell ()
 @property (nonatomic) CGRect coverFrame;
@@ -27,6 +28,9 @@
 @synthesize coverFrame;
 @synthesize normalFrame;
 @synthesize cellType;
+
+
+
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -62,7 +66,12 @@
 
 	[self setLabel:[[VLMPaddedLabel alloc] initWithFrame:self.normalFrame]];
 	[self.label setTextColor:[UIColor whiteColor]];
-	[self.label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:36.0f]];
+	//[self.label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:36.0f]];
+    
+    [self.label setFont:FONT_WIREFRAME];
+    
+    
+    
 	[self.label setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
 	[self.label setTextAlignment:NSTextAlignmentCenter];
 	[self.label setAdjustsFontSizeToFitWidth:YES];
@@ -138,7 +147,12 @@
 
 	if ([model.name length] > 0)
 	{
-		[self.label setText:model.name];
+        if (USE_ALL_CAPS) {
+            [self.label setText:[model.name uppercaseString]];
+        } else {
+            [self.label setText:model.name];
+        }
+		
 	}
 	self.cellType = model.cellType;
 
@@ -165,7 +179,7 @@
 			break;
 
 		case kCellTypeWireframe :
-			[self.label setBackgroundColor:[UIColor lightGrayColor]];
+			[self.label setBackgroundColor:[UIColor blackColor]];
 			self.caption.hidden = YES;
 			self.imageview.hidden = YES;
 			break;
