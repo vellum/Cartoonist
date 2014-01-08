@@ -210,7 +210,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
             {
                 if (zoomAmount < 1)
                 {
-                    [self switchZoom:kZoomZoomedOut targetPage:-1];
+                    [self switchZoom:kZoomZoomedOut targetPage:-1 shouldBounce:NO];
                 }
                 else
                 {
@@ -235,7 +235,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
                                          }
                          
                          ];
-                        [self switchZoom:kZoomNormal targetPage:-1];
+                        [self switchZoom:kZoomNormal targetPage:-1 shouldBounce:NO];
                     }
                 }
             }
@@ -281,7 +281,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
                                      }
                      
                      ];
-                    [self switchZoom:kZoomZoomedOut targetPage:-1];
+                    [self switchZoom:kZoomZoomedOut targetPage:-1 shouldBounce:NO];
                 }
                 else
                 {
@@ -306,7 +306,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
                          
                          ];
                     }
-                    [self switchZoom:kZoomNormal targetPage:-1];
+                    [self switchZoom:kZoomNormal targetPage:-1 shouldBounce:NO];
                 }
             }
             break;
@@ -396,7 +396,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 #pragma mark - () & Event Handling
 
-- (void)switchZoom:(ZoomMode)mode targetPage:(NSInteger)targetPage
+- (void)switchZoom:(ZoomMode)mode targetPage:(NSInteger)targetPage shouldBounce:(BOOL)shouldBounce
 {
 	if (mode == self.zoomMode)
 	{
@@ -441,10 +441,15 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 			[self.secretScrollview setContentInset:UIEdgeInsetsZero];
 			[self setZoomEnabled:NO];
             
+            if (shouldBounce) {
+                [self animateBounceZoom:CHOICE_SCALE];
+            }
 			[UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
 							 animations:^{
                                  [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * kItemSize.height)];
-                                 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, CHOICE_SCALE, CHOICE_SCALE, 1.0f)];
+                                 if (!shouldBounce) {
+                                     [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, CHOICE_SCALE, CHOICE_SCALE, 1.0f)];
+                                 }
                                  [self.spinner setFrame:self.fuckA];
                              } completion:^(BOOL completed) {
                                  [self.secretScrollview setPagingEnabled:YES];
@@ -465,11 +470,16 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
             
             
 			[self setZoomEnabled:NO];
-            
+
+            if (shouldBounce) {
+                [self animateBounceZoom:1.0f];
+            }
 			[UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
 							 animations:^{
                                  [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * kItemSize.height)];
-                                 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f, 1.0f, 1.0f)];
+                                 if (!shouldBounce) {
+                                     [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f, 1.0f, 1.0f)];
+                                 }
                                  [self.spinner setFrame:self.fuckA];
 
                              } completion:^(BOOL completed) {
@@ -508,10 +518,17 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
         
 		[self.secretScrollview.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f / self.screensizeMultiplier, 1.0f / self.screensizeMultiplier, 1.0f)];
 		[self setZoomEnabled:NO];
+
+        if (shouldBounce) {
+            [self animateBounceZoom:1.0f/self.screensizeMultiplier];
+        }
         
 		[UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
 						 animations:^{
-                             [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f / self.screensizeMultiplier, 1.0f / self.screensizeMultiplier, 1.0f)];
+                             if (!shouldBounce) {
+                                 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f / self.screensizeMultiplier, 1.0f / self.screensizeMultiplier, 1.0f)];
+                                 
+                             }
                              
                              [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * kItemSize.height)];
                              [self.spinner setFrame:self.fuckB];
@@ -530,11 +547,51 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	}
 }
 
+-(void)animateBounceZoom:(CGFloat)targetZoom
+{
+    CGFloat currentScale = [[self.collectionView.layer valueForKeyPath: @"transform.scale"] floatValue];
+    NSValue * from = [NSNumber numberWithFloat:currentScale];
+    NSValue * to = [NSNumber numberWithFloat:targetZoom];
+    NSString * keypath = @"transform.scale";
+
+    [self.collectionView.layer addAnimation:[self bounceAnimationFrom:from to:to forKeyPath:keypath withDuration:ZOOM_DURATION] forKey:@"bounce"];
+    [self.collectionView.layer setValue:to forKeyPath:keypath];
+}
+
+#pragma mark - CAAnimations
+
+-(CABasicAnimation *)bounceAnimationFrom:(NSValue *)from
+                                      to:(NSValue *)to
+                              forKeyPath:(NSString *)keypath
+                            withDuration:(CFTimeInterval)duration
+{
+    CABasicAnimation * result = [CABasicAnimation animationWithKeyPath:keypath];
+    [result setFromValue:from];
+    [result setToValue:to];
+    [result setDuration:duration];
+    
+    
+    //[result setTimingFunction:[CAMediaTimingFunction functionWithControlPoints:.5 :1.8 :.8 :0.8]];
+    [result setTimingFunction:
+     
+     // gentler but still zippy
+     //[CAMediaTimingFunction functionWithControlPoints:0.52 :1.667 :0.8 :0.8]
+     
+     // not bad
+     [CAMediaTimingFunction functionWithControlPoints:0.52 :1.7 :0.8 :0.8]
+
+     // original version: too zippy
+     //[CAMediaTimingFunction functionWithControlPoints:0.5 :1.8 :0.8 :0.8]
+
+     ];
+    return  result;
+}
+
 - (void)handleTap:(UITapGestureRecognizer *)sender
 {
 	if (self.zoomMode == kZoomNormal)
 	{
-		[self switchZoom:kZoomZoomedOut targetPage:-1];
+		[self switchZoom:kZoomZoomedOut targetPage:-1 shouldBounce:YES];
 	}
 	else
 	{
@@ -553,13 +610,13 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
                 if ([self.dataSource isItemAtIndexPathChoice:hitpath]) {
                     self.lastKnownChoicePage = hitpath.section;
                 }
-                [self switchZoom:kZoomNormal targetPage:hitpath.section];
+                [self switchZoom:kZoomNormal targetPage:hitpath.section shouldBounce:YES];
             } else {
                 //[self switchZoom:kZoomNormal targetPage:-1];
             }
             
         } else {
-            [self switchZoom:kZoomNormal targetPage:-1];
+            [self switchZoom:kZoomNormal targetPage:-1 shouldBounce:YES];
         }
 	}
 }

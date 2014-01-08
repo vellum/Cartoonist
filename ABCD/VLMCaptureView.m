@@ -66,9 +66,9 @@
 	CGFloat threshold = 1;                                                                                                                                                                                                                                                                            // 0.125f;
 	if ([pgr scale] < 1 - threshold || [pgr scale] > 1 + threshold)
 	{
-		[pgr setEnabled:NO];
-		[pgr setEnabled:YES];
-		ended = YES;
+		//[pgr setEnabled:NO];
+		//[pgr setEnabled:YES];
+		//ended = YES;
 	}
 	if (self.zoomPageBlock)
 	{
