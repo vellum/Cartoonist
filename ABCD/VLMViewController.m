@@ -185,20 +185,23 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
                 CGFloat s = zoomAmount;
                 if (s < lb)
                 {
-                    s = lb;
+                    CGFloat dif = s - lb;
+                    s = lb + dif*0.1f;
                 }
                 if ([self.dataSource isItemAtIndexChoice:page])
                 {
                     if (s > CHOICE_SCALE)
                     {
-                        s = CHOICE_SCALE;
+                        CGFloat dif = s - CHOICE_SCALE;
+                        s = CHOICE_SCALE + dif*0.1f;
                     }
                 }
                 else
                 {
                     if (s > 1.0f)
                     {
-                        s = 1.0f;
+                        CGFloat dif = s - 1.0f;
+                        s = 1.0f + dif*0.1f;
                     }
                 }
                 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
@@ -211,7 +214,29 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
                 }
                 else
                 {
-                    [self switchZoom:kZoomNormal targetPage:-1];
+                    
+                    if ([self.dataSource isItemAtIndexChoice:page])
+                    {
+                        [UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
+                                         animations:^{
+                                             [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, CHOICE_SCALE, CHOICE_SCALE, 1.0f)];
+
+                                         } completion:^(BOOL completed) {
+                                         }
+                         
+                         ];
+                    }
+                    else
+                    {
+                        [UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
+                                         animations:^{
+                                             [self.collectionView.layer setTransform:CATransform3DIdentity];
+                                         } completion:^(BOOL completed) {
+                                         }
+                         
+                         ];
+                        [self switchZoom:kZoomNormal targetPage:-1];
+                    }
                 }
             }
             break;
@@ -222,20 +247,23 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
                 CGFloat s = lb + (zoomAmount - 1);
                 if (s < lb)
                 {
-                    s = lb;
+                    CGFloat dif = s - lb;
+                    s = lb + dif*0.1f;
                 }
                 if ([self.dataSource isItemAtIndexChoice:page])
                 {
                     if (s > CHOICE_SCALE)
                     {
-                        s = CHOICE_SCALE;
+                        CGFloat dif = s - CHOICE_SCALE;
+                        s = CHOICE_SCALE + dif*0.1f;
                     }
                 }
                 else
                 {
                     if (s > 1.0f)
                     {
-                        s = 1.0f;
+                        CGFloat dif = s - 1.0f;
+                        s = 1.0f + dif*0.1f;
                     }
                 }
                 
@@ -245,10 +273,39 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
             {
                 if (zoomAmount < 1)
                 {
+                    [UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
+                                     animations:^{
+                                          [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, lb, lb, 1.0f)];
+                                         
+                                     } completion:^(BOOL completed) {
+                                     }
+                     
+                     ];
                     [self switchZoom:kZoomZoomedOut targetPage:-1];
                 }
                 else
                 {
+                    if ([self.dataSource isItemAtIndexChoice:page])
+                    {
+                        [UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
+                                         animations:^{
+                                             [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, CHOICE_SCALE, CHOICE_SCALE, 1.0f)];
+                                             
+                                         } completion:^(BOOL completed) {
+                                         }
+                         
+                         ];
+                    }
+                    else
+                    {
+                        [UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
+                                         animations:^{
+                                             [self.collectionView.layer setTransform:CATransform3DIdentity];
+                                         } completion:^(BOOL completed) {
+                                         }
+                         
+                         ];
+                    }
                     [self switchZoom:kZoomNormal targetPage:-1];
                 }
             }
@@ -347,6 +404,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	}
 	self.zoomMode = mode;
     
+    NSLog(@"switchzoom");
     
 	CGRect frame = UIScreen.mainScreen.bounds;
 	CGFloat page = roundf(self.secretScrollview.contentOffset.y / kItemSize.height);
