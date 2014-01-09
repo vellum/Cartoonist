@@ -553,11 +553,11 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
          
          ];
         
-		CGFloat h = kItemSize.height;
-		h *= [self.dataSource numberOfSectionsInCollectionView:self.collectionView];
-		h += insetY * 2;
+		//[self.secretScrollview setContentSize:CGSizeMake(kItemSize.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * kItemSize.height + (desiredSize.height - frame.size.height))];
         
-		[self.secretScrollview setContentSize:CGSizeMake(kItemSize.width, h)];
+        [self.secretScrollview setContentSize:CGSizeMake(kItemSize.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * kItemSize.height + self.collectionView.contentInset.top*self.screensizeMultiplier)];
+        
+        //self.collectionView.contentInset.top
 	}
 }
 
