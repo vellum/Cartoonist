@@ -9,6 +9,7 @@
 #import "VLMGradient.h"
 #import "VLMConstants.h"
 
+
 @interface VLMGradient ()
 @property (nonatomic, strong) UILabel *current;
 @property (nonatomic, strong) UILabel *next;
@@ -83,14 +84,22 @@
 
 - (void)setAlpha:(CGFloat)alpha
 {
-    [self.heading setAlpha:alpha];
-	[self.current setAlpha:alpha];
-	[self.next setAlpha:0];
+    NSLog(@"setalpha");
+    BOOL isOverview = NO;
+    if (self.checkOverviewBlock) {
+        isOverview = self.checkOverviewBlock();
+    }
+    if (!isOverview) {
+        [self.heading setAlpha:alpha];
+        [self.current setAlpha:alpha];
+        [self.next setAlpha:0];
+    }
 	[super setAlpha:alpha];
 }
 
 - (void)setText:(NSString *)text
 {
+    NSLog(@"settext");
 	[self.next setText:text];
 
 	// fade up next
@@ -117,12 +126,15 @@
 
 - (void)setTextNoAnimation:(NSString *)text
 {
+    NSLog(@"settextnoanimation");
 	[self.next setText:text];
 	[self.current setText:text];
 }
 
 - (void)setAlpha:(CGFloat)alpha forText:(NSString *)text andAlpha:(CGFloat)alpha2 forText2:(NSString *)text2
 {
+    NSLog(@"setalphafortextandalphafortext2");
+
 	[self.next setText:text];
 	[self.next setAlpha:alpha];
 
@@ -133,6 +145,8 @@
 
 - (void)hide
 {
+    NSLog(@"hide");
+
 	self.restoreAlphaCurrent = self.current.alpha;
 	self.restoreAlphaNext = self.next.alpha;
 
@@ -154,6 +168,12 @@
 
 - (void)show
 {
+    NSLog(@"show");
+
+    if (self.restoreAlphaCurrent == 0.0f) {
+        self.restoreAlphaCurrent = 1.0f;
+        self.restoreAlphaNext = 0.0f;
+    }
 	[UIView animateWithDuration:ZOOM_DURATION
 						  delay:0.0f
 						options:ZOOM_OPTIONS
@@ -181,6 +201,46 @@
 	 }
 
 	];
+}
+
+- (void)hideText
+{
+    NSLog(@"hidetext");
+	//self.restoreAlphaCurrent = self.current.alpha;
+	//self.restoreAlphaNext = self.next.alpha;
+    
+	[UIView animateWithDuration:ZOOM_DURATION
+						  delay:0.0f
+						options:ZOOM_OPTIONS
+					 animations:^{
+                         [self.next setAlpha:0.0f];
+                         [self.current setAlpha:0.0f];
+                         [self.heading setAlpha:0.0f];
+                     }
+     
+					 completion:^(BOOL completed) {
+                     }
+     
+     ];
+}
+
+- (void)showBaseWithTextHidden
+{
+    NSLog(@"showbasewithtexthidden");
+    [UIView animateWithDuration:ZOOM_DURATION
+						  delay:0.0f
+						options:ZOOM_OPTIONS
+					 animations:^{
+                         [self.next setAlpha:0.0f];
+                         [self.current setAlpha:0.0f];
+                         [self.heading setAlpha:0.0f];
+                         [self setAlpha:1.0f];
+                     }
+     
+					 completion:^(BOOL completed) {
+                     }
+     
+     ];
 }
 
 @end

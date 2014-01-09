@@ -327,6 +327,7 @@ typedef enum
     [self.capture setCheckOverviewBlock:checkOverviewBlock];
     
     [self.singlePanelFlow setCheckOverviewBlock:checkOverviewBlock];
+    [self.overlay setCheckOverviewBlock:checkOverviewBlock];
 }
 
 - (void)setupCollectionView
@@ -475,8 +476,10 @@ typedef enum
 		else
 		{
 			[self.capture enableHorizontalPan:NO];
-			[self.overlay setTextNoAnimation:@""];
-			[self.overlay hide];
+			
+            //[self.overlay setTextNoAnimation:@""];
+			
+            [self.overlay hide];
 			[self.secretScrollview.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f, 1.0f, 1.0f)];
 			[self.secretScrollview setFrame:CGRectMake(0, 0, kItemSize.width, kItemSize.height)];
 			[self.secretScrollview setContentSize:CGSizeMake(kItemSize.width, kItemSize.height * [self.dataSource numberOfSectionsInCollectionView:self.collectionView])];
@@ -511,16 +514,7 @@ typedef enum
         }
 		[self.capture enableHorizontalPan:NO];
 		[self.secretScrollview setPagingEnabled:NO];
-		if ([self.dataSource isItemAtIndexChoice:page])
-		{
-            // this was an empty case previously (i think)
-			[self.overlay setTextNoAnimation:@""];
-		}
-		else
-		{
-			[self.overlay setTextNoAnimation:@""];
-		}
-		[self.overlay show];
+        [self.overlay showBaseWithTextHidden];
         
 		CGSize desiredSize = CGSizeMake(frame.size.width, frame.size.height * self.screensizeMultiplier);
 		CGFloat insetY = (desiredSize.height - frame.size.height) / 2.0f;
