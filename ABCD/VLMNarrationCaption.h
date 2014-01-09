@@ -11,4 +11,6 @@
 @interface VLMNarrationCaption : UIView
 - (void)setup;
 - (void)transitionAtValue:(CGFloat)value;
+- (void)setText:(NSString *)text;
+- (void)setAttributedText:(NSAttributedString *)text;
 @end

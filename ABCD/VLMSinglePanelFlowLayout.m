@@ -94,7 +94,8 @@
 		return;
 	}
 
-	CGFloat distanceFromVisibleRectToItem = CGRectGetMidY(visibleRect) - attributes.center.y;
+    // not sure why i need to subtract 10 here. might be to account for kitempadding.
+	CGFloat distanceFromVisibleRectToItem = CGRectGetMidY(visibleRect) - attributes.center.y - 10.0f;
 	CGFloat normalized = distanceFromVisibleRectToItem / self.itemSize.height;
 
 	[(VLMCollectionViewLayoutAttributes *)attributes setTransitionValue : normalized];

@@ -48,7 +48,7 @@
 	self.coverFrame = CGRectMake(pad, -3.0f, kItemSize.width - pad * 2, kItemSize.height - kItemPaddingBottom + pad + 3.0f);
 	self.normalFrame = CGRectMake(pad, pad, kItemSize.width - pad * 2, kItemSize.height - kItemPaddingBottom);
 
-    NSLog(@"cover %f,%f", self.coverFrame.size.width, self.coverFrame.size.height);
+    //NSLog(@"cover %f,%f", self.coverFrame.size.width, self.coverFrame.size.height);
     
 	UIView *baseView = [[UIView alloc] initWithFrame:self.normalFrame];
 	[baseView setBackgroundColor:[UIColor clearColor]];
@@ -69,7 +69,6 @@
 	[self setLabel:[[VLMPaddedLabel alloc] initWithFrame:self.normalFrame]];
 	[self.label setTextColor:[UIColor whiteColor]];
 	//[self.label setFont:[UIFont fontWithName:@"Helvetica-Bold" size:36.0f]];
-    
     [self.label setFont:FONT_WIREFRAME];
     
     
@@ -80,10 +79,12 @@
 	[self.label setNumberOfLines:100];
 	[self.contentView addSubview:self.label];
 
-	VLMNarrationCaption *vvvv = [[VLMNarrationCaption alloc] initWithFrame:CGRectMake(pad, pad, baseView.frame.size.width - pad * 2, 50.0f)];
+	VLMNarrationCaption *vvvv = [[VLMNarrationCaption alloc] initWithFrame:CGRectMake(pad, pad, baseView.frame.size.width - pad * 2, 60.0f)];
 	[self setCaption:vvvv];
 	[baseView addSubview:self.caption];
 
+    
+    //FIXME: i think this might be a weird default
 	self.imagename = @"<not set yet>";
 
 	self.cellType = kCellTypeNoCaption;
@@ -161,6 +162,8 @@
         [paragraphStyle setAlignment:NSTextAlignmentCenter];
         [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [labelText length])];
         self.label.attributedText = attributedString;
+
+        [self.caption setAttributedText:attributedString];
 	}
 	self.cellType = model.cellType;
 
@@ -169,6 +172,7 @@
 		case kCellTypeCaption :
 			[self.label setBackgroundColor:[UIColor clearColor]];
 			self.caption.hidden = NO;
+            
 			self.imageview.hidden = NO;
             self.label.hidden = YES;
 			if (model.image)

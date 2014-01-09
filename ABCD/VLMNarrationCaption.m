@@ -7,6 +7,12 @@
 //
 
 #import "VLMNarrationCaption.h"
+#import "VLMConstants.h"
+#import "VLMPaddedLabel.h"
+
+@interface VLMNarrationCaption()
+@property (nonatomic, strong) VLMPaddedLabel *label;
+@end
 
 @implementation VLMNarrationCaption
 
@@ -23,9 +29,34 @@
 
 - (void)setup
 {
-	[self setBackgroundColor:[UIColor colorWithHue:54.0f / 360.0f saturation:0.96f brightness:0.98f alpha:1.0f]];
+	//[self setBackgroundColor:[UIColor colorWithHue:54.0f / 360.0f saturation:0.96f brightness:0.98f alpha:1.0f]];
+    [self setBackgroundColor:[UIColor clearColor]];
 	[self setAlpha:0];
 	[self setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
+    
+    [self setLabel:[[VLMPaddedLabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)]];
+    [self addSubview:self.label];
+    
+    [self.label setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
+	[self.label setTextAlignment:NSTextAlignmentCenter];
+	[self.label setAdjustsFontSizeToFitWidth:YES];
+	[self.label setNumberOfLines:3];
+    [self.label setFont:FONT_WIREFRAME];
+    [self.label setTextColor:[UIColor blackColor]];
+    [self.label setBackgroundColor:[UIColor whiteColor]];
+    [self setUserInteractionEnabled:NO];
+    
+
+}
+
+- (void)setText:(NSString *)text
+{
+    [self.label setText:text];
+}
+
+- (void)setAttributedText:(NSAttributedString *)text
+{
+    [self.label setAttributedText:text];
 }
 
 - (void)transitionAtValue:(CGFloat)value
@@ -46,7 +77,7 @@
 	}
 	transition = 1 - transition;
 	transition = roundf(transition * 100.0f) / 100.0f;     // this makes for jaggy animation
-	CGFloat duration = 0.5f;
+	CGFloat duration = 0;//0.5f;
 
 	if (isLeaving)
 	{
@@ -60,7 +91,7 @@
 		mapped = 1.0f - (mapped / threshold);
 		[UIView beginAnimations:nil context:nil];
 		[UIView setAnimationDelay:0.0f];
-		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+		[UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
 		[UIView setAnimationBeginsFromCurrentState:YES];
 		[UIView setAnimationDuration:duration];
 		[self setAlpha:mapped];
@@ -84,7 +115,7 @@
 		}
 		[UIView beginAnimations:nil context:nil];
 		[UIView setAnimationDelay:0.0f];
-		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+		[UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
 		[UIView setAnimationBeginsFromCurrentState:YES];
 		[UIView setAnimationDuration:duration];
 		[self setAlpha:mapped];
@@ -94,6 +125,7 @@
 		[UIView commitAnimations];
 	}
 }
+
 
 /*
  * // Only override drawRect: if you perform custom drawing.

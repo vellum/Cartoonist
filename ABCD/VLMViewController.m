@@ -404,7 +404,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	}
 	self.zoomMode = mode;
     
-    NSLog(@"switchzoom");
+    //NSLog(@"switchzoom");
     
 	CGRect frame = UIScreen.mainScreen.bounds;
 	CGFloat page = roundf(self.secretScrollview.contentOffset.y / kItemSize.height);
