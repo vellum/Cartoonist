@@ -25,7 +25,7 @@
         [self.spinner setCenter:CGPointMake(frame.size.width/2.0f, frame.size.height/2.0f)];
         [self addSubview:self.spinner];
         [self setUserInteractionEnabled:NO];
-        [self setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.1f]];
+        [self setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.75f]];
         [self.layer setCornerRadius:frame.size.width/2.0f];
         [self.layer setMasksToBounds:YES];
         [self setAlpha:0.0f];
