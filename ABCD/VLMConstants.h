@@ -19,6 +19,7 @@
 #define FUCKING_HORIZONTAL 2
 
 #define FONT_WIREFRAME [UIFont fontWithName:@"Draftsman" size:14.0f]
+#define FONT_CAPTION [UIFont fontWithName:@"Draftsman" size:13.0f]
 #define USE_ALL_CAPS YES
 #define FONT_LINE_SPACING 6.0f
 //#define FONT_WIREFRAME [UIFont fontWithName:@"Architect_Regular" size:18.0f]

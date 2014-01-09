@@ -172,7 +172,6 @@
 		case kCellTypeCaption :
 			[self.label setBackgroundColor:[UIColor clearColor]];
 			self.caption.hidden = NO;
-            
 			self.imageview.hidden = NO;
             self.label.hidden = YES;
 			if (model.image)
@@ -200,6 +199,7 @@
 			break;
 
 		default :
+            NSLog(@"Warning: VLMCollectionViewCell->configure - celltype not matched.");
 			break;
 	}
 }

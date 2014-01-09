@@ -14,11 +14,10 @@
 @property (nonatomic, strong) UILabel *next;
 @property CGFloat restoreAlphaCurrent;
 @property CGFloat restoreAlphaNext;
+@property (nonatomic, strong) UILabel *heading;
 @end
 
 @implementation VLMGradient
-@synthesize current;
-@synthesize next;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -28,25 +27,38 @@
 		[self setUserInteractionEnabled:NO];
 		[self setBackgroundColor:[UIColor clearColor]];
 
-		CGFloat pad = 30.0f;
-		[self setCurrent:[[UILabel alloc] initWithFrame:CGRectMake(pad, 50 + pad, 320 - pad * 2, 100)]];
+		CGFloat padx = 24.0f;
+		CGFloat pady = 48.0f;
+		[self setCurrent:[[UILabel alloc] initWithFrame:CGRectMake(padx, 50 + pady, 320 - padx * 2, 60)]];
 		[self.current setText:@""];
-		[self.current setFont:[UIFont fontWithName:@"Helvetica-Bold" size:36.0f]];
+		[self.current setFont:[UIFont fontWithName:@"Helvetica-Bold" size:28.0f]];
 		[self.current setTextColor:[UIColor whiteColor]];
 		[self.current setTextAlignment:NSTextAlignmentCenter];
-		[self.current setAdjustsFontSizeToFitWidth:YES];
-		[self.current setNumberOfLines:3.0f];
+		//[self.current setAdjustsFontSizeToFitWidth:YES];
+		[self.current setNumberOfLines:2.0f];
 		[self addSubview:self.current];
 
-		[self setNext:[[UILabel alloc] initWithFrame:CGRectMake(pad, 50 + pad, 320 - pad * 2, 100)]];
+		[self setNext:[[UILabel alloc] initWithFrame:CGRectMake(padx, 50 + pady, 320 - padx * 2, 60)]];
 		[self.next setText:@""];
-		[self.next setFont:[UIFont fontWithName:@"Helvetica-Bold" size:36.0f]];
+		[self.next setFont:[UIFont fontWithName:@"Helvetica-Bold" size:28.0f]];
 		[self.next setTextColor:[UIColor whiteColor]];
 		[self.next setTextAlignment:NSTextAlignmentCenter];
 		[self.next setAlpha:0.0f];
-		[self.next setAdjustsFontSizeToFitWidth:YES];
-		[self.next setNumberOfLines:3.0f];
+		//[self.next setAdjustsFontSizeToFitWidth:YES];
+		[self.next setNumberOfLines:2.0f];
 		[self addSubview:self.next];
+        
+        [self setHeading:[[UILabel alloc] initWithFrame:CGRectMake(self.current.frame.origin.x, self.current.frame.origin.y - 6.0f, self.current.frame.size.width, 12.0f)]];
+        [self.heading setText:@"swipe to choose"];
+        [self.heading setFont:[UIFont fontWithName:@"Helvetica-Bold" size:12.0f]];
+        [self.heading setTextColor:[UIColor colorWithWhite:1.0f alpha:0.25f]];
+        [self.heading setTextAlignment:NSTextAlignmentCenter];
+        [self addSubview:self.heading];
+        [self.heading setAlpha:0.0f];
+
+        //[self.current setBackgroundColor:[UIColor blackColor]];
+        //[self.next setBackgroundColor:[UIColor blackColor]];
+        
 	}
 	return self;
 }
@@ -71,6 +83,7 @@
 
 - (void)setAlpha:(CGFloat)alpha
 {
+    [self.heading setAlpha:alpha];
 	[self.current setAlpha:alpha];
 	[self.next setAlpha:0];
 	[super setAlpha:alpha];
@@ -90,6 +103,7 @@
 					 animations:^{
 		 [self.current setAlpha:0.0f];
 		 [self.next setAlpha:1.0f];
+         [self.heading setAlpha:1.0f];
 	 }
 
 					 completion:^(BOOL completed) {
@@ -114,6 +128,7 @@
 
 	[self.current setText:text2];
 	[self.current setAlpha:alpha2];
+    
 }
 
 - (void)hide
@@ -128,6 +143,7 @@
 		 [self setAlpha:0.0f];
 		 [self.next setAlpha:0.0f];
 		 [self.current setAlpha:0.0f];
+         [self.heading setAlpha:0.0f];
 	 }
 
 					 completion:^(BOOL completed) {
@@ -145,9 +161,23 @@
 		 [self setAlpha:1.0f];
 		 [self.next setAlpha:self.restoreAlphaNext];
 		 [self.current setAlpha:self.restoreAlphaCurrent];
+         [self.heading setAlpha:self.restoreAlphaCurrent];
+
+                         /*
+                         [self.next setAlpha:1.0f];
+                         [self.current setAlpha:0.0f];
+                         
+                         if ([self.next.text length]==0) {
+                             [self.heading setAlpha:0.0f];
+                         } else {
+                             [self.heading setAlpha:1.0f];
+                         }
+                          */
+                         
 	 }
 
 					 completion:^(BOOL completed) {
+                         
 	 }
 
 	];

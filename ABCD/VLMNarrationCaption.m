@@ -41,7 +41,7 @@
 	[self.label setTextAlignment:NSTextAlignmentCenter];
 	[self.label setAdjustsFontSizeToFitWidth:YES];
 	[self.label setNumberOfLines:3];
-    [self.label setFont:FONT_WIREFRAME];
+    [self.label setFont:FONT_CAPTION];
     [self.label setTextColor:[UIColor blackColor]];
     [self.label setBackgroundColor:[UIColor whiteColor]];
     [self setUserInteractionEnabled:NO];

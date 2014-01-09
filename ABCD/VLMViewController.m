@@ -499,6 +499,8 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		[self.secretScrollview setPagingEnabled:NO];
 		if ([self.dataSource isItemAtIndexChoice:page])
 		{
+            // this was an empty case previously (i think)
+			[self.overlay setTextNoAnimation:@""];
 		}
 		else
 		{
