@@ -13,4 +13,6 @@
 - (void)hide;
 - (void)show;
 - (void)hideWithDelay:(CGFloat)delay;
+- (BOOL)isSpinning;
+
 @end

@@ -45,6 +45,7 @@
 
 - (void)hide
 {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
 	[UIView animateWithDuration:ZOOM_DURATION
 						  delay:0.0f
 						options:ZOOM_OPTIONS
@@ -61,6 +62,7 @@
 
 - (void)show
 {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [self.spinner startAnimating];
 	[UIView animateWithDuration:ZOOM_DURATION
 						  delay:0.0f
@@ -76,9 +78,16 @@
      
      ];
 }
+
 - (void)hideWithDelay:(CGFloat)delay{
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [self performSelector:@selector(hide) withObject:nil afterDelay:delay];
     
 }
+
+- (BOOL)isSpinning
+{
+    return self.spinner.isAnimating;
+}
+
 @end
