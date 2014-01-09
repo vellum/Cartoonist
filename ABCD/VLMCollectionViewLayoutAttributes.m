@@ -17,6 +17,7 @@
     
     attributes.transitionValue = self.transitionValue;
     attributes.scaleValue = self.scaleValue;
+    attributes.isOverview = self.isOverview;
     
     return attributes;
 }
@@ -32,6 +33,9 @@
         return NO;
     }
     if ([(VLMCollectionViewLayoutAttributes *) other scaleValue] != [self scaleValue]) {
+        return NO;
+    }
+    if ([(VLMCollectionViewLayoutAttributes *) other isOverview] != [self isOverview]) {
         return NO;
     }
     

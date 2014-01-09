@@ -12,5 +12,5 @@
 
 @property (nonatomic, assign) CGFloat transitionValue;
 @property (nonatomic, assign) CGFloat scaleValue;
-
+@property BOOL isOverview;
 @end

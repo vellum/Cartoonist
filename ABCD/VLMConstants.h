@@ -18,15 +18,18 @@
 #define FUCKING_VERTICAL   1
 #define FUCKING_HORIZONTAL 2
 
-#define FONT_WIREFRAME [UIFont fontWithName:@"Draftsman" size:14.0f]
-#define FONT_CAPTION [UIFont fontWithName:@"Draftsman" size:13.0f]
-#define USE_ALL_CAPS YES
-#define FONT_LINE_SPACING 6.0f
-//#define FONT_WIREFRAME [UIFont fontWithName:@"Architect_Regular" size:18.0f]
-//#define USE_ALL_CAPS NO
+//#define FONT_WIREFRAME [UIFont fontWithName:@"Draftsman" size:14.0f]
+#define FONT_CAPTION [UIFont fontWithName:@"Architect_Regular" size:23.0f]
+#define USE_ALL_CAPS NO
+#define FONT_LINE_SPACING 0.0f
+#define FONT_WIREFRAME [UIFont fontWithName:@"Architect_Regular" size:24.0f]
 
 #define kItemPadding       9.0f
 #define kItemPaddingBottom 9.0f
 #define kItemSize          [VLMCollectionViewCell idealItemSize]
 #define kItemSizeIphone    CGSizeMake(320, 568.0f - 2.0f * (9.0f + 9.0f))
 #define kItemSizeIpad      CGSizeMake(768.0f, 1024.0f - 2.0f * (9.0f + 9.0f))
+
+#define SPINNER_STYLE UIActivityIndicatorViewStyleWhite
+#define SPINNER_BACKGROUND_COLOR [UIColor colorWithWhite:0.0f alpha:0.95f]
+#define SPINNER_DIAMETER 48.0f

@@ -9,6 +9,7 @@
 #import "VLMNarrationCaption.h"
 #import "VLMConstants.h"
 #import "VLMPaddedLabel.h"
+#import "VLMCollectionViewLayoutAttributes.h"
 
 @interface VLMNarrationCaption()
 @property (nonatomic, strong) VLMPaddedLabel *label;
@@ -42,11 +43,13 @@
 	[self.label setAdjustsFontSizeToFitWidth:YES];
 	[self.label setNumberOfLines:3];
     [self.label setFont:FONT_CAPTION];
-    [self.label setTextColor:[UIColor blackColor]];
-    [self.label setBackgroundColor:[UIColor whiteColor]];
     [self setUserInteractionEnabled:NO];
     
-
+    
+    [self.label setTextColor:[UIColor blackColor]];
+    [self.label setBackgroundColor:[UIColor whiteColor]];
+    self.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.layer.borderWidth = 1.0f;
 }
 
 - (void)setText:(NSString *)text
@@ -61,6 +64,8 @@
 
 - (void)transitionAtValue:(CGFloat)value
 {
+    
+    
 	/*
 	 * // notes:
 	 * // 0 to 1 - panel is scrolling between center and off top edge of screen
@@ -126,6 +131,24 @@
 	}
 }
 
+- (void)applyLayoutAttributes:(VLMCollectionViewLayoutAttributes*)attributes{
+    if (attributes.isOverview) {
+
+        if (self.alpha==1) {
+            return;
+        }
+		[UIView beginAnimations:nil context:nil];
+		[UIView setAnimationDelay:0.0f];
+		[UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+		[UIView setAnimationBeginsFromCurrentState:YES];
+		[UIView setAnimationDuration:0.5f];
+		[self setAlpha:1.0f];
+		[UIView commitAnimations];
+
+    } else {
+        [self transitionAtValue:attributes.transitionValue];
+    }
+}
 
 /*
  * // Only override drawRect: if you perform custom drawing.

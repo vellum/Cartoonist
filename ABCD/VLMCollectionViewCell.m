@@ -72,14 +72,13 @@
     [self.label setFont:FONT_WIREFRAME];
     
     
-    
 	[self.label setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
 	[self.label setTextAlignment:NSTextAlignmentCenter];
 	[self.label setAdjustsFontSizeToFitWidth:YES];
 	[self.label setNumberOfLines:100];
 	[self.contentView addSubview:self.label];
 
-	VLMNarrationCaption *vvvv = [[VLMNarrationCaption alloc] initWithFrame:CGRectMake(pad, pad, baseView.frame.size.width - pad * 2, 60.0f)];
+	VLMNarrationCaption *vvvv = [[VLMNarrationCaption alloc] initWithFrame:CGRectMake(pad, pad, baseView.frame.size.width - pad * 2, 72.0f)];
 	[self setCaption:vvvv];
 	[baseView addSubview:self.caption];
 
@@ -115,10 +114,11 @@
 	// debug text
 	// [self.label setText:[NSString stringWithFormat:@"%f", transition]];
 
+    
 	switch (self.cellType)
 	{
 		case kCellTypeCaption :
-			[self.caption transitionAtValue:castedLayoutAttributes.transitionValue];
+            [self.caption applyLayoutAttributes:castedLayoutAttributes];
 			break;
 
 		case kCellTypeNoCaption :

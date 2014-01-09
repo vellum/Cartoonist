@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class VLMCollectionViewLayoutAttributes;
+
 @interface VLMNarrationCaption : UIView
 - (void)setup;
 - (void)transitionAtValue:(CGFloat)value;
+- (void)applyLayoutAttributes:(VLMCollectionViewLayoutAttributes*)attributes;
 - (void)setText:(NSString *)text;
 - (void)setAttributedText:(NSAttributedString *)text;
 @end

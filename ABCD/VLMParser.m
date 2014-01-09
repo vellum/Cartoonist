@@ -141,7 +141,7 @@ static inline BOOL IsEmpty(id thing)
 
 	NSDate *endMillis = [NSDate date];
 	NSTimeInterval executionTime = [endMillis timeIntervalSinceDate:beginMillis];
-	NSLog(@"parseRootNode execution time: %f", executionTime);
+	//NSLog(@"parseRootNode execution time: %f", executionTime);
 	return list;
 }
 

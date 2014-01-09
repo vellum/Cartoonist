@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef BOOL (^CheckOverviewBlock)();
+
 @interface VLMSinglePanelFlowLayout : UICollectionViewFlowLayout
+
+@property (nonatomic, copy) CheckOverviewBlock checkOverviewBlock;
 
 - (CGFloat)scale;
 - (void)setScale:(CGFloat)value;

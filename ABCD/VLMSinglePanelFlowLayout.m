@@ -93,6 +93,11 @@
 	{
 		return;
 	}
+    
+    BOOL isOverview = YES;
+    if (self.checkOverviewBlock) {
+        isOverview = self.checkOverviewBlock();
+    }
 
     // not sure why i need to subtract 10 here. might be to account for kitempadding.
 	CGFloat distanceFromVisibleRectToItem = CGRectGetMidY(visibleRect) - attributes.center.y - 10.0f;
@@ -100,6 +105,7 @@
 
 	[(VLMCollectionViewLayoutAttributes *)attributes setTransitionValue : normalized];
 	[(VLMCollectionViewLayoutAttributes *)attributes setScaleValue : self.scalevalue];
+	[(VLMCollectionViewLayoutAttributes *)attributes setIsOverview:isOverview];
 }
 
 @end

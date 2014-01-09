@@ -10,6 +10,7 @@
 #import "VLMSpinner.h"
 #include "VLMConstants.h"
 
+
 @interface VLMSpinner ()
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 @end
@@ -21,11 +22,11 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:SPINNER_STYLE];
         [self.spinner setCenter:CGPointMake(frame.size.width/2.0f, frame.size.height/2.0f)];
         [self addSubview:self.spinner];
         [self setUserInteractionEnabled:NO];
-        [self setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.75f]];
+        [self setBackgroundColor:SPINNER_BACKGROUND_COLOR];
         [self.layer setCornerRadius:frame.size.width/2.0f];
         [self.layer setMasksToBounds:YES];
         [self setAlpha:0.0f];

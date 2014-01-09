@@ -108,11 +108,14 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	// touch capture view detects kinds of gestures and decides what behavior to trigger
 	[self setupCaptureView];
     
-    CGFloat side = 36.0f;
-    CGRect spinframe = CGRectMake(self.capture.frame.size.width/2.0f-side/2.0f, self.capture.frame.size.height - side * 3.5f, side, side);
+    CGFloat side = SPINNER_DIAMETER;
+    CGRect spinframe = CGRectMake(
+                                  self.capture.frame.size.width/2.0f-SPINNER_DIAMETER/2.0f,
+                                  self.capture.frame.size.height - (self.capture.frame.size.height-kItemSize.height) - SPINNER_DIAMETER - kItemPadding*4,
+                                  SPINNER_DIAMETER, SPINNER_DIAMETER);
 
     self.fuckA = spinframe;
-    self.fuckB = CGRectMake(spinframe.origin.x, self.capture.frame.size.height/2.0f + side/4 + kItemSize.height/8.0f, side, side);
+    self.fuckB = CGRectMake(spinframe.origin.x, self.capture.frame.size.height/2.0f - side/2, side, side);
     self.spinner = [[VLMSpinner alloc] initWithFrame:spinframe];
     [self.view addSubview:self.spinner];
     
@@ -319,6 +322,8 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	[self.capture addGestureRecognizer:tgr];
 	[self.capture setZoomPageBlock:zoomPageBlock];
     [self.capture setCheckOverviewBlock:checkOverviewBlock];
+    
+    [self.singlePanelFlow setCheckOverviewBlock:checkOverviewBlock];
 }
 
 - (void)setupCollectionView
@@ -525,6 +530,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
             [self animateBounceZoom:1.0f/self.screensizeMultiplier];
         }
         
+        [self.spinner setFrame:self.fuckB];
 		[UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
 						 animations:^{
                              if (!shouldBounce) {
@@ -533,7 +539,6 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
                              }
                              
                              [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * kItemSize.height)];
-                             [self.spinner setFrame:self.fuckB];
 
                          } completion:^(BOOL completed) {
                              [self setZoomEnabled:YES];
@@ -549,6 +554,8 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 	}
 }
 
+#pragma mark - Bounce
+
 -(void)animateBounceZoom:(CGFloat)targetZoom
 {
     CGFloat currentScale = [[self.collectionView.layer valueForKeyPath: @"transform.scale"] floatValue];
@@ -560,7 +567,6 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     [self.collectionView.layer setValue:to forKeyPath:keypath];
 }
 
-#pragma mark - CAAnimations
 
 -(CABasicAnimation *)bounceAnimationFrom:(NSValue *)from
                                       to:(NSValue *)to
@@ -576,9 +582,6 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     //[result setTimingFunction:[CAMediaTimingFunction functionWithControlPoints:.5 :1.8 :.8 :0.8]];
     [result setTimingFunction:
      
-     // gentler but still zippy
-     //[CAMediaTimingFunction functionWithControlPoints:0.52 :1.667 :0.8 :0.8]
-     
      // not bad
      [CAMediaTimingFunction functionWithControlPoints:0.52 :1.7 :0.8 :0.8]
 
@@ -588,6 +591,8 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
      ];
     return  result;
 }
+
+#pragma mark - Events & ()
 
 - (void)handleTap:(UITapGestureRecognizer *)sender
 {
