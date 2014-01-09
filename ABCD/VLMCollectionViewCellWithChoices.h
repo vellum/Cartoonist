@@ -21,4 +21,6 @@ typedef void (^ScrollPageBlock)(CGFloat primaryAlpha, NSString *primary, CGFloat
 
 - (void)setDelegate:(id)scrollViewDelegate;
 - (void)configureWithModel:(VLMPanelModels *)models;
+
++ (NSString *)CellIdentifier;
 @end

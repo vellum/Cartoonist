@@ -12,11 +12,18 @@
 //
 //
 #import <objc/runtime.h>
+
 #import "VLMViewController.h"
-#import "VLMPanelModels.h"
+
 #import "VLMConstants.h"
+#import "VLMPanelModels.h"
 #import "VLMSpinner.h"
 #import "VLMAnimButton.h"
+
+#import "VLMCollectionViewCell.h"
+#import "VLMWireframeCell.h"
+#import "VLMStaticImageCell.h"
+#import "VLMCollectionViewCellWithChoices.h"
 
 typedef enum
 {
@@ -54,10 +61,6 @@ typedef enum
 @synthesize zoomMode;
 @synthesize zoomEnabled;
 @synthesize screensizeMultiplier;
-
-static NSString *CellIdentifier = @"CellIdentifier";
-static NSString *HeaderIdentifier = @"HeaderIdentifier";
-static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 
 #define SHOULD_HIT_TEST_TAPS NO
 
@@ -334,8 +337,12 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
     
 	CGRect frame = UIScreen.mainScreen.bounds;
 	[cv setContentOffset:CGPointMake(0, kItemPaddingBottom)];
-	[cv registerClass:[VLMCollectionViewCell class] forCellWithReuseIdentifier:CellIdentifier];
-	[cv registerClass:[VLMCollectionViewCellWithChoices class] forCellWithReuseIdentifier:CellChoiceIdentifier];
+
+    [cv registerClass:[VLMWireframeCell class] forCellWithReuseIdentifier:[VLMWireframeCell CellIdentifier]];
+    [cv registerClass:[VLMStaticImageCell class] forCellWithReuseIdentifier:[VLMStaticImageCell CellIdentifier]];
+    [cv registerClass:[VLMCollectionViewCell class] forCellWithReuseIdentifier:[VLMCollectionViewCell CellIdentifier]];
+	[cv registerClass:[VLMCollectionViewCellWithChoices class] forCellWithReuseIdentifier:[VLMCollectionViewCellWithChoices CellIdentifier]];
+
 	[cv setBackgroundColor:[UIColor whiteColor]];
 	[cv.panGestureRecognizer setEnabled:NO];
 	[cv setClipsToBounds:NO];
@@ -397,8 +404,7 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
         }
 	};
     
-	VLMDataSource *ds = [[VLMDataSource alloc] initWithCellIdentifier:CellIdentifier cellChoiceIdentifier:CellChoiceIdentifier configureCellBlock:configureCellBlock configureCellChoiceBlock:configureCellChoiceBlock];
-    
+	VLMDataSource *ds = [[VLMDataSource alloc] initWithConfigureCellBlock:configureCellBlock configureCellChoiceBlock:configureCellChoiceBlock];
 	[self setDataSource:ds];
 }
 

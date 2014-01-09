@@ -8,20 +8,20 @@
 
 #import <UIKit/UIKit.h>
 #import "VLMConstants.h"
+#import "VLMPanelModel.h"
 
-@class VLMPanelModel;
 @class VLMNarrationCaption;
 @class VLMPaddedLabel;
 
 @interface VLMCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIView *base;
-@property (nonatomic, strong) VLMNarrationCaption *caption;
-@property (nonatomic, strong) NSString *imagename;
-@property (nonatomic, strong) UIImageView *imageview;
-@property (nonatomic, strong) VLMPaddedLabel *label;
+@property (nonatomic) CGRect coverFrame;
+@property (nonatomic) CGRect normalFrame;
+@property (nonatomic) CellType cellType;
 
 - (void)configureWithModel:(VLMPanelModel *)model;
 + (CGSize)idealItemSize;
++ (NSString *)CellIdentifier;
 
 @end

@@ -23,6 +23,10 @@
 @synthesize subviews;
 @synthesize panels;
 
++ (NSString *)CellIdentifier
+{
+    return @"VLMCollectionViewCellWithChoicesID";
+}
 - (id)initWithFrame:(CGRect)frame
 {
 	self = [super initWithFrame:frame];

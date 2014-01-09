@@ -10,6 +10,7 @@
 
 typedef enum
 {
+    kCellTypeUndefined,
 	kCellTypeWireframe,
 	kCellTypeCaption,
 	kCellTypeNoCaption

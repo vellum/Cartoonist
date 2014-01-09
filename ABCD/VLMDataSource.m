@@ -9,16 +9,18 @@
 #import "VLMDataSource.h"
 #import "VLMCollectionViewCell.h"
 #import "VLMCollectionViewCellWithChoices.h"
+#import "VLMWireframeCell.h"
+#import "VLMStaticImageCell.h"
+
 #import "VLMPanelModel.h"
 #import "VLMPanelModels.h"
 #import "VLMParser.h"
+
 
 @interface VLMDataSource ()
 
 // FIXME: work out improperly defined references to strong/copy objects
 @property (nonatomic, strong) NSMutableArray *items;
-@property (nonatomic, copy) NSString *cellIdentifier;
-@property (nonatomic, copy) NSString *cellChoiceIdentifier;
 @property (nonatomic, strong) VLMParser *parser;
 @property (nonatomic, copy) CollectionViewCellConfigureBlock configureCellBlock;
 @property (nonatomic, copy) CollectionViewCellConfigureBlock configureCellChoiceBlock;
@@ -37,16 +39,12 @@
 	return nil;
 }
 
-- (id)initWithCellIdentifier:(NSString *)aCellIdentifier
-		cellChoiceIdentifier:(NSString *)aCellChoiceIdentifier
-		  configureCellBlock:(CollectionViewCellConfigureBlock)aConfigureCellBlock
+- (id)initWithConfigureCellBlock:(CollectionViewCellConfigureBlock)aConfigureCellBlock
 	configureCellChoiceBlock:(CollectionViewCellConfigureBlock)aConfigureCellChoiceBlock
 {
 	self = [super init];
 	if (self)
 	{
-		self.cellIdentifier = aCellIdentifier;
-		self.cellChoiceIdentifier = aCellChoiceIdentifier;
 		self.configureCellBlock = [aConfigureCellBlock copy];
 		self.configureCellChoiceBlock = [aConfigureCellChoiceBlock copy];
 		self.isDataLoaded = NO;
@@ -226,14 +224,32 @@
 
 	if (![self isItemAtIndexPathChoice:indexPath])
 	{
-		VLMCollectionViewCell *cell = (VLMCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:indexPath];
-		id item = [self itemAtIndexPath:indexPath];
+        
+        NSString *cellID = [VLMCollectionViewCell CellIdentifier]; // not meant to be used irl
+        id item = [self itemAtIndexPath:indexPath];
+		if ([item isKindOfClass:[VLMPanelModel class]]) {
+            VLMPanelModel *pm = (VLMPanelModel *)item;
+            switch (pm.cellType) {
+                case kCellTypeWireframe:
+                    cellID = [VLMWireframeCell CellIdentifier];
+                    break;
+
+                case kCellTypeCaption:
+                case kCellTypeNoCaption:
+                    cellID = [VLMStaticImageCell CellIdentifier];
+                    break;
+                
+                default:
+                    break;
+            }
+        }
+		VLMCollectionViewCell *cell = (VLMCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
 		self.configureCellBlock(cell, item);
 		return cell;
 	}
 	else
 	{
-		VLMCollectionViewCellWithChoices *cell = (VLMCollectionViewCellWithChoices *)[collectionView dequeueReusableCellWithReuseIdentifier:self.cellChoiceIdentifier forIndexPath:indexPath];
+		VLMCollectionViewCellWithChoices *cell = (VLMCollectionViewCellWithChoices *)[collectionView dequeueReusableCellWithReuseIdentifier:[VLMCollectionViewCellWithChoices CellIdentifier] forIndexPath:indexPath];
 		id item = [self itemAtIndexPath:indexPath];
 		self.configureCellChoiceBlock(cell, item);
 		return cell;
