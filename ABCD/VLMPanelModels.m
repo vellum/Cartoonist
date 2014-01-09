@@ -7,6 +7,7 @@
 //
 
 #import "VLMPanelModels.h"
+#import "VLMPanelModel.h"
 
 @implementation VLMPanelModels
 @synthesize models;
@@ -36,4 +37,10 @@
 	}
 }
 
+- (NSString *)selectedLabelString
+{
+    NSInteger curIndex = [[self.sourceNode objectForKey:@"selected"] integerValue];
+    VLMPanelModel *model = (VLMPanelModel *)[self.models objectAtIndex:curIndex];
+    return model.name;
+}
 @end

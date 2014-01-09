@@ -389,6 +389,9 @@ static NSString *CellChoiceIdentifier = @"CellChoiceIdentifier";
 		[cell setScrollPageBlock:scrollPageBlock];
 		[cell configureWithModel:panelModels];
         
+        NSString *nextlabelstring = [panelModels selectedLabelString];
+        [self.overlay setTextNoAnimation:nextlabelstring];
+        
         if (self.zoomMode != kZoomNormal) {
             [self checkHorizontalPanEnabled];
         }
