@@ -61,8 +61,6 @@
 	[self setPanels:models];
 
 
-	// TBD: query data for the *selected* item and make sure the scrollview presents this as centered
-
 	// remove all children
 	//
 	for (NSInteger i = 0; i < [self.subviews count]; i++)
@@ -80,6 +78,7 @@
 
 		if (model.cellType != kCellTypeWireframe)
 		{
+            NSLog(@"not celltypewire");
 			UIImageView *imageview = [[UIImageView alloc] initWithFrame:rect];
 			[imageview setContentMode:UIViewContentModeScaleAspectFill];
 			[imageview setClipsToBounds:YES];
@@ -90,6 +89,7 @@
 		}
 		else
 		{
+			NSLog(@"celltypewire");
 			UIView *placeholder = [[UIView alloc] initWithFrame:rect];
 			[placeholder setBackgroundColor:[UIColor blackColor]];
 			[self.scrollview addSubview:placeholder];

@@ -77,6 +77,7 @@ static inline BOOL IsEmpty(id thing)
 	VLMPanelModels *models = [[VLMPanelModels alloc] init];
 	NSArray *children = [node objectForKey:@"children"];
 
+    //NSLog(@"%@", node);
 	for (NSMutableDictionary *child in children)
 	{
 		NSString *imagename = [child objectForKey:@"image"];
@@ -91,12 +92,17 @@ static inline BOOL IsEmpty(id thing)
 		{
 			imagename = @"";
 		}
-
+        
 
 		CellType type = kCellTypeNoCaption;
 		id typepettytype = [node objectForKey:@"celltype"];
         
         UIImage *image;
+        
+        if ([imagename length]>0) {
+            image = [UIImage imageNamed:imagename];
+        }
+        
 		if (typepettytype)
 		{
 			NSString *typestring = (NSString *)typepettytype;
@@ -107,15 +113,17 @@ static inline BOOL IsEmpty(id thing)
 			else if ([typestring isEqualToString:@"nocaption"])
 			{
 				type = kCellTypeNoCaption;
-                image = [UIImage imageNamed:imagename];
 			}
 			else if ([typestring isEqualToString:@"caption"])
 			{
 				type = kCellTypeCaption;
-                image = [UIImage imageNamed:imagename];
+			}
+			else if ([typestring isEqualToString:@"sequence"])
+			{
+				type = kCellTypeCaption;
 			}
 		}
-
+        NSLog(@"panelmodels model :%@ :%@ :%@", caption, imagename, image?@"notnil":@"nil");
 		VLMPanelModel *model = [VLMPanelModel panelModelWithName:caption image:image type:type];
 		[models.models addObject:model];
 		[models setSourceNode:node];

@@ -84,22 +84,25 @@
 
 - (void)setAlpha:(CGFloat)alpha
 {
-    NSLog(@"setalpha");
+    //NSLog(@"setalpha");
     BOOL isOverview = NO;
     if (self.checkOverviewBlock) {
         isOverview = self.checkOverviewBlock();
+        [self.heading setAlpha:0.0f];
+        [self.current setAlpha:0.0f];
+        [self.next setAlpha:0.0f];
     }
     if (!isOverview) {
         [self.heading setAlpha:alpha];
         [self.current setAlpha:alpha];
-        [self.next setAlpha:0];
+        [self.next setAlpha:0.0f];
     }
 	[super setAlpha:alpha];
 }
 
 - (void)setText:(NSString *)text
 {
-    NSLog(@"settext");
+    //NSLog(@"settext");
 	[self.next setText:text];
 
 	// fade up next
@@ -126,14 +129,14 @@
 
 - (void)setTextNoAnimation:(NSString *)text
 {
-    NSLog(@"settextnoanimation");
+    //NSLog(@"settextnoanimation");
 	[self.next setText:text];
 	[self.current setText:text];
 }
 
 - (void)setAlpha:(CGFloat)alpha forText:(NSString *)text andAlpha:(CGFloat)alpha2 forText2:(NSString *)text2
 {
-    NSLog(@"setalphafortextandalphafortext2");
+    //NSLog(@"setalphafortextandalphafortext2");
 
 	[self.next setText:text];
 	[self.next setAlpha:alpha];
@@ -145,7 +148,7 @@
 
 - (void)hide
 {
-    NSLog(@"hide");
+    //NSLog(@"hide");
 
 	self.restoreAlphaCurrent = self.current.alpha;
 	self.restoreAlphaNext = self.next.alpha;
@@ -168,7 +171,7 @@
 
 - (void)show
 {
-    NSLog(@"show");
+    //NSLog(@"show");
 
     if (self.restoreAlphaCurrent == 0.0f) {
         self.restoreAlphaCurrent = 1.0f;
@@ -205,7 +208,7 @@
 
 - (void)hideText
 {
-    NSLog(@"hidetext");
+    //NSLog(@"hidetext");
 	//self.restoreAlphaCurrent = self.current.alpha;
 	//self.restoreAlphaNext = self.next.alpha;
     
@@ -226,7 +229,7 @@
 
 - (void)showBaseWithTextHidden
 {
-    NSLog(@"showbasewithtexthidden");
+    //NSLog(@"showbasewithtexthidden");
     [UIView animateWithDuration:ZOOM_DURATION
 						  delay:0.0f
 						options:ZOOM_OPTIONS
