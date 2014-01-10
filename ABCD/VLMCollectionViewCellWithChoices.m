@@ -83,7 +83,7 @@
 			[imageview setContentMode:UIViewContentModeScaleAspectFill];
 			[imageview setClipsToBounds:YES];
 			[imageview setImage:model.image];
-			[imageview setBackgroundColor:[UIColor lightGrayColor]];
+			[imageview setBackgroundColor:[UIColor colorWithWhite:0.9f alpha:1.0f]];
 			[self.scrollview addSubview:imageview];
 			[self.subviews addObject:imageview];
 		}

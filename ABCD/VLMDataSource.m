@@ -158,6 +158,10 @@
 	if ([o isKindOfClass:[VLMPanelModel class]])
 	{
 		VLMPanelModel *model = (VLMPanelModel *)o;
+        
+        if (model.index<0) {
+            model.index = indexPath.section;
+        }
 		return model;
 	}
 	else if ([o isKindOfClass:[VLMPanelModels class]])
