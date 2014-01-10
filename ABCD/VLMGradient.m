@@ -227,6 +227,13 @@
      ];
 }
 
+- (void)hideTextNoAnimation
+{
+    [self.next setAlpha:0.0f];
+    [self.current setAlpha:0.0f];
+    [self.heading setAlpha:0.0f];
+}
+
 - (void)showBaseWithTextHidden
 {
     //NSLog(@"showbasewithtexthidden");

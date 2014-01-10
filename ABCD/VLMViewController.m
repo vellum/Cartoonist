@@ -514,6 +514,12 @@ typedef enum
         }
 		[self.capture enableHorizontalPan:NO];
 		[self.secretScrollview setPagingEnabled:NO];
+        
+        // if current page is zoomed, hidetextnoanim!
+        if (![self.dataSource isItemAtIndexChoice:page])
+        {
+            [self.overlay hideTextNoAnimation];
+        }
         [self.overlay showBaseWithTextHidden];
         
 		CGSize desiredSize = CGSizeMake(frame.size.width, frame.size.height * self.screensizeMultiplier);

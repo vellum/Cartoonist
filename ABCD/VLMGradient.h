@@ -20,5 +20,5 @@ typedef BOOL (^CheckOverviewBlock)();
 - (void)setTextNoAnimation:(NSString *)text;
 - (void)hideText;
 - (void)showBaseWithTextHidden;
-
+- (void)hideTextNoAnimation;
 @end
