@@ -539,18 +539,18 @@ typedef enum
             [self animateBounceZoom:1.0f/self.screensizeMultiplier];
         }
         
-        if (![self.spinner isSpinning]) {
+        //if (![self.spinner isSpinning]) {
             [self.spinner setFrame:self.fuckB];
-        }
+        //}
 		[UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
 						 animations:^{
                              if (!shouldBounce) {
                                  [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f / self.screensizeMultiplier, 1.0f / self.screensizeMultiplier, 1.0f)];
                              }
                              
-                             if ([self.spinner isSpinning]) {
-                                 [self.spinner setFrame:self.fuckB];
-                             }
+                             //if ([self.spinner isSpinning]) {
+                             //    [self.spinner setFrame:self.fuckB];
+                            // }
                              [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * kItemSize.height)];
 
                          } completion:^(BOOL completed) {
