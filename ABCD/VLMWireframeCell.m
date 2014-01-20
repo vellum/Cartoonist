@@ -34,7 +34,7 @@
         
         if ((UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad))
         {
-            self.label.padding = 18.0f;
+            self.label.padding = 20.0f;
         }
         else
         {
