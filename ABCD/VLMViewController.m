@@ -100,6 +100,9 @@ typedef enum
 	[scrollView setPagingEnabled:YES];
 	[scrollView setDelegate:self];
 	[self setSecretScrollview:scrollView];
+    [self.view addSubview:self.secretScrollview];
+    [self.secretScrollview setUserInteractionEnabled:NO];
+    [self.secretScrollview setHidden:YES];
     
 	// overlay when we are zoomed out
 	VLMGradient *gradient = [[VLMGradient alloc] initWithFrame:self.view.frame];
@@ -141,6 +144,8 @@ typedef enum
 											 selector:@selector(needsUpdateContent:)
 												 name:@"decisionTreeUpdated"
 											   object:nil];
+    
+
 }
 
 - (void)dealloc
@@ -347,8 +352,12 @@ typedef enum
 	[cv setBackgroundColor:[UIColor whiteColor]];
 	[cv.panGestureRecognizer setEnabled:NO];
 	[cv setClipsToBounds:NO];
-	[cv setContentInset:UIEdgeInsetsMake(kItemPaddingBottom + 3 + frame.size.height / 2, 0, kItemPaddingBottom, 0)];
-	[self setCollectionView:cv];
+    
+    CGFloat paddingVertical = (frame.size.height - kItemSize.height)/2;
+	[cv setContentInset:UIEdgeInsetsMake(kItemPaddingBottom + 0 + frame.size.height / 2, 0, kItemPaddingBottom, 0)];
+	
+    
+    [self setCollectionView:cv];
 	CGSize desiredSize = CGSizeMake(frame.size.width, frame.size.height * self.screensizeMultiplier);
 	CGFloat insetY = (desiredSize.height - frame.size.height) / 2.0f;
 	self.collectionView.frame = CGRectMake(
@@ -356,7 +365,7 @@ typedef enum
                                            -insetY,
                                            desiredSize.width,
                                            desiredSize.height);
-	[self.collectionView setContentInset:UIEdgeInsetsMake(kItemPaddingBottom + 3 + insetY, 0, kItemPaddingBottom, 0)];
+	[self.collectionView setContentInset:UIEdgeInsetsMake(kItemPaddingBottom + 0 + insetY, 0, kItemPaddingBottom, 0)];
 }
 
 - (void)setupDataSource

@@ -24,11 +24,26 @@
 #define FONT_LINE_SPACING 0.0f
 #define FONT_WIREFRAME [UIFont fontWithName:@"Architect_Regular" size:24.0f]
 
-#define kItemPadding       9.0f
-#define kItemPaddingBottom 9.0f
 #define kItemSize          [VLMCollectionViewCell idealItemSize]
-#define kItemSizeIphone    CGSizeMake(320, 568.0f - 2.0f * (9.0f + 9.0f))
-#define kItemSizeIpad      CGSizeMake(768.0f, 1024.0f - 2.0f * (9.0f + 9.0f))
+#define kItemPadding       [VLMCollectionViewCell itemPadding]
+#define kItemPaddingBottom [VLMCollectionViewCell itemPaddingBottom]
+
+#define kItemPaddingIphone  9.0f
+#define kItemPaddingIpad    18.0f
+
+// fill screen
+#define kItemSizeIphone    CGSizeMake(320, 568.0f - 2.0f * (9.0f + 9.0f) + 9.0f)
+#define kItemSizeIpad      CGSizeMake(768.0f, 1024.0f - 2.0f * (18.0f + 18.0f) + 18.0f)
+#define kItemPaddingBottomIphone  9.0f
+#define kItemPaddingBottomIpad    18.0f
+
+
+// square items
+//#define kItemSizeIphone    CGSizeMake(320, 320.0f - 2.0f * (9.0f + 9.0f) + 3.0f)
+//#define kItemSizeIpad      CGSizeMake(768.0f, 768.0f - 2.0f * (18.0f))
+//#define kItemPaddingBottomIphone  9.0f
+//#define kItemPaddingBottomIpad    18.0f
+
 
 #define SPINNER_STYLE UIActivityIndicatorViewStyleWhite
 #define SPINNER_BACKGROUND_COLOR [UIColor colorWithWhite:0.0f alpha:0.95f]

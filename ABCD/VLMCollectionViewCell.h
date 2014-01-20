@@ -23,5 +23,6 @@
 - (void)configureWithModel:(VLMPanelModel *)model;
 + (CGSize)idealItemSize;
 + (NSString *)CellIdentifier;
-
++ (CGFloat)itemPadding;
++ (CGFloat)itemPaddingBottom;
 @end
