@@ -28,38 +28,71 @@
 		[self setUserInteractionEnabled:NO];
 		[self setBackgroundColor:[UIColor clearColor]];
 
-		CGFloat padx = 24.0f;
-		CGFloat pady = 48.0f;
-		[self setCurrent:[[UILabel alloc] initWithFrame:CGRectMake(padx, 50 + pady, 320 - padx * 2, 60)]];
-		[self.current setText:@""];
-		[self.current setFont:[UIFont fontWithName:@"Helvetica-Bold" size:28.0f]];
-		[self.current setTextColor:[UIColor whiteColor]];
-		[self.current setTextAlignment:NSTextAlignmentCenter];
-		//[self.current setAdjustsFontSizeToFitWidth:YES];
-		[self.current setNumberOfLines:2.0f];
-		[self addSubview:self.current];
-
-		[self setNext:[[UILabel alloc] initWithFrame:CGRectMake(padx, 50 + pady, 320 - padx * 2, 60)]];
-		[self.next setText:@""];
-		[self.next setFont:[UIFont fontWithName:@"Helvetica-Bold" size:28.0f]];
-		[self.next setTextColor:[UIColor whiteColor]];
-		[self.next setTextAlignment:NSTextAlignmentCenter];
-		[self.next setAlpha:0.0f];
-		//[self.next setAdjustsFontSizeToFitWidth:YES];
-		[self.next setNumberOfLines:2.0f];
-		[self addSubview:self.next];
         
-        [self setHeading:[[UILabel alloc] initWithFrame:CGRectMake(self.current.frame.origin.x, self.current.frame.origin.y - 6.0f, self.current.frame.size.width, 12.0f)]];
-        [self.heading setText:@"a story branch"];
-        [self.heading setFont:[UIFont fontWithName:@"Helvetica-Bold" size:10.0f]];
-        [self.heading setTextColor:[UIColor colorWithWhite:1.0f alpha:0.25f]];
-        [self.heading setTextAlignment:NSTextAlignmentCenter];
-        [self addSubview:self.heading];
-        [self.heading setAlpha:0.0f];
-
-        //[self.current setBackgroundColor:[UIColor blackColor]];
-        //[self.next setBackgroundColor:[UIColor blackColor]];
-        
+        if ((UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad))
+        {
+            CGFloat padx = 24.0f;
+            CGFloat pady = 48.0f;
+            [self setCurrent:[[UILabel alloc] initWithFrame:CGRectMake(padx, 50 + pady, frame.size.width - padx * 2, 60)]];
+            [self.current setText:@""];
+            [self.current setFont:[UIFont fontWithName:@"Helvetica-Bold" size:28.0f]];
+            [self.current setTextColor:[UIColor whiteColor]];
+            [self.current setTextAlignment:NSTextAlignmentCenter];
+            //[self.current setAdjustsFontSizeToFitWidth:YES];
+            [self.current setNumberOfLines:2.0f];
+            [self addSubview:self.current];
+            
+            [self setNext:[[UILabel alloc] initWithFrame:CGRectMake(padx, 50 + pady, frame.size.width - padx * 2, 60)]];
+            [self.next setText:@""];
+            [self.next setFont:[UIFont fontWithName:@"Helvetica-Bold" size:28.0f]];
+            [self.next setTextColor:[UIColor whiteColor]];
+            [self.next setTextAlignment:NSTextAlignmentCenter];
+            [self.next setAlpha:0.0f];
+            //[self.next setAdjustsFontSizeToFitWidth:YES];
+            [self.next setNumberOfLines:2.0f];
+            [self addSubview:self.next];
+            
+            [self setHeading:[[UILabel alloc] initWithFrame:CGRectMake(self.current.frame.origin.x, self.current.frame.origin.y - 6.0f, self.current.frame.size.width, 12.0f)]];
+            [self.heading setText:@"a story branch"];
+            [self.heading setFont:[UIFont fontWithName:@"Helvetica-Bold" size:10.0f]];
+            [self.heading setTextColor:[UIColor colorWithWhite:1.0f alpha:0.25f]];
+            [self.heading setTextAlignment:NSTextAlignmentCenter];
+            [self addSubview:self.heading];
+            [self.heading setAlpha:0.0f];
+         
+        }
+        else
+        {
+            CGFloat padx = 24.0f;
+            CGFloat pady = 96.0f;
+            [self setCurrent:[[UILabel alloc] initWithFrame:CGRectMake(padx, 50 + pady, frame.size.width - padx * 2, 60)]];
+            [self.current setText:@""];
+            [self.current setFont:[UIFont fontWithName:@"Helvetica-Bold" size:48.0f]];
+            [self.current setTextColor:[UIColor whiteColor]];
+            [self.current setTextAlignment:NSTextAlignmentCenter];
+            //[self.current setAdjustsFontSizeToFitWidth:YES];
+            [self.current setNumberOfLines:2.0f];
+            [self addSubview:self.current];
+            
+            [self setNext:[[UILabel alloc] initWithFrame:CGRectMake(padx, 50 + pady, frame.size.width - padx * 2, 60)]];
+            [self.next setText:@""];
+            [self.next setFont:[UIFont fontWithName:@"Helvetica-Bold" size:48.0f]];
+            [self.next setTextColor:[UIColor whiteColor]];
+            [self.next setTextAlignment:NSTextAlignmentCenter];
+            [self.next setAlpha:0.0f];
+            //[self.next setAdjustsFontSizeToFitWidth:YES];
+            [self.next setNumberOfLines:2.0f];
+            [self addSubview:self.next];
+            
+            [self setHeading:[[UILabel alloc] initWithFrame:CGRectMake(self.current.frame.origin.x, self.current.frame.origin.y - 12.0f, self.current.frame.size.width, 12.0f)]];
+            [self.heading setText:@"a story branch"];
+            [self.heading setFont:[UIFont fontWithName:@"Helvetica-Bold" size:12.0f]];
+            [self.heading setTextColor:[UIColor colorWithWhite:1.0f alpha:0.25f]];
+            [self.heading setTextAlignment:NSTextAlignmentCenter];
+            [self addSubview:self.heading];
+            [self.heading setAlpha:0.0f];
+            
+        }
 	}
 	return self;
 }

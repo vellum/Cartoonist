@@ -74,11 +74,11 @@
 	for (NSInteger i = 0; i < numPages; i++)
 	{
 		VLMPanelModel *model = (VLMPanelModel *)[models.models objectAtIndex:i];
-		CGRect rect = CGRectMake((kItemSize.width - kItemPadding) * i, kItemPadding, kItemSize.width - kItemPadding * 2, kItemSize.height - kItemPaddingBottom);
+		CGRect rect = CGRectMake((kItemSize.width - kItemPadding) * i, kItemPadding, kItemSize.width - kItemPadding * 2, kItemSize.height - kItemPadding);
 
 		if (model.cellType != kCellTypeWireframe)
 		{
-            NSLog(@"not celltypewire");
+            //NSLog(@"not celltypewire");
 			UIImageView *imageview = [[UIImageView alloc] initWithFrame:rect];
 			[imageview setContentMode:UIViewContentModeScaleAspectFill];
 			[imageview setClipsToBounds:YES];
@@ -89,7 +89,7 @@
 		}
 		else
 		{
-			NSLog(@"celltypewire");
+			//NSLog(@"celltypewire");
 			UIView *placeholder = [[UIView alloc] initWithFrame:rect];
 			[placeholder setBackgroundColor:[UIColor blackColor]];
 			[self.scrollview addSubview:placeholder];

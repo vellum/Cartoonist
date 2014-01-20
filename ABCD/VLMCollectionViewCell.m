@@ -32,8 +32,8 @@
 	[self setBackgroundColor:[UIColor clearColor]];
 
 	CGFloat pad = kItemPadding;
-	[self setCoverFrame: CGRectMake(pad, 0, kItemSize.width - pad * 2, kItemSize.height - kItemPaddingBottom + pad)];
-	[self setNormalFrame: CGRectMake(pad, pad, kItemSize.width - pad * 2, kItemSize.height - kItemPaddingBottom)];
+	[self setCoverFrame: CGRectMake(pad, 0, kItemSize.width - pad * 2, kItemSize.height - kItemPadding + pad)];
+	[self setNormalFrame: CGRectMake(pad, pad, kItemSize.width - pad * 2, kItemSize.height - kItemPadding)];
 
 	UIView *baseView = [[UIView alloc] initWithFrame:self.normalFrame];
 	[baseView setBackgroundColor:[UIColor clearColor]];
@@ -93,13 +93,5 @@
 	return kItemPaddingIpad;
 }
 
-+ (CGFloat)itemPaddingBottom
-{
-	if ((UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad))
-	{
-		return kItemPaddingBottomIphone;
-	}
-	return kItemPaddingBottomIpad;
-}
 
 @end

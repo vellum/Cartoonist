@@ -342,7 +342,7 @@ typedef enum
 	[cv setDataSource:self.dataSource];
     
 	CGRect frame = UIScreen.mainScreen.bounds;
-	[cv setContentOffset:CGPointMake(0, kItemPaddingBottom)];
+	[cv setContentOffset:CGPointMake(0, kItemPadding)];
 
     [cv registerClass:[VLMWireframeCell class] forCellWithReuseIdentifier:[VLMWireframeCell CellIdentifier]];
     [cv registerClass:[VLMStaticImageCell class] forCellWithReuseIdentifier:[VLMStaticImageCell CellIdentifier]];
@@ -353,7 +353,7 @@ typedef enum
 	[cv.panGestureRecognizer setEnabled:NO];
 	[cv setClipsToBounds:NO];
     
-	[cv setContentInset:UIEdgeInsetsMake(kItemPaddingBottom + 0 + frame.size.height / 2, 0, kItemPaddingBottom, 0)];
+	[cv setContentInset:UIEdgeInsetsMake(kItemPadding + 0 + frame.size.height / 2, 0, kItemPadding, 0)];
 	
     
     [self setCollectionView:cv];
@@ -365,7 +365,7 @@ typedef enum
                                            desiredSize.width,
                                            desiredSize.height);
 	//[self.collectionView setContentInset:UIEdgeInsetsMake(kItemPaddingBottom + 0 + insetY, 0, kItemPaddingBottom, 0)];
-	[self.collectionView setContentInset:UIEdgeInsetsMake(-kItemPaddingBottom/2.0f + (self.view.frame.size.height-kItemSize.height)/2.0f + insetY, 0, kItemPaddingBottom, 0)];
+	[self.collectionView setContentInset:UIEdgeInsetsMake(-kItemPadding/2.0f + (self.view.frame.size.height-kItemSize.height)/2.0f + insetY, 0, kItemPadding, 0)];
 }
 
 - (void)setupDataSource

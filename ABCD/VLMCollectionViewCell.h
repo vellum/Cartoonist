@@ -24,5 +24,4 @@
 + (CGSize)idealItemSize;
 + (NSString *)CellIdentifier;
 + (CGFloat)itemPadding;
-+ (CGFloat)itemPaddingBottom;
 @end

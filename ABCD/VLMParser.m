@@ -123,7 +123,7 @@ static inline BOOL IsEmpty(id thing)
 				type = kCellTypeCaption;
 			}
 		}
-        NSLog(@"panelmodels model :%@ :%@ :%@", caption, imagename, image?@"notnil":@"nil");
+        //NSLog(@"panelmodels model :%@ :%@ :%@", caption, imagename, image?@"notnil":@"nil");
 		VLMPanelModel *model = [VLMPanelModel panelModelWithName:caption image:image type:type];
 		[models.models addObject:model];
 		[models setSourceNode:node];
