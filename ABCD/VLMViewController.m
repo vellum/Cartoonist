@@ -353,7 +353,6 @@ typedef enum
 	[cv.panGestureRecognizer setEnabled:NO];
 	[cv setClipsToBounds:NO];
     
-    CGFloat paddingVertical = (frame.size.height - kItemSize.height)/2;
 	[cv setContentInset:UIEdgeInsetsMake(kItemPaddingBottom + 0 + frame.size.height / 2, 0, kItemPaddingBottom, 0)];
 	
     
@@ -365,7 +364,8 @@ typedef enum
                                            -insetY,
                                            desiredSize.width,
                                            desiredSize.height);
-	[self.collectionView setContentInset:UIEdgeInsetsMake(kItemPaddingBottom + 0 + insetY, 0, kItemPaddingBottom, 0)];
+	//[self.collectionView setContentInset:UIEdgeInsetsMake(kItemPaddingBottom + 0 + insetY, 0, kItemPaddingBottom, 0)];
+	[self.collectionView setContentInset:UIEdgeInsetsMake(-kItemPaddingBottom/2.0f + (self.view.frame.size.height-kItemSize.height)/2.0f + insetY, 0, kItemPaddingBottom, 0)];
 }
 
 - (void)setupDataSource
