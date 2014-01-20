@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface VLMPaddedLabel : UILabel
-
+@property (nonatomic) CGFloat padding;
 @end

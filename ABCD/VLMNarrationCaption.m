@@ -48,8 +48,12 @@
     
     [self.label setTextColor:[UIColor blackColor]];
     [self.label setBackgroundColor:[UIColor whiteColor]];
+    /*
     self.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.layer.borderWidth = 1.0f;
+     */
+    self.layer.borderColor = [UIColor colorWithWhite:0.6f alpha:1.0f].CGColor;
+    self.layer.borderWidth = 1.2f;
 }
 
 - (void)setText:(NSString *)text

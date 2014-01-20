@@ -213,7 +213,7 @@ typedef enum
                     if (s > 1.0f)
                     {
                         CGFloat dif = s - 1.0f;
-                        s = 1.0f + dif * multiplierB;
+                        s = 1.0f + dif * multiplierA;
                     }
                 }
                 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
@@ -580,6 +580,8 @@ typedef enum
 
 -(void)animateBounceZoom:(CGFloat)targetZoom
 {
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    
     CGFloat currentScale = [[self.collectionView.layer valueForKeyPath: @"transform.scale"] floatValue];
     NSValue * from = [NSNumber numberWithFloat:currentScale];
     NSValue * to = [NSNumber numberWithFloat:targetZoom];

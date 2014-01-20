@@ -31,6 +31,15 @@
         [self.label setAdjustsFontSizeToFitWidth:YES];
         [self.label setNumberOfLines:100];
         [self.contentView addSubview:self.label];
+        
+        if ((UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad))
+        {
+            self.label.padding = 18.0f;
+        }
+        else
+        {
+            self.label.padding = 120.0f;
+        }
 
     }
     return self;

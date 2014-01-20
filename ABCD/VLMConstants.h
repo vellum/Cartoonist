@@ -18,11 +18,19 @@
 #define FUCKING_VERTICAL   1
 #define FUCKING_HORIZONTAL 2
 
-//#define FONT_WIREFRAME [UIFont fontWithName:@"Draftsman" size:14.0f]
+// Mixed Case, Legible but not quite heavy enough
 #define FONT_CAPTION [UIFont fontWithName:@"Architect_Regular" size:23.0f]
 #define USE_ALL_CAPS NO
 #define FONT_LINE_SPACING 0.0f
 #define FONT_WIREFRAME [UIFont fontWithName:@"Architect_Regular" size:24.0f]
+
+/*
+// All Upper Case, Sentences are hard to read though characters have good weight
+#define FONT_CAPTION [UIFont fontWithName:@"Draftsman" size:14.0f]
+#define USE_ALL_CAPS YES
+#define FONT_LINE_SPACING 8.0f
+#define FONT_WIREFRAME [UIFont fontWithName:@"Draftsman" size:14.0f]
+*/
 
 #define kItemSize          [VLMCollectionViewCell idealItemSize]
 #define kItemPadding       [VLMCollectionViewCell itemPadding]

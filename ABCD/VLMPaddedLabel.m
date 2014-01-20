@@ -15,12 +15,13 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        self.padding = 10.0f;
     }
     return self;
 }
 
 - (void)drawTextInRect:(CGRect)rect {
-    UIEdgeInsets insets = {0, 10, 0, 10};
+    UIEdgeInsets insets = {0, self.padding, 0, self.padding};
     return [super drawTextInRect:UIEdgeInsetsInsetRect(rect, insets)];
 }
 /*
