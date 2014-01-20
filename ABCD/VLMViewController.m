@@ -187,7 +187,8 @@ typedef enum
         
 		CGFloat lb = 1 / self.screensizeMultiplier;
 		CGFloat page = roundf(self.secretScrollview.contentOffset.y / kItemSize.height);
-        
+        CGFloat multiplierA = 0.2f;
+        CGFloat multiplierB = 0.1f;
 		switch (self.zoomMode)
 		{
 			case kZoomNormal :
@@ -197,14 +198,14 @@ typedef enum
                 if (s < lb)
                 {
                     CGFloat dif = s - lb;
-                    s = lb + dif*0.1f;
+                    s = lb + dif * multiplierA;
                 }
                 if ([self.dataSource isItemAtIndexChoice:page])
                 {
                     if (s > CHOICE_SCALE)
                     {
                         CGFloat dif = s - CHOICE_SCALE;
-                        s = CHOICE_SCALE + dif*0.1f;
+                        s = CHOICE_SCALE + dif * multiplierA;
                     }
                 }
                 else
@@ -212,7 +213,7 @@ typedef enum
                     if (s > 1.0f)
                     {
                         CGFloat dif = s - 1.0f;
-                        s = 1.0f + dif*0.1f;
+                        s = 1.0f + dif * multiplierB;
                     }
                 }
                 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
@@ -259,14 +260,14 @@ typedef enum
                 if (s < lb)
                 {
                     CGFloat dif = s - lb;
-                    s = lb + dif*0.1f;
+                    s = lb + dif * multiplierB;
                 }
                 if ([self.dataSource isItemAtIndexChoice:page])
                 {
                     if (s > CHOICE_SCALE)
                     {
                         CGFloat dif = s - CHOICE_SCALE;
-                        s = CHOICE_SCALE + dif*0.1f;
+                        s = CHOICE_SCALE + dif * multiplierA;
                     }
                 }
                 else
@@ -274,10 +275,9 @@ typedef enum
                     if (s > 1.0f)
                     {
                         CGFloat dif = s - 1.0f;
-                        s = 1.0f + dif*0.1f;
+                        s = 1.0f + dif * multiplierA;
                     }
                 }
-                
                 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
             }
             else
