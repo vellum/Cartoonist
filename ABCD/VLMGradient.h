@@ -14,6 +14,7 @@ typedef BOOL (^CheckOverviewBlock)();
 @property (nonatomic, copy) CheckOverviewBlock checkOverviewBlock;
 
 - (void)setText:(NSString *)text;
+- (void)setAlpha:(CGFloat)alpha withLabelsHidden:(BOOL)shouldHideLabels;
 - (void)setAlpha:(CGFloat)alpha forText:(NSString *)text andAlpha:(CGFloat)alpha2 forText2:(NSString *)text2;
 - (void)hide;
 - (void)show;

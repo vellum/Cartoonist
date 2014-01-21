@@ -133,6 +133,17 @@
 	[super setAlpha:alpha];
 }
 
+
+- (void)setAlpha:(CGFloat)alpha withLabelsHidden:(BOOL)shouldHideLabels
+{
+    if (shouldHideLabels) {
+        [self.heading setAlpha:0.0f];
+        [self.current setAlpha:0.0f];
+        [self.next setAlpha:0.0f];
+    }
+	[super setAlpha:alpha];
+}
+
 - (void)setText:(NSString *)text
 {
     //NSLog(@"settext");

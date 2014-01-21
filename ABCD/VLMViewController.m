@@ -215,7 +215,17 @@ typedef enum
                         CGFloat dif = s - 1.0f;
                         s = 1.0f + dif * multiplierA;
                     }
+                    CGFloat gradientopa = 1 - ( s - lb ) / ( 1 - lb );
+                    if (gradientopa>1) {
+                        gradientopa = 1;
+                    } else if (gradientopa<0){
+                        gradientopa = 0;
+                    }
+                    [self.overlay setAlpha:gradientopa withLabelsHidden:YES];
+                    NSLog(@"%f", gradientopa);
                 }
+                
+                
                 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
             }
             else
@@ -277,7 +287,16 @@ typedef enum
                         CGFloat dif = s - 1.0f;
                         s = 1.0f + dif * multiplierA;
                     }
+                    CGFloat gradientopa = 1 - ( s - lb ) / ( 1 - lb );
+                    if (gradientopa>1) {
+                        gradientopa = 1;
+                    } else if (gradientopa<0){
+                        gradientopa = 0;
+                    }
+                    [self.overlay setAlpha:gradientopa withLabelsHidden:YES];
+
                 }
+
                 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
             }
             else
