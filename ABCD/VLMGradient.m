@@ -64,7 +64,7 @@
         else
         {
             CGFloat padx = 24.0f;
-            CGFloat pady = 96.0f;
+            CGFloat pady = 120.0f;
             [self setCurrent:[[UILabel alloc] initWithFrame:CGRectMake(padx, 50 + pady, frame.size.width - padx * 2, 60)]];
             [self.current setText:@""];
             [self.current setFont:[UIFont fontWithName:@"Helvetica-Bold" size:48.0f]];
