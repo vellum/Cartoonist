@@ -53,7 +53,6 @@
 - (void)handlePinch:(UIPinchGestureRecognizer *)pgr
 {
 	BOOL ended = NO;
-
 	switch (pgr.state)
 	{
 		case UIGestureRecognizerStateEnded :
@@ -72,7 +71,7 @@
 	}
 	if (self.zoomPageBlock)
 	{
-		self.zoomPageBlock([pgr scale], ended);
+		self.zoomPageBlock([pgr scale], [pgr velocity], ended);
 	}
 }
 

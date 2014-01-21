@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^ZoomPageBlock)(CGFloat zoomBy, BOOL ended);
+typedef void (^ZoomPageBlock)(CGFloat zoomBy, CGFloat velocity, BOOL ended);
 typedef BOOL (^CheckOverviewBlock)();
 
 @interface VLMCaptureView : UIView <UIGestureRecognizerDelegate>

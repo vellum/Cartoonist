@@ -28,7 +28,7 @@
 typedef enum
 {
 	kZoomNormal,
-	kZoomZoomedOut
+	kZoomOverview
 } ZoomMode;
 
 @interface VLMViewController ()
@@ -46,7 +46,7 @@ typedef enum
 @property NSInteger lastKnownChoicePage;
 @property (nonatomic, strong) VLMSpinner *spinner;
 @property (nonatomic, strong) VLMAnimButton *qbutton;
-
+@property CGFloat pinchvelocity;
 @property CGRect fuckA;
 @property CGRect fuckB;
 @end
@@ -79,6 +79,7 @@ typedef enum
 	[self setZoomEnabled:YES];
 	[self setScreensizeMultiplier:2.0f];
 	[self setIsArtificiallyScrolling:NO];
+    [self setPinchvelocity:0];
 }
 
 - (void)viewDidLoad
@@ -172,13 +173,13 @@ typedef enum
     
     CheckOverviewBlock checkOverviewBlock = ^()
     {
-        if (self.zoomMode==kZoomZoomedOut) {
+        if (self.zoomMode==kZoomOverview) {
             return YES;
         }
         return NO;
     };
     
-	ZoomPageBlock zoomPageBlock = ^(CGFloat zoomAmount, BOOL ended)
+	ZoomPageBlock zoomPageBlock = ^(CGFloat zoomAmount, CGFloat zoomVelocity, BOOL ended)
 	{
 		if (!self.zoomEnabled)
 		{
@@ -189,6 +190,7 @@ typedef enum
 		CGFloat page = roundf(self.secretScrollview.contentOffset.y / kItemSize.height);
         CGFloat multiplierA = 0.2f;
         CGFloat multiplierB = 0.1f;
+        self.pinchvelocity = zoomVelocity;
 		switch (self.zoomMode)
 		{
 			case kZoomNormal :
@@ -199,6 +201,7 @@ typedef enum
                 {
                     CGFloat dif = s - lb;
                     s = lb + dif * multiplierA;
+                    self.pinchvelocity = 0;
                 }
                 if ([self.dataSource isItemAtIndexChoice:page])
                 {
@@ -206,6 +209,7 @@ typedef enum
                     {
                         CGFloat dif = s - CHOICE_SCALE;
                         s = CHOICE_SCALE + dif * multiplierA;
+                        self.pinchvelocity = 0;
                     }
                 }
                 else
@@ -214,6 +218,7 @@ typedef enum
                     {
                         CGFloat dif = s - 1.0f;
                         s = 1.0f + dif * multiplierA;
+                        self.pinchvelocity = 0;
                     }
                     CGFloat gradientopa = 1 - ( s - lb ) / ( 1 - lb );
                     if (gradientopa>1) {
@@ -222,7 +227,6 @@ typedef enum
                         gradientopa = 0;
                     }
                     [self.overlay setAlpha:gradientopa withLabelsHidden:YES];
-                    //NSLog(@"%f", gradientopa);
                 }
                 
                 
@@ -232,7 +236,7 @@ typedef enum
             {
                 if (zoomAmount < 1)
                 {
-                    [self switchZoom:kZoomZoomedOut targetPage:-1 shouldBounce:NO];
+                    [self switchZoom:kZoomOverview targetPage:-1 shouldBounce:NO];
                 }
                 else
                 {
@@ -263,7 +267,7 @@ typedef enum
             }
             break;
             
-			case kZoomZoomedOut :
+			case kZoomOverview :
             if (!ended)
             {
                 CGFloat s = lb + (zoomAmount - 1);
@@ -271,6 +275,7 @@ typedef enum
                 {
                     CGFloat dif = s - lb;
                     s = lb + dif * multiplierB;
+                    self.pinchvelocity = 0;
                 }
                 if ([self.dataSource isItemAtIndexChoice:page])
                 {
@@ -278,6 +283,7 @@ typedef enum
                     {
                         CGFloat dif = s - CHOICE_SCALE;
                         s = CHOICE_SCALE + dif * multiplierA;
+                        self.pinchvelocity = 0;
                     }
                 }
                 else
@@ -286,6 +292,7 @@ typedef enum
                     {
                         CGFloat dif = s - 1.0f;
                         s = 1.0f + dif * multiplierA;
+                        self.pinchvelocity = 0;
                     }
                     CGFloat gradientopa = 1 - ( s - lb ) / ( 1 - lb );
                     if (gradientopa>1) {
@@ -311,7 +318,7 @@ typedef enum
                                      }
                      
                      ];
-                    [self switchZoom:kZoomZoomedOut targetPage:-1 shouldBounce:NO];
+                    [self switchZoom:kZoomOverview targetPage:-1 shouldBounce:NO];
                 }
                 else
                 {
@@ -462,6 +469,7 @@ typedef enum
         }
         
         
+        
 		[self.capture enableHorizontalPan:NO];
 		if ([self.dataSource isItemAtIndexChoice:page])
 		{
@@ -598,7 +606,12 @@ typedef enum
     NSValue * to = [NSNumber numberWithFloat:targetZoom];
     NSString * keypath = @"transform.scale";
 
-    [self.collectionView.layer addAnimation:[self bounceAnimationFrom:from to:to forKeyPath:keypath withDuration:ZOOM_DURATION] forKey:@"bounce"];
+    CGFloat duration = ZOOM_DURATION*1.2f;
+    if ([self.dataSource isItemAtIndexChoice:self.currentPage] && targetZoom>=CHOICE_SCALE) {
+        //duration = 0.475f;
+        //duration *= 1.5f;
+    }
+    [self.collectionView.layer addAnimation:[self bounceAnimationFrom:from to:to forKeyPath:keypath withDuration:duration] forKey:@"bounce"];
     [self.collectionView.layer setValue:to forKeyPath:keypath];
 }
 
@@ -633,7 +646,7 @@ typedef enum
 {
 	if (self.zoomMode == kZoomNormal)
 	{
-		[self switchZoom:kZoomZoomedOut targetPage:-1 shouldBounce:YES];
+		[self switchZoom:kZoomOverview targetPage:-1 shouldBounce:YES];
 	}
 	else
 	{
@@ -689,7 +702,7 @@ typedef enum
 		return;
 	}
     
-	if (self.zoomMode == kZoomZoomedOut)
+	if (self.zoomMode == kZoomOverview)
 	{
 		CGPoint contentOffset = scrollView.contentOffset;
 		contentOffset.y = contentOffset.y - self.collectionView.contentInset.top;
@@ -825,7 +838,7 @@ typedef enum
 		return;
 	}
     
-	if (self.zoomMode == kZoomZoomedOut)
+	if (self.zoomMode == kZoomOverview)
 	{
 		CGFloat targetpage = roundf(targetContentOffset->y / kItemSize.height);
 		if (velocity.y == 0)
