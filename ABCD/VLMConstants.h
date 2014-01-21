@@ -8,10 +8,10 @@
 
 #define CHOICE_SCALE       0.9f
 #define ZOOM_DURATION      0.325f
-#define ZOOM_OPTIONS       UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
+#define ZOOM_OPTIONS       UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseOut
 
 #define GENERIC_DURATION   0.325f
-#define GENERIC_OPTIONS    UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
+#define GENERIC_OPTIONS    UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseOut
 
 #define DEAD_ZONE          CGSizeMake(10.0f, 10.0f)
 #define FUCKING_UNKNOWN    0

@@ -163,11 +163,19 @@ function removeNodeFromParent(node)
 	var type = parentnode.type.toUpperCase();
 	if ( type == 'JOINT' )
 	{
+		console.log('parent is joint');
 		var ind = parentnode.children.indexOf(node);
+		console.log('child is child nmr ' + ind);
 		if ( ind > -1 )
 		{
 			parentnode.children.splice(ind, 1);
 			console.log('removed node from joint');
+			console.log('new length is ' + parentnode.children.length);
+			if (parentnode.selected>parentnode.children.length-1)
+			{
+				parentnode.selected = 0;
+				console.log('new selection is zero');
+			}
 		}
 		if (parentnode.children.length==0)
 		{
@@ -177,6 +185,8 @@ function removeNodeFromParent(node)
 	} 
 	else if ( type == 'SEQUENCE' ) 
 	{
+		console.log('parent is sequence');
+		
 		var ind = parentnode.nodes.indexOf(node);
 		if ( ind > -1 )
 		{

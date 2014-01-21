@@ -41,6 +41,7 @@ function renderSequenceIntoDiv( seq, $div )
 	if ( seq.id != undefined ){
 		var $dl = $('<span data-id="' + seq.id + '" class="delete">[remove]</span>');
 		$dl.click(function(){
+			console.log('click');
 			var extractedid = $(this).attr('data-id');
 			var resultnode = idlookup[extractedid];
 			removeNodeFromParent(resultnode);
@@ -167,7 +168,7 @@ function renderSequenceIntoDiv( seq, $div )
 		var $addie = $('<div class="add node">[add joint]</div>');
 		$sequence.append($addie);
 		$addie.click(function(){
-			var joint = makeBranchWith(3, 3, 'empty');
+			var joint = makeBranchWith(2, 1, 'empty');
 			addJointToSequence(joint, seq);
 			render();
 		});
