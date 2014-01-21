@@ -33,7 +33,7 @@ select {
 .add {
 	text-transform:uppercase;
 	font-size:50%;
-	opacity:0.25;
+	opacity:0.2;
 }
 .add:hover{
 	opacity:1;
@@ -42,7 +42,20 @@ select {
 .addbranch{
 	padding-left:1em;
 }
-
+.imagetext{
+	text-transform:uppercase;
+	font-size:50%;
+	opacity:0.75;
+	font-style:italic;
+	letter-spacing:2;
+	padding:2em;
+	width:100px;
+	text-align:center;
+	margin-bottom:1em;
+	border: 1px dashed rgba(0,0,0,0.5);
+}
+.captiontext{
+}
 textarea {
 	width:99%;
 	height:150px;

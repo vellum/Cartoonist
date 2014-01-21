@@ -76,6 +76,20 @@ function renderSequenceIntoDiv( seq, $div )
 		
 		if (node.type.toUpperCase() == 'FRAME')
 		{
+			var $img = $('<div class="imagetext" data-id="' + node.id + '">' + node.image + '</div>');
+			$node.append($img);
+			$img.editable({
+			    type: 'text',
+			    title: '',
+			    success: function(response, newValue) {
+					var extractedid = $(this).attr('data-id');
+					var resultnode = idlookup[extractedid];
+					if (newValue=='null') newValue = null;
+					resultnode.image = newValue;
+					render();
+			    }
+			});
+			
 			var $framediv = $('<div class="captiontext" data-id="' + node.id + '">' + node.caption + '</div>');
 			var $cap = $('<div class="caption"></div>');
 			$cap.append($framediv);
@@ -126,7 +140,19 @@ function renderSequenceIntoDiv( seq, $div )
 			$node.append($addseq);
 			var $fuckingbranch = $('<div class="node"><div class="heading">branch</div></div>');
 			$node.append($fuckingbranch);
-
+			var $img = $('<div class="imagetext" data-id="' + node.children[node.selected].id + '">' + node.children[node.selected].image + '</div>');
+			$fuckingbranch.append($img);
+			$img.editable({
+			    type: 'text',
+			    title: '',
+			    success: function(response, newValue) {
+					var extractedid = $(this).attr('data-id');
+					var resultnode = idlookup[extractedid];
+					if (newValue=='null') newValue = null;
+					resultnode.image = newValue;
+					render();
+			    }
+			});
 			var $framediv = $('<div class="captiontext" data-id="' + node.children[node.selected].id + '">' + node.children[node.selected].caption + '</div>');
 			var $cap = $('<div class="caption"></div>');
 			$cap.append($framediv);
