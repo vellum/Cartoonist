@@ -19,7 +19,6 @@ typedef void (^ScrollPageBlock)(CGFloat primaryAlpha, NSString *primary, CGFloat
 @property (nonatomic, copy) ChoosePageBlock choosePageBlock;
 @property (nonatomic, copy) ScrollPageBlock scrollPageBlock;
 
-- (void)setDelegate:(id)scrollViewDelegate;
 - (void)configureWithModel:(VLMPanelModels *)models;
 
 + (NSString *)CellIdentifier;

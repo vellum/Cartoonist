@@ -48,11 +48,6 @@
 	return self;
 }
 
-- (void)setDelegate:(id)scrollViewDelegate
-{
-	// [self.scrollview setDelegate:scrollViewDelegate];
-}
-
 - (void)configureWithModel:(VLMPanelModels *)models
 {
 	NSInteger numPages = [models.models count];
@@ -155,20 +150,11 @@
 
 - (void)updatePage:(NSInteger)page
 {
-	/*
-	 *  // NSLog(@"updatePage");
-	 *  if (self.choosePageBlock)
-	 *  {
-	 *          VLMPanelModel *model = [self.panels.models objectAtIndex:page];
-	 *          self.choosePageBlock(page, model.name);
-	 *  }
-	 */
 	[NSObject cancelPreviousPerformRequestsWithTarget:self];
     
     // we might be flipping back and forth between options, so wait half a second before requesting a reloaddata
     // (while sections reload, horizontal pan gesture recognizers are torn down and reconstructed.
 	[self performSelector:@selector(notifyPageChange:) withObject:[NSNumber numberWithInteger:page] afterDelay:0.5f];
-	//[self performSelector:@selector(notifyPageChange:) withObject:[NSNumber numberWithInteger:page] afterDelay:0.01f];
 }
 
 - (void)notifyPageChange:(NSNumber *)page
@@ -181,16 +167,5 @@
 		[self.panels setSelectedIndex:p];
 	}
 }
-
-/*
- * // Only override drawRect: if you perform custom drawing.
- * // An empty implementation adversely affects performance during animation.
- * - (void)drawRect:(CGRect)rect
- * {
- *  // Drawing code
- * }
- */
-
-
 
 @end

@@ -606,10 +606,9 @@ typedef enum
     NSValue * to = [NSNumber numberWithFloat:targetZoom];
     NSString * keypath = @"transform.scale";
 
-    CGFloat duration = ZOOM_DURATION*1.2f;
+    CGFloat duration = ZOOM_DURATION;
     if ([self.dataSource isItemAtIndexChoice:self.currentPage] && targetZoom>=CHOICE_SCALE) {
-        //duration = 0.475f;
-        //duration *= 1.5f;
+        duration *= 1.2f;
     }
     [self.collectionView.layer addAnimation:[self bounceAnimationFrom:from to:to forKeyPath:keypath withDuration:duration] forKey:@"bounce"];
     [self.collectionView.layer setValue:to forKeyPath:keypath];

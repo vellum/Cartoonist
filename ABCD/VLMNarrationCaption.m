@@ -30,7 +30,6 @@
 
 - (void)setup
 {
-	//[self setBackgroundColor:[UIColor colorWithHue:54.0f / 360.0f saturation:0.96f brightness:0.98f alpha:1.0f]];
     [self setBackgroundColor:[UIColor clearColor]];
 	[self setAlpha:0];
 	[self setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
@@ -48,10 +47,7 @@
     
     [self.label setTextColor:[UIColor blackColor]];
     [self.label setBackgroundColor:[UIColor whiteColor]];
-    /*
-    self.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    self.layer.borderWidth = 1.0f;
-     */
+
     self.layer.borderColor = [UIColor colorWithWhite:0.6f alpha:1.0f].CGColor;
     self.layer.borderWidth = 1.2f;
 }
@@ -68,12 +64,10 @@
 
 - (void)transitionAtValue:(CGFloat)value
 {
-    
-    
 	/*
-	 * // notes:
-	 * // 0 to 1 - panel is scrolling between center and off top edge of screen
-	 * // 0 to -1 - panel is scrolling between center and off bottom edge of screen
+	 * notes:
+	 * 0 to 1 - panel is scrolling between center and off top edge of screen
+	 * 0 to -1 - panel is scrolling between center and off bottom edge of screen
 	 */
 	BOOL isLeaving = roundf(value * 100.0f) / 100.0f > 0;
 	BOOL isArriving = roundf(value * 100.0f) / 100.0f < 0;
@@ -153,14 +147,4 @@
         [self transitionAtValue:attributes.transitionValue];
     }
 }
-
-/*
- * // Only override drawRect: if you perform custom drawing.
- * // An empty implementation adversely affects performance during animation.
- * - (void)drawRect:(CGRect)rect
- * {
- *  // Drawing code
- * }
- */
-
 @end

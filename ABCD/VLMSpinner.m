@@ -34,15 +34,6 @@
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
-
 - (void)hide
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
@@ -72,8 +63,6 @@
                      }
      
 					 completion:^(BOOL completed) {
-                         //[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hide) object:nil];
-                         //[self performSelector:@selector(hide) withObject:nil afterDelay:1.0f];
                      }
      
      ];

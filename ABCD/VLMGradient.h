@@ -22,4 +22,5 @@ typedef BOOL (^CheckOverviewBlock)();
 - (void)hideText;
 - (void)showBaseWithTextHidden;
 - (void)hideTextNoAnimation;
+
 @end

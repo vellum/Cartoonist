@@ -56,7 +56,6 @@
 - (void)setAlpha:(CGFloat)alpha
 {
     [super setAlpha:alpha];
-    //[self.layer setTransform:CATransform3DScale(CATransform3DIdentity, alpha, alpha, 1.0f)];
     
     if (alpha>0.5f) {
         [self setUserInteractionEnabled:YES];
@@ -64,14 +63,4 @@
         [self setUserInteractionEnabled:NO];
     }
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
-
 @end

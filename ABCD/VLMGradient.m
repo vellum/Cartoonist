@@ -27,7 +27,6 @@
 	{
 		[self setUserInteractionEnabled:NO];
 		[self setBackgroundColor:[UIColor clearColor]];
-
         
         if ((UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad))
         {
@@ -225,27 +224,13 @@
 						  delay:0.0f
 						options:ZOOM_OPTIONS
 					 animations:^{
-		 [self setAlpha:1.0f];
-		 [self.next setAlpha:self.restoreAlphaNext];
-		 [self.current setAlpha:self.restoreAlphaCurrent];
-         [self.heading setAlpha:self.restoreAlphaCurrent];
-
-                         /*
-                         [self.next setAlpha:1.0f];
-                         [self.current setAlpha:0.0f];
-                         
-                         if ([self.next.text length]==0) {
-                             [self.heading setAlpha:0.0f];
-                         } else {
-                             [self.heading setAlpha:1.0f];
-                         }
-                          */
-                         
-	 }
-
+                         [self setAlpha:1.0f];
+                         [self.next setAlpha:self.restoreAlphaNext];
+                         [self.current setAlpha:self.restoreAlphaCurrent];
+                         [self.heading setAlpha:self.restoreAlphaCurrent];
+                     }
 					 completion:^(BOOL completed) {
-                         
-	 }
+                     }
 
 	];
 }
@@ -253,9 +238,6 @@
 - (void)hideText
 {
     //NSLog(@"hidetext");
-	//self.restoreAlphaCurrent = self.current.alpha;
-	//self.restoreAlphaNext = self.next.alpha;
-    
 	[UIView animateWithDuration:ZOOM_DURATION
 						  delay:0.0f
 						options:ZOOM_OPTIONS
@@ -264,7 +246,6 @@
                          [self.current setAlpha:0.0f];
                          [self.heading setAlpha:0.0f];
                      }
-     
 					 completion:^(BOOL completed) {
                      }
      

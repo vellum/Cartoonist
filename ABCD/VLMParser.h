@@ -19,6 +19,4 @@
 - (VLMPanelModels *)panelModelsFromNode:(NSMutableDictionary *)node;
 - (NSMutableArray *)parseRootNode:(NSMutableDictionary *)root keepReference:(BOOL)shouldKeep;
 
-// - (NSMutableArray)setPlayerChoiceAtIndex:(NSInteger)index Choice:(NSInteger)choiceIndex
-
 @end

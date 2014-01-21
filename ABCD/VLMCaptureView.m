@@ -62,6 +62,8 @@
 		default :
 			break;
 	}
+    /*
+    // this code forces the pinch gesture to end when a threshold is reached
 	CGFloat threshold = 1;                                                                                                                                                                                                                                                                            // 0.125f;
 	if ([pgr scale] < 1 - threshold || [pgr scale] > 1 + threshold)
 	{
@@ -69,6 +71,7 @@
 		//[pgr setEnabled:YES];
 		//ended = YES;
 	}
+     */
 	if (self.zoomPageBlock)
 	{
 		self.zoomPageBlock([pgr scale], [pgr velocity], ended);
