@@ -93,6 +93,11 @@
             
         }
 	}
+    [self setScrollview:[[UIScrollView alloc] initWithFrame:CGRectMake(frame.size.width-25.0f, 0.0f, 25.0f, frame.size.height)]];
+    [self.scrollview setBackgroundColor:[UIColor clearColor]];
+    [self.scrollview setUserInteractionEnabled:NO];
+    [self addSubview:self.scrollview];
+
 	return self;
 }
 
