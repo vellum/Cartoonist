@@ -222,7 +222,7 @@ typedef enum
                         gradientopa = 0;
                     }
                     [self.overlay setAlpha:gradientopa withLabelsHidden:YES];
-                    NSLog(@"%f", gradientopa);
+                    //NSLog(@"%f", gradientopa);
                 }
                 
                 
