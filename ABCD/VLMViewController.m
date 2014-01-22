@@ -113,8 +113,6 @@ typedef enum
 	[gradient setUserInteractionEnabled:NO];
 	[self.view addSubview:gradient];
 	[self setOverlay:gradient];
-    [self.overlay.scrollview setContentSize:CGSizeMake(1,kItemSize.height * [self.dataSource numberOfSectionsInCollectionView:self.collectionView])];
-    
     
 	// touch capture view detects kinds of gestures and decides what behavior to trigger
 	[self setupCaptureView];
@@ -496,8 +494,6 @@ typedef enum
 			[self.secretScrollview setFrame:CGRectMake(0, 0, kItemSize.width, kItemSize.height)];
 			[self.secretScrollview setContentSize:CGSizeMake(kItemSize.width, kItemSize.height * [self.dataSource numberOfSectionsInCollectionView:self.collectionView])];
 			[self.secretScrollview setContentInset:UIEdgeInsetsZero];
-            [self.overlay.scrollview setContentSize:CGSizeMake(1,kItemSize.height * [self.dataSource numberOfSectionsInCollectionView:self.collectionView])];
-
             
 			[self setZoomEnabled:NO];
             
@@ -531,8 +527,6 @@ typedef enum
 			[self.secretScrollview setContentSize:CGSizeMake(kItemSize.width, kItemSize.height * [self.dataSource numberOfSectionsInCollectionView:self.collectionView])];
 			[self.secretScrollview setContentInset:UIEdgeInsetsZero];
             
-            [self.overlay.scrollview setContentSize:CGSizeMake(1,kItemSize.height * [self.dataSource numberOfSectionsInCollectionView:self.collectionView])];
-
 			[self setZoomEnabled:NO];
 
             if (shouldBounce) {
@@ -603,10 +597,6 @@ typedef enum
          ];
         
         [self.secretScrollview setContentSize:CGSizeMake(kItemSize.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * kItemSize.height + self.collectionView.contentInset.top*self.screensizeMultiplier)];
-        [self.overlay.scrollview setContentSize:CGSizeMake(1,kItemSize.height * [self.dataSource numberOfSectionsInCollectionView:self.collectionView])];
-
-        
-
 	}
 }
 
@@ -702,8 +692,6 @@ typedef enum
 {
     [self.secretScrollview setContentSize:CGSizeMake(self.secretScrollview.frame.size.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * self.secretScrollview.frame.size.height)];
     [self.collectionView reloadData];
-    [self.overlay.scrollview setContentSize:CGSizeMake(1,kItemSize.height * [self.dataSource numberOfSectionsInCollectionView:self.collectionView])];
-
     //[self checkHorizontalPanEnabled];
     [self.spinner hideWithDelay:0.4f];
     return;
@@ -725,20 +713,12 @@ typedef enum
 		contentOffset.y = contentOffset.y - self.collectionView.contentInset.top;
 		[self.collectionView setContentOffset:contentOffset];
         
-        if (self.isArtificiallyScrolling)
-        {
-            return;
-        }
-
-        /*CGFloat targetoffsety = self.secretScrollview.contentOffset.y / (self.secretScrollview.contentSize.height-self.secretScrollview.frame.size.height*2) * (self.overlay.scrollview.contentSize.height-self.overlay.scrollview.frame.size.height);
-        CGFloat curOffsetY = self.overlay.scrollview.contentOffset.y;
-        targetoffsety = self.overlay.scrollview.contentOffset.y + (targetoffsety-curOffsetY)*0.75f;
-        */
-        [self.overlay.scrollview flashScrollIndicators];
-        [self.overlay.scrollview setContentOffset:self.secretScrollview.contentOffset];
-
         
-       
+        CGFloat pctoffset = self.secretScrollview.contentOffset.y / (self.secretScrollview.contentSize.height-self.secretScrollview.frame.size.height*2) ;
+        CGFloat windowToContentRatio = self.secretScrollview.frame.size.height/self.secretScrollview.contentSize.height;
+        NSLog(@"%f\t%f", pctoffset, windowToContentRatio);
+        [self.overlay setScrollIndicatorPositionAsPercent:pctoffset heightAsPercent:windowToContentRatio];
+        
 		return;
 	}
     
@@ -856,6 +836,12 @@ typedef enum
 	[self.collectionView setContentOffset:contentOffset];
     
     [self checkHorizontalPanEnabled];
+    
+    CGFloat pctoffset = self.secretScrollview.contentOffset.y / (self.secretScrollview.contentSize.height-self.secretScrollview.frame.size.height*2) ;
+    CGFloat windowToContentRatio = self.secretScrollview.frame.size.height/self.secretScrollview.contentSize.height;
+    NSLog(@"%f\t%f", pctoffset, windowToContentRatio);
+    [self.overlay setScrollIndicatorPositionAsPercent:pctoffset heightAsPercent:windowToContentRatio];
+
 
 }
 

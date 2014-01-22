@@ -16,6 +16,7 @@
 @property CGFloat restoreAlphaCurrent;
 @property CGFloat restoreAlphaNext;
 @property (nonatomic, strong) UILabel *heading;
+@property (nonatomic, strong) UIView *scrollIndicator;
 @end
 
 @implementation VLMGradient
@@ -93,12 +94,10 @@
             
         }
 	}
-    CGFloat itempadding = kItemPadding;
-    [self setScrollview:[[UIScrollView alloc] initWithFrame:CGRectMake(frame.size.width-itempadding, 0.0f, itempadding, frame.size.height)]];
-    [self.scrollview setBackgroundColor:[UIColor clearColor]];
-    [self.scrollview setUserInteractionEnabled:NO];
-    //[self.scrollview setScrollIndicatorInsets:UIEdgeInsetsMake(1.0f, 1.0f, 1.0f, 1.0f)];
-    [self addSubview:self.scrollview];
+    [self setScrollIndicator:[[UIView alloc] initWithFrame:CGRectZero]];
+    [self.scrollIndicator setBackgroundColor:[UIColor whiteColor]];
+    [self addSubview:self.scrollIndicator];
+    [self.scrollIndicator setAlpha:0.0f];
 
 	return self;
 }
@@ -282,6 +281,53 @@
 					 completion:^(BOOL completed) {
                      }
      
+     ];
+}
+
+- (void)setScrollIndicatorPositionAsPercent:(CGFloat)pctPos heightAsPercent:(CGFloat)pctHeight
+{
+    UIEdgeInsets edgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
+    CGFloat frameHeight = self.frame.size.height - edgeInsets.top - edgeInsets.bottom;
+    CGSize size = CGSizeMake(kItemPadding*0.25f, frameHeight * pctHeight);
+    if (pctPos<0) {
+        size.height *= 1+pctPos*25.0f;
+    } else if (pctPos>1){
+        size.height *= 1-(pctPos-1)*25.0f;
+    }
+    CGPoint pos = CGPointMake(self.frame.size.width-size.width-edgeInsets.right, edgeInsets.top + pctPos * (frameHeight-size.height));
+    if (pos.y < edgeInsets.top) {
+        pos.y = edgeInsets.top;
+    } else if (pos.y > self.frame.size.height - edgeInsets.bottom - size.height ) {
+        pos.y = self.frame.size.height - edgeInsets.bottom - size.height;
+    }
+    
+    
+    [self.scrollIndicator setFrame:CGRectMake(pos.x, pos.y, size.width, size.height)];
+    [UIView animateWithDuration:ZOOM_DURATION
+						  delay:0.0f
+						options:ZOOM_OPTIONS
+					 animations:^{
+                         [self.scrollIndicator setAlpha:1.0f];
+                     }
+					 completion:^(BOOL completed) {
+                     }
+     ];
+    
+    [UIView cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideScrollIndicator) object:nil];
+    [self performSelector:@selector(hideScrollIndicator) withObject:nil afterDelay:0.5f];
+    
+}
+
+- (void)hideScrollIndicator
+{
+    [UIView animateWithDuration:ZOOM_DURATION
+						  delay:0.0f
+						options:ZOOM_OPTIONS
+					 animations:^{
+                         [self.scrollIndicator setAlpha:0.0f];
+                     }
+					 completion:^(BOOL completed) {
+                     }
      ];
 }
 

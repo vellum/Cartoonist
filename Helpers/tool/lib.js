@@ -135,7 +135,7 @@ function makeAndAddBranchesToEnd(node, numBranches, numFrames)
 		} 
 		else if ( last.type == 'frame')
 		{
-			var joint = makeBranchWith(3, 3, last.caption);
+			var joint = makeBranchWith(3, 2, last.caption);
 			addJointToSequence(joint, node);
 		}
 	} 
@@ -245,4 +245,24 @@ function parseAndIndex(node)
 		console.log('parsing frame');
 	}
 	
+}
+
+function makeSampleTree()
+{
+    // make a root node sequence of 3 frames
+    root = makeSequenceWith(2, 'r');
+
+    // put a joint with 3 branches of 2 frames
+    var joint0 = makeBranchWith(3, 2, 'j');
+    addJointToSequence(joint0, root);
+
+    for (var i = 0; i < 5; i++)
+    {
+    	makeAndAddBranchesToEnd(root);
+    }
+
+   // var json = JSON.stringify(root);
+    //console.log(json);
+    //console.log(root);
+    //console.log(count);
 }

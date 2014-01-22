@@ -12,7 +12,6 @@ typedef BOOL (^CheckOverviewBlock)();
 @interface VLMGradient : UIView
 
 @property (nonatomic, copy) CheckOverviewBlock checkOverviewBlock;
-@property (nonatomic, strong) UIScrollView *scrollview;
 
 - (void)setText:(NSString *)text;
 - (void)setAlpha:(CGFloat)alpha withLabelsHidden:(BOOL)shouldHideLabels;
@@ -23,5 +22,5 @@ typedef BOOL (^CheckOverviewBlock)();
 - (void)hideText;
 - (void)showBaseWithTextHidden;
 - (void)hideTextNoAnimation;
-
+- (void)setScrollIndicatorPositionAsPercent:(CGFloat)pctPos heightAsPercent:(CGFloat)pctHeight;
 @end

@@ -14,6 +14,7 @@ function init()
 		root = JSON.parse( data );
 		parseAndIndex(root);
 	} else {
+		//makeSampleTree();
 		root = makeSequenceWith(0, 'root');
 		localStorage.setItem("root", JSON.stringify(root));
 	}
@@ -194,7 +195,7 @@ function renderSequenceIntoDiv( seq, $div )
 		var $addie = $('<div class="add node">[add joint]</div>');
 		$sequence.append($addie);
 		$addie.click(function(){
-			var joint = makeBranchWith(2, 1, 'empty');
+			var joint = makeBranchWith(2, 2, 'empty');
 			addJointToSequence(joint, seq);
 			render();
 		});
