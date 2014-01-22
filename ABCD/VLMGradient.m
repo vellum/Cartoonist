@@ -288,7 +288,7 @@
 {
     UIEdgeInsets edgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
     CGFloat frameHeight = self.frame.size.height - edgeInsets.top - edgeInsets.bottom;
-    CGSize size = CGSizeMake(kItemPadding*0.25f, frameHeight * pctHeight);
+    CGSize size = CGSizeMake(/*kItemPadding*0.25f*/2.0f, frameHeight * pctHeight);
     if (pctPos<0) {
         size.height *= 1+pctPos*25.0f;
     } else if (pctPos>1){
