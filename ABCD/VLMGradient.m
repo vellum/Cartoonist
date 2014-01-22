@@ -8,7 +8,7 @@
 
 #import "VLMGradient.h"
 #import "VLMConstants.h"
-
+#import "VLMCollectionViewCell.h"
 
 @interface VLMGradient ()
 @property (nonatomic, strong) UILabel *current;
@@ -93,9 +93,11 @@
             
         }
 	}
-    [self setScrollview:[[UIScrollView alloc] initWithFrame:CGRectMake(frame.size.width-25.0f, 0.0f, 25.0f, frame.size.height)]];
+    CGFloat itempadding = kItemPadding;
+    [self setScrollview:[[UIScrollView alloc] initWithFrame:CGRectMake(frame.size.width-itempadding, 0.0f, itempadding, frame.size.height)]];
     [self.scrollview setBackgroundColor:[UIColor clearColor]];
     [self.scrollview setUserInteractionEnabled:NO];
+    //[self.scrollview setScrollIndicatorInsets:UIEdgeInsetsMake(1.0f, 1.0f, 1.0f, 1.0f)];
     [self addSubview:self.scrollview];
 
 	return self;

@@ -89,9 +89,7 @@
 	switch (pgr.state)
 	{
 		// when the pan starts or ends, make sure we reset the state
-		case UIGestureRecognizerStateBegan :
-            
-
+		case UIGestureRecognizerStateBegan :        
 			[self setRecognizedDirection:FUCKING_UNKNOWN];
 			if (self.horizontalPanGestureRecognizer && !self.horizontalPanGestureRecognizer.enabled)
 			{

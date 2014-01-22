@@ -45,7 +45,7 @@ typedef enum
 @property BOOL isArtificiallyScrolling;
 @property NSInteger lastKnownChoicePage;
 @property (nonatomic, strong) VLMSpinner *spinner;
-@property (nonatomic, strong) VLMAnimButton *qbutton;
+//@property (nonatomic, strong) VLMAnimButton *qbutton;
 @property CGFloat pinchvelocity;
 @property CGRect fuckA;
 @property CGRect fuckB;
@@ -104,6 +104,8 @@ typedef enum
     [self.view addSubview:self.secretScrollview];
     [self.secretScrollview setUserInteractionEnabled:NO];
     [self.secretScrollview setHidden:YES];
+    [self.secretScrollview setShowsHorizontalScrollIndicator:NO];
+    [self.secretScrollview setShowsVerticalScrollIndicator:NO];
     
 	// overlay when we are zoomed out
 	VLMGradient *gradient = [[VLMGradient alloc] initWithFrame:self.view.frame];
@@ -128,7 +130,7 @@ typedef enum
     self.spinner = [[VLMSpinner alloc] initWithFrame:spinframe];
     [self.view addSubview:self.spinner];
     
-    
+    /*
     [self setQbutton:[[VLMAnimButton alloc] initWithFrame:
                       CGRectMake(self.capture.frame.size.width/2.0f-25.0f,
                                  self.capture.frame.size.height - (self.capture.frame.size.height-kItemSize.height) - 50.0f - kItemPadding*2,
@@ -137,7 +139,7 @@ typedef enum
                       ]];
     [self.qbutton setImage:[UIImage imageNamed:@"qbutton"] forState:UIControlStateNormal];
     [self.view addSubview:self.qbutton];
-    
+    */
 
     
     
@@ -382,7 +384,8 @@ typedef enum
 	[cv setClipsToBounds:NO];
     
 	[cv setContentInset:UIEdgeInsetsMake(kItemPadding + 0 + frame.size.height / 2, 0, kItemPadding, 0)];
-	
+	[cv setShowsVerticalScrollIndicator:NO];
+    [cv setShowsHorizontalScrollIndicator:NO];
     
     [self setCollectionView:cv];
 	CGSize desiredSize = CGSizeMake(frame.size.width, frame.size.height * self.screensizeMultiplier);
@@ -392,7 +395,6 @@ typedef enum
                                            -insetY,
                                            desiredSize.width,
                                            desiredSize.height);
-	//[self.collectionView setContentInset:UIEdgeInsetsMake(kItemPaddingBottom + 0 + insetY, 0, kItemPaddingBottom, 0)];
 	[self.collectionView setContentInset:UIEdgeInsetsMake(-kItemPadding/2.0f + (self.view.frame.size.height-kItemSize.height)/2.0f + insetY, 0, kItemPadding, 0)];
 }
 
@@ -466,9 +468,11 @@ typedef enum
     }
 	if (self.zoomMode == kZoomNormal)
 	{
+        /*
         if (page<1.0f) {
             [self.qbutton show];
         }
+         */
         
         
         
@@ -552,9 +556,11 @@ typedef enum
 	}
 	else
 	{
+        /*
         if (page<1.0f) {
             [self.qbutton hide];
         }
+         */
 		[self.capture enableHorizontalPan:NO];
 		[self.secretScrollview setPagingEnabled:NO];
         
@@ -744,7 +750,7 @@ typedef enum
 	BOOL currentPageIsZoomedOut = [self.dataSource isItemAtIndexChoice:self.currentPage];
 	BOOL nextPageIsZoomedOut = NO;
 	CGFloat zoomedoutscale = CHOICE_SCALE;
-    
+    /*
     if (page<=0.125f) {
 
         CGFloat qbuttonAlpha = 1 - 8*page;
@@ -759,6 +765,7 @@ typedef enum
         [self.qbutton setAlpha:0];
         
     }
+    */
     
 	if (delta > 0)
 	{
