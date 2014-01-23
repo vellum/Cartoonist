@@ -723,7 +723,7 @@ typedef enum
         
         CGFloat pctoffset = self.secretScrollview.contentOffset.y / (self.secretScrollview.contentSize.height-self.secretScrollview.frame.size.height*2) ;
         CGFloat windowToContentRatio = self.secretScrollview.frame.size.height/self.secretScrollview.contentSize.height;
-        NSLog(@"%f\t%f", pctoffset, windowToContentRatio);
+        //NSLog(@"%f\t%f", pctoffset, windowToContentRatio);
         [self.overlay setScrollIndicatorPositionAsPercent:pctoffset heightAsPercent:windowToContentRatio shouldFlash:YES];
         
 		return;
@@ -846,7 +846,7 @@ typedef enum
     
     CGFloat pctoffset = self.secretScrollview.contentOffset.y / (self.secretScrollview.contentSize.height-self.secretScrollview.frame.size.height*2) ;
     CGFloat windowToContentRatio = self.secretScrollview.frame.size.height/self.secretScrollview.contentSize.height;
-    NSLog(@"%f\t%f", pctoffset, windowToContentRatio);
+    //NSLog(@"%f\t%f", pctoffset, windowToContentRatio);
     [self.overlay setScrollIndicatorPositionAsPercent:pctoffset heightAsPercent:windowToContentRatio shouldFlash:NO];
 
 

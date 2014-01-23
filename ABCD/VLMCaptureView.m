@@ -137,46 +137,49 @@
 			// the current pan will continue, but the scrollview will handle it
 			[self.topLevelPanGestureRecognizer setEnabled:NO];
 			[self.topLevelPanGestureRecognizer setEnabled:YES];
+            
+            // set vertical pan gesture recognizer's translation value to zero
+			// this means that we scroll based on fresh data (not accumulated translation data)
+			if (self.verticalPanGestureRecognizer)
+			{
+                //commenting out as it seems to sometimes causes the gesture recco to fail
+				//[self.verticalPanGestureRecognizer setTranslation:CGPointZero inView:self];
+			}
 
-			// do the same for the horizontal pan gesture recognizer
+			// reset the horizontal pan gesture recognizer
 			if (self.horizontalPanGestureRecognizer)
 			{
 				[self.horizontalPanGestureRecognizer setEnabled:NO];
 				[self.horizontalPanGestureRecognizer setEnabled:YES];
 			}
 
-			// set vertical pan gesture recognizer's translation value to zero
-			// this means that we scroll based on fresh data (not accumulated translation data)
-			if (self.verticalPanGestureRecognizer)
-			{
-				[self.verticalPanGestureRecognizer setTranslation:CGPointZero inView:self];
-			}
-            
 			// a little debugging
 			// NSLog(@"recognized vertical pan");
 		}
 		else if (!isZoomOverview && (p.x > deadzone.width / 2 || p.x < -deadzone.width / 2))
 		{
-			// horizontal pan resets the translation point
-			// so that translationinview: reports a delta from last event
 			[self setRecognizedDirection:FUCKING_HORIZONTAL];
-
-			if (self.horizontalPanGestureRecognizer)
-			{
-				if (!self.shouldRecognizeHorizontalPans)
-				{
-					[self.horizontalPanGestureRecognizer setEnabled:NO];
-					[self.horizontalPanGestureRecognizer setEnabled:YES];
-				}
-				[self.horizontalPanGestureRecognizer setTranslation:CGPointZero inView:self];
-			}
 
 			// cancel the recognizer and restart it for capturing the next pan
 			// the current pan will continue, but the scrollview will handle it
 			[self.topLevelPanGestureRecognizer setEnabled:NO];
 			[self.topLevelPanGestureRecognizer setEnabled:YES];
+            
+			// horizontal pan resets the translation point
+			// so that translationinview: reports a delta from last event
+			if (self.horizontalPanGestureRecognizer)
+			{
+                //commenting out as it seems to sometimes causes the gesture recco to fail
+				//[self.horizontalPanGestureRecognizer setTranslation:CGPointZero inView:self];
 
-			// do the same for the vertical gesture recognizer
+				if (!self.shouldRecognizeHorizontalPans)
+				{
+					[self.horizontalPanGestureRecognizer setEnabled:NO];
+					[self.horizontalPanGestureRecognizer setEnabled:YES];
+				}
+			}
+
+			// reset the vertical gesture recognizer
 			if (self.verticalPanGestureRecognizer)
 			{
 				[self.verticalPanGestureRecognizer setEnabled:NO];
