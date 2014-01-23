@@ -125,7 +125,6 @@
 		// establish a deadzone of 50 x 24
 		// this is a generous allowance for which we ignore wiggly movement
 		CGSize deadzone = DEAD_ZONE;
-        
 
 		// vertical pans will cancel this gesture recognizer
 		// and let the scrollview's recognizer to take over
@@ -133,13 +132,6 @@
 		{
 			// set the recognized direction
 			[self setRecognizedDirection:FUCKING_VERTICAL];
-
-			// set vertical pan gesture recognizer's translation value to zero
-			// this means that we scroll based on fresh data (not accumulated translation data)
-			if (self.verticalPanGestureRecognizer)
-			{
-				[self.verticalPanGestureRecognizer setTranslation:CGPointZero inView:self];
-			}
 
 			// cancel the recognizer and restart it for capturing the next pan
 			// the current pan will continue, but the scrollview will handle it
@@ -153,6 +145,13 @@
 				[self.horizontalPanGestureRecognizer setEnabled:YES];
 			}
 
+			// set vertical pan gesture recognizer's translation value to zero
+			// this means that we scroll based on fresh data (not accumulated translation data)
+			if (self.verticalPanGestureRecognizer)
+			{
+				[self.verticalPanGestureRecognizer setTranslation:CGPointZero inView:self];
+			}
+            
 			// a little debugging
 			// NSLog(@"recognized vertical pan");
 		}
@@ -164,12 +163,12 @@
 
 			if (self.horizontalPanGestureRecognizer)
 			{
-				[self.horizontalPanGestureRecognizer setTranslation:CGPointZero inView:self];
 				if (!self.shouldRecognizeHorizontalPans)
 				{
 					[self.horizontalPanGestureRecognizer setEnabled:NO];
 					[self.horizontalPanGestureRecognizer setEnabled:YES];
 				}
+				[self.horizontalPanGestureRecognizer setTranslation:CGPointZero inView:self];
 			}
 
 			// cancel the recognizer and restart it for capturing the next pan
