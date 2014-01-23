@@ -84,8 +84,6 @@
     if (self.checkOverviewBlock) {
         isZoomOverview = self.checkOverviewBlock();
     }
-    
-
 	switch (pgr.state)
 	{
 		// when the pan starts or ends, make sure we reset the state
@@ -154,7 +152,7 @@
 			}
 
 			// a little debugging
-			// NSLog(@"recognized vertical pan");
+			 NSLog(@"recognized vertical pan");
 		}
 		else if (!isZoomOverview && (p.x > deadzone.width / 2 || p.x < -deadzone.width / 2))
 		{
@@ -186,7 +184,7 @@
 				[self.verticalPanGestureRecognizer setEnabled:YES];
 			}
 
-			// NSLog(@"recognized horizontal pan");
+			 NSLog(@"recognized horizontal pan");
 		}
 	}
 	else
@@ -294,6 +292,11 @@
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
 	return YES;
+}
+
+#pragma mark -
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    NSLog(@"touches began");
 }
 
 @end

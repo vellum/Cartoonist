@@ -49,6 +49,7 @@ typedef enum
 @property CGFloat pinchvelocity;
 @property CGRect fuckA;
 @property CGRect fuckB;
+@property CGFloat lastKnownScale;
 @end
 
 @implementation VLMViewController
@@ -80,6 +81,7 @@ typedef enum
 	[self setScreensizeMultiplier:2.0f];
 	[self setIsArtificiallyScrolling:NO];
     [self setPinchvelocity:0];
+    [self setLastKnownScale:-1.0f];
 }
 
 - (void)viewDidLoad
@@ -106,6 +108,8 @@ typedef enum
     [self.secretScrollview setHidden:YES];
     [self.secretScrollview setShowsHorizontalScrollIndicator:NO];
     [self.secretScrollview setShowsVerticalScrollIndicator:NO];
+    [self.secretScrollview setDirectionalLockEnabled:NO];
+    [self.secretScrollview setBounces:YES];
     
 	// overlay when we are zoomed out
 	VLMGradient *gradient = [[VLMGradient alloc] initWithFrame:self.view.frame];
@@ -233,13 +237,22 @@ typedef enum
                 
                 
                 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
+                [self setLastKnownScale:s];
             }
             else
             {
+                // squish down
                 if (zoomAmount < 1)
                 {
-                    [self switchZoom:kZoomOverview targetPage:-1 shouldBounce:NO];
+                    // lower than lower bound, so gently return to lower bound
+                    if (zoomAmount<=lb) {
+                        [self switchZoom:kZoomOverview targetPage:-1 shouldBounce:NO];
+                    // otherwise bounce
+                    } else {
+                        [self switchZoom:kZoomOverview targetPage:-1 shouldBounce:YES];
+                    }
                 }
+                // stretch, so gently return to normal
                 else
                 {
                     
@@ -253,6 +266,7 @@ typedef enum
                                          }
                          
                          ];
+                        [self switchZoom:kZoomNormal targetPage:-1 shouldBounce:NO];
                     }
                     else
                     {
@@ -307,6 +321,7 @@ typedef enum
                 }
 
                 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
+                [self setLastKnownScale:s];
             }
             else
             {
@@ -324,28 +339,44 @@ typedef enum
                 }
                 else
                 {
+                    
                     if ([self.dataSource isItemAtIndexChoice:page])
                     {
-                        [UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
-                                         animations:^{
-                                             [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, CHOICE_SCALE, CHOICE_SCALE, 1.0f)];
-                                             
-                                         } completion:^(BOOL completed) {
-                                         }
-                         
-                         ];
+                        
+                        if (zoomAmount>1.45f) {
+                            [UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
+                                             animations:^{
+                                                 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, CHOICE_SCALE, CHOICE_SCALE, 1.0f)];
+                                                 
+                                             } completion:^(BOOL completed) {
+                                             }
+                             
+                             ];
+                            [self switchZoom:kZoomNormal targetPage:-1 shouldBounce:NO];
+                        } else {
+                            [self switchZoom:kZoomNormal targetPage:-1 shouldBounce:YES];
+                        }
+                        
+                        
+
                     }
                     else
                     {
-                        [UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
-                                         animations:^{
-                                             [self.collectionView.layer setTransform:CATransform3DIdentity];
-                                         } completion:^(BOOL completed) {
-                                         }
-                         
-                         ];
+                        // gentle scale
+                        if (zoomAmount>1.5f) {
+                            [UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
+                                             animations:^{
+                                                 [self.collectionView.layer setTransform:CATransform3DIdentity];
+                                             } completion:^(BOOL completed) {
+                                             }
+                             
+                             ];
+                            [self switchZoom:kZoomNormal targetPage:-1 shouldBounce:NO];
+                        // bounce
+                        } else {
+                            [self switchZoom:kZoomNormal targetPage:-1 shouldBounce:YES];
+                        }
                     }
-                    [self switchZoom:kZoomNormal targetPage:-1 shouldBounce:NO];
                 }
             }
             break;
@@ -497,6 +528,7 @@ typedef enum
             
 			[self setZoomEnabled:NO];
             
+            
             if (shouldBounce) {
                 [self animateBounceZoom:CHOICE_SCALE];
             }
@@ -609,6 +641,9 @@ typedef enum
     [UIView setAnimationBeginsFromCurrentState:YES];
     
     CGFloat currentScale = [[self.collectionView.layer valueForKeyPath: @"transform.scale"] floatValue];
+    if (self.lastKnownScale!=-1.0f) {
+        currentScale = self.lastKnownScale;
+    }
     NSValue * from = [NSNumber numberWithFloat:currentScale];
     NSValue * to = [NSNumber numberWithFloat:targetZoom];
     NSString * keypath = @"transform.scale";
@@ -650,6 +685,7 @@ typedef enum
 
 - (void)handleTap:(UITapGestureRecognizer *)sender
 {
+    [self setLastKnownScale:-1];
 	if (self.zoomMode == kZoomNormal)
 	{
 		[self switchZoom:kZoomOverview targetPage:-1 shouldBounce:YES];
@@ -737,6 +773,7 @@ typedef enum
 	BOOL currentPageIsZoomedOut = [self.dataSource isItemAtIndexChoice:self.currentPage];
 	BOOL nextPageIsZoomedOut = NO;
 	CGFloat zoomedoutscale = CHOICE_SCALE;
+    
     /*
     if (page<=0.125f) {
 
