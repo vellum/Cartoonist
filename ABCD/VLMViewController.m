@@ -656,8 +656,14 @@ typedef enum
 	}
 	else
 	{
+        CGPoint hit = [sender locationInView:self.capture];
+        NSLog(@"%@", NSStringFromCGPoint(hit));
+        if (hit.y < 60.0f) {
+            
+            [self.secretScrollview scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+            return;
+        }
         if (SHOULD_HIT_TEST_TAPS) {
-            CGPoint hit = [sender locationInView:self.collectionView];
             //NSLog(@"hit point %f, %f", hit.x, hit.y);
             
             // uncomment to allow whitespace hits

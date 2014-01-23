@@ -51,6 +51,6 @@
 //#define kItemSizeIpad      CGSizeMake(768.0f, 768.0f - 2.0f * (9.0f))
 
 
-#define SPINNER_STYLE UIActivityIndicatorViewStyleWhite
-#define SPINNER_BACKGROUND_COLOR [UIColor colorWithWhite:0.0f alpha:0.95f]
+#define SPINNER_STYLE UIActivityIndicatorViewStyleGray
+#define SPINNER_BACKGROUND_COLOR [UIColor colorWithWhite:1.0f alpha:0.85f]
 #define SPINNER_DIAMETER 48.0f
