@@ -22,5 +22,6 @@ typedef BOOL (^CheckOverviewBlock)();
 - (void)hideText;
 - (void)showBaseWithTextHidden;
 - (void)hideTextNoAnimation;
-- (void)setScrollIndicatorPositionAsPercent:(CGFloat)pctPos heightAsPercent:(CGFloat)pctHeight;
+- (void)setScrollIndicatorPositionAsPercent:(CGFloat)pctPos heightAsPercent:(CGFloat)pctHeight shouldFlash:(BOOL)shouldFlash;
+- (void)flashScrollIndicator;
 @end

@@ -284,9 +284,9 @@
      ];
 }
 
-- (void)setScrollIndicatorPositionAsPercent:(CGFloat)pctPos heightAsPercent:(CGFloat)pctHeight
+- (void)setScrollIndicatorPositionAsPercent:(CGFloat)pctPos heightAsPercent:(CGFloat)pctHeight  shouldFlash:(BOOL)shouldFlash
 {
-    UIEdgeInsets edgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
+    UIEdgeInsets edgeInsets = UIEdgeInsetsMake(1.0f, 0.0f, 1.0f, 0.0f);
     CGFloat frameHeight = self.frame.size.height - edgeInsets.top - edgeInsets.bottom;
     CGSize size = CGSizeMake(/*kItemPadding*0.25f*/2.0f, frameHeight * pctHeight);
     if (pctPos<0) {
@@ -303,19 +303,27 @@
     
     
     [self.scrollIndicator setFrame:CGRectMake(pos.x, pos.y, size.width, size.height)];
+    if (shouldFlash) {
+        [self flashScrollIndicator];
+    }
+    
+    
+}
+
+- (void)flashScrollIndicator
+{
     [UIView animateWithDuration:ZOOM_DURATION
-						  delay:0.0f
-						options:ZOOM_OPTIONS
-					 animations:^{
+                          delay:0.0f
+                        options:ZOOM_OPTIONS
+                     animations:^{
                          [self.scrollIndicator setAlpha:1.0f];
                      }
-					 completion:^(BOOL completed) {
+                     completion:^(BOOL completed) {
                      }
      ];
-    
     [UIView cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideScrollIndicator) object:nil];
-    [self performSelector:@selector(hideScrollIndicator) withObject:nil afterDelay:0.5f];
-    
+    [self performSelector:@selector(hideScrollIndicator) withObject:nil afterDelay:ZOOM_DURATION*1.5f];
+
 }
 
 - (void)hideScrollIndicator
