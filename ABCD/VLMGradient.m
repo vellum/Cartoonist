@@ -95,7 +95,7 @@
         }
 	}
     [self setScrollIndicator:[[UIView alloc] initWithFrame:CGRectZero]];
-    [self.scrollIndicator setBackgroundColor:[UIColor whiteColor]];
+    [self.scrollIndicator setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.5f]];
     [self addSubview:self.scrollIndicator];
     [self.scrollIndicator setAlpha:0.0f];
 
