@@ -73,12 +73,12 @@ typedef enum
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait|UIInterfaceOrientationMaskPortraitUpsideDown;
+    return UIInterfaceOrientationMaskPortrait;//|UIInterfaceOrientationMaskPortraitUpsideDown;
 }
 
 - (BOOL) shouldAutorotate
 {
-    return YES;
+    return NO;
 }
 
 - (void)loadView
@@ -161,6 +161,7 @@ typedef enum
 												 name:@"decisionTreeUpdated"
 											   object:nil];
     
+    // listen for rotation changes
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self
                            selector:@selector(deviceOrientationDidChange)
@@ -978,18 +979,26 @@ typedef enum
 {
     switch ([[UIDevice currentDevice] orientation]) {
         case UIDeviceOrientationLandscapeLeft:
-            self.view.transform = CGAffineTransformMakeRotation(0.0f);
+            self.view.transform = CGAffineTransformRotate(CGAffineTransformIdentity, 0.0f);
+            [self.overlay setOrientation:UIDeviceOrientationLandscapeLeft];
             NSLog(@"landscapeL");
             
             break;
         case UIDeviceOrientationLandscapeRight:
-            self.view.transform = CGAffineTransformMakeRotation(M_PI);
+            self.view.transform = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI);
+            [self.overlay setOrientation:UIDeviceOrientationLandscapeLeft];
             NSLog(@"LandscapeR");
             break;
         
         case UIDeviceOrientationPortrait:
-        case UIDeviceOrientationPortraitUpsideDown:
             NSLog(@"portrait");
+            self.view.transform = CGAffineTransformRotate(CGAffineTransformIdentity, 0.0f);
+            [self.overlay setOrientation:UIDeviceOrientationPortrait];
+            break;
+        case UIDeviceOrientationPortraitUpsideDown:
+            self.view.transform = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI);
+            [self.overlay setOrientation:UIDeviceOrientationPortrait];
+            NSLog(@"portrait upsidedown");
             break;
         default:
             break;

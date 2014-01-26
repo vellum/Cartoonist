@@ -17,6 +17,8 @@
 @property CGFloat restoreAlphaNext;
 @property (nonatomic, strong) UILabel *heading;
 @property (nonatomic, strong) UIView *scrollIndicator;
+@property CGPoint portraitHeaderPos;
+@property CGPoint portraitLabelPos;
 @end
 
 @implementation VLMGradient
@@ -59,6 +61,9 @@
             [self.heading setTextAlignment:NSTextAlignmentCenter];
             [self addSubview:self.heading];
             [self.heading setAlpha:0.0f];
+            
+            self.portraitHeaderPos = self.heading.center;
+            self.portraitLabelPos = self.current.center;
          
         }
         else
@@ -91,6 +96,10 @@
             [self.heading setTextAlignment:NSTextAlignmentCenter];
             [self addSubview:self.heading];
             [self.heading setAlpha:0.0f];
+            
+            self.portraitHeaderPos = self.heading.center;
+            self.portraitLabelPos = self.current.center;
+
             
         }
 	}
@@ -337,6 +346,30 @@
 					 completion:^(BOOL completed) {
                      }
      ];
+}
+
+- (void)setOrientation:(UIDeviceOrientation)orientation
+{
+    
+    if (UIDeviceOrientationIsPortrait(orientation)) {
+        self.current.transform = CGAffineTransformMakeRotation(0.0f);
+        self.next.transform = CGAffineTransformMakeRotation(0.0f);
+        self.heading.transform = CGAffineTransformMakeRotation(0.0f);
+        
+        self.heading.center = self.portraitHeaderPos;
+        self.current.center = self.portraitLabelPos;
+        self.next.center = self.current.center;
+
+    } else {
+        self.current.transform = CGAffineTransformMakeRotation(M_PI/2.0f);
+        self.next.transform = CGAffineTransformMakeRotation(M_PI/2.0f);
+        self.heading.transform = CGAffineTransformMakeRotation(M_PI/2.0f);
+        
+        self.current.center = CGPointMake(self.frame.size.width*(1-self.portraitLabelPos.y/self.frame.size.height), self.frame.size.height/2.0f);
+        self.next.center = self.current.center;
+        self.heading.center = CGPointMake(self.current.center.x + 36, self.frame.size.height/2.0f);
+    }
+     
 }
 
 @end
