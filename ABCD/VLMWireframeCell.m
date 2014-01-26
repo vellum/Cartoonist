@@ -23,7 +23,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        [self setLabel:[[VLMPaddedLabel alloc] initWithFrame:self.normalFrame]];
+        [self setLabel:[[VLMPaddedLabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.normalFrame.size.width, self.normalFrame.size.height)]];
         [self.label setTextColor:[UIColor whiteColor]];
         [self.label setFont:FONT_WIREFRAME];
         [self.label setBackgroundColor:[UIColor clearColor]];
@@ -31,7 +31,7 @@
         [self.label setTextAlignment:NSTextAlignmentCenter];
         [self.label setAdjustsFontSizeToFitWidth:YES];
         [self.label setNumberOfLines:100];
-        [self.contentView addSubview:self.label];
+        [self.base addSubview:self.label];
         
         if ((UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad))
         {
