@@ -72,6 +72,15 @@ typedef enum
 	return YES;
 }
 
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait|UIInterfaceOrientationMaskPortraitUpsideDown;
+}
+
+- (BOOL) shouldAutorotate
+{
+    return YES;
+}
+
 - (void)loadView
 {
 	[self setNeedsStatusBarAppearanceUpdate];
@@ -152,7 +161,10 @@ typedef enum
 												 name:@"decisionTreeUpdated"
 											   object:nil];
     
-
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                           selector:@selector(deviceOrientationDidChange)
+                               name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 - (void)dealloc
@@ -960,6 +972,28 @@ typedef enum
                      }
      
      ];
+}
+
+- (void)deviceOrientationDidChange
+{
+    switch ([[UIDevice currentDevice] orientation]) {
+        case UIDeviceOrientationLandscapeLeft:
+            self.view.transform = CGAffineTransformMakeRotation(0.0f);
+            NSLog(@"landscapeL");
+            
+            break;
+        case UIDeviceOrientationLandscapeRight:
+            self.view.transform = CGAffineTransformMakeRotation(M_PI);
+            NSLog(@"LandscapeR");
+            break;
+        
+        case UIDeviceOrientationPortrait:
+        case UIDeviceOrientationPortraitUpsideDown:
+            NSLog(@"portrait");
+            break;
+        default:
+            break;
+    }
 }
 
 @end
