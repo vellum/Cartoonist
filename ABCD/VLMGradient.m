@@ -304,6 +304,12 @@
         size.height *= 1-(pctPos-1)*25.0f;
     }
     CGPoint pos = CGPointMake(self.frame.size.width-size.width-edgeInsets.right, edgeInsets.top + pctPos * (frameHeight-size.height));
+    
+    if (UIDeviceOrientationIsLandscape(self.orientation))
+    {
+        pos.x = edgeInsets.left;
+    }
+    
     if (pos.y < edgeInsets.top) {
         pos.y = edgeInsets.top;
     } else if (pos.y > self.frame.size.height - edgeInsets.bottom - size.height ) {
@@ -350,6 +356,7 @@
 
 - (void)setOrientation:(UIDeviceOrientation)orientation
 {
+    _orientation = orientation;
     
     if (UIDeviceOrientationIsPortrait(orientation)) {
         self.current.transform = CGAffineTransformMakeRotation(0.0f);

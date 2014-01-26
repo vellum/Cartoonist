@@ -25,4 +25,5 @@
 
 
 @interface VLMViewController : UICollectionViewController<UIScrollViewDelegate>
++ (UIDeviceOrientation)orientation;
 @end

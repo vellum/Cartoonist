@@ -65,6 +65,13 @@ typedef enum
 
 #define SHOULD_HIT_TEST_TAPS NO
 
+static UIDeviceOrientation theOrientation;
+
++ (UIDeviceOrientation)orientation
+{
+    return theOrientation;
+}
+
 #pragma mark - Boilerplate
 
 - (BOOL)prefersStatusBarHidden
@@ -166,6 +173,9 @@ typedef enum
     [[NSNotificationCenter defaultCenter] addObserver:self
                            selector:@selector(deviceOrientationDidChange)
                                name:UIDeviceOrientationDidChangeNotification object:nil];
+    
+    // FIXME : this may not be accurate, unless one can guarantee that the app is launched in portrait
+    theOrientation = UIDeviceOrientationPortrait;
 }
 
 - (void)dealloc
@@ -979,30 +989,37 @@ typedef enum
 {
     switch ([[UIDevice currentDevice] orientation]) {
         case UIDeviceOrientationLandscapeLeft:
+            NSLog(@"landscapeL");
+            theOrientation = UIDeviceOrientationLandscapeLeft;
             self.view.transform = CGAffineTransformRotate(CGAffineTransformIdentity, 0.0f);
             [self.overlay setOrientation:UIDeviceOrientationLandscapeLeft];
-            NSLog(@"landscapeL");
-            
             break;
+
         case UIDeviceOrientationLandscapeRight:
+            NSLog(@"LandscapeR");
+            theOrientation = UIDeviceOrientationLandscapeLeft;
             self.view.transform = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI);
             [self.overlay setOrientation:UIDeviceOrientationLandscapeLeft];
-            NSLog(@"LandscapeR");
             break;
         
         case UIDeviceOrientationPortrait:
             NSLog(@"portrait");
+            theOrientation = UIDeviceOrientationPortrait;
             self.view.transform = CGAffineTransformRotate(CGAffineTransformIdentity, 0.0f);
             [self.overlay setOrientation:UIDeviceOrientationPortrait];
             break;
+        
         case UIDeviceOrientationPortraitUpsideDown:
+            NSLog(@"portrait upsidedown");
+            theOrientation = UIDeviceOrientationPortrait;
             self.view.transform = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI);
             [self.overlay setOrientation:UIDeviceOrientationPortrait];
-            NSLog(@"portrait upsidedown");
             break;
+        
         default:
-            break;
+            return;
     }
+    [self.collectionView reloadData];
 }
 
 @end
