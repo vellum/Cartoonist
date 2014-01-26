@@ -305,10 +305,12 @@
     }
     CGPoint pos = CGPointMake(self.frame.size.width-size.width-edgeInsets.right, edgeInsets.top + pctPos * (frameHeight-size.height));
     
+    /*
     if (UIDeviceOrientationIsLandscape(self.orientation))
     {
         pos.x = edgeInsets.left;
     }
+    */
     
     if (pos.y < edgeInsets.top) {
         pos.y = edgeInsets.top;
