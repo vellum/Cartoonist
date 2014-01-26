@@ -176,6 +176,9 @@ static UIDeviceOrientation theOrientation;
     
     // FIXME : this may not be accurate, unless one can guarantee that the app is launched in portrait
     theOrientation = UIDeviceOrientationPortrait;
+    
+    [self.view setClipsToBounds:YES];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (void)dealloc
@@ -987,39 +990,59 @@ static UIDeviceOrientation theOrientation;
 
 - (void)deviceOrientationDidChange
 {
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    
     switch ([[UIDevice currentDevice] orientation]) {
         case UIDeviceOrientationLandscapeLeft:
             NSLog(@"landscapeL");
             theOrientation = UIDeviceOrientationLandscapeLeft;
-            self.view.transform = CGAffineTransformRotate(CGAffineTransformIdentity, 0.0f);
+            transform = CGAffineTransformRotate(CGAffineTransformIdentity, 0.0f);
             [self.overlay setOrientation:UIDeviceOrientationLandscapeLeft];
             break;
 
         case UIDeviceOrientationLandscapeRight:
             NSLog(@"LandscapeR");
             theOrientation = UIDeviceOrientationLandscapeLeft;
-            self.view.transform = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI);
+            transform = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI);
             [self.overlay setOrientation:UIDeviceOrientationLandscapeLeft];
             break;
         
         case UIDeviceOrientationPortrait:
             NSLog(@"portrait");
             theOrientation = UIDeviceOrientationPortrait;
-            self.view.transform = CGAffineTransformRotate(CGAffineTransformIdentity, 0.0f);
+            transform = CGAffineTransformRotate(CGAffineTransformIdentity, 0.0f);
             [self.overlay setOrientation:UIDeviceOrientationPortrait];
             break;
         
         case UIDeviceOrientationPortraitUpsideDown:
             NSLog(@"portrait upsidedown");
             theOrientation = UIDeviceOrientationPortrait;
-            self.view.transform = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI);
+            transform = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI);
             [self.overlay setOrientation:UIDeviceOrientationPortrait];
             break;
         
         default:
             return;
     }
+    [UIView animateWithDuration:ROT_DURATION delay:0.0f options:ROT_OPTIONS
+					 animations:^{
+                         [self.view setTransform:transform];
+
+                     } completion:^(BOOL completed) {
+
+                     }
+     
+     ];
+
+    // none of these work
+    //[self.collectionView.collectionViewLayout invalidateLayout];
+    //[self.collectionViewLayout invalidateLayout];
+    //[self.singlePanelFlow invalidateLayout];
     [self.collectionView reloadData];
 }
 
+- (void)invalidate
+{
+    [self.collectionViewLayout invalidateLayout];
+}
 @end

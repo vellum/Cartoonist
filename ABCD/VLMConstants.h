@@ -13,6 +13,9 @@
 #define GENERIC_DURATION   0.325f
 #define GENERIC_OPTIONS    UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseOut
 
+#define ROT_DURATION   0.5f
+#define ROT_OPTIONS    UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
+
 #define DEAD_ZONE          CGSizeMake(10.0f, 10.0f)
 #define FUCKING_UNKNOWN    0
 #define FUCKING_VERTICAL   1

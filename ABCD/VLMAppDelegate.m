@@ -19,7 +19,7 @@
     self.viewController = [[VLMViewController alloc] init];
     self.window.rootViewController = self.viewController;
     
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.backgroundColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
     
 #ifdef PRINT_AVAILABLE_FONT_NAMES

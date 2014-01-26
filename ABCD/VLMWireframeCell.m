@@ -49,12 +49,22 @@
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
 {
 	[super applyLayoutAttributes:layoutAttributes];
+    
+    CGAffineTransform t;
     if (UIDeviceOrientationIsPortrait([VLMViewController orientation]))
     {
-        self.label.transform = CGAffineTransformRotate(CGAffineTransformIdentity, 0.0f);
+        t = CGAffineTransformRotate(CGAffineTransformIdentity, 0.0f);
     } else {
-        self.label.transform = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI/2.0f);
+        t = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI/2.0f);
     }
+    
+    [UIView animateWithDuration:ROT_DURATION delay:0.0f options:ROT_OPTIONS
+					 animations:^{
+                         self.label.transform = t;
+                     } completion:^(BOOL completed) {
+                         
+                     }];
+
 }
 
 
