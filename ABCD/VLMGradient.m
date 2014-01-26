@@ -372,9 +372,18 @@
         self.next.transform = CGAffineTransformMakeRotation(M_PI/2.0f);
         self.heading.transform = CGAffineTransformMakeRotation(M_PI/2.0f);
         
-        self.current.center = CGPointMake(self.frame.size.width*(1-self.portraitLabelPos.y/self.frame.size.height), self.frame.size.height/2.0f);
-        self.next.center = self.current.center;
-        self.heading.center = CGPointMake(self.current.center.x + 36, self.frame.size.height/2.0f);
+        if ((UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad))
+        {
+            self.current.center = CGPointMake(self.frame.size.width*(1-0.3f), self.frame.size.height/2.0f);
+            self.heading.center = CGPointMake(self.current.center.x + 28, self.frame.size.height/2.0f);
+            self.next.center = self.current.center;
+        }
+        else
+        {
+            self.current.center = CGPointMake(self.frame.size.width*(1-self.portraitLabelPos.y/self.frame.size.height), self.frame.size.height/2.0f);
+            self.next.center = self.current.center;
+            self.heading.center = CGPointMake(self.current.center.x + 36, self.frame.size.height/2.0f);
+        }
     }
      
 }
