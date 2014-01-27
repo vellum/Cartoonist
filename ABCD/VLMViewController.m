@@ -47,9 +47,10 @@ typedef enum
 @property (nonatomic, strong) VLMSpinner *spinner;
 //@property (nonatomic, strong) VLMAnimButton *qbutton;
 @property CGFloat pinchvelocity;
-@property CGRect fuckA;
-@property CGRect fuckB;
 @property CGFloat lastKnownScale;
+@property CGPoint spinnerCenterPortrait;
+@property CGPoint spinnerCenterLandscape;
+
 @end
 
 @implementation VLMViewController
@@ -137,16 +138,15 @@ static UIDeviceOrientation theOrientation;
 	// touch capture view detects kinds of gestures and decides what behavior to trigger
 	[self setupCaptureView];
     
-    CGFloat side = SPINNER_DIAMETER;
     CGRect spinframe = CGRectMake(
                                   self.capture.frame.size.width/2.0f-SPINNER_DIAMETER/2.0f,
-                                  self.capture.frame.size.height - (self.capture.frame.size.height-kItemSize.height) - SPINNER_DIAMETER - kItemPadding*4,
+                                  self.capture.frame.size.height - (self.capture.frame.size.height-kItemSize.height) - SPINNER_DIAMETER - kItemPadding*4 - 4,
                                   SPINNER_DIAMETER, SPINNER_DIAMETER);
 
-    self.fuckA = spinframe;
-    self.fuckB = CGRectMake(spinframe.origin.x, self.capture.frame.size.height/2.0f - side/2, side, side);
     self.spinner = [[VLMSpinner alloc] initWithFrame:spinframe];
     [self.view addSubview:self.spinner];
+    self.spinnerCenterPortrait = self.spinner.center;
+    self.spinnerCenterLandscape = CGPointMake(self.spinner.center.x - kItemSize.width/2.0f + 64, self.spinner.center.y);
     
     /*
     [self setQbutton:[[VLMAnimButton alloc] initWithFrame:
@@ -566,7 +566,6 @@ static UIDeviceOrientation theOrientation;
                                  if (!shouldBounce) {
                                      [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, CHOICE_SCALE, CHOICE_SCALE, 1.0f)];
                                  }
-                                 [self.spinner setFrame:self.fuckA];
                              } completion:^(BOOL completed) {
                                  [self setZoomEnabled:YES];
                              }
@@ -597,7 +596,6 @@ static UIDeviceOrientation theOrientation;
                                  if (!shouldBounce) {
                                      [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f, 1.0f, 1.0f)];
                                  }
-                                 [self.spinner setFrame:self.fuckA];
 
                              } completion:^(BOOL completed) {
                                  [self setZoomEnabled:YES];
@@ -641,7 +639,6 @@ static UIDeviceOrientation theOrientation;
             [self animateBounceZoom:1.0f/self.screensizeMultiplier];
         }
         
-        [self.spinner setFrame:self.fuckB];
 		[UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
 						 animations:^{
                              if (!shouldBounce) {
@@ -998,6 +995,7 @@ static UIDeviceOrientation theOrientation;
             theOrientation = UIDeviceOrientationLandscapeLeft;
             transform = CGAffineTransformRotate(CGAffineTransformIdentity, 0.0f);
             [self.overlay setOrientation:UIDeviceOrientationLandscapeLeft];
+            [self.spinner setCenter:self.spinnerCenterLandscape];
             break;
 
         case UIDeviceOrientationLandscapeRight:
@@ -1005,6 +1003,7 @@ static UIDeviceOrientation theOrientation;
             theOrientation = UIDeviceOrientationLandscapeLeft;
             transform = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI);
             [self.overlay setOrientation:UIDeviceOrientationLandscapeLeft];
+            [self.spinner setCenter:self.spinnerCenterLandscape];
             break;
         
         case UIDeviceOrientationPortrait:
@@ -1012,6 +1011,7 @@ static UIDeviceOrientation theOrientation;
             theOrientation = UIDeviceOrientationPortrait;
             transform = CGAffineTransformRotate(CGAffineTransformIdentity, 0.0f);
             [self.overlay setOrientation:UIDeviceOrientationPortrait];
+            [self.spinner setCenter:self.spinnerCenterPortrait];
             break;
         
         case UIDeviceOrientationPortraitUpsideDown:
@@ -1019,6 +1019,7 @@ static UIDeviceOrientation theOrientation;
             theOrientation = UIDeviceOrientationPortrait;
             transform = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI);
             [self.overlay setOrientation:UIDeviceOrientationPortrait];
+            [self.spinner setCenter:self.spinnerCenterPortrait];
             break;
         
         default:
