@@ -102,6 +102,8 @@
 	NSInteger selected = [[models.sourceNode objectForKey:@"selected"] integerValue];
 	[self.scrollview setContentOffset:CGPointMake(selected * (kItemSize.width - kItemPadding), 0)];
 	[self updatePage:selected];
+    
+    [self applyLayoutAttributes:nil];
 }
 
 
