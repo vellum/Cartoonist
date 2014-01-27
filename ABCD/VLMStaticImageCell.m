@@ -42,7 +42,10 @@
         self.imagename = nil;
         
         
-        
+        //@property (nonatomic) CGPoint captionCenterPortrait;
+        //@property (nonatomic) CGPoint captionCenterLandscape;
+        self.captionCenterPortrait = self.caption.center;
+        self.captionCenterLandscape = CGPointMake(self.base.frame.size.width-self.caption.frame.size.height/2.0f - kItemPadding, 0 + self.caption.frame.size.width/2.0f + kItemPadding);
 
         
 
@@ -80,10 +83,13 @@
     if (UIDeviceOrientationIsPortrait([VLMViewController orientation]))
     {
         t = CGAffineTransformRotate(CGAffineTransformIdentity, 0.0f);
+        self.caption.center = self.captionCenterPortrait;
     } else {
         t = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI/2.0f);
+        self.caption.center = self.captionCenterLandscape;
     }
     self.imageview.transform = t;
+    self.caption.transform = t;
 
     /*
     [UIView animateWithDuration:ROT_DURATION delay:0.0f options:ROT_OPTIONS animations:^{

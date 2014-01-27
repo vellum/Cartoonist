@@ -13,6 +13,7 @@
 @property (nonatomic, strong) VLMNarrationCaption *caption;
 @property (nonatomic, strong) NSString *imagename;
 @property (nonatomic, strong) UIImageView *imageview;
-
+@property (nonatomic) CGPoint captionCenterPortrait;
+@property (nonatomic) CGPoint captionCenterLandscape;
 
 @end
