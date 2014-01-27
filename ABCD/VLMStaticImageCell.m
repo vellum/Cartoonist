@@ -83,13 +83,21 @@
     if (UIDeviceOrientationIsPortrait([VLMViewController orientation]))
     {
         t = CGAffineTransformRotate(CGAffineTransformIdentity, 0.0f);
-        self.caption.center = self.captionCenterPortrait;
+        if (!CGPointEqualToPoint(self.caption.center, self.captionCenterPortrait)) {
+            self.caption.center = self.captionCenterPortrait;
+        }
     } else {
         t = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI/2.0f);
-        self.caption.center = self.captionCenterLandscape;
+        if (!CGPointEqualToPoint(self.caption.center, self.captionCenterLandscape)) {
+            self.caption.center = self.captionCenterLandscape;
+        }
     }
-    self.imageview.transform = t;
-    self.caption.transform = t;
+    if (!CGAffineTransformEqualToTransform(self.imageview.transform, t)){
+        self.imageview.transform = t;
+    }
+    if (!CGAffineTransformEqualToTransform(self.caption.transform, t)){
+        self.caption.transform = t;
+    }
 
     /*
     [UIView animateWithDuration:ROT_DURATION delay:0.0f options:ROT_OPTIONS animations:^{

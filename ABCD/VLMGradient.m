@@ -108,6 +108,7 @@
     [self addSubview:self.scrollIndicator];
     [self.scrollIndicator setAlpha:0.0f];
 
+    
 	return self;
 }
 
@@ -369,6 +370,12 @@
         self.heading.center = self.portraitHeaderPos;
         self.current.center = self.portraitLabelPos;
         self.next.center = self.current.center;
+
+        [self.heading setTextAlignment:NSTextAlignmentCenter];
+        [self.current setTextAlignment:NSTextAlignmentCenter];
+        [self.next setTextAlignment:NSTextAlignmentCenter];
+
+        
         
     } else {
         self.current.transform = CGAffineTransformMakeRotation(M_PI/2.0f);
@@ -377,9 +384,14 @@
         
         if ((UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad))
         {
-            self.current.center = CGPointMake(self.frame.size.width*(1-0.3f), self.frame.size.height/2.0f);
-            self.heading.center = CGPointMake(self.current.center.x + 28, self.frame.size.height/2.0f);
+            self.current.center = CGPointMake(self.frame.size.width*(1-0.25f), self.frame.size.height/2.0f - self.current.frame.size.width*1.25);
+            self.heading.center = CGPointMake(self.current.center.x + 28, self.current.center.y);
             self.next.center = self.current.center;
+            
+            [self.heading setTextAlignment:NSTextAlignmentLeft];
+            [self.current setTextAlignment:NSTextAlignmentLeft];
+            [self.next setTextAlignment:NSTextAlignmentLeft];
+
         }
         else
         {
