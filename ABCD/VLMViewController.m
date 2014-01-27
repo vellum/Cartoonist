@@ -89,6 +89,11 @@ static UIDeviceOrientation theOrientation;
     return NO;
 }
 
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
+{
+    return UIInterfaceOrientationPortrait;
+}
+
 - (void)loadView
 {
 	[self setNeedsStatusBarAppearanceUpdate];

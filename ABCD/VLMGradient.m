@@ -104,7 +104,7 @@
         }
 	}
     [self setScrollIndicator:[[UIView alloc] initWithFrame:CGRectZero]];
-    [self.scrollIndicator setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.5f]];
+    [self.scrollIndicator setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.8f]];
     [self addSubview:self.scrollIndicator];
     [self.scrollIndicator setAlpha:0.0f];
 
@@ -306,12 +306,10 @@
     }
     CGPoint pos = CGPointMake(self.frame.size.width-size.width-edgeInsets.right, edgeInsets.top + pctPos * (frameHeight-size.height));
     
-    /*
     if (UIDeviceOrientationIsLandscape(self.orientation))
     {
         pos.x = edgeInsets.left;
     }
-    */
     
     if (pos.y < edgeInsets.top) {
         pos.y = edgeInsets.top;
@@ -384,7 +382,7 @@
         
         if ((UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad))
         {
-            self.current.center = CGPointMake(self.frame.size.width*(1-0.25f), self.frame.size.height/2.0f - self.current.frame.size.width*1.25);
+            self.current.center = CGPointMake(self.frame.size.width*(1-0.3f), self.frame.size.height/2.0f - self.current.frame.size.width*1.3);
             self.heading.center = CGPointMake(self.current.center.x + 28, self.current.center.y);
             self.next.center = self.current.center;
             
