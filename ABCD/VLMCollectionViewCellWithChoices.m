@@ -10,6 +10,7 @@
 #import "VLMCollectionViewCell.h"
 #import "VLMPanelModels.h"
 #import "VLMPanelModel.h"
+#import "VLMViewController.h"
 
 @interface VLMCollectionViewCellWithChoices ()
 @property (nonatomic, strong) NSMutableArray *subviews;
@@ -73,13 +74,20 @@
 
 		if (model.cellType != kCellTypeWireframe)
 		{
+            UIView *croppie = [[UIView alloc] initWithFrame:rect];
+            [croppie setClipsToBounds:YES];
+            [croppie setUserInteractionEnabled:NO];
+            
             //NSLog(@"not celltypewire");
-			UIImageView *imageview = [[UIImageView alloc] initWithFrame:rect];
+			UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, rect.size.height, rect.size.height)];
 			[imageview setContentMode:UIViewContentModeScaleAspectFill];
-			[imageview setClipsToBounds:YES];
+			[imageview setClipsToBounds:NO];
 			[imageview setImage:model.image];
 			[imageview setBackgroundColor:[UIColor colorWithWhite:0.9f alpha:1.0f]];
-			[self.scrollview addSubview:imageview];
+            [imageview setCenter:CGPointMake(rect.size.width/2.0f, rect.size.height/2.0f)];
+            [croppie addSubview:imageview];
+            
+			[self.scrollview addSubview:croppie];
 			[self.subviews addObject:imageview];
 		}
 		else
@@ -94,6 +102,31 @@
 	NSInteger selected = [[models.sourceNode objectForKey:@"selected"] integerValue];
 	[self.scrollview setContentOffset:CGPointMake(selected * (kItemSize.width - kItemPadding), 0)];
 	[self updatePage:selected];
+}
+
+
+- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
+{
+	[super applyLayoutAttributes:layoutAttributes];
+    if (UIDeviceOrientationIsPortrait([VLMViewController orientation])) {
+        for (NSInteger i = 0; i < [self.scrollview.subviews count]; i++)
+        {
+            UIView *subview = (UIView *)[self.scrollview.subviews objectAtIndex:i];
+            if ([subview.subviews count] > 0) {
+                UIView *iv = [subview.subviews objectAtIndex:0];
+                iv.transform = CGAffineTransformMakeRotation(0.0f);
+            }
+        }
+    } else {
+        for (NSInteger i = 0; i < [self.scrollview.subviews count]; i++)
+        {
+            UIView *subview = (UIView *)[self.scrollview.subviews objectAtIndex:i];
+            if ([subview.subviews count] > 0) {
+                UIView *iv = [subview.subviews objectAtIndex:0];
+                iv.transform = CGAffineTransformMakeRotation(M_PI/2.0f);
+            }
+        }
+    }
 }
 
 #pragma mark - ScrollView Delegate
