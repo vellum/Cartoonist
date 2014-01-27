@@ -35,7 +35,7 @@
         
         [self.base addSubview:self.imageview];
         
-        VLMNarrationCaption *vvvv = [[VLMNarrationCaption alloc] initWithFrame:CGRectMake(pad, pad, self.base.frame.size.width - pad * 2, 72.0f)];
+        VLMNarrationCaption *vvvv = [[VLMNarrationCaption alloc] initWithFrame:CGRectMake(pad, pad, self.base.frame.size.width - pad * 2, 60.0f)];
         [self setCaption:vvvv];
         [self.base addSubview:self.caption];
         
