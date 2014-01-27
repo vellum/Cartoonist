@@ -15,6 +15,8 @@
 
 #define ROT_DURATION   0.5f
 #define ROT_OPTIONS    UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
+#define ROT_OPTIONS_OUT UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
+#define ROT_OPTIONS_IN UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseInOut
 
 #define DEAD_ZONE          CGSizeMake(10.0f, 10.0f)
 #define FUCKING_UNKNOWN    0

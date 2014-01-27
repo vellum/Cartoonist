@@ -7,6 +7,7 @@
 //
 
 #import "VLMCollectionViewLayoutAttributes.h"
+#import "VLMViewController.h"
 
 @implementation VLMCollectionViewLayoutAttributes
 
@@ -18,6 +19,7 @@
     attributes.transitionValue = self.transitionValue;
     attributes.scaleValue = self.scaleValue;
     attributes.isOverview = self.isOverview;
+    attributes.orientationValue = self.orientationValue;
     
     return attributes;
 }
@@ -38,7 +40,9 @@
     if ([(VLMCollectionViewLayoutAttributes *) other isOverview] != [self isOverview]) {
         return NO;
     }
-    
+    if ([(VLMCollectionViewLayoutAttributes *) other orientationValue] != [self orientationValue]) {
+        return NO;
+    }
     return YES;
 }
 

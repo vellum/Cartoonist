@@ -10,6 +10,7 @@
 #import "VLMNarrationCaption.h"
 #import "VLMCollectionViewLayoutAttributes.h"
 #import "VLMPanelModel.h"
+#import "VLMViewController.h"
 
 @implementation VLMStaticImageCell
 
@@ -25,11 +26,13 @@
         // Initialization code
         
         CGFloat pad = kItemPadding;
-        
-        [self setImageview:[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.base.frame.size.width, self.base.frame.size.height)]];
+        CGFloat edge = self.base.frame.size.height;
+
+        [self setImageview:[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, edge, edge)]];
+        [self.imageview setCenter:CGPointMake(self.base.frame.size.width/2.0f, self.base.frame.size.height/2.0f)];
         [self.imageview setContentMode:UIViewContentModeScaleAspectFill];
-        [self.imageview setClipsToBounds:YES];
-        [self.imageview setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin];
+        [self.imageview setAutoresizingMask:UIViewAutoresizingNone];
+        
         [self.base addSubview:self.imageview];
         
         VLMNarrationCaption *vvvv = [[VLMNarrationCaption alloc] initWithFrame:CGRectMake(pad, pad, self.base.frame.size.width - pad * 2, 72.0f)];
@@ -37,6 +40,11 @@
         [self.base addSubview:self.caption];
         
         self.imagename = nil;
+        
+        
+        
+
+        
 
     }
     return self;
@@ -67,6 +75,21 @@
 		default :
 			break;
 	}
+    
+    CGAffineTransform t;
+    if (UIDeviceOrientationIsPortrait([VLMViewController orientation]))
+    {
+        t = CGAffineTransformRotate(CGAffineTransformIdentity, 0.0f);
+    } else {
+        t = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI/2.0f);
+    }
+    self.imageview.transform = t;
+
+    /*
+    [UIView animateWithDuration:ROT_DURATION delay:0.0f options:ROT_OPTIONS animations:^{
+    } completion:^(BOOL completed){}];
+     */
+
 }
 
 - (void)configureWithModel:(VLMPanelModel *)model

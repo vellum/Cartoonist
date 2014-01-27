@@ -12,5 +12,6 @@
 
 @property (nonatomic, assign) CGFloat transitionValue;
 @property (nonatomic, assign) CGFloat scaleValue;
+@property (nonatomic, assign) UIDeviceOrientation orientationValue;
 @property BOOL isOverview;
 @end

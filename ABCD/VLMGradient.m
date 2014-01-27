@@ -361,6 +361,7 @@
     _orientation = orientation;
     
     if (UIDeviceOrientationIsPortrait(orientation)) {
+        
         self.current.transform = CGAffineTransformMakeRotation(0.0f);
         self.next.transform = CGAffineTransformMakeRotation(0.0f);
         self.heading.transform = CGAffineTransformMakeRotation(0.0f);
@@ -368,7 +369,7 @@
         self.heading.center = self.portraitHeaderPos;
         self.current.center = self.portraitLabelPos;
         self.next.center = self.current.center;
-
+        
     } else {
         self.current.transform = CGAffineTransformMakeRotation(M_PI/2.0f);
         self.next.transform = CGAffineTransformMakeRotation(M_PI/2.0f);
@@ -387,7 +388,54 @@
             self.heading.center = CGPointMake(self.current.center.x + 36, self.frame.size.height/2.0f);
         }
     }
+
+    /*
+    [UIView animateWithDuration:ROT_DURATION*0.25f
+						  delay:0.0f
+						options:ROT_OPTIONS_OUT
+					 animations:^{
+                         self.current.alpha = 0.0f;
+                         self.next.alpha = 0.0f;
+                         self.heading.alpha = 0.0f;
+                     }
+					 completion:^(BOOL completed) {
+                         if (UIDeviceOrientationIsPortrait(orientation)) {
      
+                             self.current.transform = CGAffineTransformMakeRotation(0.0f);
+                             self.next.transform = CGAffineTransformMakeRotation(0.0f);
+                             self.heading.transform = CGAffineTransformMakeRotation(0.0f);
+                             
+                             self.heading.center = self.portraitHeaderPos;
+                             self.current.center = self.portraitLabelPos;
+                             self.next.center = self.current.center;
+                             
+                         } else {
+                             self.current.transform = CGAffineTransformMakeRotation(M_PI/2.0f);
+                             self.next.transform = CGAffineTransformMakeRotation(M_PI/2.0f);
+                             self.heading.transform = CGAffineTransformMakeRotation(M_PI/2.0f);
+                             
+                             if ((UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad))
+                             {
+                                 self.current.center = CGPointMake(self.frame.size.width*(1-0.3f), self.frame.size.height/2.0f);
+                                 self.heading.center = CGPointMake(self.current.center.x + 28, self.frame.size.height/2.0f);
+                                 self.next.center = self.current.center;
+                             }
+                             else
+                             {
+                                 self.current.center = CGPointMake(self.frame.size.width*(1-self.portraitLabelPos.y/self.frame.size.height), self.frame.size.height/2.0f);
+                                 self.next.center = self.current.center;
+                                 self.heading.center = CGPointMake(self.current.center.x + 36, self.frame.size.height/2.0f);
+                             }
+                         }
+                         
+                         [UIView animateWithDuration:ROT_DURATION*0.25f delay:ROT_DURATION*0.25f options:ROT_OPTIONS_IN animations:^{
+                             self.current.alpha = 1.0f;
+                             self.next.alpha = 1.0f;
+                             self.heading.alpha = 1.0f;
+
+                         } completion:^(BOOL completed){}];
+                     }
+     ];*/
 }
 
 @end

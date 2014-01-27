@@ -1037,8 +1037,8 @@ static UIDeviceOrientation theOrientation;
     // none of these work
     //[self.collectionView.collectionViewLayout invalidateLayout];
     //[self.collectionViewLayout invalidateLayout];
-    //[self.singlePanelFlow invalidateLayout];
-    [self.collectionView reloadData];
+    [self.singlePanelFlow invalidateLayout];
+    //[self.collectionView reloadData];
 }
 
 - (void)invalidate

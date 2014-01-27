@@ -58,12 +58,9 @@
         t = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI/2.0f);
     }
     
-    [UIView animateWithDuration:ROT_DURATION delay:0.0f options:ROT_OPTIONS
-					 animations:^{
-                         self.label.transform = t;
-                     } completion:^(BOOL completed) {
-                         
-                     }];
+    [UIView animateWithDuration:ROT_DURATION delay:0.0f options:ROT_OPTIONS animations:^{
+        self.label.transform = t;
+    } completion:^(BOOL completed){}];
 
 }
 

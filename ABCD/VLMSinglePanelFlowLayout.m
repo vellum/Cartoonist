@@ -9,6 +9,7 @@
 #import "VLMSinglePanelFlowLayout.h"
 #import "VLMCollectionViewLayoutAttributes.h"
 #import "VLMCollectionViewCell.h"
+#import "VLMViewController.h"
 
 @interface VLMSinglePanelFlowLayout ()
 @property (nonatomic) CGFloat scalevalue;
@@ -105,6 +106,7 @@
 	[(VLMCollectionViewLayoutAttributes *)attributes setTransitionValue : normalized];
 	[(VLMCollectionViewLayoutAttributes *)attributes setScaleValue : self.scalevalue];
 	[(VLMCollectionViewLayoutAttributes *)attributes setIsOverview:isOverview];
+	[(VLMCollectionViewLayoutAttributes *)attributes setOrientationValue:[VLMViewController orientation]];
 }
 
 @end
