@@ -187,8 +187,8 @@ static UIDeviceOrientation theOrientation;
     [self.view setClipsToBounds:YES];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    
-    self.sectionIndexView = [[VLMSectionIndex alloc] initWithFrame:CGRectMake(self.view.frame.size.width-40, 0, 40, self.view.frame.size.height)];
+    CGFloat indexWidth = 20.0f;
+    self.sectionIndexView = [[VLMSectionIndex alloc] initWithFrame:CGRectMake(self.view.frame.size.width-indexWidth, 0, indexWidth, self.view.frame.size.height)];
     [self.view addSubview:self.sectionIndexView];
     
     
@@ -1047,6 +1047,8 @@ static UIDeviceOrientation theOrientation;
             [self.overlay setOrientation:UIDeviceOrientationLandscapeLeft];
             [self.spinner setCenter:self.spinnerCenterLandscape];
             [self.sectionIndexView setCenter:CGPointMake(self.sectionIndexView.frame.size.width/2.0f, self.sectionIndexView.frame.size.height/2.0f)];
+            [self.sectionIndexView establishMarkersWithDataSource:self.dataSource collectionView:self.collectionView];
+
             break;
 
         case UIDeviceOrientationLandscapeRight:
@@ -1056,6 +1058,8 @@ static UIDeviceOrientation theOrientation;
             [self.overlay setOrientation:UIDeviceOrientationLandscapeLeft];
             [self.spinner setCenter:self.spinnerCenterLandscape];
             [self.sectionIndexView setCenter:CGPointMake(self.sectionIndexView.frame.size.width/2.0f, self.sectionIndexView.frame.size.height/2.0f)];
+            [self.sectionIndexView establishMarkersWithDataSource:self.dataSource collectionView:self.collectionView];
+
             break;
         
         case UIDeviceOrientationPortrait:
@@ -1065,6 +1069,8 @@ static UIDeviceOrientation theOrientation;
             [self.overlay setOrientation:UIDeviceOrientationPortrait];
             [self.spinner setCenter:self.spinnerCenterPortrait];
             [self.sectionIndexView setCenter:CGPointMake(self.view.frame.size.width-self.sectionIndexView.frame.size.width/2.0f, self.sectionIndexView.frame.size.height/2.0f)];
+            [self.sectionIndexView establishMarkersWithDataSource:self.dataSource collectionView:self.collectionView];
+
             break;
         
         case UIDeviceOrientationPortraitUpsideDown:
@@ -1074,12 +1080,13 @@ static UIDeviceOrientation theOrientation;
             [self.overlay setOrientation:UIDeviceOrientationPortrait];
             [self.spinner setCenter:self.spinnerCenterPortrait];
             [self.sectionIndexView setCenter:CGPointMake(self.view.frame.size.width-self.sectionIndexView.frame.size.width/2.0f, self.sectionIndexView.frame.size.height/2.0f)];
+            [self.sectionIndexView establishMarkersWithDataSource:self.dataSource collectionView:self.collectionView];
+
             break;
         
         default:
             return;
     }
-    [self.sectionIndexView establishMarkersWithDataSource:self.dataSource collectionView:self.collectionView];
     [UIView animateWithDuration:ROT_DURATION delay:0.0f options:ROT_OPTIONS
 					 animations:^{
                          [self.view setTransform:transform];

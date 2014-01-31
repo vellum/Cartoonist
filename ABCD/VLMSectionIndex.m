@@ -97,7 +97,7 @@
             
             CGPoint center = CGPointMake(x, unitsize.height*i+unitsize.height/2.0f);
             UIView *v = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 4, 4)];
-            [v.layer setBorderColor:[UIColor colorWithWhite:1.0f alpha:0.25f].CGColor];
+            [v.layer setBorderColor:[UIColor colorWithWhite:1.0f alpha:0.3f].CGColor];
             [v.layer setBorderWidth:0.5f];
             [v.layer setCornerRadius:2.0f];
             [v setUserInteractionEnabled:NO];
@@ -107,10 +107,19 @@
         } else {
             
             CGPoint center = CGPointMake(x, unitsize.height*i+unitsize.height/2.0f);
+            
             UIView *v = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 1, 1)];
-            [v.layer setCornerRadius:1.0f];
+            [v.layer setCornerRadius:0.5f];
             [v setUserInteractionEnabled:NO];
-            [v setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.25f]];
+
+            if (i == 0 || i == count-1) {
+                [v setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.3f]];
+            } else {
+                [v setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.0f]];
+            }
+
+            
+
             [v setCenter:center];
             [self addSubview:v];
             

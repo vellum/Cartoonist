@@ -13,7 +13,6 @@
 #import "VLMViewController.h"
 
 @interface VLMCollectionViewCellWithChoices ()
-@property (nonatomic, strong) NSMutableArray *subviews;
 @property (nonatomic, strong) VLMPanelModels *panels; // this should be a weak reference
 @end
 
@@ -21,13 +20,13 @@
 @synthesize scrollview;
 @synthesize choosePageBlock;
 @synthesize scrollPageBlock;
-@synthesize subviews;
 @synthesize panels;
 
 + (NSString *)CellIdentifier
 {
     return @"VLMCollectionViewCellWithChoicesID";
 }
+
 - (id)initWithFrame:(CGRect)frame
 {
 	self = [super initWithFrame:frame];
@@ -46,8 +45,6 @@
 		[self.scrollview setTag:1000];
 		[self.scrollview setDelegate:self];
 		[self.contentView addSubview:self.scrollview];
-
-		[self setSubviews:[[NSMutableArray alloc] init]];
     }
 	return self;
 }
@@ -83,7 +80,6 @@
             [croppie addSubview:imageview];
             
 			[self.scrollview addSubview:croppie];
-			[self.subviews addObject:imageview];
 		}
 		else
 		{
@@ -91,7 +87,6 @@
 			UIView *placeholder = [[UIView alloc] initWithFrame:rect];
 			[placeholder setBackgroundColor:[UIColor blackColor]];
 			[self.scrollview addSubview:placeholder];
-			[self.subviews addObject:placeholder];
 		}
 	}
 	NSInteger selected = [[models.sourceNode objectForKey:@"selected"] integerValue];
@@ -130,15 +125,7 @@
 - (void)prepareForReuse
 {
 	[super prepareForReuse];
-    // remove all children
-	//
-	for (NSInteger i = 0; i < [self.subviews count]; i++)
-	{
-		UIView *subview = (UIView *)[self.subviews objectAtIndex:i];
-		[subview removeFromSuperview];
-	}
-	[self.subviews removeAllObjects];
-
+    [[self.scrollview subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 }
 
 #pragma mark - ScrollView Delegate
