@@ -33,6 +33,9 @@
 	self = [super initWithFrame:frame];
 	if (self)
 	{
+        [self setBackgroundColor:[UIColor clearColor]];
+        [self.contentView setBackgroundColor:[UIColor clearColor]];
+        
 		[self setScrollview:[[UIScrollView alloc] initWithFrame:CGRectMake(kItemPadding, 0, kItemSize.width - kItemPadding, kItemSize.height)]];
 		[self.scrollview setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
 		[self.scrollview setAutoresizesSubviews:NO];
@@ -45,7 +48,7 @@
 		[self.contentView addSubview:self.scrollview];
 
 		[self setSubviews:[[NSMutableArray alloc] init]];
-	}
+    }
 	return self;
 }
 
@@ -57,15 +60,7 @@
 	[self setPanels:models];
 
 
-	// remove all children
-	//
-	for (NSInteger i = 0; i < [self.subviews count]; i++)
-	{
-		UIView *subview = (UIView *)[self.subviews objectAtIndex:i];
-		[subview removeFromSuperview];
-	}
-	[self.subviews removeAllObjects];
-
+	
 	// add as many as makes sense
 	for (NSInteger i = 0; i < numPages; i++)
 	{
@@ -129,6 +124,21 @@
             }
         }
     }
+}
+
+
+- (void)prepareForReuse
+{
+	[super prepareForReuse];
+    // remove all children
+	//
+	for (NSInteger i = 0; i < [self.subviews count]; i++)
+	{
+		UIView *subview = (UIView *)[self.subviews objectAtIndex:i];
+		[subview removeFromSuperview];
+	}
+	[self.subviews removeAllObjects];
+
 }
 
 #pragma mark - ScrollView Delegate

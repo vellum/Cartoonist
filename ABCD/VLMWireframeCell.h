@@ -11,5 +11,5 @@
 @interface VLMWireframeCell : VLMCollectionViewCell
 
 @property (nonatomic, strong) VLMPaddedLabel *label;
-
++ (NSString *)CellIdentifier;
 @end

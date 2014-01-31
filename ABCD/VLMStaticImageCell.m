@@ -25,6 +25,8 @@
     if (self) {
         // Initialization code
         
+        [self setBackgroundColor:[UIColor clearColor]];
+
         CGFloat pad = kItemPadding;
         CGFloat edge = self.base.frame.size.height;
 
@@ -47,12 +49,15 @@
         self.captionCenterPortrait = self.caption.center;
         self.captionCenterLandscape = CGPointMake(self.base.frame.size.width-self.caption.frame.size.height/2.0f - kItemPadding, 0 + self.caption.frame.size.width/2.0f + kItemPadding);
 
-        
-
     }
     return self;
 }
 
+
+- (void)prepareForReuse
+{
+	[super prepareForReuse];
+}
 
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
 {

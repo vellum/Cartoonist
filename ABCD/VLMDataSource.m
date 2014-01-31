@@ -223,12 +223,12 @@
 {
 	if (indexPath.section < 0 || indexPath.section > [self numberOfSectionsInCollectionView:collectionView] - 1)
 	{
+        NSLog(@"indexpath section is out of bounds, returning nil cell");
 		return nil;
 	}
 
 	if (![self isItemAtIndexPathChoice:indexPath])
 	{
-        
         NSString *cellID = [VLMCollectionViewCell CellIdentifier]; // not meant to be used irl
         id item = [self itemAtIndexPath:indexPath];
 		if ([item isKindOfClass:[VLMPanelModel class]]) {
@@ -247,12 +247,15 @@
                     break;
             }
         }
+        NSLog(@"dequeing cell with id: %@", cellID);
 		VLMCollectionViewCell *cell = (VLMCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
 		self.configureCellBlock(cell, item);
+      
 		return cell;
 	}
 	else
 	{
+        NSLog(@"dequeing cell with id: %@", [VLMCollectionViewCellWithChoices CellIdentifier]);
 		VLMCollectionViewCellWithChoices *cell = (VLMCollectionViewCellWithChoices *)[collectionView dequeueReusableCellWithReuseIdentifier:[VLMCollectionViewCellWithChoices CellIdentifier] forIndexPath:indexPath];
 		id item = [self itemAtIndexPath:indexPath];
 		self.configureCellChoiceBlock(cell, item);

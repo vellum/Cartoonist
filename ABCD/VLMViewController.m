@@ -24,6 +24,7 @@
 #import "VLMWireframeCell.h"
 #import "VLMStaticImageCell.h"
 #import "VLMCollectionViewCellWithChoices.h"
+#import "VLMSectionIndex.h"
 
 typedef enum
 {
@@ -50,6 +51,7 @@ typedef enum
 @property CGFloat lastKnownScale;
 @property CGPoint spinnerCenterPortrait;
 @property CGPoint spinnerCenterLandscape;
+@property (nonatomic, strong) VLMSectionIndex *sectionIndexView;
 
 @end
 
@@ -184,6 +186,41 @@ static UIDeviceOrientation theOrientation;
     
     [self.view setClipsToBounds:YES];
     [self.view setBackgroundColor:[UIColor whiteColor]];
+    
+    
+    self.sectionIndexView = [[VLMSectionIndex alloc] initWithFrame:CGRectMake(self.view.frame.size.width-40, 0, 40, self.view.frame.size.height)];
+    [self.view addSubview:self.sectionIndexView];
+    
+    
+    // FIXME: there's a bug when choice cells are selected:
+    // the collectionviewcell doesn't get populated
+    // it's 
+    SectionIndexSelectionBlock sectionSelectionBlock = ^(CGFloat page){
+        if (page==self.currentPage) {
+            return;
+        }
+        /*
+        
+        [UIView animateWithDuration:ZOOM_DURATION
+                              delay:0.0f
+                            options:ZOOM_OPTIONS
+                         animations:^{
+                             [self.collectionView setContentOffset:CGPointMake(0, roundf(page) * kItemSize.height
+                                                                               - self.collectionView.contentInset.top)];
+                         }
+                         completion:^(BOOL completed) {
+                             [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * kItemSize.height)];
+                       
+                         }
+         ];
+         */
+        [self.secretScrollview setContentOffset:CGPointMake(0, roundf(page) * kItemSize.height) animated:YES];
+
+        self.currentPage = page;
+    };
+    [self.sectionIndexView setSelectionBlock:sectionSelectionBlock];
+    
+    
 }
 
 - (void)dealloc
@@ -434,6 +471,7 @@ static UIDeviceOrientation theOrientation;
 	CGRect frame = UIScreen.mainScreen.bounds;
 	[cv setContentOffset:CGPointMake(0, kItemPadding)];
 
+    [cv registerClass:[VLMCollectionViewCell class] forCellWithReuseIdentifier:[VLMCollectionViewCell CellIdentifier]];
     [cv registerClass:[VLMWireframeCell class] forCellWithReuseIdentifier:[VLMWireframeCell CellIdentifier]];
     [cv registerClass:[VLMStaticImageCell class] forCellWithReuseIdentifier:[VLMStaticImageCell CellIdentifier]];
     [cv registerClass:[VLMCollectionViewCell class] forCellWithReuseIdentifier:[VLMCollectionViewCell CellIdentifier]];
@@ -533,7 +571,8 @@ static UIDeviceOrientation theOrientation;
             [self.qbutton show];
         }
          */
-        
+        [self.sectionIndexView hide];
+
         
         
 		[self.capture enableHorizontalPan:NO];
@@ -611,6 +650,10 @@ static UIDeviceOrientation theOrientation;
 	}
 	else
 	{
+
+        [self.sectionIndexView establishMarkersWithDataSource:self.dataSource collectionView:self.collectionView];
+        [self.sectionIndexView show];
+
         [self.overlay flashScrollIndicator];
         /*
         if (page<1.0f) {
@@ -765,6 +808,8 @@ static UIDeviceOrientation theOrientation;
     [self.collectionView reloadData];
     //[self checkHorizontalPanEnabled];
     [self.spinner hideWithDelay:0.4f];
+    
+    [self.sectionIndexView establishMarkersWithDataSource:self.dataSource collectionView:self.collectionView];
     return;
 }
 
@@ -1001,6 +1046,7 @@ static UIDeviceOrientation theOrientation;
             transform = CGAffineTransformRotate(CGAffineTransformIdentity, 0.0f);
             [self.overlay setOrientation:UIDeviceOrientationLandscapeLeft];
             [self.spinner setCenter:self.spinnerCenterLandscape];
+            [self.sectionIndexView setCenter:CGPointMake(self.sectionIndexView.frame.size.width/2.0f, self.sectionIndexView.frame.size.height/2.0f)];
             break;
 
         case UIDeviceOrientationLandscapeRight:
@@ -1009,6 +1055,7 @@ static UIDeviceOrientation theOrientation;
             transform = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI);
             [self.overlay setOrientation:UIDeviceOrientationLandscapeLeft];
             [self.spinner setCenter:self.spinnerCenterLandscape];
+            [self.sectionIndexView setCenter:CGPointMake(self.sectionIndexView.frame.size.width/2.0f, self.sectionIndexView.frame.size.height/2.0f)];
             break;
         
         case UIDeviceOrientationPortrait:
@@ -1017,6 +1064,7 @@ static UIDeviceOrientation theOrientation;
             transform = CGAffineTransformRotate(CGAffineTransformIdentity, 0.0f);
             [self.overlay setOrientation:UIDeviceOrientationPortrait];
             [self.spinner setCenter:self.spinnerCenterPortrait];
+            [self.sectionIndexView setCenter:CGPointMake(self.view.frame.size.width-self.sectionIndexView.frame.size.width/2.0f, self.sectionIndexView.frame.size.height/2.0f)];
             break;
         
         case UIDeviceOrientationPortraitUpsideDown:
@@ -1025,11 +1073,13 @@ static UIDeviceOrientation theOrientation;
             transform = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI);
             [self.overlay setOrientation:UIDeviceOrientationPortrait];
             [self.spinner setCenter:self.spinnerCenterPortrait];
+            [self.sectionIndexView setCenter:CGPointMake(self.view.frame.size.width-self.sectionIndexView.frame.size.width/2.0f, self.sectionIndexView.frame.size.height/2.0f)];
             break;
         
         default:
             return;
     }
+    [self.sectionIndexView establishMarkersWithDataSource:self.dataSource collectionView:self.collectionView];
     [UIView animateWithDuration:ROT_DURATION delay:0.0f options:ROT_OPTIONS
 					 animations:^{
                          [self.view setTransform:transform];

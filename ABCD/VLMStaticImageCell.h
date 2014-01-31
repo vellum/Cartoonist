@@ -15,5 +15,5 @@
 @property (nonatomic, strong) UIImageView *imageview;
 @property (nonatomic) CGPoint captionCenterPortrait;
 @property (nonatomic) CGPoint captionCenterLandscape;
-
++ (NSString *)CellIdentifier;
 @end

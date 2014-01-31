@@ -22,6 +22,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        [self setBackgroundColor:[UIColor clearColor]];
+
         // Initialization code
         [self setLabel:[[VLMPaddedLabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.normalFrame.size.width, self.normalFrame.size.height)]];
         [self.label setTextColor:[UIColor whiteColor]];
@@ -41,7 +43,6 @@
         {
             self.label.padding = 120.0f;
         }
-
     }
     return self;
 }
@@ -66,6 +67,11 @@
 
 }
 
+
+- (void)prepareForReuse
+{
+	[super prepareForReuse];
+}
 
 - (void)configureWithModel:(VLMPanelModel *)model
 {
