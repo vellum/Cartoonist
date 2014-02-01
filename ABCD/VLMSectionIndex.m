@@ -115,6 +115,8 @@
     CGFloat pctY = touchwhere.y / self.frame.size.height;
     if (self.numSections) {
         CGFloat selected = floorf(pctY * self.numSections);
+        if (selected>self.numSections-1) selected = self.numSections-1;
+
         if (self.selectionBlock) {
             self.selectionBlock(selected);
         }
