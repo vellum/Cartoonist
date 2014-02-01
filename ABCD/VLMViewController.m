@@ -52,7 +52,7 @@ typedef enum
 @property CGPoint spinnerCenterPortrait;
 @property CGPoint spinnerCenterLandscape;
 @property (nonatomic, strong) VLMSectionIndex *sectionIndexView;
-
+//@property (nonatomic, strong) UIView *sectionIndexDeadArea;
 @end
 
 @implementation VLMViewController
@@ -187,7 +187,14 @@ static UIDeviceOrientation theOrientation;
     [self.view setClipsToBounds:YES];
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    CGFloat indexWidth = 20.0f;
+    /*
+    self.sectionIndexDeadArea = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width-SECTION_INDEX_DEAD_PADDING-SECTION_INDEX_WIDTH, 0, SECTION_INDEX_WIDTH+SECTION_INDEX_DEAD_PADDING, self.view.frame.size.height)];
+    [self.sectionIndexDeadArea setBackgroundColor:[UIColor blackColor]];
+    [self.view addSubview:self.sectionIndexDeadArea];
+    [self.sectionIndexDeadArea setUserInteractionEnabled:NO];
+    */
+    
+    CGFloat indexWidth = SECTION_INDEX_WIDTH;
     self.sectionIndexView = [[VLMSectionIndex alloc] initWithFrame:CGRectMake(self.view.frame.size.width-indexWidth, 0, indexWidth, self.view.frame.size.height)];
     [self.view addSubview:self.sectionIndexView];
     
@@ -572,6 +579,8 @@ static UIDeviceOrientation theOrientation;
         }
          */
         [self.sectionIndexView hide];
+        //[self.sectionIndexDeadArea setUserInteractionEnabled:NO];
+
 
         
         
@@ -653,6 +662,8 @@ static UIDeviceOrientation theOrientation;
 
         [self.sectionIndexView establishMarkersWithDataSource:self.dataSource collectionView:self.collectionView];
         [self.sectionIndexView show];
+        //[self.sectionIndexDeadArea setUserInteractionEnabled:YES];
+
 
         [self.overlay flashScrollIndicator];
         /*
@@ -1048,6 +1059,7 @@ static UIDeviceOrientation theOrientation;
             [self.spinner setCenter:self.spinnerCenterLandscape];
             [self.sectionIndexView setCenter:CGPointMake(self.sectionIndexView.frame.size.width/2.0f, self.sectionIndexView.frame.size.height/2.0f)];
             [self.sectionIndexView establishMarkersWithDataSource:self.dataSource collectionView:self.collectionView];
+            //[self.sectionIndexDeadArea setCenter:CGPointMake(self.sectionIndexDeadArea.frame.size.width/2.0f, self.sectionIndexDeadArea.frame.size.height/2.0f)];
 
             break;
 
@@ -1059,6 +1071,7 @@ static UIDeviceOrientation theOrientation;
             [self.spinner setCenter:self.spinnerCenterLandscape];
             [self.sectionIndexView setCenter:CGPointMake(self.sectionIndexView.frame.size.width/2.0f, self.sectionIndexView.frame.size.height/2.0f)];
             [self.sectionIndexView establishMarkersWithDataSource:self.dataSource collectionView:self.collectionView];
+            //[self.sectionIndexDeadArea setCenter:CGPointMake(self.sectionIndexDeadArea.frame.size.width/2.0f, self.sectionIndexDeadArea.frame.size.height/2.0f)];
 
             break;
         
@@ -1070,6 +1083,7 @@ static UIDeviceOrientation theOrientation;
             [self.spinner setCenter:self.spinnerCenterPortrait];
             [self.sectionIndexView setCenter:CGPointMake(self.view.frame.size.width-self.sectionIndexView.frame.size.width/2.0f, self.sectionIndexView.frame.size.height/2.0f)];
             [self.sectionIndexView establishMarkersWithDataSource:self.dataSource collectionView:self.collectionView];
+            //[self.sectionIndexDeadArea setCenter:CGPointMake(self.view.frame.size.width-self.sectionIndexDeadArea.frame.size.width/2.0f, self.sectionIndexDeadArea.frame.size.height/2.0f)];
 
             break;
         
@@ -1081,6 +1095,8 @@ static UIDeviceOrientation theOrientation;
             [self.spinner setCenter:self.spinnerCenterPortrait];
             [self.sectionIndexView setCenter:CGPointMake(self.view.frame.size.width-self.sectionIndexView.frame.size.width/2.0f, self.sectionIndexView.frame.size.height/2.0f)];
             [self.sectionIndexView establishMarkersWithDataSource:self.dataSource collectionView:self.collectionView];
+            //[self.sectionIndexDeadArea setCenter:CGPointMake(self.view.frame.size.width-self.sectionIndexDeadArea.frame.size.width/2.0f, self.sectionIndexDeadArea.frame.size.height/2.0f)];
+
 
             break;
         

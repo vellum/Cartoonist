@@ -59,3 +59,6 @@
 #define SPINNER_STYLE UIActivityIndicatorViewStyleGray
 #define SPINNER_BACKGROUND_COLOR [UIColor colorWithWhite:1.0f alpha:0.8f]
 #define SPINNER_DIAMETER 40.0f
+
+#define SECTION_INDEX_WIDTH 20.0f
+#define SECTION_INDEX_DEAD_PADDING 10.0f

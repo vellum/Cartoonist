@@ -13,7 +13,8 @@
 
 @interface VLMSectionIndex()
 @property  NSInteger numSections;
-
+@property (nonatomic, strong) UIView *back;
+@property (nonatomic, strong) UIView *contentView;
 @end
 
 @implementation VLMSectionIndex
@@ -28,37 +29,66 @@
         [self setUserInteractionEnabled:NO];
         [self setAlpha:0.0f];
         [self setHidden:YES];
+        
+        self.back = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        [self.back setBackgroundColor:[UIColor blackColor]];
+        [self.back setUserInteractionEnabled:NO];
+        [self.back setAlpha:0.0f];
+        [self addSubview:self.back];
+        
+        self.contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        [self.contentView setBackgroundColor:[UIColor clearColor]];
+        [self addSubview:self.contentView];
 
+        UIPanGestureRecognizer *pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        [pgr setCancelsTouchesInView:NO];
+        [pgr setMaximumNumberOfTouches:1];
+        [self addGestureRecognizer:pgr];
     }
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
-
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"began");
     if ([touches count] != 1) {
         return;
     }
-    UITouch *touch = [touches anyObject];
-    [self handleTouch:touch];
+    [UIView animateWithDuration:ZOOM_DURATION * 0.0f
+						  delay:0.0f
+						options:ZOOM_OPTIONS
+					 animations:^{
+                         [self.back setAlpha:0.125f];
+                     }
+					 completion:^(BOOL completed) {
+                     }
+     ];
+    [self handleTouchAt:[[touches anyObject] locationInView:self]];
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if ([touches count] != 1) {
-        return;
-    }
-    UITouch *touch = [touches anyObject];
-    [self handleTouch:touch];
+    [UIView animateWithDuration:ZOOM_DURATION
+						  delay:0.0f
+						options:ZOOM_OPTIONS
+					 animations:^{
+                         [self.back setAlpha:0.0f];
+                     }
+					 completion:^(BOOL completed) {
+                     }
+     ];
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [UIView animateWithDuration:ZOOM_DURATION
+						  delay:0.0f
+						options:ZOOM_OPTIONS
+					 animations:^{
+                         [self.back setAlpha:0.0f];
+                     }
+					 completion:^(BOOL completed) {
+                     }
+     ];
 }
 
 - (void)handleTouch:(UITouch *)touch
@@ -68,9 +98,24 @@
     
     if (self.numSections) {
         CGFloat selected = floorf(pctY * self.numSections);
-        NSLog(@"move to %f", selected);
         if (self.selectionBlock) {
-            NSLog(@"here");
+            self.selectionBlock(selected);
+        }
+    }
+}
+
+- (void)handlePan:(UIPanGestureRecognizer *)pgr
+{
+    CGPoint touchwhere = [pgr locationInView:self];
+    [self handleTouchAt:touchwhere];
+}
+
+- (void)handleTouchAt:(CGPoint)touchwhere
+{
+    CGFloat pctY = touchwhere.y / self.frame.size.height;
+    if (self.numSections) {
+        CGFloat selected = floorf(pctY * self.numSections);
+        if (self.selectionBlock) {
             self.selectionBlock(selected);
         }
     }
@@ -78,59 +123,31 @@
 
 - (void)establishMarkersWithDataSource:(VLMDataSource *)dataSource collectionView:(UICollectionView *)cv
 {
-	// remove all children
-	//
-    [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
+    [[self.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     NSInteger count = [dataSource numberOfSectionsInCollectionView:cv];
     self.numSections = count;
-
     CGSize size = self.frame.size;
     CGSize unitsize = CGSizeMake(size.width, size.height/(CGFloat)count);
-    CGFloat x = UIDeviceOrientationIsPortrait([VLMViewController orientation]) ? unitsize.width - 10 : 10;
-    
+    CGFloat x = roundf(unitsize.width/2.0f);
     for (NSInteger i = 0; i < count; i++)
     {
         BOOL isMarker = [dataSource isItemAtIndexChoice:i];
         if (isMarker) {
-            // put a marker in our view
-            
             CGPoint center = CGPointMake(x, unitsize.height*i+unitsize.height/2.0f);
-            UIView *v = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 4, 4)];
-            [v.layer setBorderColor:[UIColor colorWithWhite:1.0f alpha:0.3f].CGColor];
-            [v.layer setBorderWidth:0.5f];
-            [v.layer setCornerRadius:2.0f];
-            [v setUserInteractionEnabled:NO];
-            [v setBackgroundColor:[UIColor clearColor]];
-            [v setCenter:center];
-            [self addSubview:v];
-        } else {
-            
-            CGPoint center = CGPointMake(x, unitsize.height*i+unitsize.height/2.0f);
-            
             UIView *v = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 1, 1)];
             [v.layer setCornerRadius:0.5f];
             [v setUserInteractionEnabled:NO];
-
-            if (i == 0 || i == count-1) {
-                [v setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.3f]];
-            } else {
-                [v setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.0f]];
-            }
-
-            
+            [v setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.75f]];
 
             [v setCenter:center];
-            [self addSubview:v];
-            
+            [self.contentView addSubview:v];
         }
     }
 }
 
-
-- (void)hide{
+- (void)hide
+{
     [self setUserInteractionEnabled:NO];
-
     [UIView animateWithDuration:ZOOM_DURATION
 						  delay:0.0f
 						options:ZOOM_OPTIONS
@@ -140,10 +157,11 @@
 					 completion:^(BOOL completed) {
                          [self setHidden:YES];
                      }
-     
      ];
 }
-- (void)show{
+
+- (void)show
+{
     [self setUserInteractionEnabled:YES];
     [self setHidden:NO];
     [UIView animateWithDuration:ZOOM_DURATION
@@ -154,8 +172,6 @@
                      }
 					 completion:^(BOOL completed) {
                      }
-     
      ];
-    
 }
 @end
