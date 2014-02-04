@@ -15,10 +15,14 @@
 		BD4F5C50187D6A8800BAD2AB /* VLMInstructionControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5C4F187D6A8800BAD2AB /* VLMInstructionControllerViewController.m */; };
 		BD4F5C53187F38D300BAD2AB /* VLMWireframeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5C52187F38D300BAD2AB /* VLMWireframeCell.m */; };
 		BD4F5C57187F391B00BAD2AB /* VLMStaticImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5C56187F391B00BAD2AB /* VLMStaticImageCell.m */; };
+		BD6B134618A0E8D8004E4FC3 /* UIScrollView+BDDRScrollViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BD6B134518A0E8D8004E4FC3 /* UIScrollView+BDDRScrollViewAdditions.m */; };
+		BD6B134B18A0E96E004E4FC3 /* BDDROneFingerZoomGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = BD6B134818A0E96E004E4FC3 /* BDDROneFingerZoomGestureRecognizer.m */; };
+		BD6B134C18A0E96E004E4FC3 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = BD6B134A18A0E96E004E4FC3 /* JRSwizzle.m */; };
 		BD8C6E01185969ED005FA217 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = BD8C6E00185969ED005FA217 /* data.json */; };
 		BD8FD83918401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */; };
 		BD8FD83C18402F5D00C8B9C6 /* VLMCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83B18402F5D00C8B9C6 /* VLMCaptureView.m */; };
 		BD8FD83F1840877C00C8B9C6 /* VLMGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83E1840877C00C8B9C6 /* VLMGradient.m */; };
+		BD9B2BA918A0BF9B00756943 /* VLMZoomableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD9B2BA818A0BF9B00756943 /* VLMZoomableImageView.m */; };
 		BDA1F987184E69F500C4AC57 /* VLMPanelModels.m in Sources */ = {isa = PBXBuildFile; fileRef = BDA1F986184E69F500C4AC57 /* VLMPanelModels.m */; };
 		BDB3BB8E1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB3BB8D1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m */; };
 		BDB3BB921849B6C600F59AE1 /* VLMDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB3BB911849B6C600F59AE1 /* VLMDataSource.m */; };
@@ -55,6 +59,12 @@
 		BD4F5C52187F38D300BAD2AB /* VLMWireframeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMWireframeCell.m; sourceTree = "<group>"; };
 		BD4F5C55187F391B00BAD2AB /* VLMStaticImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMStaticImageCell.h; sourceTree = "<group>"; };
 		BD4F5C56187F391B00BAD2AB /* VLMStaticImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMStaticImageCell.m; sourceTree = "<group>"; };
+		BD6B134418A0E8D8004E4FC3 /* UIScrollView+BDDRScrollViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+BDDRScrollViewAdditions.h"; sourceTree = "<group>"; };
+		BD6B134518A0E8D8004E4FC3 /* UIScrollView+BDDRScrollViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+BDDRScrollViewAdditions.m"; sourceTree = "<group>"; };
+		BD6B134718A0E96E004E4FC3 /* BDDROneFingerZoomGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDDROneFingerZoomGestureRecognizer.h; sourceTree = "<group>"; };
+		BD6B134818A0E96E004E4FC3 /* BDDROneFingerZoomGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDDROneFingerZoomGestureRecognizer.m; sourceTree = "<group>"; };
+		BD6B134918A0E96E004E4FC3 /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
+		BD6B134A18A0E96E004E4FC3 /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
 		BD8C6E00185969ED005FA217 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		BD8FD83718401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCollectionViewCellWithChoices.h; sourceTree = "<group>"; };
 		BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCollectionViewCellWithChoices.m; sourceTree = "<group>"; };
@@ -62,6 +72,8 @@
 		BD8FD83B18402F5D00C8B9C6 /* VLMCaptureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCaptureView.m; sourceTree = "<group>"; };
 		BD8FD83D1840877C00C8B9C6 /* VLMGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMGradient.h; sourceTree = "<group>"; };
 		BD8FD83E1840877C00C8B9C6 /* VLMGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMGradient.m; sourceTree = "<group>"; };
+		BD9B2BA718A0BF9B00756943 /* VLMZoomableImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMZoomableImageView.h; sourceTree = "<group>"; };
+		BD9B2BA818A0BF9B00756943 /* VLMZoomableImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMZoomableImageView.m; sourceTree = "<group>"; };
 		BDA1F985184E69F500C4AC57 /* VLMPanelModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMPanelModels.h; sourceTree = "<group>"; };
 		BDA1F986184E69F500C4AC57 /* VLMPanelModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMPanelModels.m; sourceTree = "<group>"; };
 		BDB3BB8C1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCollectionViewLayoutAttributes.h; sourceTree = "<group>"; };
@@ -181,6 +193,8 @@
 				BD0213B0187BB63800E113DA /* VLMSpinner.m */,
 				BD4F5C4B187D488C00BAD2AB /* VLMAnimButton.h */,
 				BD4F5C4C187D488C00BAD2AB /* VLMAnimButton.m */,
+				BD9B2BA718A0BF9B00756943 /* VLMZoomableImageView.h */,
+				BD9B2BA818A0BF9B00756943 /* VLMZoomableImageView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -210,6 +224,12 @@
 		BDD899B3183C4C39002E089C = {
 			isa = PBXGroup;
 			children = (
+				BD6B134418A0E8D8004E4FC3 /* UIScrollView+BDDRScrollViewAdditions.h */,
+				BD6B134518A0E8D8004E4FC3 /* UIScrollView+BDDRScrollViewAdditions.m */,
+				BD6B134718A0E96E004E4FC3 /* BDDROneFingerZoomGestureRecognizer.h */,
+				BD6B134818A0E96E004E4FC3 /* BDDROneFingerZoomGestureRecognizer.m */,
+				BD6B134918A0E96E004E4FC3 /* JRSwizzle.h */,
+				BD6B134A18A0E96E004E4FC3 /* JRSwizzle.m */,
 				BD4F5C42187D0BE900BAD2AB /* Fonts */,
 				BD8C6E02185969F4005FA217 /* Data */,
 				BDD899C5183C4C39002E089C /* Cartoonist */,
@@ -374,6 +394,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDA1F987184E69F500C4AC57 /* VLMPanelModels.m in Sources */,
+				BD6B134B18A0E96E004E4FC3 /* BDDROneFingerZoomGestureRecognizer.m in Sources */,
 				BDD0AE12183EBFB100BF0CE6 /* VLMSinglePanelFlowLayout.m in Sources */,
 				BD8FD83F1840877C00C8B9C6 /* VLMGradient.m in Sources */,
 				BD4F5C4D187D488C00BAD2AB /* VLMAnimButton.m in Sources */,
@@ -382,7 +403,9 @@
 				BD8FD83918401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m in Sources */,
 				BD0213B1187BB63800E113DA /* VLMSpinner.m in Sources */,
 				BDB942531879D8E20010E350 /* VLMPaddedLabel.m in Sources */,
+				BD6B134C18A0E96E004E4FC3 /* JRSwizzle.m in Sources */,
 				BDB3BB921849B6C600F59AE1 /* VLMDataSource.m in Sources */,
+				BD9B2BA918A0BF9B00756943 /* VLMZoomableImageView.m in Sources */,
 				BDD0AE0B183D51E800BF0CE6 /* VLMPanelModel.m in Sources */,
 				BDD0AE08183D4A0200BF0CE6 /* VLMCollectionViewCell.m in Sources */,
 				BD47DFD9185A71150048925D /* VLMParser.m in Sources */,
@@ -393,6 +416,7 @@
 				BDB3BB96184D484200F59AE1 /* VLMNarrationCaption.m in Sources */,
 				BD4F5C50187D6A8800BAD2AB /* VLMInstructionControllerViewController.m in Sources */,
 				BD4F5C53187F38D300BAD2AB /* VLMWireframeCell.m in Sources */,
+				BD6B134618A0E8D8004E4FC3 /* UIScrollView+BDDRScrollViewAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

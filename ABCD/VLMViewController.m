@@ -24,11 +24,13 @@
 #import "VLMWireframeCell.h"
 #import "VLMStaticImageCell.h"
 #import "VLMCollectionViewCellWithChoices.h"
+#import "VLMZoomableImageView.h"
 
 typedef enum
 {
 	kZoomNormal,
-	kZoomOverview
+	kZoomOverview,
+    kZoomZoomed
 } ZoomMode;
 
 @interface VLMViewController ()
@@ -37,6 +39,8 @@ typedef enum
 @property (nonatomic, strong) VLMGradient *overlay;
 @property (nonatomic, strong) UIScrollView *secretScrollview;
 @property (nonatomic, strong) VLMSinglePanelFlowLayout *singlePanelFlow;
+@property (nonatomic, strong) VLMSpinner *spinner;
+@property (nonatomic, strong) VLMZoomableImageView *zoomieImageView;
 @property ZoomMode zoomMode;
 @property CGFloat currentPage;
 @property BOOL zoomEnabled;
@@ -44,7 +48,6 @@ typedef enum
 @property CGPoint lastKnownContentOffset;
 @property BOOL isArtificiallyScrolling;
 @property NSInteger lastKnownChoicePage;
-@property (nonatomic, strong) VLMSpinner *spinner;
 //@property (nonatomic, strong) VLMAnimButton *qbutton;
 @property CGFloat pinchvelocity;
 @property CGFloat lastKnownScale;
@@ -163,7 +166,28 @@ static UIDeviceOrientation theOrientation;
     [self.qbutton setImage:[UIImage imageNamed:@"qbutton"] forState:UIControlStateNormal];
     [self.view addSubview:self.qbutton];
     */
+    ZoomOverlayChanged zzzBlock = ^(CGFloat alpha)
+    {
+        CGFloat s = CHOICE_SCALE + (1-CHOICE_SCALE)*(1-alpha);
+        [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
+    };
+    
+    ZoomOverlayHide zzzHide = ^()
+    {
+        [UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
+                         animations:^{
+                             [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f, 1.0f, 1.0f)];
+                             
+                         } completion:^(BOOL completed) {
+                         }
+         
+         ];
+    };
 
+    [self setZoomieImageView:[[VLMZoomableImageView alloc] initWithFrame:self.capture.frame]];
+    [self.zoomieImageView setZoomOverlayChanged:zzzBlock];
+    [self.zoomieImageView setZoomOverlayHide:zzzHide];
+    [self.view addSubview:self.zoomieImageView];
     
     
 	// listen for decision tree changes
@@ -233,6 +257,7 @@ static UIDeviceOrientation theOrientation;
 			case kZoomNormal :
             if (!ended)
             {
+
                 CGFloat s = zoomAmount;
                 if (s < lb)
                 {
@@ -266,6 +291,20 @@ static UIDeviceOrientation theOrientation;
                     [self.overlay setAlpha:gradientopa withLabelsHidden:YES];
                 }
                 
+                // if pinching to zoom in and this is an image cell
+                // interpolate an zoomieimageview
+                if ([self.dataSource isItemAtIndexImage:page] && s >= 1) {
+                    CGFloat alpha = (s-1.0f)*4.0f;
+                    if (alpha>1) {
+                        alpha=1;
+                    }
+                    [self.zoomieImageView setImage:[self.dataSource imageAtIndex:page]];
+                    [self.zoomieImageView showAlpha:alpha];
+                    s = 1 - alpha*(1-CHOICE_SCALE);
+                    
+                } else {
+                    [self.zoomieImageView showAlpha:0.0f];
+                }
                 
                 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, s, s, 1.0f)];
                 [self setLastKnownScale:s];
@@ -286,31 +325,59 @@ static UIDeviceOrientation theOrientation;
                 // stretch, so gently return to normal
                 else
                 {
-                    
-                    if ([self.dataSource isItemAtIndexChoice:page])
-                    {
-                        [UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
-                                         animations:^{
-                                             [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, CHOICE_SCALE, CHOICE_SCALE, 1.0f)];
+                    // unless we're zooming into an image
+                    if ([self.dataSource isItemAtIndexImage:page]) {
+                        if (zoomAmount >= 2.0f) {
+                            [self.zoomieImageView show];
+                            [UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
+                                             animations:^{
+                                                 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, CHOICE_SCALE, CHOICE_SCALE, 1.0f)];
+                                                 
+                                             } completion:^(BOOL completed) {
+                                             }
+                             
+                             ];
+                            
+                        } else {
+                            [self.zoomieImageView hide];
+                            [UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
+                                             animations:^{
+                                                 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f, 1.0f, 1.0f)];
+                                                 
+                                             } completion:^(BOOL completed) {
+                                             }
+                             
+                             ];
+                            
+                        }
 
-                                         } completion:^(BOOL completed) {
-                                         }
-                         
-                         ];
-                        [self switchZoom:kZoomNormal targetPage:-1 shouldBounce:NO];
+                    } else {
+                        if ([self.dataSource isItemAtIndexChoice:page])
+                        {
+                            [UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
+                                             animations:^{
+                                                 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, CHOICE_SCALE, CHOICE_SCALE, 1.0f)];
+                                                 
+                                             } completion:^(BOOL completed) {
+                                             }
+                             
+                             ];
+                            [self switchZoom:kZoomNormal targetPage:-1 shouldBounce:NO];
+                        }
+                        else
+                        {
+                            [UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
+                                             animations:^{
+                                                 [self.collectionView.layer setTransform:CATransform3DIdentity];
+                                             } completion:^(BOOL completed) {
+                                             }
+                             
+                             ];
+                            [self switchZoom:kZoomNormal targetPage:-1 shouldBounce:NO];
+                        }
+
                     }
-                    else
-                    {
-                        [UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
-                                         animations:^{
-                                             [self.collectionView.layer setTransform:CATransform3DIdentity];
-                                         } completion:^(BOOL completed) {
-                                         }
-                         
-                         ];
-                        [self switchZoom:kZoomNormal targetPage:-1 shouldBounce:NO];
-                    }
-                }
+               }
             }
             break;
             

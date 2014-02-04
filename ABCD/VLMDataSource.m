@@ -197,6 +197,30 @@
 	return NO;
 }
 
+- (BOOL)isItemAtIndexImage:(NSInteger)index
+{
+    
+	if (!self.isDataLoaded || !self.items)
+	{
+		return NO;
+	}
+	if (index < 0 || index > [self.items count] - 1)
+	{
+		return NO;
+	}
+    id o = [self.items objectAtIndex:index];
+	if ([o isKindOfClass:[VLMPanelModel class]])
+	{
+		VLMPanelModel *pm = (VLMPanelModel*)o;
+        if (pm.cellType==kCellTypeCaption || pm.cellType==kCellTypeNoCaption)
+        {
+            return YES;
+        }
+
+	}
+    return NO;
+}
+
 #pragma mark - DataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -271,6 +295,13 @@
     return m.name;
 }
 
-
+- (UIImage *)imageAtIndex:(NSInteger)index
+{
+    if (![self isItemAtIndexImage:index]) {
+        return nil;
+    }
+    VLMPanelModel *o = (VLMPanelModel *)[self.items objectAtIndex:index];
+    return o.image;
+}
 
 @end
