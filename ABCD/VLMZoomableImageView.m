@@ -12,6 +12,7 @@
 
 @interface VLMZoomableImageView ()
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UIImageView *dummy;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @end
 
@@ -27,7 +28,7 @@
         [self setAlpha:0.0f];
         //[self setDelegate:self];
         
-        [self setImageView:[[UIImageView alloc] initWithFrame:CGRectMake(0,0,1024,1024)]];
+        [self setImageView:[[UIImageView alloc] initWithFrame:CGRectZero]];
         [self.imageView setCenter:self.center];
 
         self.scrollView = [[UIScrollView alloc] initWithFrame:frame];
@@ -41,6 +42,7 @@
         //[self addGestureRecognizer:tgr];
         
         UIPanGestureRecognizer *pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        [pgr setMaximumNumberOfTouches:1];
         [self addGestureRecognizer:pgr];
     }
     return self;
@@ -100,10 +102,29 @@
      ];
 }
 
+- (void)hideWithDelay:(CGFloat)delay
+{
+    if (self.zoomOverlayHide) {
+        self.zoomOverlayHide();
+    }
+    [self setUserInteractionEnabled:NO];
+	[UIView animateWithDuration:ZOOM_DURATION
+						  delay:delay
+						options:ZOOM_OPTIONS
+					 animations:^{
+                         [self setAlpha:0.0f];
+                     }
+     
+					 completion:^(BOOL completed) {
+                     }
+     
+     ];
+}
+
 - (void)show
 {
     [self setUserInteractionEnabled:YES];
-	[UIView animateWithDuration:ZOOM_DURATION*2
+	[UIView animateWithDuration:ZOOM_DURATION
 						  delay:0.0f
 						options:ZOOM_OPTIONS
 					 animations:^{
@@ -166,14 +187,14 @@
     NSLog(@"%f", scrollView.zoomScale);
     NSLog(@"%@", NSStringFromCGRect(self.imageView.frame));
     if (scrollView.zoomScale <= 1 ) {
-        [self setAlpha:scrollView.zoomScale];
+        //[self setAlpha:scrollView.zoomScale];
     }
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale{
     if (scale<1) {
-        //[self.scrollView setZoomScale:1.0f animated:YES];
-        [self hide];
+        [self.scrollView setZoomScale:1.0f animated:YES];
+        [self hideWithDelay:0.275f];
     }
 }
 
