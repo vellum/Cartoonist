@@ -174,14 +174,7 @@ static UIDeviceOrientation theOrientation;
     
     ZoomOverlayHide zzzHide = ^()
     {
-        [UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
-                         animations:^{
-                             [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f, 1.0f, 1.0f)];
-                             
-                         } completion:^(BOOL completed) {
-                         }
-         
-         ];
+        [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f, 1.0f, 1.0f)];
     };
 
     [self setZoomieImageView:[[VLMZoomableImageView alloc] initWithFrame:self.capture.frame]];
@@ -327,7 +320,7 @@ static UIDeviceOrientation theOrientation;
                 {
                     // unless we're zooming into an image
                     if ([self.dataSource isItemAtIndexImage:page]) {
-                        if (zoomAmount >= 2.0f) {
+                        if (zoomAmount >= 1.1f) {
                             [self.zoomieImageView show];
                             [UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
                                              animations:^{

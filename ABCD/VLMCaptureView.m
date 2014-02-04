@@ -43,6 +43,7 @@
         [self enableHorizontalPan:NO];
 
 		UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
+        [pinch requireGestureRecognizerToFail:self.topLevelPanGestureRecognizer];
 		[self addGestureRecognizer:pinch];
 	}
 	return self;
@@ -84,6 +85,7 @@
     if (self.checkOverviewBlock) {
         isZoomOverview = self.checkOverviewBlock();
     }
+    
 	switch (pgr.state)
 	{
 		// when the pan starts or ends, make sure we reset the state
@@ -297,6 +299,25 @@
 #pragma mark -
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     NSLog(@"touches began");
+    /*
+    if ([touches count]>1) {
+        [self.topLevelPanGestureRecognizer setEnabled:NO];
+        [self.topLevelPanGestureRecognizer setEnabled:YES];
+        
+        if (self.verticalPanGestureRecognizer)
+        {
+            [self.verticalPanGestureRecognizer setEnabled:NO];
+            [self.verticalPanGestureRecognizer setEnabled:YES];
+        }
+        
+        if (self.horizontalPanGestureRecognizer)
+        {
+            [self.horizontalPanGestureRecognizer setEnabled:NO];
+            [self.horizontalPanGestureRecognizer setEnabled:YES];
+        }
+        
+        
+    }*/
 }
 
 @end
