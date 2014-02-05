@@ -322,14 +322,6 @@ static UIDeviceOrientation theOrientation;
                     if ([self.dataSource isItemAtIndexImage:page]) {
                         if (zoomAmount >= 1.1f) {
                             [self.zoomieImageView show];
-                            [UIView animateWithDuration:ZOOM_DURATION delay:0.0f options:ZOOM_OPTIONS
-                                             animations:^{
-                                                 [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, CHOICE_SCALE, CHOICE_SCALE, 1.0f)];
-                                                 
-                                             } completion:^(BOOL completed) {
-                                             }
-                             
-                             ];
                             
                         } else {
                             [self.zoomieImageView hide];

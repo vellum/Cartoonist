@@ -44,7 +44,7 @@
         
         [self setImageView:[[UIImageView alloc] initWithFrame:CGRectZero]];
         [self.imageView setCenter:self.center];
-[self.imageView setAlpha:1.0f];
+        [self.imageView setAlpha:1.0f];
         [self.container addSubview:self.imageView];
 
         self.scrollView = [[UIScrollView alloc] initWithFrame:frame];
@@ -57,6 +57,9 @@
         UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap)];
         [tgr setNumberOfTouchesRequired:1.0f];
         [self addGestureRecognizer:tgr];
+        
+        UIPanGestureRecognizer *pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        //[self addGestureRecognizer:pgr];
         
         [self addSubview:self.scrollView];
         [self.scrollView addSubview:self.container];
@@ -82,6 +85,9 @@
 						  delay:0.0f
 						options:ZOOM_OPTIONS
 					 animations:^{
+                         if (self.scrollView.zoomScale!=1) {
+                             [self.scrollView setZoomScale:1.0f];
+                         }
                          [self.container setFrame:f];
                          [self.container setCenter:self.center];
                          
@@ -89,19 +95,19 @@
                          [self.imageView setCenter:CGPointMake(
                                        self.container.frame.size.width/2,
                                        self.container.frame.size.height/2)];
+                         [self.container setAlpha:0.0f];
                      }
      
 					 completion:^(BOOL completed) {
                          [self setUserInteractionEnabled:NO];
                      }
      ];
-    [UIView animateWithDuration:ZOOM_DURATION*1.0f
+    
+    [UIView animateWithDuration:ZOOM_DURATION*0.5f
 						  delay:ZOOM_DURATION*1.0f
 						options:ZOOM_OPTIONS
 					 animations:^{
                          [self.back setAlpha:0];
-                         [self.container setAlpha:0.0f];
-
                      }
      
 					 completion:^(BOOL completed) {
@@ -136,7 +142,6 @@
     //[self setUserInteractionEnabled: NO];
     [self.scrollView setZoomScale: 1.0f];
     [self.back setAlpha:alpha*10.0f];
-    
     [self.container setAlpha:alpha==0?0:1];
 
     CGSize s = kItemSize;
@@ -149,12 +154,9 @@
 
     [self.container setFrame:f];
     [self.container setCenter:self.center];
-
     CGFloat twidth = self.container.frame.size.height - alpha*(self.container.frame.size.height-self.container.frame.size.width);
     [self.imageView setFrame:CGRectMake((self.container.frame.size.width-twidth)/2.0f, (self.container.frame.size.height-twidth)/2.0f, twidth, twidth)];
-    
     [self.scrollView setContentSize:self.frame.size];
-
 }
 
 
@@ -185,7 +187,6 @@
     if (!CGAffineTransformEqualToTransform(self.imageView.transform, t)){
         self.imageView.transform = t;
     }
-    
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
@@ -196,38 +197,45 @@
     return self.container;
 }
 
-- (void)scrollViewDidZoom:(UIScrollView *)scrollView
-{
-    NSLog(@"%f", scrollView.zoomScale);
-    NSLog(@"%@", NSStringFromCGRect(self.imageView.frame));
-    if (scrollView.zoomScale <= 1 ) {
-        //[self setAlpha:scrollView.zoomScale];
-        
-    }
-}
-
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale{
     if (scale<1) {
-        [self.scrollView setZoomScale:1.0f animated:YES];
-        [self performSelector:@selector(hide) withObject:self afterDelay:ZOOM_DURATION*(0.5f + 2*fabsf(self.scrollView.zoomScale-1.0f))];
-        //[self setUserInteractionEnabled:NO];
-        //[self hide];
+        [self hide];
     }
 }
 
 - (void)handleTap
 {
-    [self.scrollView setZoomScale:1.0f animated:YES];
-    [self performSelector:@selector(hide) withObject:self afterDelay:ZOOM_DURATION*(1.0f + 2*fabsf(self.scrollView.zoomScale-1.0f))];
+    [self hide];
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (void)handlePan:(UIPanGestureRecognizer *)pgr
 {
-    // Drawing code
+    CGPoint t = [pgr translationInView:self];
+    t.y /= 160.0f;
+    
+    CGFloat alpha = -t.y;
+    alpha = 1 - alpha;
+    if (alpha<0) {
+        alpha = 0;
+    }
+    if (alpha>1) {
+        alpha=1;    
+    }
+
+    switch ([pgr state]) {
+        case UIGestureRecognizerStateBegan:
+            break;
+
+        case UIGestureRecognizerStateChanged:
+            [self showAlpha:alpha];
+            break;
+            
+        case UIGestureRecognizerStateEnded:
+            break;
+            
+        default:
+            break;
+    }
 }
-*/
 
 @end
