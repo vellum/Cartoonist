@@ -293,8 +293,8 @@ static UIDeviceOrientation theOrientation;
                     }
                     [self.zoomieImageView setImage:[self.dataSource imageAtIndex:page]];
                     [self.zoomieImageView showAlpha:alpha];
-                    s = 1 - alpha*(1-CHOICE_SCALE);
-                    
+                    //s = 1 - alpha*(1-CHOICE_SCALE);
+                    return;
                 } else {
                     [self.zoomieImageView showAlpha:0.0f];
                 }

@@ -53,6 +53,7 @@
         self.scrollView.bddr_twoFingerZoomOutEnabled = YES;
         self.scrollView.bddr_oneFingerZoomEnabled = YES;
         
+        
         [self addSubview:self.scrollView];
         [self.scrollView addSubview:self.container];
     }
@@ -61,41 +62,42 @@
 
 - (void)hide
 {
-    CGFloat alpha = 0;
     CGSize s = kItemSize;
-    s.width = s.width + (self.frame.size.width-s.width)*alpha - (1-alpha)*kItemPadding*2;
-    s.height = s.height - (s.height-self.frame.size.width)*alpha;
+    s.width = s.height-kItemPadding*2;
     
-    CGRect f = CGRectMake((self.frame.size.width-s.width)/2.0f-(1-alpha)*kItemPadding*1,
-                          (self.frame.size.height-s.height)/2.0f,
-                          s.width, s.height);
+    CGRect f = CGRectMake(0,
+                          0,
+                          s.width,
+                          s.height);
     
-    
-    CGFloat twidth = self.container.frame.size.height - alpha*(self.container.frame.size.height-self.container.frame.size.width);
-
     if (self.zoomOverlayHide) {
         self.zoomOverlayHide();
     }
 
-	[UIView animateWithDuration:ZOOM_DURATION*1.5f
+	[UIView animateWithDuration:ZOOM_DURATION*1.0f
 						  delay:0.0f
 						options:ZOOM_OPTIONS
 					 animations:^{
                          [self.container setFrame:f];
                          [self.container setCenter:self.center];
-                         [self.imageView setFrame:CGRectMake((self.container.frame.size.width-twidth)/2.0f, (self.container.frame.size.height-twidth)/2.0f, twidth, twidth)];
+                         
+                         [self.imageView setFrame:CGRectMake(0, 0, s.width, s.width)];
+                         [self.imageView setCenter:CGPointMake(
+                                       self.container.frame.size.width/2,
+                                       self.container.frame.size.height/2)];
                      }
      
 					 completion:^(BOOL completed) {
                          [self setUserInteractionEnabled:NO];
-                         [self.container setAlpha:0.0f];
                      }
      ];
-    [UIView animateWithDuration:ZOOM_DURATION*2.0f
+    [UIView animateWithDuration:ZOOM_DURATION*1.0f
 						  delay:ZOOM_DURATION*1.0f
 						options:ZOOM_OPTIONS
 					 animations:^{
                          [self.back setAlpha:0];
+                         [self.container setAlpha:0.0f];
+
                      }
      
 					 completion:^(BOOL completed) {
