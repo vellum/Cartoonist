@@ -103,7 +103,7 @@
                      }
      ];
     
-    [UIView animateWithDuration:ZOOM_DURATION*0.5f
+    [UIView animateWithDuration:ZOOM_DURATION*0.25f
 						  delay:ZOOM_DURATION*1.0f
 						options:ZOOM_OPTIONS
 					 animations:^{
