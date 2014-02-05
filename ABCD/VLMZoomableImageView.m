@@ -10,6 +10,7 @@
 #import "VLMConstants.h"
 #import "VLMCollectionViewCell.h"
 #import "UIScrollView+BDDRScrollViewAdditions.h"
+#import "VLMViewController.h"
 
 @interface VLMZoomableImageView ()
 @property (nonatomic, strong) UIImageView *imageView;
@@ -48,11 +49,14 @@
 
         self.scrollView = [[UIScrollView alloc] initWithFrame:frame];
         self.scrollView.bddr_centersContent = YES;
-        self.scrollView.bddr_doubleTapZoomInEnabled = YES;
+        self.scrollView.bddr_doubleTapZoomInEnabled = NO;
         self.scrollView.bddr_doubleTapZoomsToMinimumZoomScaleWhenAtMaximumZoomScale = NO;
         self.scrollView.bddr_twoFingerZoomOutEnabled = YES;
-        self.scrollView.bddr_oneFingerZoomEnabled = YES;
+        self.scrollView.bddr_oneFingerZoomEnabled = NO;
         
+        UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap)];
+        [tgr setNumberOfTouchesRequired:1.0f];
+        [self addGestureRecognizer:tgr];
         
         [self addSubview:self.scrollView];
         [self.scrollView addSubview:self.container];
@@ -170,6 +174,18 @@
         [self.scrollView setBounces:YES];
     }
     [self.scrollView setZoomScale:1.0f];
+    
+    CGAffineTransform t;
+    if (UIDeviceOrientationIsPortrait([VLMViewController orientation]))
+    {
+        t = CGAffineTransformRotate(CGAffineTransformIdentity, 0.0f);
+    } else {
+        t = CGAffineTransformRotate(CGAffineTransformIdentity, M_PI/2.0f);
+    }
+    if (!CGAffineTransformEqualToTransform(self.imageView.transform, t)){
+        self.imageView.transform = t;
+    }
+    
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
@@ -186,16 +202,23 @@
     NSLog(@"%@", NSStringFromCGRect(self.imageView.frame));
     if (scrollView.zoomScale <= 1 ) {
         //[self setAlpha:scrollView.zoomScale];
+        
     }
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale{
     if (scale<1) {
         [self.scrollView setZoomScale:1.0f animated:YES];
-        [self performSelector:@selector(hide) withObject:self afterDelay:ZOOM_DURATION*0.75f];
+        [self performSelector:@selector(hide) withObject:self afterDelay:ZOOM_DURATION*(0.5f + 2*fabsf(self.scrollView.zoomScale-1.0f))];
         //[self setUserInteractionEnabled:NO];
         //[self hide];
     }
+}
+
+- (void)handleTap
+{
+    [self.scrollView setZoomScale:1.0f animated:YES];
+    [self performSelector:@selector(hide) withObject:self afterDelay:ZOOM_DURATION*(1.0f + 2*fabsf(self.scrollView.zoomScale-1.0f))];
 }
 
 /*
