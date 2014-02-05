@@ -95,6 +95,17 @@
                          [self.imageView setCenter:CGPointMake(
                                        self.container.frame.size.width/2,
                                        self.container.frame.size.height/2)];
+                     }
+     
+					 completion:^(BOOL completed) {
+                         [self setUserInteractionEnabled:NO];
+                     }
+     ];
+    
+    [UIView animateWithDuration:ZOOM_DURATION*2.0f
+						  delay:0.0f
+						options:ZOOM_OPTIONS
+					 animations:^{
                          [self.container setAlpha:0.0f];
                      }
      
@@ -103,7 +114,7 @@
                      }
      ];
     
-    [UIView animateWithDuration:ZOOM_DURATION*0.25f
+    [UIView animateWithDuration:ZOOM_DURATION*1.0f
 						  delay:ZOOM_DURATION*1.0f
 						options:ZOOM_OPTIONS
 					 animations:^{
