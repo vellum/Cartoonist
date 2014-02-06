@@ -25,33 +25,30 @@
     if (self) {
         // Initialization code
         
-        CGFloat pad;
-        if ((UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad))
-        {
-            pad = roundf(kItemPadding*0.75f);
-        }
-        else
-        {
-            pad = roundf(kItemPadding*1.2f);
-        }
         CGFloat edge = self.base.frame.size.height;
-
         [self setImageview:[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, edge, edge)]];
         [self.imageview setCenter:CGPointMake(self.base.frame.size.width/2.0f, self.base.frame.size.height/2.0f)];
         [self.imageview setContentMode:UIViewContentModeScaleAspectFill];
         [self.imageview setAutoresizingMask:UIViewAutoresizingNone];
-        
         [self.base addSubview:self.imageview];
-        
-        VLMNarrationCaption *vvvv = [[VLMNarrationCaption alloc] initWithFrame:CGRectMake(pad, pad, self.base.frame.size.width - pad * 2, 60.0f)];
+
+        CGFloat pad;
+        CGSize captionsize;
+        if ((UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad))
+        {
+            pad = roundf(kItemPadding*0.75f);
+            captionsize = CGSizeMake(self.base.frame.size.width - pad * 2, 60.0f);
+        }
+        else
+        {
+            pad = roundf(kItemPadding*1.0f);
+            captionsize = CGSizeMake(320.0f, 60.0f);
+        }
+        VLMNarrationCaption *vvvv = [[VLMNarrationCaption alloc] initWithFrame:CGRectMake(pad, pad, captionsize.width, captionsize.height)];
         [self setCaption:vvvv];
         [self.base addSubview:self.caption];
         
         self.imagename = nil;
-        
-        
-        //@property (nonatomic) CGPoint captionCenterPortrait;
-        //@property (nonatomic) CGPoint captionCenterLandscape;
         self.captionCenterPortrait = self.caption.center;
         self.captionCenterLandscape = CGPointMake(self.base.frame.size.width-self.caption.frame.size.height/2.0f - pad, 0 + self.caption.frame.size.width/2.0f + pad);
 
