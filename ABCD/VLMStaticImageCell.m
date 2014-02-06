@@ -25,7 +25,7 @@
     if (self) {
         // Initialization code
         
-        CGFloat pad = kItemPadding;
+        CGFloat pad = roundf(kItemPadding*0.75f);
         CGFloat edge = self.base.frame.size.height;
 
         [self setImageview:[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, edge, edge)]];
@@ -45,7 +45,7 @@
         //@property (nonatomic) CGPoint captionCenterPortrait;
         //@property (nonatomic) CGPoint captionCenterLandscape;
         self.captionCenterPortrait = self.caption.center;
-        self.captionCenterLandscape = CGPointMake(self.base.frame.size.width-self.caption.frame.size.height/2.0f - kItemPadding, 0 + self.caption.frame.size.width/2.0f + kItemPadding);
+        self.captionCenterLandscape = CGPointMake(self.base.frame.size.width-self.caption.frame.size.height/2.0f - pad, 0 + self.caption.frame.size.width/2.0f + pad);
 
         
 

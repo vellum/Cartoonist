@@ -710,6 +710,9 @@ static UIDeviceOrientation theOrientation;
          ];
         
         [self.secretScrollview setContentSize:CGSizeMake(kItemSize.width, [self.dataSource numberOfSectionsInCollectionView:self.collectionView] * kItemSize.height + self.collectionView.contentInset.top*self.screensizeMultiplier)];
+
+        [self.singlePanelFlow invalidateLayout];
+
 	}
 }
 

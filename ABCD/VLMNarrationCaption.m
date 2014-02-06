@@ -45,10 +45,10 @@
     [self setUserInteractionEnabled:NO];
     
     
-    [self.label setTextColor:[UIColor blackColor]];
-    [self.label setBackgroundColor:[UIColor whiteColor]];
+    [self.label setTextColor:[UIColor whiteColor]];
+    [self.label setBackgroundColor:[UIColor colorWithWhite:0.15f alpha:1.0f]];
 
-    self.layer.borderColor = [UIColor colorWithWhite:0.6f alpha:1.0f].CGColor;
+    self.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.35f].CGColor;
     self.layer.borderWidth = 1.2f;
 }
 
@@ -86,7 +86,10 @@
 	{
 		// map 0 to 0.1 to 1 and 0
 		CGFloat mapped = value;
-		CGFloat threshold = 0.1f;
+		
+        //CGFloat threshold = 0.1f;
+        CGFloat threshold = 0.25f; // changing to test
+        
 		if (mapped > threshold)
 		{
 			mapped = threshold;
@@ -106,7 +109,10 @@
 	}
 	else if (isArriving)
 	{
-		CGFloat threshold = 0.5f;
+		//CGFloat threshold = 0.5f;
+        CGFloat threshold = 0.75f; // testing
+        
+        
 		CGFloat mapped = (transition - threshold) / (1 - threshold);
 		if (mapped < 0)
 		{

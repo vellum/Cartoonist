@@ -87,6 +87,18 @@ function renderSequenceIntoDiv( seq, $div )
 					var resultnode = idlookup[extractedid];
 					if (newValue=='null') newValue = null;
 					resultnode.image = newValue;
+
+					if (newValue==null){
+						resultnode.celltype = 'wireframe';
+					} else {
+						if (resultnode.caption == null || resultnode.caption == 
+						''){
+							resultnode.celltype = 'nocaption';
+						} else {
+							resultnode.celltype = 'caption';
+						}
+					}
+				
 					render();
 			    }
 			});
@@ -151,6 +163,17 @@ function renderSequenceIntoDiv( seq, $div )
 					var resultnode = idlookup[extractedid];
 					if (newValue=='null') newValue = null;
 					resultnode.image = newValue;
+					
+					if (newValue==null){
+						resultnode.celltype = 'wireframe';
+					} else {
+						if (resultnode.caption == null || resultnode.caption == 
+						''){
+							resultnode.celltype = 'nocaption';
+						} else {
+							resultnode.celltype = 'caption';
+						}
+					}
 					render();
 			    }
 			});

@@ -24,7 +24,7 @@
 #define FUCKING_HORIZONTAL 2
 
 // Mixed Case, Legible but not quite heavy enough
-#define FONT_CAPTION [UIFont fontWithName:@"Architect_Regular" size:22.0f]
+#define FONT_CAPTION [UIFont fontWithName:@"Architect_Regular" size:20.0f]
 #define USE_ALL_CAPS NO
 #define FONT_LINE_SPACING 0.0f
 #define FONT_WIREFRAME [UIFont fontWithName:@"Architect_Regular" size:24.0f]
