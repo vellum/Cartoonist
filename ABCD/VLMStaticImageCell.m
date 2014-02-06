@@ -25,7 +25,15 @@
     if (self) {
         // Initialization code
         
-        CGFloat pad = roundf(kItemPadding*0.75f);
+        CGFloat pad;
+        if ((UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad))
+        {
+            pad = roundf(kItemPadding*0.75f);
+        }
+        else
+        {
+            pad = roundf(kItemPadding*1.2f);
+        }
         CGFloat edge = self.base.frame.size.height;
 
         [self setImageview:[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, edge, edge)]];
