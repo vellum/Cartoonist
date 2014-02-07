@@ -30,34 +30,50 @@
         [self.imageview setCenter:CGPointMake(self.base.frame.size.width/2.0f, self.base.frame.size.height/2.0f)];
         [self.imageview setContentMode:UIViewContentModeScaleAspectFill];
         [self.imageview setAutoresizingMask:UIViewAutoresizingNone];
+        [self.imageview setOpaque:YES];
         [self.base addSubview:self.imageview];
+        [self.base setAutoresizingMask:UIViewAutoresizingNone];
+        [self.contentView setAutoresizingMask:UIViewAutoresizingNone];
 
-        CGFloat pad;
-        CGSize captionsize;
-        if ((UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad))
-        {
-            pad = roundf(kItemPadding*0.75f);
-            captionsize = CGSizeMake(self.base.frame.size.width - pad * 2, 60.0f);
-        }
-        else
-        {
-            pad = roundf(kItemPadding*1.0f);
-            captionsize = CGSizeMake(320.0f, 60.0f);
-        }
-        VLMNarrationCaption *vvvv = [[VLMNarrationCaption alloc] initWithFrame:CGRectMake(pad, pad, captionsize.width, captionsize.height)];
+        VLMNarrationCaption *vvvv = [[VLMNarrationCaption alloc] initWithFrame:CGRectZero];
         [self setCaption:vvvv];
         [self.base addSubview:self.caption];
-        
         self.imagename = nil;
-        self.captionCenterPortrait = self.caption.center;
-        self.captionCenterLandscape = CGPointMake(self.base.frame.size.width-self.caption.frame.size.height/2.0f - pad, 0 + self.caption.frame.size.width/2.0f + pad);
-
         
+        [self computeDimensions:60.0f];
 
     }
     return self;
 }
 
+- (void)computeDimensions:(CGFloat)targetHeight
+{
+    CGFloat pad;
+    CGSize captionsize;
+    if ((UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad))
+    {
+        pad = roundf(kItemPadding*0.75f);
+        captionsize = CGSizeMake(self.base.frame.size.width - pad * 2, targetHeight);
+    }
+    else
+    {
+        pad = roundf(kItemPadding*1.0f);
+        captionsize = CGSizeMake(320.0f, targetHeight);
+    }
+    
+    [self.caption setTransform:CGAffineTransformIdentity];
+    
+    CGRect b = self.caption.bounds;
+    b.size.width = captionsize.width;
+    b.size.height = captionsize.height;
+    self.caption.bounds = b;
+    //[self.caption setFrame:CGRectMake(pad, pad, captionsize.width, captionsize.height)];
+
+    
+    self.captionCenterPortrait = CGPointMake(pad + captionsize.width/2.0f, pad + captionsize.height/2.0f);
+    self.captionCenterLandscape = CGPointMake(self.base.frame.size.width-self.caption.frame.size.height/2.0f - pad, 0 + self.caption.frame.size.width/2.0f + pad);
+    [self.caption setCenter:self.captionCenterPortrait];
+}
 
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
 {
@@ -130,6 +146,13 @@
         [paragraphStyle setAlignment:NSTextAlignmentCenter];
         [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [labelText length])];
         
+        
+        NSDictionary *attributes = @{NSFontAttributeName: FONT_CAPTION, NSParagraphStyleAttributeName: paragraphStyle};
+       
+        
+        CGRect rect = [labelText boundingRectWithSize:(CGSize){self.caption.bounds.size.width, CGFLOAT_MAX} options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:attributes context:nil];
+        
+        [self computeDimensions:rect.size.height + 18.0f*2.0f];
         [self.caption setAttributedText:attributedString];
 	}
 	self.cellType = model.cellType;

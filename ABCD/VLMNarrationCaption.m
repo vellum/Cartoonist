@@ -32,15 +32,17 @@
 {
     [self setBackgroundColor:[UIColor clearColor]];
 	[self setAlpha:0];
+    [self setAutoresizingMask:UIViewAutoresizingNone];
 	//[self setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
     
     [self setLabel:[[VLMPaddedLabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)]];
     [self addSubview:self.label];
     
-    //[self.label setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
+    [self.label setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleRightMargin];
+    
 	[self.label setTextAlignment:NSTextAlignmentCenter];
 	[self.label setAdjustsFontSizeToFitWidth:YES];
-	[self.label setNumberOfLines:3];
+	[self.label setNumberOfLines:5];
     [self.label setFont:FONT_CAPTION];
     [self setUserInteractionEnabled:NO];
     

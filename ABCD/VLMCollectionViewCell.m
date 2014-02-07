@@ -29,7 +29,9 @@
 
 	[self.contentView setBackgroundColor:[UIColor clearColor]];
 	[self.contentView setClipsToBounds:NO];
+    [self.contentView setOpaque:YES];
 	[self setBackgroundColor:[UIColor clearColor]];
+    [self setOpaque:YES];
 
 	CGFloat pad = kItemPadding;
 	[self setCoverFrame: CGRectMake(pad, 0, kItemSize.width - pad * 2, kItemSize.height - kItemPadding + pad)];
