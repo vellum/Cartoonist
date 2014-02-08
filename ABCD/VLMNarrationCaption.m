@@ -10,6 +10,7 @@
 #import "VLMConstants.h"
 #import "VLMPaddedLabel.h"
 #import "VLMCollectionViewLayoutAttributes.h"
+#import "VLMViewController.h"
 
 @interface VLMNarrationCaption()
 @property (nonatomic, strong) VLMPaddedLabel *label;
@@ -91,7 +92,10 @@
 		
         //CGFloat threshold = 0.1f;
         CGFloat threshold = 0.25f; // changing to test
-        
+        if (UIDeviceOrientationIsLandscape([VLMViewController orientation]))
+        {
+            threshold = 0.75f;
+        }
 		if (mapped > threshold)
 		{
 			mapped = threshold;
@@ -114,6 +118,10 @@
 		//CGFloat threshold = 0.5f;
         CGFloat threshold = 0.75f; // testing
         
+        if (UIDeviceOrientationIsLandscape([VLMViewController orientation]))
+        {
+            threshold = 0.25f;
+        }
         
 		CGFloat mapped = (transition - threshold) / (1 - threshold);
 		if (mapped < 0)
