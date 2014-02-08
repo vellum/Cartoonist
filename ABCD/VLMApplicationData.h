@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NSCache+Fix.h"
 
 @interface VLMApplicationData : NSObject
 + (VLMApplicationData *) sharedInstance;

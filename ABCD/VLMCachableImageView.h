@@ -10,4 +10,5 @@
 
 @interface VLMCachableImageView : UIImageView
 - (void)loadImageNamed:(NSString*)fileName;
+- (void)prepareForReuse;
 @end

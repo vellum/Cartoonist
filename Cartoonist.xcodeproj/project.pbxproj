@@ -22,6 +22,7 @@
 		BD7C1BF818A6CCF100565F20 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = BD7C1BF518A6CCF100565F20 /* UIImage+Alpha.m */; };
 		BD7C1BF918A6CCF100565F20 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = BD7C1BF718A6CCF100565F20 /* UIImage+RoundedCorner.m */; };
 		BD7C1BFC18A6E3D800565F20 /* VLMCachableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD7C1BFB18A6E3D800565F20 /* VLMCachableImageView.m */; };
+		BD7C1BFF18A6F53100565F20 /* NSCache+Fix.m in Sources */ = {isa = PBXBuildFile; fileRef = BD7C1BFE18A6F53100565F20 /* NSCache+Fix.m */; };
 		BD8C6E01185969ED005FA217 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = BD8C6E00185969ED005FA217 /* data.json */; };
 		BD8FD83918401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */; };
 		BD8FD83C18402F5D00C8B9C6 /* VLMCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83B18402F5D00C8B9C6 /* VLMCaptureView.m */; };
@@ -79,6 +80,8 @@
 		BD7C1BF718A6CCF100565F20 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		BD7C1BFA18A6E3D800565F20 /* VLMCachableImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCachableImageView.h; sourceTree = "<group>"; };
 		BD7C1BFB18A6E3D800565F20 /* VLMCachableImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCachableImageView.m; sourceTree = "<group>"; };
+		BD7C1BFD18A6F53100565F20 /* NSCache+Fix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCache+Fix.h"; sourceTree = "<group>"; };
+		BD7C1BFE18A6F53100565F20 /* NSCache+Fix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCache+Fix.m"; sourceTree = "<group>"; };
 		BD8C6E00185969ED005FA217 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		BD8FD83718401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCollectionViewCellWithChoices.h; sourceTree = "<group>"; };
 		BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCollectionViewCellWithChoices.m; sourceTree = "<group>"; };
@@ -243,6 +246,8 @@
 		BDD899B3183C4C39002E089C = {
 			isa = PBXGroup;
 			children = (
+				BD7C1BFD18A6F53100565F20 /* NSCache+Fix.h */,
+				BD7C1BFE18A6F53100565F20 /* NSCache+Fix.m */,
 				BD7C1BF418A6CCF100565F20 /* UIImage+Alpha.h */,
 				BD7C1BF518A6CCF100565F20 /* UIImage+Alpha.m */,
 				BD7C1BF618A6CCF100565F20 /* UIImage+RoundedCorner.h */,
@@ -423,6 +428,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDA1F987184E69F500C4AC57 /* VLMPanelModels.m in Sources */,
+				BD7C1BFF18A6F53100565F20 /* NSCache+Fix.m in Sources */,
 				BD6B134B18A0E96E004E4FC3 /* BDDROneFingerZoomGestureRecognizer.m in Sources */,
 				BD7C1BF818A6CCF100565F20 /* UIImage+Alpha.m in Sources */,
 				BDD0AE12183EBFB100BF0CE6 /* VLMSinglePanelFlowLayout.m in Sources */,

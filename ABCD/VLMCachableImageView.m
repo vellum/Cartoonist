@@ -13,7 +13,6 @@
 #import "UIImage+Alpha.h"
 
 @interface VLMCachableImageView()
-@property (nonatomic, strong) NSString *imageName;
 @end
 
 static char * const kCacheImageAssociationKey = "VLM_CacheImageName";
@@ -25,15 +24,15 @@ static char * const kCacheImageAssociationKey = "VLM_CacheImageName";
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor colorWithWhite:0.2f alpha:1.0f];
-        self.imageName = nil;
     }
     return self;
 }
-
+- (void)prepareForReuse{
+    self.image = nil;
+}
 - (void)loadImageNamed:(NSString*)fileName
 {
-    self.imageName = fileName;
-    
+    self.image = nil;
     VLMApplicationData *appdata = [VLMApplicationData sharedInstance];
     NSCache *cache = appdata.imageCache;
 
@@ -44,7 +43,6 @@ static char * const kCacheImageAssociationKey = "VLM_CacheImageName";
     }
     else
     {
-        [self setImage:nil];
         
         NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
         NSString *imageFolder = [[resourcePath stringByAppendingPathComponent:@"Images"] copy];
@@ -70,7 +68,7 @@ static char * const kCacheImageAssociationKey = "VLM_CacheImageName";
                 NSString *requestedImageName =
                 (NSString *)objc_getAssociatedObject(self, kCacheImageAssociationKey);
                 
-                if ([requestedImageName isEqualToString:self.imageName]) {
+                if ([requestedImageName isEqualToString:fileName]) {
                     [self setImage:resizedImage];
                 }
                 [cache setObject:resizedImage forKey:requestedImageName];

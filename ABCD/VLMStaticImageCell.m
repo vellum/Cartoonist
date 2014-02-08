@@ -50,7 +50,11 @@ static char * const kPanelModelAssociationKey = "VLM_PanelModel";
     }
     return self;
 }
-
+- (void)prepareForReuse
+{
+	[super prepareForReuse];
+    [self.imageview prepareForReuse];
+}
 - (void)computeDimensions:(CGFloat)targetHeight
 {
     CGFloat pad;
