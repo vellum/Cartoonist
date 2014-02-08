@@ -300,8 +300,14 @@
     if (![self isItemAtIndexImage:index]) {
         return nil;
     }
-    VLMPanelModel *o = (VLMPanelModel *)[self.items objectAtIndex:index];
-    return o.image;
+    VLMPanelModel *model = (VLMPanelModel *)[self.items objectAtIndex:index];
+    
+    if (model.image && [model.image length]>0) {
+        UIImage *img = [UIImage imageNamed:[model.image stringByAppendingString:@".png"]];
+        return img;
+    } else {
+        return nil;
+    }
 }
 
 @end

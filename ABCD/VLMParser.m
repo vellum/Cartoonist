@@ -46,10 +46,6 @@ static inline BOOL IsEmpty(id thing)
 		imageName = @"";
 	}
 
-
-	// FIXME: i think it's wasteful to load image at outset. it should be lazy loaded.
-	UIImage *image;
-
 	CellType type = kCellTypeNoCaption;
 	if (typepettytype)
 	{
@@ -61,15 +57,13 @@ static inline BOOL IsEmpty(id thing)
 		else if ([typestring isEqualToString:@"nocaption"])
 		{
 			type = kCellTypeNoCaption;
-			image = [UIImage imageNamed:imageName];
 		}
 		else if ([typestring isEqualToString:@"caption"])
 		{
 			type = kCellTypeCaption;
-			image = [UIImage imageNamed:imageName];
 		}
 	}
-	return [VLMPanelModel panelModelWithName:caption image:image type:type];
+	return [VLMPanelModel panelModelWithName:caption image:imageName type:type];
 }
 
 - (VLMPanelModels *)panelModelsFromNode:(NSMutableDictionary *)node
@@ -97,12 +91,6 @@ static inline BOOL IsEmpty(id thing)
 		CellType type = kCellTypeNoCaption;
 		id typepettytype = [node objectForKey:@"celltype"];
         
-        UIImage *image;
-        
-        if ([imagename length]>0) {
-            image = [UIImage imageNamed:imagename];
-        }
-        
 		if (typepettytype)
 		{
 			NSString *typestring = (NSString *)typepettytype;
@@ -124,7 +112,7 @@ static inline BOOL IsEmpty(id thing)
 			}
 		}
         //NSLog(@"panelmodels model :%@ :%@ :%@", caption, imagename, image?@"notnil":@"nil");
-		VLMPanelModel *model = [VLMPanelModel panelModelWithName:caption image:image type:type];
+		VLMPanelModel *model = [VLMPanelModel panelModelWithName:caption image:imagename type:type];
 		[models.models addObject:model];
 		[models setSourceNode:node];
 	}

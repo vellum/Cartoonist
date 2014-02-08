@@ -81,8 +81,12 @@
             //NSLog(@"not celltypewire");
 			UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, rect.size.height, rect.size.height)];
 			[imageview setContentMode:UIViewContentModeScaleAspectFill];
+            
 			[imageview setClipsToBounds:NO];
-			[imageview setImage:model.image];
+            if (model.image && [model.image length]>0) {
+                UIImage *img = [UIImage imageNamed:[model.image stringByAppendingString:@".png"]];
+                [imageview setImage:img];
+            }
 			[imageview setBackgroundColor:[UIColor colorWithWhite:0.9f alpha:1.0f]];
             [imageview setCenter:CGPointMake(rect.size.width/2.0f, rect.size.height/2.0f)];
             [croppie addSubview:imageview];

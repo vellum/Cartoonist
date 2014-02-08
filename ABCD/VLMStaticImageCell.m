@@ -5,12 +5,16 @@
 //  Created by David Lu on 1/9/14.
 //  Copyright (c) 2014 David Lu. All rights reserved.
 //
+#import <objc/runtime.h>
 
 #import "VLMStaticImageCell.h"
 #import "VLMNarrationCaption.h"
 #import "VLMCollectionViewLayoutAttributes.h"
 #import "VLMPanelModel.h"
 #import "VLMViewController.h"
+#import "VLMApplicationData.h"
+#import "UIImage+Resize.h"
+#import "UIImage+Alpha.h"
 
 @implementation VLMStaticImageCell
 
@@ -18,6 +22,8 @@
 {
     return @"VLMStaticImageCellID";
 }
+
+static char * const kPanelModelAssociationKey = "VLM_PanelModel";
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -31,6 +37,7 @@
         [self.imageview setContentMode:UIViewContentModeScaleAspectFill];
         [self.imageview setAutoresizingMask:UIViewAutoresizingNone];
         [self.imageview setOpaque:YES];
+        [self.imageview setBackgroundColor:[UIColor colorWithWhite:0.3f alpha:1.0f]];
         [self.base addSubview:self.imageview];
         [self.base setAutoresizingMask:UIViewAutoresizingNone];
         [self.contentView setAutoresizingMask:UIViewAutoresizingNone];
@@ -157,28 +164,76 @@
 	}
 	self.cellType = model.cellType;
     
+    
+    NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
+    NSString *imageFolder = [[resourcePath stringByAppendingPathComponent:@"Images"] copy];
+    NSString *fileName = [model.image stringByAppendingString:@".png"];
+    NSString *filePath = [imageFolder stringByAppendingPathComponent:fileName];
+    NSLog(@"%@", filePath);
+    
+    VLMApplicationData *appdata = [VLMApplicationData sharedInstance];
+    NSCache *cache = appdata.imageCache;
+    BOOL shouldApplyImage = NO;
 	switch (self.cellType)
 	{
 		case kCellTypeCaption :
 			self.caption.hidden = NO;
-			if (model.image)
-			{
-				[self.imageview setImage:model.image];
-			}
+            shouldApplyImage = YES;
 			break;
             
 		case kCellTypeNoCaption :
 			self.caption.hidden = YES;
 			self.imageview.hidden = NO;
-			if (model.image)
-			{
-				[self.imageview setImage:model.image];
-			}
+            shouldApplyImage = YES;
 			break;
 
 		default :
 			break;
 	}
+    
+    if (shouldApplyImage) {
+        if (model.image && [model.image length]>0)
+        {
+            // if exists in cache, add it
+            if ([cache objectForKey:model.image])
+            {
+                UIImage *img = (UIImage *)[cache objectForKey:model.image];
+                [self.imageview setImage:img];
+            }
+            else
+            {
+                [self.imageview setImage:nil];
+                dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
+                // Now, we can’t cancel a block once it begins, so we’ll use associated objects and compare
+                // index paths to see if we should continue once we have a resized image.
+                objc_setAssociatedObject(self,
+                                         kPanelModelAssociationKey,
+                                         model,
+                                         OBJC_ASSOCIATION_RETAIN);
+   
+                dispatch_async(queue, ^{
+                    UIImage *image = [UIImage imageWithContentsOfFile:filePath];
+                    CGFloat scale = [UIScreen mainScreen].scale;
+                    UIImage *resizedImage = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFill
+                                                                        bounds:CGSizeMake(self.base.frame.size.height*scale, self.base.frame.size.height*scale)
+                                                          interpolationQuality:kCGInterpolationHigh];
+
+                    
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        VLMPanelModel *requestingModel =
+                        (VLMPanelModel *)objc_getAssociatedObject(self, kPanelModelAssociationKey);
+                        
+                        if ([requestingModel.image isEqualToString:model.image]) {
+                            [self.imageview setImage:resizedImage];
+                        }
+                        [cache setObject:resizedImage forKey:requestingModel.image];
+
+                    });
+                });
+            }
+        }
+    }
 }
 
 @end
