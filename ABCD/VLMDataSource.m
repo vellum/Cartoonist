@@ -295,7 +295,7 @@
     return m.name;
 }
 
-- (UIImage *)imageAtIndex:(NSInteger)index
+- (NSString *)imageAtIndex:(NSInteger)index
 {
     if (![self isItemAtIndexImage:index]) {
         return nil;
@@ -303,8 +303,7 @@
     VLMPanelModel *model = (VLMPanelModel *)[self.items objectAtIndex:index];
     
     if (model.image && [model.image length]>0) {
-        UIImage *img = [UIImage imageNamed:[model.image stringByAppendingString:@".png"]];
-        return img;
+        return model.image;
     } else {
         return nil;
     }

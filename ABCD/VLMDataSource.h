@@ -20,5 +20,5 @@ typedef void (^CollectionViewCellConfigureBlock)(id cell, id item);
 - (BOOL)isItemAtIndexChoice:(NSInteger)index;
 - (BOOL)isItemAtIndexImage:(NSInteger)index;
 - (NSString *)labelAtIndex:(NSInteger)index;
-- (UIImage *)imageAtIndex:(NSInteger)index;
+- (NSString *)imageAtIndex:(NSInteger)index;
 @end

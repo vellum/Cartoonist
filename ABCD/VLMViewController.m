@@ -291,7 +291,7 @@ static UIDeviceOrientation theOrientation;
                     if (alpha>1) {
                         alpha=1;
                     }
-                    [self.zoomieImageView setImage:[self.dataSource imageAtIndex:page]];
+                    [self.zoomieImageView loadImageNamed:[self.dataSource imageAtIndex:page]];
                     [self.zoomieImageView showAlpha:alpha];
                     //s = 1 - alpha*(1-CHOICE_SCALE);
                     return;

@@ -21,6 +21,7 @@
 		BD7C1BF318A6CC9000565F20 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = BD7C1BF218A6CC9000565F20 /* UIImage+Resize.m */; };
 		BD7C1BF818A6CCF100565F20 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = BD7C1BF518A6CCF100565F20 /* UIImage+Alpha.m */; };
 		BD7C1BF918A6CCF100565F20 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = BD7C1BF718A6CCF100565F20 /* UIImage+RoundedCorner.m */; };
+		BD7C1BFC18A6E3D800565F20 /* VLMCachableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD7C1BFB18A6E3D800565F20 /* VLMCachableImageView.m */; };
 		BD8C6E01185969ED005FA217 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = BD8C6E00185969ED005FA217 /* data.json */; };
 		BD8FD83918401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */; };
 		BD8FD83C18402F5D00C8B9C6 /* VLMCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83B18402F5D00C8B9C6 /* VLMCaptureView.m */; };
@@ -76,6 +77,8 @@
 		BD7C1BF518A6CCF100565F20 /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
 		BD7C1BF618A6CCF100565F20 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
 		BD7C1BF718A6CCF100565F20 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
+		BD7C1BFA18A6E3D800565F20 /* VLMCachableImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCachableImageView.h; sourceTree = "<group>"; };
+		BD7C1BFB18A6E3D800565F20 /* VLMCachableImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCachableImageView.m; sourceTree = "<group>"; };
 		BD8C6E00185969ED005FA217 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		BD8FD83718401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCollectionViewCellWithChoices.h; sourceTree = "<group>"; };
 		BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCollectionViewCellWithChoices.m; sourceTree = "<group>"; };
@@ -192,6 +195,8 @@
 		BDD0AE04183D490500BF0CE6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BD7C1BFA18A6E3D800565F20 /* VLMCachableImageView.h */,
+				BD7C1BFB18A6E3D800565F20 /* VLMCachableImageView.m */,
 				BD8FD83718401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.h */,
 				BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */,
 				BD4F5C54187F38DD00BAD2AB /* CollectionViewCells */,
@@ -437,6 +442,7 @@
 				BD47DFD9185A71150048925D /* VLMParser.m in Sources */,
 				BDD899D0183C4C39002E089C /* VLMAppDelegate.m in Sources */,
 				BDD899CC183C4C39002E089C /* main.m in Sources */,
+				BD7C1BFC18A6E3D800565F20 /* VLMCachableImageView.m in Sources */,
 				BDD0AE03183D479900BF0CE6 /* VLMViewController.m in Sources */,
 				BDB3BB8E1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m in Sources */,
 				BDB3BB96184D484200F59AE1 /* VLMNarrationCaption.m in Sources */,

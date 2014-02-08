@@ -7,12 +7,13 @@
 //
 
 #import "VLMCollectionViewCell.h"
+@class VLMCachableImageView;
 
 @interface VLMStaticImageCell : VLMCollectionViewCell
 
 @property (nonatomic, strong) VLMNarrationCaption *caption;
 @property (nonatomic, strong) NSString *imagename;
-@property (nonatomic, strong) UIImageView *imageview;
+@property (nonatomic, strong) VLMCachableImageView *imageview;
 @property (nonatomic) CGPoint captionCenterPortrait;
 @property (nonatomic) CGPoint captionCenterLandscape;
 
