@@ -320,7 +320,7 @@ static UIDeviceOrientation theOrientation;
                 {
                     // unless we're zooming into an image
                     if ([self.dataSource isItemAtIndexImage:page]) {
-                        if (zoomAmount >= 1.1f) {
+                        if (zoomAmount >= 1.0f) {
                             [self.zoomieImageView show];
                             
                         } else {

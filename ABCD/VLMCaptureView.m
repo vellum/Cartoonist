@@ -45,6 +45,7 @@
 		UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
         [pinch requireGestureRecognizerToFail:self.topLevelPanGestureRecognizer];
 		[self addGestureRecognizer:pinch];
+        [pinch setDelegate:self];
 	}
 	return self;
 }
@@ -56,6 +57,19 @@
 	BOOL ended = NO;
 	switch (pgr.state)
 	{
+        case UIGestureRecognizerStateBegan:
+        [self.topLevelPanGestureRecognizer setEnabled:NO];
+        [self.topLevelPanGestureRecognizer setEnabled:YES];
+        if (self.verticalPanGestureRecognizer) {
+            [self.verticalPanGestureRecognizer setEnabled:NO];
+            [self.verticalPanGestureRecognizer setEnabled:YES];
+        }
+        if (self.horizontalPanGestureRecognizer) {
+            [self.horizontalPanGestureRecognizer setEnabled:NO];
+            [self.horizontalPanGestureRecognizer setEnabled:YES];
+        }
+        
+            break;
 		case UIGestureRecognizerStateEnded :
 		case UIGestureRecognizerStateCancelled :
 			ended = YES;
