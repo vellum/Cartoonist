@@ -11,9 +11,10 @@
 #import "VLMCollectionViewCell.h"
 #import "UIScrollView+BDDRScrollViewAdditions.h"
 #import "VLMViewController.h"
+#import "VLMCachableImageView.h"
 
 @interface VLMZoomableImageView ()
-@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) VLMCachableImageView *imageView;
 @property (nonatomic, strong) UIView *back;
 @property (nonatomic, strong) UIView *container;
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -42,7 +43,7 @@
         [self.container setBackgroundColor:[UIColor clearColor]];
         [self.container setAutoresizesSubviews:NO];
         
-        [self setImageView:[[UIImageView alloc] initWithFrame:CGRectZero]];
+        [self setImageView:[[VLMCachableImageView alloc] initWithFrame:CGRectZero]];
         [self.imageView setCenter:self.center];
         [self.imageView setAlpha:1.0f];
         [self.container addSubview:self.imageView];
@@ -150,7 +151,7 @@
 
 - (void)showAlpha:(CGFloat)alpha
 {
-    //[self setUserInteractionEnabled: NO];
+    [self setUserInteractionEnabled: NO];
     [self.scrollView setZoomScale: 1.0f];
     [self.back setAlpha:alpha*10.0f];
     [self.container setAlpha:alpha==0?0:1];
@@ -172,20 +173,18 @@
 
 
 
-- (void)setImage:(UIImage *)image
+- (void)loadImageNamed:(NSString *)imageName;
 {
-    if (![self.imageView.image isEqual:image]) {
-        [self.imageView setImage:image];
-        [self.imageView setFrame:CGRectMake(0, 0, self.frame.size.height, self.frame.size.height)];
-        [self.imageView setCenter:self.center];
-        
-        [self.scrollView setMinimumZoomScale:0.5f];
-        [self.scrollView setMaximumZoomScale:5.0f];
-        [self.scrollView setContentSize:self.imageView.frame.size];
-        [self.scrollView setBouncesZoom:YES];
-        [self.scrollView setDelegate:self];
-        [self.scrollView setBounces:YES];
-    }
+    [self.imageView setFrame:CGRectMake(0, 0, self.frame.size.height, self.frame.size.height)];
+    [self.imageView setCenter:self.center];
+    [self.imageView loadImageNamed:imageName];
+    
+    [self.scrollView setMinimumZoomScale:0.5f];
+    [self.scrollView setMaximumZoomScale:5.0f];
+    [self.scrollView setContentSize:self.imageView.frame.size];
+    [self.scrollView setBouncesZoom:YES];
+    [self.scrollView setDelegate:self];
+    [self.scrollView setBounces:YES];
     [self.scrollView setZoomScale:1.0f];
     
     CGAffineTransform t;

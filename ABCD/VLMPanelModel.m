@@ -10,11 +10,11 @@
 
 @implementation VLMPanelModel
 
-+ (instancetype)panelModelWithName:(NSString *)name image:(UIImage *)image{
++ (instancetype)panelModelWithName:(NSString *)name image:(NSString *)image{
     return [VLMPanelModel panelModelWithName:name image:image type:kCellTypeNoCaption];
 }
 
-+ (instancetype)panelModelWithName:(NSString *)name image:(UIImage *)image type:(CellType)type
++ (instancetype)panelModelWithName:(NSString *)name image:(NSString *)image type:(CellType)type
 {
 	VLMPanelModel *model = [[VLMPanelModel alloc] init];
 	model.index = -1000;

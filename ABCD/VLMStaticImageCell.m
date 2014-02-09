@@ -11,6 +11,8 @@
 #import "VLMCollectionViewLayoutAttributes.h"
 #import "VLMPanelModel.h"
 #import "VLMViewController.h"
+#import "VLMApplicationData.h"
+#import "VLMCachableImageView.h"
 
 @implementation VLMStaticImageCell
 
@@ -19,6 +21,8 @@
     return @"VLMStaticImageCellID";
 }
 
+static char * const kPanelModelAssociationKey = "VLM_PanelModel";
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -26,11 +30,12 @@
         // Initialization code
         
         CGFloat edge = self.base.frame.size.height;
-        [self setImageview:[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, edge, edge)]];
+        [self setImageview:[[VLMCachableImageView alloc] initWithFrame:CGRectMake(0, 0, edge, edge)]];
         [self.imageview setCenter:CGPointMake(self.base.frame.size.width/2.0f, self.base.frame.size.height/2.0f)];
         [self.imageview setContentMode:UIViewContentModeScaleAspectFill];
         [self.imageview setAutoresizingMask:UIViewAutoresizingNone];
         [self.imageview setOpaque:YES];
+        [self.imageview setBackgroundColor:[UIColor colorWithWhite:0.3f alpha:1.0f]];
         [self.base addSubview:self.imageview];
         [self.base setAutoresizingMask:UIViewAutoresizingNone];
         [self.contentView setAutoresizingMask:UIViewAutoresizingNone];
@@ -45,6 +50,14 @@
     }
     return self;
 }
+
+/*
+- (void)prepareForReuse
+{
+	[super prepareForReuse];
+    //[self.imageview prepareForReuse];
+}
+*/
 
 - (void)computeDimensions:(CGFloat)targetHeight
 {
@@ -99,7 +112,11 @@
 		default :
 			break;
 	}
-    
+    [self updateRotation];
+}
+
+- (void)updateRotation
+{
     CGAffineTransform t;
     if (UIDeviceOrientationIsPortrait([VLMViewController orientation]))
     {
@@ -120,13 +137,7 @@
         self.caption.transform = t;
     }
 
-    /*
-    [UIView animateWithDuration:ROT_DURATION delay:0.0f options:ROT_OPTIONS animations:^{
-    } completion:^(BOOL completed){}];
-     */
-
 }
-
 - (void)configureWithModel:(VLMPanelModel *)model
 {
 	[super configureWithModel:model];
@@ -146,10 +157,7 @@
         [paragraphStyle setAlignment:NSTextAlignmentCenter];
         [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [labelText length])];
         
-        
         NSDictionary *attributes = @{NSFontAttributeName: FONT_CAPTION, NSParagraphStyleAttributeName: paragraphStyle};
-       
-        
         CGRect rect = [labelText boundingRectWithSize:(CGSize){self.caption.bounds.size.width, CGFLOAT_MAX} options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:attributes context:nil];
         
         [self computeDimensions:rect.size.height + 18.0f*2.0f];
@@ -157,28 +165,31 @@
 	}
 	self.cellType = model.cellType;
     
+    BOOL shouldApplyImage = NO;
 	switch (self.cellType)
 	{
 		case kCellTypeCaption :
 			self.caption.hidden = NO;
-			if (model.image)
-			{
-				[self.imageview setImage:model.image];
-			}
+            shouldApplyImage = YES;
 			break;
             
 		case kCellTypeNoCaption :
 			self.caption.hidden = YES;
 			self.imageview.hidden = NO;
-			if (model.image)
-			{
-				[self.imageview setImage:model.image];
-			}
+            shouldApplyImage = YES;
 			break;
 
 		default :
 			break;
 	}
+    
+    if (shouldApplyImage) {
+        if (model.image && [model.image length]>0)
+        {
+            [self.imageview loadImageNamed:model.image];
+        }
+    }
+    [self updateRotation];
 }
 
 @end

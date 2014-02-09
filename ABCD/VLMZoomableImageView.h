@@ -16,7 +16,7 @@ typedef void (^ZoomOverlayHide)();
 - (void)hide;
 - (void)show;
 - (void)showAlpha:(CGFloat)alpha;
-- (void)setImage:(UIImage *)image;
+- (void)loadImageNamed:(NSString *)imageName;
 @property (nonatomic, copy) ZoomOverlayChanged zoomOverlayChanged;
 @property (nonatomic, copy) ZoomOverlayHide zoomOverlayHide;
 @end

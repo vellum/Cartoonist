@@ -20,13 +20,13 @@ typedef enum
 @interface VLMPanelModel : NSObject
 
 
-+ (instancetype)panelModelWithName:(NSString *)name image:(UIImage *)image;
++ (instancetype)panelModelWithName:(NSString *)name image:(NSString *)image;
 
-+ (instancetype)panelModelWithName:(NSString *)name image:(UIImage *)image type:(CellType)type;
++ (instancetype)panelModelWithName:(NSString *)name image:(NSString *)image type:(CellType)type;
 
 @property (nonatomic) NSInteger index;
 @property (nonatomic) CellType cellType;
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, copy) NSString *image;
 
 @end
