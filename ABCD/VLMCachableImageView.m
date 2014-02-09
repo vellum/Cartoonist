@@ -24,15 +24,17 @@ static char * const kCacheImageAssociationKey = "VLM_CacheImageName";
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor colorWithWhite:0.2f alpha:1.0f];
+        self.image = [UIImage imageNamed:@"placeholder-panel"];
     }
     return self;
 }
+
 - (void)prepareForReuse{
     self.image = nil;
 }
+
 - (void)loadImageNamed:(NSString*)fileName
 {
-    self.image = nil;
     VLMApplicationData *appdata = [VLMApplicationData sharedInstance];
     NSCache *cache = appdata.imageCache;
 
@@ -43,7 +45,7 @@ static char * const kCacheImageAssociationKey = "VLM_CacheImageName";
     }
     else
     {
-        
+        self.image = [UIImage imageNamed:@"placeholder-panel"];
         NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
         NSString *imageFolder = [[resourcePath stringByAppendingPathComponent:@"Images"] copy];
         NSString *fn = [fileName stringByAppendingString:@".png"];

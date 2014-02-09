@@ -50,11 +50,15 @@ static char * const kPanelModelAssociationKey = "VLM_PanelModel";
     }
     return self;
 }
+
+/*
 - (void)prepareForReuse
 {
 	[super prepareForReuse];
-    [self.imageview prepareForReuse];
+    //[self.imageview prepareForReuse];
 }
+*/
+
 - (void)computeDimensions:(CGFloat)targetHeight
 {
     CGFloat pad;
@@ -108,7 +112,11 @@ static char * const kPanelModelAssociationKey = "VLM_PanelModel";
 		default :
 			break;
 	}
-    
+    [self updateRotation];
+}
+
+- (void)updateRotation
+{
     CGAffineTransform t;
     if (UIDeviceOrientationIsPortrait([VLMViewController orientation]))
     {
@@ -129,13 +137,7 @@ static char * const kPanelModelAssociationKey = "VLM_PanelModel";
         self.caption.transform = t;
     }
 
-    /*
-    [UIView animateWithDuration:ROT_DURATION delay:0.0f options:ROT_OPTIONS animations:^{
-    } completion:^(BOOL completed){}];
-     */
-
 }
-
 - (void)configureWithModel:(VLMPanelModel *)model
 {
 	[super configureWithModel:model];
@@ -187,6 +189,7 @@ static char * const kPanelModelAssociationKey = "VLM_PanelModel";
             [self.imageview loadImageNamed:model.image];
         }
     }
+    [self updateRotation];
 }
 
 @end
