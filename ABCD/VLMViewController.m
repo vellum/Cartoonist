@@ -175,6 +175,7 @@ static UIDeviceOrientation theOrientation;
     ZoomOverlayHide zzzHide = ^()
     {
         [self.collectionView.layer setTransform:CATransform3DScale(CATransform3DIdentity, 1.0f, 1.0f, 1.0f)];
+        [self.capture setUserInteractionEnabled:YES];
     };
 
     [self setZoomieImageView:[[VLMZoomableImageView alloc] initWithFrame:self.capture.frame]];
@@ -322,6 +323,7 @@ static UIDeviceOrientation theOrientation;
                     if ([self.dataSource isItemAtIndexImage:page]) {
                         if (zoomAmount >= 1.0f) {
                             [self.zoomieImageView show];
+                            [self.capture setUserInteractionEnabled:NO];
                             
                         } else {
                             [self.zoomieImageView hide];

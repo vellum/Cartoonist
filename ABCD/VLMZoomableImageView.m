@@ -151,7 +151,7 @@
 
 - (void)showAlpha:(CGFloat)alpha
 {
-    //[self setUserInteractionEnabled: NO];
+    [self setUserInteractionEnabled: NO];
     [self.scrollView setZoomScale: 1.0f];
     [self.back setAlpha:alpha*10.0f];
     [self.container setAlpha:alpha==0?0:1];
