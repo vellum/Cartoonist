@@ -15,7 +15,7 @@
 #import "VLMPanelModel.h"
 #import "VLMPanelModels.h"
 #import "VLMParser.h"
-
+#import "VLMApplicationData.h"
 
 @interface VLMDataSource ()
 
@@ -214,7 +214,10 @@
 		VLMPanelModel *pm = (VLMPanelModel*)o;
         if (pm.cellType==kCellTypeCaption || pm.cellType==kCellTypeNoCaption)
         {
-            return YES;
+            if ([[VLMApplicationData sharedInstance].imageCache objectForKey:pm.image]) {
+                return YES;
+            }
+            return NO;
         }
 
 	}
