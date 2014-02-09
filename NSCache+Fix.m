@@ -30,7 +30,7 @@
 {
     if ((self = [self init_NSCF]))
     {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeAllObjects) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMemoryWarning) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     }
     return self;
 }
@@ -39,6 +39,12 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self dealloc_NSCF];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    NSLog(@"memory warning");
+    [self removeAllObjects];
 }
 
 @end
