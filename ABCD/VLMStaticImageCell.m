@@ -186,7 +186,16 @@ static char * const kPanelModelAssociationKey = "VLM_PanelModel";
     if (shouldApplyImage) {
         if (model.image && [model.image length]>0)
         {
-            [self.imageview loadImageNamed:model.image];
+            
+            // build a file path
+            NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
+            NSString *imageFolder = [[resourcePath stringByAppendingPathComponent:@"Images"] copy];
+            NSString *fileName = [model.image stringByAppendingString:@".png"];
+            NSString *filePath = [imageFolder stringByAppendingPathComponent:fileName];
+            NSURL *url = [NSURL fileURLWithPath:filePath];
+
+            [self.imageview setImageWithURL:url placeholderImage:[UIImage imageNamed:@"placeholder-panel"]];
+            //[self.imageview setImageWithURL:url placeholderImage:[UIImage imageNamed:@"placeholder-panel"] options:SDWebImageContinueInBackground|SDWebImageCacheMemoryOnly];
         }
     }
     [self updateRotation];

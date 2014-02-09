@@ -11,12 +11,12 @@
 @implementation VLMApplicationData
 
 + (VLMApplicationData *) sharedInstance {
-    static dispatch_once_t once;
-    static VLMApplicationData *instance;
-    dispatch_once(&once, ^{
-        instance = [[VLMApplicationData alloc] init];
+    static dispatch_once_t onceToken;
+    static VLMApplicationData *sharedInstance = nil;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[VLMApplicationData alloc] init];
     });
-    return instance;
+    return sharedInstance;
 }
 
 - (VLMApplicationData *) init
@@ -24,7 +24,7 @@
     self = [super init];
 	if (self)
 	{
-		self.imageCache = [[NSCache alloc] init];
+		[self setImageCache:[[NSCache alloc] init]];
         [self.imageCache setName:@"VLMImageCache"];
 	}
 	return self;

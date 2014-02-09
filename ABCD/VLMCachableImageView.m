@@ -11,14 +11,15 @@
 #import "VLMApplicationData.h"
 #import "UIImage+Resize.h"
 #import "UIImage+Alpha.h"
+#import "VLMDataSource.h"
 
-@interface VLMCachableImageView()
-@end
-
+// constant key for thread-safe objc_set/get
 static char * const kCacheImageAssociationKey = "VLM_CacheImageName";
+static char * const kCacheIndexAssociationKey = "VLM_CacheIndexPath";
 
 @implementation VLMCachableImageView
 
+// populate with placeholder by default
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -29,38 +30,47 @@ static char * const kCacheImageAssociationKey = "VLM_CacheImageName";
     return self;
 }
 
-- (void)prepareForReuse{
-    self.image = nil;
-}
-
-- (void)loadImageNamed:(NSString*)fileName
+- (void)loadImageNamed:(NSString*)imageName
 {
     VLMApplicationData *appdata = [VLMApplicationData sharedInstance];
     NSCache *cache = appdata.imageCache;
 
-    if ([cache objectForKey:fileName])
+    if ([cache objectForKey:imageName])
     {
-        UIImage *img = (UIImage *)[cache objectForKey:fileName];
-        [self setImage:img];
+        // image has been cached, so populate the imageview
+        UIImage *image = (UIImage *)[cache objectForKey:imageName];
+        [self setImage:image];
     }
     else
     {
-        self.image = [UIImage imageNamed:@"placeholder-panel"];
+        // image hasn't been cached, so populate with placeholder
+        [self setImage:[UIImage imageNamed:@"placeholder-panel"]];
+
+        // build a file path
         NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
         NSString *imageFolder = [[resourcePath stringByAppendingPathComponent:@"Images"] copy];
-        NSString *fn = [fileName stringByAppendingString:@".png"];
-        NSString *filePath = [imageFolder stringByAppendingPathComponent:fn];
+        NSString *fileName = [imageName stringByAppendingString:@".png"];
+        NSString *filePath = [imageFolder stringByAppendingPathComponent:fileName];
 
+        // get ready to load image in background
         dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
-        // Now, we can’t cancel a block once it begins, so we’ll use associated objects and compare
-        // index paths to see if we should continue once we have a resized image.
+
+        // use associated objects and compare imagenames to see if we should continue once we have a resized image.
         objc_setAssociatedObject(self,
                                  kCacheImageAssociationKey,
-                                 fileName,
-                                 OBJC_ASSOCIATION_RETAIN);
+                                 imageName,
+                                 OBJC_ASSOCIATION_COPY_NONATOMIC);
         
+        //
         dispatch_async(queue, ^{
             UIImage *image = [UIImage imageWithContentsOfFile:filePath];
+            if (!image) {
+                objc_setAssociatedObject(self,
+                                         kCacheImageAssociationKey,
+                                         nil,
+                                         OBJC_ASSOCIATION_COPY_NONATOMIC);
+                return;
+            }
             CGFloat scale = [UIScreen mainScreen].scale;
             UIImage *resizedImage = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFill
                                                                 bounds:CGSizeMake(self.frame.size.height*scale, self.frame.size.height*scale)
@@ -68,13 +78,21 @@ static char * const kCacheImageAssociationKey = "VLM_CacheImageName";
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSString *requestedImageName =
-                (NSString *)objc_getAssociatedObject(self, kCacheImageAssociationKey);
+                    (NSString *)objc_getAssociatedObject(self, kCacheImageAssociationKey);
                 
-                if ([requestedImageName isEqualToString:fileName]) {
-                    [self setImage:resizedImage];
+                if (requestedImageName) {
+                    if ([requestedImageName isEqualToString:imageName]) {
+                        [self setImage:resizedImage];
+                    }
+                    [cache setObject:resizedImage forKey:requestedImageName];
                 }
-                [cache setObject:resizedImage forKey:requestedImageName];
                 
+                objc_setAssociatedObject(self,
+                                         kCacheImageAssociationKey,
+                                         nil,
+                                         OBJC_ASSOCIATION_COPY_NONATOMIC);
+                
+
             });
         });
     }

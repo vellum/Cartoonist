@@ -8,18 +8,30 @@
 
 #import "VLMAppDelegate.h"
 #import "VLMViewController.h"
+#import "SDImageCache.h"
+#import "SDWebImageManager.h"
+#import "UIImage+Resize.h"
+#import "UIImage+Alpha.h"
+
 //#define PRINT_AVAILABLE_FONT_NAMES 1
 
 @implementation VLMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //Add a custom read-only cache path
+    NSString *bundledPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"];
+    [[SDImageCache sharedImageCache] addReadOnlyCachePath:bundledPath];
+    
+    [[SDWebImageManager sharedManager] setDelegate:self];
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor blackColor];
 
     self.viewController = [[VLMViewController alloc] init];
     self.window.rootViewController = self.viewController;
     
-    self.window.backgroundColor = [UIColor blackColor];
     [self.window makeKeyAndVisible];
     
 #ifdef PRINT_AVAILABLE_FONT_NAMES
@@ -31,7 +43,24 @@
         }
     }
 #endif
+    
     return YES;
+}
+
+- (BOOL)imageManager:(SDWebImageManager *)imageManager shouldDownloadImageForURL:(NSURL *)imageURL
+{
+    return YES;
+}
+
+- (UIImage *)imageManager:(SDWebImageManager *)imageManager transformDownloadedImage:(UIImage *)image withURL:(NSURL *)imageURL
+{
+    CGSize itemSize = kItemSize;
+    CGFloat scale = [UIScreen mainScreen].scale;
+    UIImage *resizedImage = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFill
+                                                        bounds:CGSizeMake(itemSize.height*scale, itemSize.height*scale)
+                                          interpolationQuality:kCGInterpolationHigh];
+    return resizedImage;
+
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

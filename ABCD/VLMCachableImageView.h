@@ -9,6 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface VLMCachableImageView : UIImageView
-- (void)loadImageNamed:(NSString*)fileName;
-- (void)prepareForReuse;
+- (void)loadImageNamed:(NSString*)imageName;
 @end

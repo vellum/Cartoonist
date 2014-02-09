@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SDWebImageManager.h"
 @class VLMViewController;
 
-@interface VLMAppDelegate : UIResponder <UIApplicationDelegate>
+@interface VLMAppDelegate : UIResponder <UIApplicationDelegate, SDWebImageManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) VLMViewController *viewController;

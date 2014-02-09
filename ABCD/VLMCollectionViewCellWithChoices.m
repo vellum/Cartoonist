@@ -11,7 +11,7 @@
 #import "VLMPanelModels.h"
 #import "VLMPanelModel.h"
 #import "VLMViewController.h"
-#import "VLMCachableImageView.h"
+#import "UIImageView+WebCache.h"
 
 @interface VLMCollectionViewCellWithChoices ()
 @property (nonatomic, strong) NSMutableArray *subviews;
@@ -80,14 +80,21 @@
             [croppie setUserInteractionEnabled:NO];
             
             //NSLog(@"not celltypewire");
-			VLMCachableImageView *imageview = [[VLMCachableImageView alloc] initWithFrame:CGRectMake(0, 0, rect.size.height, rect.size.height)];
+			UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, rect.size.height, rect.size.height)];
 			[imageview setContentMode:UIViewContentModeScaleAspectFill];
             
 			[imageview setClipsToBounds:NO];
             if (model.image && [model.image length]>0) {
-                //UIImage *img = [UIImage imageNamed:[model.image stringByAppendingString:@".png"]];
-                //[imageview setImage:img];
-                [imageview loadImageNamed:model.image];
+
+                // build a file path
+                NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
+                NSString *imageFolder = [[resourcePath stringByAppendingPathComponent:@"Images"] copy];
+                NSString *fileName = [model.image stringByAppendingString:@".png"];
+                NSString *filePath = [imageFolder stringByAppendingPathComponent:fileName];
+                NSURL *url = [NSURL fileURLWithPath:filePath];
+
+                [imageview setImageWithURL:url placeholderImage:[UIImage imageNamed:@"placeholder-panel"]];
+            
             }
 			[imageview setBackgroundColor:[UIColor colorWithWhite:0.9f alpha:1.0f]];
             [imageview setCenter:CGPointMake(rect.size.width/2.0f, rect.size.height/2.0f)];
