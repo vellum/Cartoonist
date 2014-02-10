@@ -11,8 +11,9 @@
 #import "VLMCollectionViewLayoutAttributes.h"
 #import "VLMPanelModel.h"
 #import "VLMViewController.h"
-#import "VLMApplicationData.h"
-#import "VLMCachableImageView.h"
+#import "VLMUtility.h"
+#import "UIImage+Alpha.h"
+#import "UIImage+Resize.h"
 
 @implementation VLMStaticImageCell
 
@@ -30,7 +31,7 @@ static char * const kPanelModelAssociationKey = "VLM_PanelModel";
         // Initialization code
         
         CGFloat edge = self.base.frame.size.height;
-        [self setImageview:[[VLMCachableImageView alloc] initWithFrame:CGRectMake(0, 0, edge, edge)]];
+        [self setImageview:[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, edge, edge)]];
         [self.imageview setCenter:CGPointMake(self.base.frame.size.width/2.0f, self.base.frame.size.height/2.0f)];
         [self.imageview setContentMode:UIViewContentModeScaleAspectFill];
         [self.imageview setAutoresizingMask:UIViewAutoresizingNone];
@@ -186,16 +187,9 @@ static char * const kPanelModelAssociationKey = "VLM_PanelModel";
     if (shouldApplyImage) {
         if (model.image && [model.image length]>0)
         {
-            
-            // build a file path
-            NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
-            NSString *imageFolder = [[resourcePath stringByAppendingPathComponent:@"Images"] copy];
-            NSString *fileName = [model.image stringByAppendingString:@".png"];
-            NSString *filePath = [imageFolder stringByAppendingPathComponent:fileName];
-            NSURL *url = [NSURL fileURLWithPath:filePath];
-
-            [self.imageview setImageWithURL:url placeholderImage:[UIImage imageNamed:@"placeholder-panel"]];
-            //[self.imageview setImageWithURL:url placeholderImage:[UIImage imageNamed:@"placeholder-panel"] options:SDWebImageContinueInBackground|SDWebImageCacheMemoryOnly];
+            NSURL *url = [VLMUtility URLForImageNamed:model.image];
+            UIImage *placeholder = [VLMUtility placeholderForImageNamed:model.image];
+            [self.imageview setImageWithURL:url placeholderImage:placeholder];
         }
     }
     [self updateRotation];

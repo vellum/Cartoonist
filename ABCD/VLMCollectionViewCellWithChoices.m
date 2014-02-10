@@ -12,6 +12,7 @@
 #import "VLMPanelModel.h"
 #import "VLMViewController.h"
 #import "UIImageView+WebCache.h"
+#import "VLMUtility.h"
 
 @interface VLMCollectionViewCellWithChoices ()
 @property (nonatomic, strong) NSMutableArray *subviews;
@@ -86,17 +87,11 @@
 			[imageview setClipsToBounds:NO];
             if (model.image && [model.image length]>0) {
 
-                // build a file path
-                NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
-                NSString *imageFolder = [[resourcePath stringByAppendingPathComponent:@"Images"] copy];
-                NSString *fileName = [model.image stringByAppendingString:@".png"];
-                NSString *filePath = [imageFolder stringByAppendingPathComponent:fileName];
-                NSURL *url = [NSURL fileURLWithPath:filePath];
-
-                [imageview setImageWithURL:url placeholderImage:[UIImage imageNamed:@"placeholder-panel"]];
+                NSURL *url = [VLMUtility URLForImageNamed:model.image];
+                UIImage *placeholder = [VLMUtility placeholderForImageNamed:model.image];
+                [imageview setImageWithURL:url placeholderImage:placeholder];
             
             }
-			[imageview setBackgroundColor:[UIColor colorWithWhite:0.9f alpha:1.0f]];
             [imageview setCenter:CGPointMake(rect.size.width/2.0f, rect.size.height/2.0f)];
             [croppie addSubview:imageview];
             

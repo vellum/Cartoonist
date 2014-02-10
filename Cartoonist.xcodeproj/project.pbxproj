@@ -8,10 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		BD0213B1187BB63800E113DA /* VLMSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = BD0213B0187BB63800E113DA /* VLMSpinner.m */; };
-		BD1DCBF818A8451E00DD81E6 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCBE918A8451E00DD81E6 /* UIImage+Alpha.m */; };
-		BD1DCBF918A8451E00DD81E6 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCBEB18A8451E00DD81E6 /* UIImage+Resize.m */; };
-		BD1DCBFA18A8451E00DD81E6 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCBED18A8451E00DD81E6 /* UIImage+RoundedCorner.m */; };
-		BD1DCBFB18A8451E00DD81E6 /* UIImage+Scaling.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCBEF18A8451E00DD81E6 /* UIImage+Scaling.m */; };
 		BD1DCC1A18A845BA00DD81E6 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCBFE18A845BA00DD81E6 /* MKAnnotationView+WebCache.m */; };
 		BD1DCC1B18A845BA00DD81E6 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCC0018A845BA00DD81E6 /* NSData+ImageContentType.m */; };
 		BD1DCC1C18A845BA00DD81E6 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCC0218A845BA00DD81E6 /* SDImageCache.m */; };
@@ -30,19 +26,23 @@
 		BD1DCC3118A8475500DD81E6 /* BDDROneFingerZoomGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCC2C18A8475500DD81E6 /* BDDROneFingerZoomGestureRecognizer.m */; };
 		BD1DCC3218A8475500DD81E6 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCC2E18A8475500DD81E6 /* JRSwizzle.m */; };
 		BD1DCC3318A8475500DD81E6 /* UIScrollView+BDDRScrollViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCC3018A8475500DD81E6 /* UIScrollView+BDDRScrollViewAdditions.m */; };
+		BD1DCC3F18A8647C00DD81E6 /* VLMUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCC3E18A8647C00DD81E6 /* VLMUtility.m */; };
+		BD1DCC4818A87C2400DD81E6 /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCC4118A87C2400DD81E6 /* UIImage+Alpha.m */; };
+		BD1DCC4918A87C2400DD81E6 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCC4318A87C2400DD81E6 /* UIImage+Resize.m */; };
+		BD1DCC4A18A87C2400DD81E6 /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCC4518A87C2400DD81E6 /* UIImage+RoundedCorner.m */; };
+		BD1DCC4B18A87C2400DD81E6 /* UIImage+Scaling.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCC4718A87C2400DD81E6 /* UIImage+Scaling.m */; };
+		BD1DCC4D18A87EB900DD81E6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD1DCC4C18A87EB900DD81E6 /* Images.xcassets */; };
 		BD47DFD9185A71150048925D /* VLMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BD47DFD8185A71150048925D /* VLMParser.m */; };
 		BD4F5C49187D0C9400BAD2AB /* Draftsman.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD4F5C47187D0C9400BAD2AB /* Draftsman.ttf */; };
 		BD4F5C4A187D0C9400BAD2AB /* ARCHITEC.TTF in Resources */ = {isa = PBXBuildFile; fileRef = BD4F5C48187D0C9400BAD2AB /* ARCHITEC.TTF */; };
 		BD4F5C4D187D488C00BAD2AB /* VLMAnimButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5C4C187D488C00BAD2AB /* VLMAnimButton.m */; };
 		BD4F5C53187F38D300BAD2AB /* VLMWireframeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5C52187F38D300BAD2AB /* VLMWireframeCell.m */; };
 		BD4F5C57187F391B00BAD2AB /* VLMStaticImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5C56187F391B00BAD2AB /* VLMStaticImageCell.m */; };
-		BD7C1BFC18A6E3D800565F20 /* VLMCachableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD7C1BFB18A6E3D800565F20 /* VLMCachableImageView.m */; };
 		BD8C6E01185969ED005FA217 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = BD8C6E00185969ED005FA217 /* data.json */; };
 		BD8FD83918401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */; };
 		BD8FD83C18402F5D00C8B9C6 /* VLMCaptureView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83B18402F5D00C8B9C6 /* VLMCaptureView.m */; };
 		BD8FD83F1840877C00C8B9C6 /* VLMGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83E1840877C00C8B9C6 /* VLMGradient.m */; };
 		BD9139DE18A5E42B0081E37C /* Images in Resources */ = {isa = PBXBuildFile; fileRef = BD9139DC18A5DA6C0081E37C /* Images */; };
-		BD9139E118A5F2940081E37C /* VLMApplicationData.m in Sources */ = {isa = PBXBuildFile; fileRef = BD9139E018A5F2940081E37C /* VLMApplicationData.m */; };
 		BD9B2BA918A0BF9B00756943 /* VLMZoomableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD9B2BA818A0BF9B00756943 /* VLMZoomableImageView.m */; };
 		BDA1F987184E69F500C4AC57 /* VLMPanelModels.m in Sources */ = {isa = PBXBuildFile; fileRef = BDA1F986184E69F500C4AC57 /* VLMPanelModels.m */; };
 		BDB3BB8E1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB3BB8D1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m */; };
@@ -59,7 +59,6 @@
 		BDD899CA183C4C39002E089C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BDD899C8183C4C39002E089C /* InfoPlist.strings */; };
 		BDD899CC183C4C39002E089C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD899CB183C4C39002E089C /* main.m */; };
 		BDD899D0183C4C39002E089C /* VLMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BDD899CF183C4C39002E089C /* VLMAppDelegate.m */; };
-		BDD899D2183C4C39002E089C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDD899D1183C4C39002E089C /* Images.xcassets */; };
 		C67DEC8A67C1421CA3419DFD /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4987A15EBCA94D2E935D6AC9 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -67,14 +66,6 @@
 		4987A15EBCA94D2E935D6AC9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD0213AF187BB63800E113DA /* VLMSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMSpinner.h; sourceTree = "<group>"; };
 		BD0213B0187BB63800E113DA /* VLMSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMSpinner.m; sourceTree = "<group>"; };
-		BD1DCBE818A8451E00DD81E6 /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
-		BD1DCBE918A8451E00DD81E6 /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
-		BD1DCBEA18A8451E00DD81E6 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
-		BD1DCBEB18A8451E00DD81E6 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		BD1DCBEC18A8451E00DD81E6 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
-		BD1DCBED18A8451E00DD81E6 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
-		BD1DCBEE18A8451E00DD81E6 /* UIImage+Scaling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Scaling.h"; sourceTree = "<group>"; };
-		BD1DCBEF18A8451E00DD81E6 /* UIImage+Scaling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Scaling.m"; sourceTree = "<group>"; };
 		BD1DCBFD18A845BA00DD81E6 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		BD1DCBFE18A845BA00DD81E6 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		BD1DCBFF18A845BA00DD81E6 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -112,6 +103,17 @@
 		BD1DCC2E18A8475500DD81E6 /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRSwizzle.m; path = Libraries/BDDRScrollView/JRSwizzle.m; sourceTree = "<group>"; };
 		BD1DCC2F18A8475500DD81E6 /* UIScrollView+BDDRScrollViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+BDDRScrollViewAdditions.h"; path = "Libraries/BDDRScrollView/UIScrollView+BDDRScrollViewAdditions.h"; sourceTree = "<group>"; };
 		BD1DCC3018A8475500DD81E6 /* UIScrollView+BDDRScrollViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+BDDRScrollViewAdditions.m"; path = "Libraries/BDDRScrollView/UIScrollView+BDDRScrollViewAdditions.m"; sourceTree = "<group>"; };
+		BD1DCC3D18A8647C00DD81E6 /* VLMUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMUtility.h; sourceTree = "<group>"; };
+		BD1DCC3E18A8647C00DD81E6 /* VLMUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMUtility.m; sourceTree = "<group>"; };
+		BD1DCC4018A87C2400DD81E6 /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
+		BD1DCC4118A87C2400DD81E6 /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
+		BD1DCC4218A87C2400DD81E6 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
+		BD1DCC4318A87C2400DD81E6 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
+		BD1DCC4418A87C2400DD81E6 /* UIImage+RoundedCorner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+RoundedCorner.h"; sourceTree = "<group>"; };
+		BD1DCC4518A87C2400DD81E6 /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
+		BD1DCC4618A87C2400DD81E6 /* UIImage+Scaling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Scaling.h"; sourceTree = "<group>"; };
+		BD1DCC4718A87C2400DD81E6 /* UIImage+Scaling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Scaling.m"; sourceTree = "<group>"; };
+		BD1DCC4C18A87EB900DD81E6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		BD3451C0186623B800D6B6A4 /* VLMConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMConstants.h; sourceTree = "<group>"; };
 		BD47DFD7185A71150048925D /* VLMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMParser.h; sourceTree = "<group>"; };
 		BD47DFD8185A71150048925D /* VLMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMParser.m; sourceTree = "<group>"; };
@@ -123,8 +125,6 @@
 		BD4F5C52187F38D300BAD2AB /* VLMWireframeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMWireframeCell.m; sourceTree = "<group>"; };
 		BD4F5C55187F391B00BAD2AB /* VLMStaticImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMStaticImageCell.h; sourceTree = "<group>"; };
 		BD4F5C56187F391B00BAD2AB /* VLMStaticImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMStaticImageCell.m; sourceTree = "<group>"; };
-		BD7C1BFA18A6E3D800565F20 /* VLMCachableImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCachableImageView.h; sourceTree = "<group>"; };
-		BD7C1BFB18A6E3D800565F20 /* VLMCachableImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCachableImageView.m; sourceTree = "<group>"; };
 		BD8C6E00185969ED005FA217 /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		BD8FD83718401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCollectionViewCellWithChoices.h; sourceTree = "<group>"; };
 		BD8FD83818401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMCollectionViewCellWithChoices.m; sourceTree = "<group>"; };
@@ -133,8 +133,6 @@
 		BD8FD83D1840877C00C8B9C6 /* VLMGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMGradient.h; sourceTree = "<group>"; };
 		BD8FD83E1840877C00C8B9C6 /* VLMGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMGradient.m; sourceTree = "<group>"; };
 		BD9139DC18A5DA6C0081E37C /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
-		BD9139DF18A5F2940081E37C /* VLMApplicationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMApplicationData.h; sourceTree = "<group>"; };
-		BD9139E018A5F2940081E37C /* VLMApplicationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMApplicationData.m; sourceTree = "<group>"; };
 		BD9B2BA718A0BF9B00756943 /* VLMZoomableImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMZoomableImageView.h; sourceTree = "<group>"; };
 		BD9B2BA818A0BF9B00756943 /* VLMZoomableImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMZoomableImageView.m; sourceTree = "<group>"; };
 		BDA1F985184E69F500C4AC57 /* VLMPanelModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMPanelModels.h; sourceTree = "<group>"; };
@@ -164,7 +162,6 @@
 		BDD899CD183C4C39002E089C /* Cartoonist-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Cartoonist-Prefix.pch"; sourceTree = "<group>"; };
 		BDD899CE183C4C39002E089C /* VLMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VLMAppDelegate.h; sourceTree = "<group>"; };
 		BDD899CF183C4C39002E089C /* VLMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VLMAppDelegate.m; sourceTree = "<group>"; };
-		BDD899D1183C4C39002E089C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		BDD899D8183C4C39002E089C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		BDFFD876184005D400B1A024 /* Cartoonist-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Cartoonist-Info.plist"; sourceTree = "<group>"; };
 		D42BBAE8274241A9B97AD6EE /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
@@ -199,14 +196,14 @@
 		BD1DCBE718A8451E00DD81E6 /* UIImage+Resize */ = {
 			isa = PBXGroup;
 			children = (
-				BD1DCBE818A8451E00DD81E6 /* UIImage+Alpha.h */,
-				BD1DCBE918A8451E00DD81E6 /* UIImage+Alpha.m */,
-				BD1DCBEA18A8451E00DD81E6 /* UIImage+Resize.h */,
-				BD1DCBEB18A8451E00DD81E6 /* UIImage+Resize.m */,
-				BD1DCBEC18A8451E00DD81E6 /* UIImage+RoundedCorner.h */,
-				BD1DCBED18A8451E00DD81E6 /* UIImage+RoundedCorner.m */,
-				BD1DCBEE18A8451E00DD81E6 /* UIImage+Scaling.h */,
-				BD1DCBEF18A8451E00DD81E6 /* UIImage+Scaling.m */,
+				BD1DCC4018A87C2400DD81E6 /* UIImage+Alpha.h */,
+				BD1DCC4118A87C2400DD81E6 /* UIImage+Alpha.m */,
+				BD1DCC4218A87C2400DD81E6 /* UIImage+Resize.h */,
+				BD1DCC4318A87C2400DD81E6 /* UIImage+Resize.m */,
+				BD1DCC4418A87C2400DD81E6 /* UIImage+RoundedCorner.h */,
+				BD1DCC4518A87C2400DD81E6 /* UIImage+RoundedCorner.m */,
+				BD1DCC4618A87C2400DD81E6 /* UIImage+Scaling.h */,
+				BD1DCC4718A87C2400DD81E6 /* UIImage+Scaling.m */,
 			);
 			path = "UIImage+Resize";
 			sourceTree = "<group>";
@@ -298,10 +295,8 @@
 		BD7C1C0218A6FA7100565F20 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				BD9139DF18A5F2940081E37C /* VLMApplicationData.h */,
-				BD9139E018A5F2940081E37C /* VLMApplicationData.m */,
-				BD7C1BFA18A6E3D800565F20 /* VLMCachableImageView.h */,
-				BD7C1BFB18A6E3D800565F20 /* VLMCachableImageView.m */,
+				BD1DCC3D18A8647C00DD81E6 /* VLMUtility.h */,
+				BD1DCC3E18A8647C00DD81E6 /* VLMUtility.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -382,6 +377,7 @@
 		BDD899B3183C4C39002E089C = {
 			isa = PBXGroup;
 			children = (
+				BD1DCC4C18A87EB900DD81E6 /* Images.xcassets */,
 				BD1DCBD118A8451E00DD81E6 /* Libraries */,
 				BD4F5C42187D0BE900BAD2AB /* Fonts */,
 				BDD899C5183C4C39002E089C /* Cartoonist */,
@@ -425,7 +421,6 @@
 				BDD0AE00183D437700BF0CE6 /* Controller */,
 				BDD0AE0F183EBF4200BF0CE6 /* Layout */,
 				BDD0AE04183D490500BF0CE6 /* View */,
-				BDD899D1183C4C39002E089C /* Images.xcassets */,
 				BDD899C6183C4C39002E089C /* Supporting Files */,
 			);
 			name = Cartoonist;
@@ -505,9 +500,9 @@
 				BD9139DE18A5E42B0081E37C /* Images in Resources */,
 				BDD899CA183C4C39002E089C /* InfoPlist.strings in Resources */,
 				BD4F5C49187D0C9400BAD2AB /* Draftsman.ttf in Resources */,
+				BD1DCC4D18A87EB900DD81E6 /* Images.xcassets in Resources */,
 				BD4F5C4A187D0C9400BAD2AB /* ARCHITEC.TTF in Resources */,
 				BD8C6E01185969ED005FA217 /* data.json in Resources */,
-				BDD899D2183C4C39002E089C /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -550,47 +545,46 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDA1F987184E69F500C4AC57 /* VLMPanelModels.m in Sources */,
-				BD1DCBFA18A8451E00DD81E6 /* UIImage+RoundedCorner.m in Sources */,
 				BD1DCC2218A845BA00DD81E6 /* SDWebImagePrefetcher.m in Sources */,
 				BD1DCC2A18A8470A00DD81E6 /* NSCache+Fix.m in Sources */,
 				BD1DCC2018A845BA00DD81E6 /* SDWebImageDownloaderOperation.m in Sources */,
-				BD1DCBF918A8451E00DD81E6 /* UIImage+Resize.m in Sources */,
 				BDD0AE12183EBFB100BF0CE6 /* VLMSinglePanelFlowLayout.m in Sources */,
 				BD8FD83F1840877C00C8B9C6 /* VLMGradient.m in Sources */,
 				BD1DCC2618A845BA00DD81E6 /* UIImage+WebP.m in Sources */,
 				BD1DCC1E18A845BA00DD81E6 /* SDWebImageDecoder.m in Sources */,
 				BD1DCC3218A8475500DD81E6 /* JRSwizzle.m in Sources */,
 				BD1DCC2518A845BA00DD81E6 /* UIImage+MultiFormat.m in Sources */,
+				BD1DCC4B18A87C2400DD81E6 /* UIImage+Scaling.m in Sources */,
 				BD1DCC1C18A845BA00DD81E6 /* SDImageCache.m in Sources */,
 				BD4F5C4D187D488C00BAD2AB /* VLMAnimButton.m in Sources */,
-				BD1DCBFB18A8451E00DD81E6 /* UIImage+Scaling.m in Sources */,
 				BD8FD83C18402F5D00C8B9C6 /* VLMCaptureView.m in Sources */,
 				BD1DCC1D18A845BA00DD81E6 /* SDWebImageCompat.m in Sources */,
 				BD4F5C57187F391B00BAD2AB /* VLMStaticImageCell.m in Sources */,
 				BD1DCC2418A845BA00DD81E6 /* UIImage+GIF.m in Sources */,
+				BD1DCC4A18A87C2400DD81E6 /* UIImage+RoundedCorner.m in Sources */,
 				BD1DCC2118A845BA00DD81E6 /* SDWebImageManager.m in Sources */,
 				BD8FD83918401B9700C8B9C6 /* VLMCollectionViewCellWithChoices.m in Sources */,
 				BD1DCC3318A8475500DD81E6 /* UIScrollView+BDDRScrollViewAdditions.m in Sources */,
 				BD0213B1187BB63800E113DA /* VLMSpinner.m in Sources */,
 				BD1DCC2718A845BA00DD81E6 /* UIImageView+WebCache.m in Sources */,
+				BD1DCC3F18A8647C00DD81E6 /* VLMUtility.m in Sources */,
 				BDB942531879D8E20010E350 /* VLMPaddedLabel.m in Sources */,
 				BDB3BB921849B6C600F59AE1 /* VLMDataSource.m in Sources */,
 				BD9B2BA918A0BF9B00756943 /* VLMZoomableImageView.m in Sources */,
 				BDD0AE0B183D51E800BF0CE6 /* VLMPanelModel.m in Sources */,
-				BD1DCBF818A8451E00DD81E6 /* UIImage+Alpha.m in Sources */,
+				BD1DCC4918A87C2400DD81E6 /* UIImage+Resize.m in Sources */,
 				BDD0AE08183D4A0200BF0CE6 /* VLMCollectionViewCell.m in Sources */,
 				BD47DFD9185A71150048925D /* VLMParser.m in Sources */,
+				BD1DCC4818A87C2400DD81E6 /* UIImage+Alpha.m in Sources */,
 				BD1DCC1A18A845BA00DD81E6 /* MKAnnotationView+WebCache.m in Sources */,
 				BDD899D0183C4C39002E089C /* VLMAppDelegate.m in Sources */,
 				BDD899CC183C4C39002E089C /* main.m in Sources */,
-				BD7C1BFC18A6E3D800565F20 /* VLMCachableImageView.m in Sources */,
 				BD1DCC1F18A845BA00DD81E6 /* SDWebImageDownloader.m in Sources */,
 				BDD0AE03183D479900BF0CE6 /* VLMViewController.m in Sources */,
 				BD1DCC1B18A845BA00DD81E6 /* NSData+ImageContentType.m in Sources */,
 				BDB3BB8E1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m in Sources */,
 				BDB3BB96184D484200F59AE1 /* VLMNarrationCaption.m in Sources */,
 				BD1DCC3118A8475500DD81E6 /* BDDROneFingerZoomGestureRecognizer.m in Sources */,
-				BD9139E118A5F2940081E37C /* VLMApplicationData.m in Sources */,
 				BD1DCC2318A845BA00DD81E6 /* UIButton+WebCache.m in Sources */,
 				BD4F5C53187F38D300BAD2AB /* VLMWireframeCell.m in Sources */,
 			);

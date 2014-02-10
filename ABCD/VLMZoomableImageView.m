@@ -11,10 +11,11 @@
 #import "VLMCollectionViewCell.h"
 #import "UIScrollView+BDDRScrollViewAdditions.h"
 #import "VLMViewController.h"
-#import "VLMCachableImageView.h"
+#import "UIImageView+WebCache.h"
+#import "VLMUtility.h"
 
 @interface VLMZoomableImageView ()
-@property (nonatomic, strong) VLMCachableImageView *imageView;
+@property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIView *back;
 @property (nonatomic, strong) UIView *container;
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -43,7 +44,7 @@
         [self.container setBackgroundColor:[UIColor clearColor]];
         [self.container setAutoresizesSubviews:NO];
         
-        [self setImageView:[[VLMCachableImageView alloc] initWithFrame:CGRectZero]];
+        [self setImageView:[[UIImageView alloc] initWithFrame:CGRectZero]];
         [self.imageView setCenter:self.center];
         [self.imageView setAlpha:1.0f];
         [self.container addSubview:self.imageView];
@@ -59,7 +60,7 @@
         [tgr setNumberOfTouchesRequired:1.0f];
         [self addGestureRecognizer:tgr];
         
-        UIPanGestureRecognizer *pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        // UIPanGestureRecognizer *pgr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
         //[self addGestureRecognizer:pgr];
         
         [self addSubview:self.scrollView];
@@ -177,7 +178,9 @@
 {
     [self.imageView setFrame:CGRectMake(0, 0, self.frame.size.height, self.frame.size.height)];
     [self.imageView setCenter:self.center];
-    [self.imageView loadImageNamed:imageName placeholder:placeholder];
+    // build a file path
+    NSURL *url = [VLMUtility URLForImageNamed:imageName];
+    [self.imageView setImageWithURL:url placeholderImage:placeholder];
     
     [self.scrollView setMinimumZoomScale:0.5f];
     [self.scrollView setMaximumZoomScale:5.0f];

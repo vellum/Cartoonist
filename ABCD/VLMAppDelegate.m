@@ -40,7 +40,7 @@
         NSLog(@"%@", family);
         for (NSString *name in [UIFont fontNamesForFamilyName:family]) {
             NSLog(@"\t\t%@", name);
-        }
+        } 
     }
 #endif
     
@@ -60,7 +60,6 @@
                                                         bounds:CGSizeMake(itemSize.height*scale, itemSize.height*scale)
                                           interpolationQuality:kCGInterpolationHigh];
     return resizedImage;
-
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

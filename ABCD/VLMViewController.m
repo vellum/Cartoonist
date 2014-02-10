@@ -292,8 +292,7 @@ static UIDeviceOrientation theOrientation;
                     if (alpha>1) {
                         alpha=1;
                     }
-                    UIImage *placeholder = [self.dataSource cachedImageAtIndex:page];
-                    [self.zoomieImageView loadImageNamed:[self.dataSource imageAtIndex:page] placeholder:placeholder];
+                    [self.zoomieImageView loadImageNamed:[self.dataSource imageAtIndex:page] placeholder:[UIImage imageNamed:@"placeholder-panel"]];
                     [self.zoomieImageView showAlpha:alpha];
                     //s = 1 - alpha*(1-CHOICE_SCALE);
                     return;

@@ -14,11 +14,10 @@
 #import "VLMPanelModel.h"
 #import "VLMPanelModels.h"
 #import "VLMParser.h"
-#import "VLMApplicationData.h"
 
 #import "SDWebImageManager.h"
 #import "SDImageCache.h"
-
+#import "VLMUtility.h"
 
 @interface VLMDataSource ()
 
@@ -224,12 +223,8 @@
             return NO;
             */
             // build a file path
-            NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
-            NSString *imageFolder = [[resourcePath stringByAppendingPathComponent:@"Images"] copy];
-            NSString *fileName = [pm.image stringByAppendingString:@".png"];
-            NSString *filePath = [imageFolder stringByAppendingPathComponent:fileName];
-            NSURL *url = [NSURL fileURLWithPath:filePath];
-
+            
+            NSURL *url = [VLMUtility URLForImageNamed:pm.image];
             SDImageCache * cache = [[SDWebImageManager sharedManager] imageCache];
             BOOL ret = [cache imageFromDiskCacheForKey:[url absoluteString]]!=nil;
             return ret;
@@ -336,13 +331,7 @@
     
     if (model.image && [model.image length]>0) {
 
-        // build a file path
-        NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
-        NSString *imageFolder = [[resourcePath stringByAppendingPathComponent:@"Images"] copy];
-        NSString *fileName = [model.image stringByAppendingString:@".png"];
-        NSString *filePath = [imageFolder stringByAppendingPathComponent:fileName];
-        NSURL *url = [NSURL fileURLWithPath:filePath];
-        
+        NSURL *url = [VLMUtility URLForImageNamed:model.image];
         SDImageCache * cache = [[SDWebImageManager sharedManager] imageCache];
         UIImage *ret = [cache imageFromDiskCacheForKey:[url absoluteString]];
         return ret;
