@@ -16,7 +16,9 @@
 // constant key for thread-safe objc_set/get
 static char * const kCacheImageAssociationKey = "VLM_CacheImageName";
 static char * const kCacheIndexAssociationKey = "VLM_CacheIndexPath";
-
+@interface VLMCachableImageView()
+@property (nonatomic, strong) NSString *curImageName;
+@end
 @implementation VLMCachableImageView
 
 // populate with placeholder by default
@@ -30,11 +32,15 @@ static char * const kCacheIndexAssociationKey = "VLM_CacheIndexPath";
     return self;
 }
 
-- (void)loadImageNamed:(NSString*)imageName
+- (void)loadImageNamed:(NSString *)imageName placeholder:(UIImage *)placeholder
 {
+    if ([imageName isEqualToString:self.curImageName]) {
+        return;
+    }
+    [self setCurImageName:imageName];
     VLMApplicationData *appdata = [VLMApplicationData sharedInstance];
     NSCache *cache = appdata.imageCache;
-
+    
     if ([cache objectForKey:imageName])
     {
         // image has been cached, so populate the imageview
@@ -44,17 +50,17 @@ static char * const kCacheIndexAssociationKey = "VLM_CacheIndexPath";
     else
     {
         // image hasn't been cached, so populate with placeholder
-        [self setImage:[UIImage imageNamed:@"placeholder-panel"]];
-
+        [self setImage:placeholder];
+        
         // build a file path
         NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
         NSString *imageFolder = [[resourcePath stringByAppendingPathComponent:@"Images"] copy];
         NSString *fileName = [imageName stringByAppendingString:@".png"];
         NSString *filePath = [imageFolder stringByAppendingPathComponent:fileName];
-
+        
         // get ready to load image in background
         dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
-
+        
         // use associated objects and compare imagenames to see if we should continue once we have a resized image.
         objc_setAssociatedObject(self,
                                  kCacheImageAssociationKey,
@@ -71,20 +77,22 @@ static char * const kCacheIndexAssociationKey = "VLM_CacheIndexPath";
                                          OBJC_ASSOCIATION_COPY_NONATOMIC);
                 return;
             }
-            CGFloat scale = [UIScreen mainScreen].scale;
+            /*
+             CGFloat scale = [UIScreen mainScreen].scale;
             UIImage *resizedImage = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFill
                                                                 bounds:CGSizeMake(self.frame.size.height*scale, self.frame.size.height*scale)
                                                   interpolationQuality:kCGInterpolationHigh];
+             */
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSString *requestedImageName =
-                    (NSString *)objc_getAssociatedObject(self, kCacheImageAssociationKey);
+                (NSString *)objc_getAssociatedObject(self, kCacheImageAssociationKey);
                 
                 if (requestedImageName) {
                     if ([requestedImageName isEqualToString:imageName]) {
-                        [self setImage:resizedImage];
+                        [self setImage:image];
                     }
-                    [cache setObject:resizedImage forKey:requestedImageName];
+                    [cache setObject:image forKey:requestedImageName];
                 }
                 
                 objc_setAssociatedObject(self,
@@ -92,10 +100,15 @@ static char * const kCacheIndexAssociationKey = "VLM_CacheIndexPath";
                                          nil,
                                          OBJC_ASSOCIATION_COPY_NONATOMIC);
                 
-
+                
             });
         });
     }
+}
+
+- (void)loadImageNamed:(NSString*)imageName
+{
+    [self loadImageNamed:imageName placeholder:[UIImage imageNamed:@"placeholder-panel"]];
 }
 
 @end

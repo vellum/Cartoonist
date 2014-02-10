@@ -173,11 +173,11 @@
 
 
 
-- (void)loadImageNamed:(NSString *)imageName;
+- (void)loadImageNamed:(NSString *)imageName placeholder:(UIImage *)placeholder
 {
     [self.imageView setFrame:CGRectMake(0, 0, self.frame.size.height, self.frame.size.height)];
     [self.imageView setCenter:self.center];
-    [self.imageView loadImageNamed:imageName];
+    [self.imageView loadImageNamed:imageName placeholder:placeholder];
     
     [self.scrollView setMinimumZoomScale:0.5f];
     [self.scrollView setMaximumZoomScale:5.0f];

@@ -212,6 +212,7 @@ BOOL ImageDataHasPNGPreffix(NSData *data) {
 }
 
 - (UIImage *)imageFromMemoryCacheForKey:(NSString *)key {
+    NSLog(@"%@", key);
     return [self.memCache objectForKey:key];
 }
 

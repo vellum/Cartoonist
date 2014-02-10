@@ -11,11 +11,14 @@
 #import "VLMCollectionViewCellWithChoices.h"
 #import "VLMWireframeCell.h"
 #import "VLMStaticImageCell.h"
-
 #import "VLMPanelModel.h"
 #import "VLMPanelModels.h"
 #import "VLMParser.h"
 #import "VLMApplicationData.h"
+
+#import "SDWebImageManager.h"
+#import "SDImageCache.h"
+
 
 @interface VLMDataSource ()
 
@@ -214,10 +217,22 @@
 		VLMPanelModel *pm = (VLMPanelModel*)o;
         if (pm.cellType==kCellTypeCaption || pm.cellType==kCellTypeNoCaption)
         {
+            /*
             if ([[VLMApplicationData sharedInstance].imageCache objectForKey:pm.image]) {
                 return YES;
             }
             return NO;
+            */
+            // build a file path
+            NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
+            NSString *imageFolder = [[resourcePath stringByAppendingPathComponent:@"Images"] copy];
+            NSString *fileName = [pm.image stringByAppendingString:@".png"];
+            NSString *filePath = [imageFolder stringByAppendingPathComponent:fileName];
+            NSURL *url = [NSURL fileURLWithPath:filePath];
+
+            SDImageCache * cache = [[SDWebImageManager sharedManager] imageCache];
+            BOOL ret = [cache imageFromDiskCacheForKey:[url absoluteString]]!=nil;
+            return ret;
         }
 
 	}
@@ -310,6 +325,32 @@
     } else {
         return nil;
     }
+}
+
+- (UIImage *)cachedImageAtIndex:(NSInteger)index
+{
+    if (![self isItemAtIndexImage:index]) {
+        return nil;
+    }
+    VLMPanelModel *model = (VLMPanelModel *)[self.items objectAtIndex:index];
+    
+    if (model.image && [model.image length]>0) {
+
+        // build a file path
+        NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
+        NSString *imageFolder = [[resourcePath stringByAppendingPathComponent:@"Images"] copy];
+        NSString *fileName = [model.image stringByAppendingString:@".png"];
+        NSString *filePath = [imageFolder stringByAppendingPathComponent:fileName];
+        NSURL *url = [NSURL fileURLWithPath:filePath];
+        
+        SDImageCache * cache = [[SDWebImageManager sharedManager] imageCache];
+        UIImage *ret = [cache imageFromDiskCacheForKey:[url absoluteString]];
+        return ret;
+        
+    } else {
+        return nil;
+    }
+    
 }
 
 @end
