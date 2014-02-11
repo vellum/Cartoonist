@@ -22,13 +22,7 @@
     //Add a custom read-only cache path
     NSString *bundledPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"];
     [[SDImageCache sharedImageCache] addReadOnlyCachePath:bundledPath];
-    
-    /*
-    [[SDImageCache sharedImageCache] clearMemory];
-    [[SDImageCache sharedImageCache] clearDisk];
-    [[SDImageCache sharedImageCache] cleanDisk];
-     */
-    
+        
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor blackColor];
 

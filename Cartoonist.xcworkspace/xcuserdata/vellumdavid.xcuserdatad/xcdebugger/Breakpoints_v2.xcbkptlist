@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ABCD/VLMStaticImageCell.m"
-            timestampString = "413791704.612481"
+            timestampString = "413793615.846245"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226">
+            startingLineNumber = "224"
+            endingLineNumber = "224">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

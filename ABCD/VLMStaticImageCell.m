@@ -191,12 +191,10 @@
             [self.imageview setImageWithURL:url placeholderImage:placeholder completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
                 if (error) {
                     NSLog(@"%@", [error localizedDescription]);
-                    NSLog(@"error, but does cache exist? %@", [VLMUtility hasCachedImageForURL:url] ? @"Y":@"N");
                     
-                    
-                    if(image){
-                        NSLog(@"Callback Image:%@",image);
-                    }
+                    // try it again
+                    [[SDWebImageManager sharedManager].imageDownloader downloadImageWithURL:url options:SDWebImageDownloaderLowPriority progress:^(NSInteger receiveds, NSInteger expected){} completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
+                    }];
                 }
                 //NSLog(@"complete %@", error ? [error localizedDescription] : @"success");
             }];
