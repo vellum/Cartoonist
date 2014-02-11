@@ -22,8 +22,6 @@
     return @"VLMStaticImageCellID";
 }
 
-static char * const kPanelModelAssociationKey = "VLM_PanelModel";
-
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -51,14 +49,6 @@ static char * const kPanelModelAssociationKey = "VLM_PanelModel";
     }
     return self;
 }
-
-/*
-- (void)prepareForReuse
-{
-	[super prepareForReuse];
-    //[self.imageview prepareForReuse];
-}
-*/
 
 - (void)computeDimensions:(CGFloat)targetHeight
 {
@@ -115,6 +105,14 @@ static char * const kPanelModelAssociationKey = "VLM_PanelModel";
 	}
     [self updateRotation];
 }
+
+/*
+-(void)prepareForReuse {
+    [super prepareForReuse];
+    [self.imageview cancelCurrentImageLoad];
+    NSLog(@"prepareforreuse -> cancel currentimageload");
+}
+*/
 
 - (void)updateRotation
 {
@@ -189,7 +187,19 @@ static char * const kPanelModelAssociationKey = "VLM_PanelModel";
         {
             NSURL *url = [VLMUtility URLForImageNamed:model.image];
             UIImage *placeholder = [VLMUtility placeholderForImageNamed:model.image];
-            [self.imageview setImageWithURL:url placeholderImage:placeholder];
+            
+            [self.imageview setImageWithURL:url placeholderImage:placeholder completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
+                if (error) {
+                    NSLog(@"%@", [error localizedDescription]);
+                    NSLog(@"error, but does cache exist? %@", [VLMUtility hasCachedImageForURL:url] ? @"Y":@"N");
+                    
+                    
+                    if(image){
+                        NSLog(@"Callback Image:%@",image);
+                    }
+                }
+                //NSLog(@"complete %@", error ? [error localizedDescription] : @"success");
+            }];
         }
     }
     [self updateRotation];

@@ -15,6 +15,7 @@
 + (NSURL *) URLForImageNamed:(NSString *)imageName
 {
     return ([[UIScreen mainScreen] scale] <= 1) ? [VLMUtility URLForNonRetinaImageNamed:imageName] : [VLMUtility URLForRetinaImageNamed:imageName];
+    //return [VLMUtility URLForNonRetinaImageNamed:imageName];
 }
 
 + (NSURL *) URLForRetinaImageNamed:(NSString *)imageName
@@ -61,10 +62,10 @@
     return [UIImage imageWithContentsOfFile:filePath];
     */
     // use standard placeholder (dots)
-    //return [UIImage imageNamed:@"placeholder-panel"];
+    return [UIImage imageNamed:@"placeholder-panel"];
     
     // use thumbs stored in xcassets (system-optimized cache)
-    return [UIImage imageNamed:imageName];
+    //return [UIImage imageNamed:imageName];
 }
 
 @end

@@ -51,6 +51,20 @@
 	return self;
 }
 
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    for (NSInteger i = 0; i < [self.subviews count]; i++)
+	{
+		UIView *subview = (UIView *)[self.subviews objectAtIndex:i];
+        if ([subview isKindOfClass:[UIImageView class]]) {
+            UIImageView *sv = (UIImageView *)subview;
+            [sv cancelCurrentImageLoad];
+        }
+	}
+
+}
+
 - (void)configureWithModel:(VLMPanelModels *)models
 {
 	NSInteger numPages = [models.models count];
@@ -64,6 +78,10 @@
 	for (NSInteger i = 0; i < [self.subviews count]; i++)
 	{
 		UIView *subview = (UIView *)[self.subviews objectAtIndex:i];
+        if ([subview isKindOfClass:[UIImageView class]]) {
+            UIImageView *sv = (UIImageView *)subview;
+            [sv cancelCurrentImageLoad];
+        }
 		[subview removeFromSuperview];
 	}
 	[self.subviews removeAllObjects];

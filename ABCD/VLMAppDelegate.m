@@ -23,8 +23,11 @@
     NSString *bundledPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"];
     [[SDImageCache sharedImageCache] addReadOnlyCachePath:bundledPath];
     
-    [[SDWebImageManager sharedManager] setDelegate:self];
-    
+    /*
+    [[SDImageCache sharedImageCache] clearMemory];
+    [[SDImageCache sharedImageCache] clearDisk];
+    [[SDImageCache sharedImageCache] cleanDisk];
+     */
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor blackColor];
@@ -45,21 +48,6 @@
 #endif
     
     return YES;
-}
-
-- (BOOL)imageManager:(SDWebImageManager *)imageManager shouldDownloadImageForURL:(NSURL *)imageURL
-{
-    return YES;
-}
-
-- (UIImage *)imageManager:(SDWebImageManager *)imageManager transformDownloadedImage:(UIImage *)image withURL:(NSURL *)imageURL
-{
-    CGSize itemSize = kItemSize;
-    CGFloat scale = [UIScreen mainScreen].scale;
-    UIImage *resizedImage = [image resizedImageWithContentMode:UIViewContentModeScaleAspectFill
-                                                        bounds:CGSizeMake(itemSize.height*scale, itemSize.height*scale)
-                                          interpolationQuality:kCGInterpolationHigh];
-    return resizedImage;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
