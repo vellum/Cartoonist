@@ -312,7 +312,6 @@
 
 #pragma mark -
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    NSLog(@"touches began");
     /*
     if ([touches count]>1) {
         [self.topLevelPanGestureRecognizer setEnabled:NO];
