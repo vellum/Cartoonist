@@ -13,12 +13,25 @@
 #import "UIImage+Resize.h"
 #import "UIImage+Alpha.h"
 
-//#define PRINT_AVAILABLE_FONT_NAMES 1
+#define PRINT_AVAILABLE_FONT_NAMES 1
 
 @implementation VLMAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+#ifdef PRINT_AVAILABLE_FONT_NAMES
+    for (NSString *family in [UIFont familyNames])
+    {
+        NSLog(@"%@", family);
+        for (NSString *name in [UIFont fontNamesForFamilyName:family]) {
+            NSLog(@"\t\t%@", name);
+        }
+    }
+#endif
+    
+
+    
+    
     //Add a custom read-only cache path
     NSString *bundledPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"];
     [[SDImageCache sharedImageCache] addReadOnlyCachePath:bundledPath];
@@ -30,16 +43,6 @@
     self.window.rootViewController = self.viewController;
     
     [self.window makeKeyAndVisible];
-    
-#ifdef PRINT_AVAILABLE_FONT_NAMES
-    for (NSString *family in [UIFont familyNames])
-    {
-        NSLog(@"%@", family);
-        for (NSString *name in [UIFont fontNamesForFamilyName:family]) {
-            NSLog(@"\t\t%@", name);
-        } 
-    }
-#endif
     
     return YES;
 }

@@ -26,8 +26,8 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Draftsman.ttf</string>
-		<string>ARCHITEC.TTF</string>
+		<string>Architect-Regular.otf</string>
+		<string>Architect-Bold.otf</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

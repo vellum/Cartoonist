@@ -22,7 +22,6 @@
 		BD1DCC2518A845BA00DD81E6 /* UIImage+MultiFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCC1518A845BA00DD81E6 /* UIImage+MultiFormat.m */; };
 		BD1DCC2618A845BA00DD81E6 /* UIImage+WebP.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCC1718A845BA00DD81E6 /* UIImage+WebP.m */; };
 		BD1DCC2718A845BA00DD81E6 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCC1918A845BA00DD81E6 /* UIImageView+WebCache.m */; };
-		BD1DCC2A18A8470A00DD81E6 /* NSCache+Fix.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCC2918A8470A00DD81E6 /* NSCache+Fix.m */; };
 		BD1DCC3118A8475500DD81E6 /* BDDROneFingerZoomGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCC2C18A8475500DD81E6 /* BDDROneFingerZoomGestureRecognizer.m */; };
 		BD1DCC3218A8475500DD81E6 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCC2E18A8475500DD81E6 /* JRSwizzle.m */; };
 		BD1DCC3318A8475500DD81E6 /* UIScrollView+BDDRScrollViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCC3018A8475500DD81E6 /* UIScrollView+BDDRScrollViewAdditions.m */; };
@@ -33,8 +32,6 @@
 		BD1DCC4B18A87C2400DD81E6 /* UIImage+Scaling.m in Sources */ = {isa = PBXBuildFile; fileRef = BD1DCC4718A87C2400DD81E6 /* UIImage+Scaling.m */; };
 		BD1DCC4D18A87EB900DD81E6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD1DCC4C18A87EB900DD81E6 /* Images.xcassets */; };
 		BD47DFD9185A71150048925D /* VLMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BD47DFD8185A71150048925D /* VLMParser.m */; };
-		BD4F5C49187D0C9400BAD2AB /* Draftsman.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BD4F5C47187D0C9400BAD2AB /* Draftsman.ttf */; };
-		BD4F5C4A187D0C9400BAD2AB /* ARCHITEC.TTF in Resources */ = {isa = PBXBuildFile; fileRef = BD4F5C48187D0C9400BAD2AB /* ARCHITEC.TTF */; };
 		BD4F5C4D187D488C00BAD2AB /* VLMAnimButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5C4C187D488C00BAD2AB /* VLMAnimButton.m */; };
 		BD4F5C53187F38D300BAD2AB /* VLMWireframeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5C52187F38D300BAD2AB /* VLMWireframeCell.m */; };
 		BD4F5C57187F391B00BAD2AB /* VLMStaticImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BD4F5C56187F391B00BAD2AB /* VLMStaticImageCell.m */; };
@@ -44,6 +41,8 @@
 		BD8FD83F1840877C00C8B9C6 /* VLMGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = BD8FD83E1840877C00C8B9C6 /* VLMGradient.m */; };
 		BD9139DE18A5E42B0081E37C /* Images in Resources */ = {isa = PBXBuildFile; fileRef = BD9139DC18A5DA6C0081E37C /* Images */; };
 		BD9B2BA918A0BF9B00756943 /* VLMZoomableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD9B2BA818A0BF9B00756943 /* VLMZoomableImageView.m */; };
+		BD9E2EEA18AA97770064A70C /* Architect-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = BD9E2EE918AA97770064A70C /* Architect-Regular.otf */; };
+		BD9E2EEE18AAAD2A0064A70C /* Architect-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BD9E2EED18AAAD2A0064A70C /* Architect-Bold.otf */; };
 		BDA1F987184E69F500C4AC57 /* VLMPanelModels.m in Sources */ = {isa = PBXBuildFile; fileRef = BDA1F986184E69F500C4AC57 /* VLMPanelModels.m */; };
 		BDB3BB8E1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB3BB8D1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m */; };
 		BDB3BB921849B6C600F59AE1 /* VLMDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB3BB911849B6C600F59AE1 /* VLMDataSource.m */; };
@@ -95,8 +94,6 @@
 		BD1DCC1718A845BA00DD81E6 /* UIImage+WebP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+WebP.m"; sourceTree = "<group>"; };
 		BD1DCC1818A845BA00DD81E6 /* UIImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WebCache.h"; sourceTree = "<group>"; };
 		BD1DCC1918A845BA00DD81E6 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
-		BD1DCC2818A8470A00DD81E6 /* NSCache+Fix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSCache+Fix.h"; path = "Libraries/NSCache+Fix/NSCache+Fix.h"; sourceTree = "<group>"; };
-		BD1DCC2918A8470A00DD81E6 /* NSCache+Fix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSCache+Fix.m"; path = "Libraries/NSCache+Fix/NSCache+Fix.m"; sourceTree = "<group>"; };
 		BD1DCC2B18A8475500DD81E6 /* BDDROneFingerZoomGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BDDROneFingerZoomGestureRecognizer.h; path = Libraries/BDDRScrollView/BDDROneFingerZoomGestureRecognizer.h; sourceTree = "<group>"; };
 		BD1DCC2C18A8475500DD81E6 /* BDDROneFingerZoomGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BDDROneFingerZoomGestureRecognizer.m; path = Libraries/BDDRScrollView/BDDROneFingerZoomGestureRecognizer.m; sourceTree = "<group>"; };
 		BD1DCC2D18A8475500DD81E6 /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRSwizzle.h; path = Libraries/BDDRScrollView/JRSwizzle.h; sourceTree = "<group>"; };
@@ -117,8 +114,6 @@
 		BD3451C0186623B800D6B6A4 /* VLMConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMConstants.h; sourceTree = "<group>"; };
 		BD47DFD7185A71150048925D /* VLMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMParser.h; sourceTree = "<group>"; };
 		BD47DFD8185A71150048925D /* VLMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMParser.m; sourceTree = "<group>"; };
-		BD4F5C47187D0C9400BAD2AB /* Draftsman.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Draftsman.ttf; path = ABCD/Draftsman.ttf; sourceTree = "<group>"; };
-		BD4F5C48187D0C9400BAD2AB /* ARCHITEC.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = ARCHITEC.TTF; path = ABCD/ARCHITEC.TTF; sourceTree = "<group>"; };
 		BD4F5C4B187D488C00BAD2AB /* VLMAnimButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMAnimButton.h; sourceTree = "<group>"; };
 		BD4F5C4C187D488C00BAD2AB /* VLMAnimButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMAnimButton.m; sourceTree = "<group>"; };
 		BD4F5C51187F38D300BAD2AB /* VLMWireframeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMWireframeCell.h; sourceTree = "<group>"; };
@@ -135,6 +130,8 @@
 		BD9139DC18A5DA6C0081E37C /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 		BD9B2BA718A0BF9B00756943 /* VLMZoomableImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMZoomableImageView.h; sourceTree = "<group>"; };
 		BD9B2BA818A0BF9B00756943 /* VLMZoomableImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMZoomableImageView.m; sourceTree = "<group>"; };
+		BD9E2EE918AA97770064A70C /* Architect-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Architect-Regular.otf"; sourceTree = "<group>"; };
+		BD9E2EED18AAAD2A0064A70C /* Architect-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Architect-Bold.otf"; sourceTree = "<group>"; };
 		BDA1F985184E69F500C4AC57 /* VLMPanelModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMPanelModels.h; sourceTree = "<group>"; };
 		BDA1F986184E69F500C4AC57 /* VLMPanelModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMPanelModels.m; sourceTree = "<group>"; };
 		BDB3BB8C1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCollectionViewLayoutAttributes.h; sourceTree = "<group>"; };
@@ -187,7 +184,6 @@
 			children = (
 				BD1DCBFC18A845BA00DD81E6 /* SDWebImage */,
 				BD7C1C0118A6FA4100565F20 /* BDDRScrollView */,
-				BD7C1C0018A6FA3600565F20 /* NSCache+Fix */,
 				BD1DCBE718A8451E00DD81E6 /* UIImage+Resize */,
 			);
 			path = Libraries;
@@ -247,8 +243,8 @@
 		BD4F5C42187D0BE900BAD2AB /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				BD4F5C47187D0C9400BAD2AB /* Draftsman.ttf */,
-				BD4F5C48187D0C9400BAD2AB /* ARCHITEC.TTF */,
+				BD9E2EED18AAAD2A0064A70C /* Architect-Bold.otf */,
+				BD9E2EE918AA97770064A70C /* Architect-Regular.otf */,
 			);
 			name = Fonts;
 			sourceTree = "<group>";
@@ -266,16 +262,6 @@
 				BD4F5C56187F391B00BAD2AB /* VLMStaticImageCell.m */,
 			);
 			name = CollectionViewCells;
-			sourceTree = "<group>";
-		};
-		BD7C1C0018A6FA3600565F20 /* NSCache+Fix */ = {
-			isa = PBXGroup;
-			children = (
-				BD1DCC2818A8470A00DD81E6 /* NSCache+Fix.h */,
-				BD1DCC2918A8470A00DD81E6 /* NSCache+Fix.m */,
-			);
-			name = "NSCache+Fix";
-			path = ..;
 			sourceTree = "<group>";
 		};
 		BD7C1C0118A6FA4100565F20 /* BDDRScrollView */ = {
@@ -498,11 +484,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD9139DE18A5E42B0081E37C /* Images in Resources */,
-				BDD899CA183C4C39002E089C /* InfoPlist.strings in Resources */,
-				BD4F5C49187D0C9400BAD2AB /* Draftsman.ttf in Resources */,
-				BD1DCC4D18A87EB900DD81E6 /* Images.xcassets in Resources */,
-				BD4F5C4A187D0C9400BAD2AB /* ARCHITEC.TTF in Resources */,
 				BD8C6E01185969ED005FA217 /* data.json in Resources */,
+				BD9E2EEA18AA97770064A70C /* Architect-Regular.otf in Resources */,
+				BDD899CA183C4C39002E089C /* InfoPlist.strings in Resources */,
+				BD9E2EEE18AAAD2A0064A70C /* Architect-Bold.otf in Resources */,
+				BD1DCC4D18A87EB900DD81E6 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,7 +532,6 @@
 			files = (
 				BDA1F987184E69F500C4AC57 /* VLMPanelModels.m in Sources */,
 				BD1DCC2218A845BA00DD81E6 /* SDWebImagePrefetcher.m in Sources */,
-				BD1DCC2A18A8470A00DD81E6 /* NSCache+Fix.m in Sources */,
 				BD1DCC2018A845BA00DD81E6 /* SDWebImageDownloaderOperation.m in Sources */,
 				BDD0AE12183EBFB100BF0CE6 /* VLMSinglePanelFlowLayout.m in Sources */,
 				BD8FD83F1840877C00C8B9C6 /* VLMGradient.m in Sources */,
