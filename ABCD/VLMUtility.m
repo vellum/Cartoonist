@@ -62,10 +62,10 @@
     return [UIImage imageWithContentsOfFile:filePath];
     */
     // use standard placeholder (dots)
-    return [UIImage imageNamed:@"placeholder-panel"];
+    //return [UIImage imageNamed:@"placeholder-panel"];
     
     // use thumbs stored in xcassets (system-optimized cache)
-    //return [UIImage imageNamed:imageName];
+    return [UIImage imageNamed:imageName];
 }
 
 @end

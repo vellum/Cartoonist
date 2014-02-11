@@ -188,12 +188,23 @@
             NSURL *url = [VLMUtility URLForImageNamed:model.image];
             UIImage *placeholder = [VLMUtility placeholderForImageNamed:model.image];
             
+            UIImageView *iv = self.imageview;
             [self.imageview setImageWithURL:url placeholderImage:placeholder completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType){
                 if (error) {
                     NSLog(@"%@", [error localizedDescription]);
                     
                     // try it again
                     [[SDWebImageManager sharedManager].imageDownloader downloadImageWithURL:url options:SDWebImageDownloaderLowPriority progress:^(NSInteger receiveds, NSInteger expected){} completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
+                        if (error) {
+                            
+                            NSLog(@"error after error%@", [error localizedDescription]);
+                        }
+                        else
+                        {
+                            [iv setImage:image];
+                            NSLog(@"-- loaded! after error");
+
+                        }
                     }];
                 }
                 //NSLog(@"complete %@", error ? [error localizedDescription] : @"success");
