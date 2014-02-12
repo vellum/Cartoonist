@@ -168,7 +168,7 @@
 			}
 
 			// a little debugging
-			 NSLog(@"recognized vertical pan");
+            // NSLog(@"recognized vertical pan");
 		}
 		else if (!isZoomOverview && (p.x > deadzone.width / 2 || p.x < -deadzone.width / 2))
 		{
@@ -200,7 +200,7 @@
 				[self.verticalPanGestureRecognizer setEnabled:YES];
 			}
 
-			 NSLog(@"recognized horizontal pan");
+			 // NSLog(@"recognized horizontal pan");
 		}
 	}
 	else
