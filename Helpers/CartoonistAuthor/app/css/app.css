@@ -1,0 +1,239 @@
+/* app css stylesheet */
+
+/* boilerplate */
+
+body {
+    background: #eee;
+    font: bold 18px/18px 'Helvetica', sans-serif;
+    color: #222;
+}
+
+ul {
+    list-style-type:none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+form {
+    padding-left:2em;
+    padding-top: 1em;
+}
+
+input {
+    width: 320px;
+    padding:1em;
+    margin-left: -1em;
+}
+
+textarea {
+    width: 320px;
+    padding:1em;
+    margin-left: -1em;
+}
+
+select {
+    margin-left: -0.5em;
+}
+
+button {
+    font: bold 18px/18px 'Helvetica', sans-serif;
+    background: #eee;
+    padding:0.75em;
+    margin:0.5em;
+    border:0.21em solid #222;
+    outline:none;
+}
+
+button:hover {
+    background:#222;
+    color:#eee;
+}
+
+/* custom */
+
+li div {
+    background:transparent;
+}
+
+.add {
+    text-align: center;
+    padding:1em;
+}
+
+li h1 {
+    margin-bottom:0.25em;
+    background: #eee;
+    padding:0.45em;
+    text-align: center;
+    font: bold 72px/56px 'Helvetica', sans-serif;
+    color: #222;
+    border: 3px solid #222;
+}
+
+.panelcollectioncontrol {
+    width:500px; margin:0 auto;
+    background: url('../img/centertrunk.png');
+    position: relative;
+}
+
+.panel {
+    border:0.2em solid #222;
+    height: 500px;
+    background: #bbb;
+    position: relative;
+}
+
+
+.panelbuttons {
+    position: absolute;
+    z-index: 1000;
+    padding:0;
+    margin:-3px;
+    text-align: right;
+    right:0;
+    top:0;
+}
+
+.editbutton {
+    border-right:none;
+}
+
+.backgroundimage {
+    position: absolute;
+    z-index: 1;
+    padding: 0;
+    margin: 0;
+    top:0;
+    left:0;
+    width:494px;
+    height:500px;
+    overflow:hidden;
+}
+
+.backgroundimage img {
+    z-index: 1;
+}
+
+.caption {
+    position: absolute;
+    z-index: 999;
+    top:0.5em;
+    left:0.5em;
+    padding:1em;
+    background:#333;
+    color:#ddd;
+    border:1px solid #ddd;
+    text-align: center;
+    max-width: 320px;
+}
+
+.wireframecaption {
+    position:absolute;
+    top:0; bottom:0; left:0; right:0;
+    margin:auto;
+    height:30px; width:80%;
+    text-align: center;
+}
+
+.editpanel {
+    z-index: 1000;
+    position: absolute;
+    top:0;
+    left:0;
+    width: 494px;
+    height: 500px;
+    background: #ccc;
+}
+
+.panelbuttons button {
+    margin:0;
+    background: #eee;
+}
+
+.panelbuttons button:hover{
+    background: #222;
+    color:#eee;
+}
+
+.dotdotdotoptions {
+    background: #fff;
+    margin-top:-3px;
+}
+
+.dotdotdotoptions button {
+    width:100%;
+    background:transparent;
+}
+
+.dotdotdotoptions button:hover {
+    background:#222;
+    color:#eee;
+}
+
+.joint {
+    background: #eee;
+    text-align: center;
+    width: 500px;
+    min-height: 250px;
+    margin:0;
+    border: 3px solid #222;
+}
+
+.sequenceHandle {
+    float: left;
+    width:248px;
+    height:248px;
+    padding:0;
+    margin: 1px;
+    position: relative;
+    background: #222;
+}
+
+.sequenceHandle .backgroundimage {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    top:0;
+    left:0;
+    width:248px;
+    height:248px;
+    opacity: 0.9;
+}
+
+
+.sequenceHandle .text {
+    color: #eee;
+    position: absolute;
+    top:1em;
+    left:1em;
+    z-index: 1000;
+}
+
+.selected {
+    z-index: 1000;
+    position:absolute;
+    top:0; bottom:0; left:0; right:0;
+    margin:auto;
+    height:96px; width:75%;
+    text-align: center;
+}
+
+.selectedSign {
+    font: bold 96px/96px 'Helvetica', sans-serif;
+    color: #222;
+}
+
+.commentcontainer {
+    width: 140px;
+    font-size:18px;
+    position:absolute;
+    left:500px;
+    z-index: 0;
+    margin: 1em;
+}
+.comment {
+    margin-left: 1em;
+    padding: 1em;
+    background: #fff;
+}

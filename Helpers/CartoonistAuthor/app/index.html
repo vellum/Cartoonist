@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" ng-app="theApp">
+<head>
+  <meta charset="utf-8">
+  <title>Cartoonist Author</title>
+  <link rel="stylesheet" href="css/app.css"/>
+    <script src="lib/cartoonist.js"></script>
+</head>
+<body>
+<div class="panelcollectioncontrol" ng-controller="PanelCollectionCtrl">
+    <ul>
+        <li><h1>sample story</h1></li>
+        <div class="commentcontainer"><div class="comment">panel sequence</div></div>
+        <li ng-repeat="node in root.nodes" ng-include="'partials/tree_item_renderer.html'"></li>
+        <li><button>add joint</button></li>
+    </ul>
+</div>
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <script src="lib/angular/angular.js"></script>
+  <script src="lib/angular/angular-route.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/directives.js"></script>
+</body>
+</html>

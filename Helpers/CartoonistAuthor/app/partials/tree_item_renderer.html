@@ -1,0 +1,66 @@
+<div ng-switch on="node.type">
+    <div ng-switch-when="frame">
+        <div class="add" ng-hide="!$first"><button ng-click="addPanelAtFirstSibling(node)">add panel</button></div>
+        <div class="panel" ng-mouseenter="hover(node)" ng-mouseleave="hover(node)">
+            <div ng-switch on="node.celltype">
+                <div ng-switch-when="caption">
+                    <div class="caption">
+                        {{node.caption}}
+                    </div>
+                    <div class="backgroundimage"><img ng-src="img/{{node.img}}.png" err-src="{{errorImage}}" width="500" height="500"></div>
+                </div>
+                <div ng-switch-when="nocaption">
+                    <div class="backgroundimage"><img ng-src="img/{{node.img}}.png" err-src="{{errorImage}}" width="500" height="500"></div>
+                </div>
+                <div class="wireframecaption" ng-switch-when="wireframe">
+                    {{node.caption}}
+                </div>
+            </div>
+            <div class="panelbuttons" ng-hide="!node.shouldShowEditButton">
+                <button class="editbutton" ng-click="editClicked(node)">edit</button><button ng-click="dotdotdotClicked(node)">...</button><div class="dotdotdotoptions">
+                <button ng-click="removeClicked(node)" ng-hide="!node.shouldShowExtendedOptions">remove</button>
+            </div>
+            </div>
+            <div class="editpanel" ng-hide="!node.shouldShowEditPanel">
+                <div class="panelbuttons">
+                    <button ng-click="editDone(node)">done</button>
+                </div>
+                <form>
+                    <p>
+                        <label>caption</label>
+                        <br>
+                        <textarea ng-model="node.caption"></textarea>
+                    </p>
+                    <p>
+                        <label>image</label><br>
+                        <input ng-model="node.image">
+                    </p>
+                    <p>
+                        <label>cell type</label><br>
+                        <select ng-model="node.celltype" ng-options="type for type in availableCellTypes"></select>
+                    </p>
+
+                </form>
+            </div>
+        </div>
+        <div class="add"><button ng-click="addPanelAfter(node, $index)">add panel</button></div>
+    </div>
+    <div ng-switch-when="joint">
+        <div class="commentcontainer"><div class="comment">{{node.children.length}} branches</div></div>
+        <div class="joint" ng-style="{height:(node.children.length<=2)? '250px' : '500px'}">
+            <div class="sequenceHandle" ng-repeat="seq in node.children" ng-click="selectedClicked(node, $index)">
+                    <img class="backgroundimage" ng-src="img/{{seq.image}}.png" err-src="{{errorImage}}" width="318" height="318">
+                    <div class="text">{{seq.caption}}</div>
+                    <div class="selected" ng-hide="!isIndexSelected(node, $index)">
+                        <div class="selectedSign">&#x2715;</div>
+                        <small>selected</small>
+                    </div>
+            </div>
+        </div>
+
+        <div class="commentcontainer"><div class="comment">panel sequence</div></div>
+        <ul>
+            <li ng-repeat="node in node.children[node.selected].nodes" ng-include="'partials/tree_item_renderer.html'"></li>
+        </ul>
+    </div>
+</div>
