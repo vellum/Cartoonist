@@ -5,6 +5,7 @@ angular.module('theApp.controllers', []).
     controller('PanelCollectionCtrl', function($scope) {
 
         $scope.root = makeSampleTree();
+        console.log($scope.root);
 
         $scope.shouldShowEditButton = false;
         $scope.shouldShowEditPanel = false;
@@ -52,6 +53,14 @@ angular.module('theApp.controllers', []).
 
         $scope.selectedClicked = function(node, index){
             node.selected = index;
+        };
+
+        $scope.removeSequence = function(sequence){
+            console.log('removesequencefrom joint');
+            var joint = idlookup[sequence.parentid];
+            if (joint.children.length>2){
+                removeNodeFromParent(sequence);
+            }
         };
 
     });

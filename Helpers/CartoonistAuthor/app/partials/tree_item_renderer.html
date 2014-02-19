@@ -25,20 +25,19 @@
                 <div class="panelbuttons">
                     <button ng-click="editDone(node)">done</button>
                 </div>
-                <form>
-                    <p>
-                        <label>caption</label>
-                        <br>
+                <form role="form">
+                    <div class="form-group">
+                        <label>caption</label><br>
                         <textarea ng-model="node.caption"></textarea>
-                    </p>
-                    <p>
+                    </div>
+                    <div class="form-group">
                         <label>image</label><br>
                         <input ng-model="node.image">
-                    </p>
-                    <p>
+                    </div>
+                    <div class="form-group">
                         <label>cell type</label><br>
                         <select ng-model="node.celltype" ng-options="type for type in availableCellTypes"></select>
-                    </p>
+                    </div>
 
                 </form>
             </div>
@@ -48,13 +47,34 @@
     <div ng-switch-when="joint">
         <div class="commentcontainer"><div class="comment">{{node.children.length}} branches</div></div>
         <div class="joint" ng-style="{height:(node.children.length<=2)? '250px' : '500px'}">
-            <div class="sequenceHandle" ng-repeat="seq in node.children" ng-click="selectedClicked(node, $index)">
-                    <img class="backgroundimage" ng-src="img/{{seq.image}}.png" err-src="{{errorImage}}" width="318" height="318">
-                    <div class="text">{{seq.caption}}</div>
-                    <div class="selected" ng-hide="!isIndexSelected(node, $index)">
+            <div class="sequenceHandle" ng-repeat="seq in node.children" ng-mouseenter="hover(seq)" ng-mouseleave="hover(seq)">
+                    <img ng-click="selectedClicked(node, $index)" class="backgroundimage" ng-src="img/{{seq.image}}.png" err-src="{{errorImage}}" width="318" height="318">
+                    <div style="point-events:none" class="text">{{seq.caption}}</div>
+                    <div style="point-events:none" class="selected" ng-hide="!isIndexSelected(node, $index)">
                         <div class="selectedSign">&#x2715;</div>
                         <small>selected</small>
                     </div>
+                    <div class="panelbuttons" ng-hide="!seq.shouldShowEditButton">
+                        <button ng-click="editClicked(seq)">edit</button> <button ng-click="dotdotdotClicked(seq)">...</button><div style="margin-top:1px;" class="dotdotdotoptions" ng-hide="!seq.shouldShowExtendedOptions">
+                        <button ng-click="removeSequence(seq)">remove</button>
+                        </div>
+                    </div>
+                <div class="editpanel" ng-hide="!seq.shouldShowEditPanel">
+                    <div class="panelbuttons">
+                        <button ng-click="editDone(seq)">done</button>
+                    </div>
+                    <form>
+                        <p>
+                            <label>caption</label>
+                            <br>
+                            <input ng-model="seq.caption">
+                        </p>
+                        <p>
+                            <label>image</label><br>
+                            <input ng-model="seq.image">
+                        </p>
+                    </form>
+                </div>
             </div>
         </div>
 

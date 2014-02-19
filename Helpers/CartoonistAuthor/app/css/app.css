@@ -16,25 +16,22 @@ ul {
 }
 
 form {
-    padding-left:2em;
+    padding-left:1.5em;
     padding-top: 1em;
 }
 
 input {
-    width: 320px;
+    width: 75%;
     padding:1em;
-    margin-left: -1em;
+    border:1px solid rgba(0,0,0,0.2);
 }
 
 textarea {
-    width: 320px;
+    width: 75%;
     padding:1em;
-    margin-left: -1em;
+    border:1px solid rgba(0,0,0,0.2);
 }
 
-select {
-    margin-left: -0.5em;
-}
 
 button {
     font: bold 18px/18px 'Helvetica', sans-serif;
@@ -64,26 +61,28 @@ li div {
 li h1 {
     margin-bottom:0.25em;
     background: #eee;
-    padding:0.45em;
+    padding:0.5em;
     text-align: center;
-    font: bold 72px/56px 'Helvetica', sans-serif;
+    font: bold 48px/48px 'Helvetica', sans-serif;
     color: #222;
-    border: 3px solid #222;
 }
 
 .panelcollectioncontrol {
     width:500px; margin:0 auto;
+    padding: 0;
+    padding-bottom: 1em;
     background: url('../img/centertrunk.png');
     position: relative;
 }
 
 .panel {
+    border-radius:0;
     border:0.2em solid #222;
     height: 500px;
-    background: #bbb;
+    background: #eee;
     position: relative;
+    margin-bottom: 0;
 }
-
 
 .panelbuttons {
     position: absolute;
@@ -107,7 +106,7 @@ li h1 {
     top:0;
     left:0;
     width:494px;
-    height:500px;
+    height:494px;
     overflow:hidden;
 }
 
@@ -132,7 +131,9 @@ li h1 {
     position:absolute;
     top:0; bottom:0; left:0; right:0;
     margin:auto;
-    height:30px; width:80%;
+    font-size: 36px;
+    line-height: 100%;
+    height:72px; width:80%;
     text-align: center;
 }
 
@@ -142,8 +143,9 @@ li h1 {
     top:0;
     left:0;
     width: 494px;
-    height: 500px;
-    background: #ccc;
+    height: 494px;
+    background: #eee;
+    border:1px solid rgba(0,0,0,0.25);
 }
 
 .panelbuttons button {
@@ -175,19 +177,19 @@ li h1 {
     background: #eee;
     text-align: center;
     width: 500px;
-    min-height: 250px;
     margin:0;
     border: 3px solid #222;
 }
 
 .sequenceHandle {
     float: left;
-    width:248px;
-    height:248px;
+    width:245px;
+    height:245px;
     padding:0;
     margin: 1px;
     position: relative;
     background: #222;
+    overflow:hidden;
 }
 
 .sequenceHandle .backgroundimage {
@@ -196,11 +198,10 @@ li h1 {
     margin: 0;
     top:0;
     left:0;
-    width:248px;
-    height:248px;
+    width:245px;
+    height:245px;
     opacity: 0.9;
 }
-
 
 .sequenceHandle .text {
     color: #eee;
@@ -226,14 +227,67 @@ li h1 {
 
 .commentcontainer {
     width: 140px;
-    font-size:18px;
+    font-size:14px;
     position:absolute;
     left:500px;
     z-index: 0;
-    margin: 1em;
+    margin-left: 2em;
+    margin-top: 0.25em;
+    min-height: 500px;
 }
+
 .comment {
-    margin-left: 1em;
-    padding: 1em;
+    border-top:1px solid #ccc;
+    padding-top: 1em;
+    padding-left:0;
+    /*
+    width:90px;
+    height:90px;
+    border-radius: 45px;
+    padding-top: 1.5em;
     background: #fff;
+    text-align: center;
+    */
+    font-family: Vollkorn;
+    font-weight: 400;
+    font-style: italic;
+    color:#666;
+}
+.sequenceHandle .panelbuttons {
+    position: absolute;
+    z-index: 10000;
+    padding:0;
+    text-align: right;
+    right:0;
+    top:0;
+    background:transparent;
+    margin:1px;
+    font-size: 4px;
+}
+.sequenceHandle .panelbuttons button {
+    border: none;
+    background:#999;
+    color:#fff;
+    font-size: 14px;
+}
+.sequenceHandle .panelbuttons button:hover{
+    background:#222;
+}
+
+.sequenceHandle .editpanel {
+    z-index:5000000;
+    width:100%;
+    height:100%;
+    text-align: left;
+}
+
+.addjoint{
+    margin-top: 0;
+    margin-bottom: -2em;
+    padding: 0;
+    text-align: center;
+}
+
+.addjoint button {
+    border:9px double #222;
 }
