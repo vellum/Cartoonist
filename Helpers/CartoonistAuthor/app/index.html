@@ -13,8 +13,6 @@
     <!-- app -->
     <link rel="stylesheet" href="css/app.css"/>
     <script src="lib/cartoonist.js"></script>
-
-
 </head>
 <body>
 <div class="panelcollectioncontrol" ng-controller="PanelCollectionCtrl">
@@ -23,7 +21,7 @@
         <div class="commentcontainer"><div class="comment">panel sequence</div></div>
         <li ng-repeat="node in root.nodes" ng-include="'partials/tree_item_renderer.html'"></li>
     </ul>
-    <div class="addjoint"><button>add joint</button></div>
+    <div ng-click="addJointClicked()" class="addjoint"><button>add joint</button></div>
 </div>
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>

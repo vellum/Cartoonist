@@ -37,7 +37,7 @@ function makeNode(caption)
 {
     var a = {
         "type" : "frame",
-        "celltype" : "wireframe",
+        "celltype" : "caption",
         "image" : null,
         "caption": caption
     };
@@ -135,7 +135,7 @@ function makeAndAddBranchesToEnd(node, numBranches, numFrames)
         }
         else if ( last.type == 'frame')
         {
-            var joint = makeBranchWith(3, 2, last.caption);
+            var joint = makeBranchWith(2, 2, last.caption);
             addJointToSequence(joint, node);
         }
     }
@@ -249,14 +249,14 @@ function parseAndIndex(node)
 
 function makeSampleTree()
 {
-    // make a root node sequence of 3 frames
+    // make a root node sequence of 2 frames
     var root = makeSequenceWith(2, 'r');
 
-    // put a joint with 3 branches of 2 frames
-    var joint0 = makeBranchWith(3, 2, 'j');
+    // put a joint with 2 branches of 2 frames
+    var joint0 = makeBranchWith(2, 2, 'j');
     addJointToSequence(joint0, root);
 
-    for (var i = 0; i < 5; i++)
+    for (var i = 0; i < 4; i++)
     {
         makeAndAddBranchesToEnd(root);
     }

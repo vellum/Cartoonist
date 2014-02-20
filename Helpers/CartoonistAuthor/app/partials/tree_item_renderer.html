@@ -45,12 +45,22 @@
         <div class="add"><button ng-click="addPanelAfter(node, $index)">add panel</button></div>
     </div>
     <div ng-switch-when="joint">
-        <div class="commentcontainer"><div class="comment">{{node.children.length}} branches</div></div>
-        <div class="joint" ng-style="{height:(node.children.length<=2)? '250px' : '500px'}">
-            <div class="sequenceHandle" ng-repeat="seq in node.children" ng-mouseenter="hover(seq)" ng-mouseleave="hover(seq)">
+        <div class="commentcontainer" ng-mouseenter="jointHover(node)" ng-mouseleave="jointHover(node)">
+            <div class="comment">
+                joint with {{node.children.length}} branches
+            </div>
+            <ul ng-hide="!node.shouldShowJointButtons">
+                <li ng-click="addNewBranchToJoint(node)">add branch</li>
+                <li ng-click="removeClicked(node)">remove joint (and everything beneath it)</li>
+            </ul>
+        </div>
+        <div class="joint" ng-style="{
+                height: node.children.length%2==0 ? 125 * node.children.length + 'px' : 125 * (node.children.length+1) + 'px'
+            }">
+            <div ng-style="{marginRight:($index%2==0) ? '4px' : '0px'}" class="sequenceHandle" ng-repeat="seq in node.children" ng-mouseenter="hover(seq)" ng-mouseleave="hover(seq)">
                     <img ng-click="selectedClicked(node, $index)" class="backgroundimage" ng-src="img/{{seq.image}}.png" err-src="{{errorImage}}" width="318" height="318">
-                    <div style="point-events:none" class="text">{{seq.caption}}</div>
-                    <div style="point-events:none" class="selected" ng-hide="!isIndexSelected(node, $index)">
+                    <div style="pointer-events:none" class="text">{{seq.caption}}</div>
+                    <div style="pointer-events:none" class="selected" ng-hide="!isIndexSelected(node, $index)">
                         <div class="selectedSign">&#x2715;</div>
                         <small>selected</small>
                     </div>
@@ -63,22 +73,29 @@
                     <div class="panelbuttons">
                         <button ng-click="editDone(seq)">done</button>
                     </div>
-                    <form>
-                        <p>
-                            <label>caption</label>
-                            <br>
-                            <input ng-model="seq.caption">
-                        </p>
-                        <p>
+                    <form role="form">
+                        <div class="form-group">
+                            <label>caption</label><br>
+                            <textarea ng-model="seq.caption"></textarea>
+                        </div>
+                        <div class="form-group">
                             <label>image</label><br>
                             <input ng-model="seq.image">
-                        </p>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
-
-        <div class="commentcontainer"><div class="comment">panel sequence</div></div>
+        <div class="commentcontainer" ng-mouseenter="sequenceHover(node)" ng-mouseleave="sequenceHover(node)">
+            <div class="comment">
+                panel sequence (beginning with the branch &ldquo;{{node.children[node.selected].caption}}&rdquo;)
+                <!--
+                <ul ng-hide="!node.shouldShowSequenceButtons">
+                    <li ng-click="removeClicked(node.children[node.selected])">remove sequence (and everything beneath it)</li>
+                </ul>
+                -->
+            </div>
+        </div>
         <ul>
             <li ng-repeat="node in node.children[node.selected].nodes" ng-include="'partials/tree_item_renderer.html'"></li>
         </ul>

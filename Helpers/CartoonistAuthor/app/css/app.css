@@ -4,8 +4,11 @@
 
 body {
     background: #eee;
-    font: bold 18px/18px 'Helvetica', sans-serif;
-    color: #222;
+    font-family: 'Helvetica', sans-serif;
+    font-size: 18px;
+    line-height: 1.0;
+    font-weight: bold;
+    color: #555;
 }
 
 ul {
@@ -16,8 +19,8 @@ ul {
 }
 
 form {
-    padding-left:1.5em;
-    padding-top: 1em;
+    padding: 1.5em;
+    font-size: 14px;
 }
 
 input {
@@ -34,17 +37,21 @@ textarea {
 
 
 button {
-    font: bold 18px/18px 'Helvetica', sans-serif;
+    font-family: 'Helvetica', sans-serif;
+    font-size: 18px;
+    line-height: 1.0;
+    font-weight: bold;
+
     background: #eee;
     padding:0.75em;
     margin:0.5em;
-    border:0.21em solid #222;
+    border:3px solid #555;
     outline:none;
 }
 
 button:hover {
-    background:#222;
-    color:#eee;
+    background:#555;
+    color:#fff;
 }
 
 /* custom */
@@ -59,12 +66,17 @@ li div {
 }
 
 li h1 {
-    margin-bottom:0.25em;
     background: #eee;
-    padding:0.5em;
+    margin:0.125em;
+    margin-top: 1em;
+    padding:0.125em;
     text-align: center;
-    font: bold 48px/48px 'Helvetica', sans-serif;
-    color: #222;
+
+    font-family: 'Helvetica', sans-serif;
+    font-size: 48px;
+    line-height: 1.0;
+    font-weight: bold;
+    color: #555;
 }
 
 .panelcollectioncontrol {
@@ -77,7 +89,7 @@ li h1 {
 
 .panel {
     border-radius:0;
-    border:0.2em solid #222;
+    border:3px solid #555;
     height: 500px;
     background: #eee;
     position: relative;
@@ -88,10 +100,16 @@ li h1 {
     position: absolute;
     z-index: 1000;
     padding:0;
-    margin:-3px;
+    margin:0;
     text-align: right;
-    right:0;
-    top:0;
+    right:0px;
+    top:0px;
+}
+
+.panelbuttons button {
+    border-top:none;
+    border-right: none;
+    background: transparent;
 }
 
 .editbutton {
@@ -120,7 +138,7 @@ li h1 {
     top:0.5em;
     left:0.5em;
     padding:1em;
-    background:#333;
+    background:#555;
     color:#ddd;
     border:1px solid #ddd;
     text-align: center;
@@ -142,10 +160,12 @@ li h1 {
     position: absolute;
     top:0;
     left:0;
-    width: 494px;
-    height: 494px;
+    padding: 0;
+    margin:0;
+    width: 100%;
+    height: 100%;
     background: #eee;
-    border:1px solid rgba(0,0,0,0.25);
+    border:none;
 }
 
 .panelbuttons button {
@@ -154,8 +174,8 @@ li h1 {
 }
 
 .panelbuttons button:hover{
-    background: #222;
-    color:#eee;
+    background: #555;
+    color:#fff;
 }
 
 .dotdotdotoptions {
@@ -169,16 +189,16 @@ li h1 {
 }
 
 .dotdotdotoptions button:hover {
-    background:#222;
-    color:#eee;
+    background:#555;
+    color:#fff;
 }
 
 .joint {
-    background: #eee;
+    background: #ddd;
     text-align: center;
     width: 500px;
     margin:0;
-    border: 3px solid #222;
+    border: 3px solid #555;
 }
 
 .sequenceHandle {
@@ -186,10 +206,9 @@ li h1 {
     width:245px;
     height:245px;
     padding:0;
-    margin: 1px;
     position: relative;
-    background: #222;
-    overflow:hidden;
+    background: transparent;
+    margin-bottom: 4px;
 }
 
 .sequenceHandle .backgroundimage {
@@ -198,17 +217,25 @@ li h1 {
     margin: 0;
     top:0;
     left:0;
-    width:245px;
-    height:245px;
-    opacity: 0.9;
+    width:100%;
+    height:100%;
+    opacity: 1;
+    overflow: hidden;
+    border:none;
+}
+
+img.backgroundimage {
+    border:none;
 }
 
 .sequenceHandle .text {
-    color: #eee;
+    color: #555;
     position: absolute;
-    top:1em;
-    left:1em;
+    top:0;
+    left:0;
+    padding: 1em;
     z-index: 1000;
+    text-align: left;
 }
 
 .selected {
@@ -222,7 +249,7 @@ li h1 {
 
 .selectedSign {
     font: bold 96px/96px 'Helvetica', sans-serif;
-    color: #222;
+    color: #555;
 }
 
 .commentcontainer {
@@ -240,14 +267,7 @@ li h1 {
     border-top:1px solid #ccc;
     padding-top: 1em;
     padding-left:0;
-    /*
-    width:90px;
-    height:90px;
-    border-radius: 45px;
-    padding-top: 1.5em;
-    background: #fff;
-    text-align: center;
-    */
+    line-height: 1.5;
     font-family: Vollkorn;
     font-weight: 400;
     font-style: italic;
@@ -266,12 +286,13 @@ li h1 {
 }
 .sequenceHandle .panelbuttons button {
     border: none;
-    background:#999;
-    color:#fff;
+    background:#fff;
+    color: #555;
     font-size: 14px;
 }
 .sequenceHandle .panelbuttons button:hover{
-    background:#222;
+    background:#555;
+    color:#fff;
 }
 
 .sequenceHandle .editpanel {
@@ -279,6 +300,10 @@ li h1 {
     width:100%;
     height:100%;
     text-align: left;
+}
+
+.sequenceHandle form {
+    margin-top:1em;
 }
 
 .addjoint{
@@ -289,5 +314,30 @@ li h1 {
 }
 
 .addjoint button {
-    border:9px double #222;
+    border:9px double #555;
+}
+
+.commentcontainer ul {
+    margin-top:1em;
+}
+
+.commentcontainer ul li {
+    margin-bottom: 1em;
+
+    font-family: Vollkorn;
+    font-weight: 400;
+    font-style: italic;
+    color:#666;
+    text-transform: uppercase;
+    font-size: 70%;
+    line-height: 1.5;
+
+    border:1px solid rgba(0,0,0,0.125);
+    padding:1em;
+    text-align: center;
+    background: transparent;
+}
+.commentcontainer ul li:hover {
+    background:#555;
+    color:#fff;
 }
