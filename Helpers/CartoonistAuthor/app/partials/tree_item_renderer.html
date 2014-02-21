@@ -1,31 +1,38 @@
 <div ng-switch on="node.type">
+    <!-- panel -->
     <div ng-switch-when="frame">
         <div class="add" ng-hide="!$first"><button ng-click="addPanelAtFirstSibling(node)">add panel</button></div>
+        <!-- display -->
         <div class="panel" ng-mouseenter="hover(node)" ng-mouseleave="hover(node)">
             <div ng-switch on="node.celltype">
+                <!-- caption type -->
                 <div ng-switch-when="caption">
                     <div class="caption">
                         {{node.caption}}
                     </div>
                     <div class="backgroundimage"><img ng-src="img/{{node.image}}.png" err-src="{{errorImage}}" width="500" height="500"></div>
                 </div>
+                <!-- no caption type -->
                 <div ng-switch-when="nocaption">
                     <div class="backgroundimage"><img ng-src="img/{{node.image}}.png" err-src="{{errorImage}}" width="500" height="500"></div>
                 </div>
+                <!-- wireframe type -->
                 <div class="wireframecaption" ng-switch-when="wireframe">
                     {{node.caption}}
                 </div>
             </div>
+            <!-- UI appears on hover -->
             <div class="panelbuttons" ng-hide="!node.shouldShowEditButton">
                 <button class="editbutton" ng-click="editClicked(node)">edit</button><button ng-click="dotdotdotClicked(node)"><i style="font-size:90%" class="fa fa-caret-down"></i></button><div class="dotdotdotoptions">
                 <button ng-click="removeClicked(node)" ng-hide="!node.shouldShowExtendedOptions">remove</button>
             </div>
+        </div>
+        <!-- edit -->
+        <div class="editpanel" ng-hide="!node.shouldShowEditPanel">
+            <div class="panelbuttons">
+                <button ng-click="editDone(node)">done</button>
             </div>
-            <div class="editpanel" ng-hide="!node.shouldShowEditPanel">
-                <div class="panelbuttons">
-                    <button ng-click="editDone(node)">done</button>
-                </div>
-                <form role="form">
+            <form role="form">
                     <div class="form-group">
                         <label>caption</label><br>
                         <textarea ng-model="node.caption"></textarea>
@@ -43,6 +50,7 @@
             </div>
         </div>
 
+        <!-- between panels UI -->
         <div class="add dropdown" ng-mouseenter="connectionHover(node)" ng-mouseleave="isCollapsed=true;connectionHover(node);">
             <div ng-style="{opacity: node.shouldShowAddButtons? 1 : 0}"><button class="addpanel" ng-click="addPanelAfter(node, $index)">add panel</button><button ng-click="isCollapsed=!isCollapsed" class="adddotdotdot"><i style="font-size:90%" class="fa fa-caret-down"></i></button>
                 <div class="addoptions" collapse="isCollapsed">
@@ -57,7 +65,10 @@
             </div>
         </div>
     </div>
+
+    <!-- joint -->
     <div ng-switch-when="joint">
+        <!-- comments in right margin -->
         <div class="commentcontainer" ng-mouseenter="jointHover(node)" ng-mouseleave="jointHover(node)">
             <div class="comment">
                 joint with {{node.children.length}} branches
@@ -67,21 +78,26 @@
                 <li ng-click="removeClicked(node)">remove joint (and everything beneath it)</li>
             </ul>
         </div>
+        <!-- joint -->
         <div class="joint" ng-style="{
                 height: node.children.length%2==0 ? 125 * node.children.length + 'px' : 125 * (node.children.length+1) + 'px'
             }">
+            <!-- display each choice in joint -->
             <div ng-style="{marginRight:($index%2==0) ? '4px' : '0px'}" class="sequenceHandle" ng-repeat="seq in node.children" ng-mouseenter="hover(seq)" ng-mouseleave="hover(seq)">
-                    <img ng-click="selectedClicked(node, $index)" class="backgroundimage" ng-src="img/{{seq.image}}.png" err-src="{{errorImage}}" width="318" height="318">
-                    <div style="pointer-events:none" class="text">{{seq.caption}}</div>
-                    <div style="pointer-events:none" class="selected" ng-hide="!isIndexSelected(node, $index)">
-                        <div class="selectedSign">&#x2715;</div>
+                <!-- display -->
+                <img ng-click="selectedClicked(node, $index)" class="backgroundimage" ng-src="img/{{seq.image}}.png" err-src="{{errorImage}}" width="318" height="318">
+                <div style="pointer-events:none" class="text">{{seq.caption}}</div>
+                <div style="pointer-events:none" class="selected" ng-hide="!isIndexSelected(node, $index)">
+                    <div class="selectedSign">&#x2715;</div>
                         <small>selected</small>
                     </div>
+                    <!-- UI -->
                     <div class="panelbuttons" ng-hide="!seq.shouldShowEditButton">
                         <button ng-click="editClicked(seq)">edit</button> <button ng-click="dotdotdotClicked(seq)"><i style="font-size:90%" class="fa fa-caret-down"></i></button><div style="margin-top:1px;" class="dotdotdotoptions" ng-hide="!seq.shouldShowExtendedOptions">
                         <button ng-click="removeSequence(seq)">remove</button>
-                        </div>
                     </div>
+                </div>
+                <!-- edit -->
                 <div class="editpanel" ng-hide="!seq.shouldShowEditPanel">
                     <div class="panelbuttons">
                         <button ng-click="editDone(seq)">done</button>
@@ -99,6 +115,7 @@
                 </div>
             </div>
         </div>
+        <!-- comment in right margin -->
         <div class="commentcontainer" ng-mouseenter="sequenceHover(node)" ng-mouseleave="sequenceHover(node)">
             <div class="comment">
                 panel sequence (beginning with the branch &ldquo;{{node.children[node.selected].caption}}&rdquo;)

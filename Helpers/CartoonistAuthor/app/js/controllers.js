@@ -22,7 +22,9 @@ angular.module('theApp.controllers', ['ui.bootstrap']).
         };
 
         $scope.hover = function(node) {
-            return node.shouldShowEditButton = !node.shouldShowEditButton;
+            node.shouldShowEditButton = !node.shouldShowEditButton;
+            if (!node.shouldShowEditButton)
+                node.shouldShowExtendedOptions = false;
         };
 
         $scope.sequenceHover = function(node) {
