@@ -1,10 +1,11 @@
 'use strict';
 
 /* Controllers */
-angular.module('theApp.controllers', []).
-    controller('PanelCollectionCtrl', function($scope) {
+angular.module('theApp.controllers', ['ui.bootstrap']).
+    controller('PanelCollectionCtrl', function($scope, DataProviderService) {
 
-        $scope.root = makeSampleTree();
+        $scope.dataProvider = DataProviderService;
+        $scope.root = DataProviderService.model;
         $scope.shouldShowEditButton = false;
         $scope.shouldShowEditPanel = false;
         $scope.shouldShowExtendedOptions = false;
@@ -12,6 +13,13 @@ angular.module('theApp.controllers', []).
         $scope.errorImage = 'img/img404.png';
         $scope.shouldShowJointButtons = false;
         $scope.shouldShowSequenceButtons = false;
+        $scope.shouldShowAddButtons = false;
+        $scope.isCollapsed = true;
+
+        $scope.handleTreeChanges = function(){
+            //console.log('handle tree changes');
+            DataProviderService.SaveState();
+        };
 
         $scope.hover = function(node) {
             return node.shouldShowEditButton = !node.shouldShowEditButton;
@@ -21,38 +29,55 @@ angular.module('theApp.controllers', []).
             return node.shouldShowSequenceButtons = !node.shouldShowSequenceButtons;
         };
 
+        $scope.connectionHover = function(node) {
+            node.shouldShowAddButtons = !node.shouldShowAddButtons;
+            if (!node.shouldShowAddButtons) {
+            }
+        };
+
         $scope.jointHover = function(node) {
             return node.shouldShowJointButtons = !node.shouldShowJointButtons;
         };
 
         $scope.editClicked = function(node) {
-          return node.shouldShowEditPanel = !node.shouldShowEditPanel;
+            node.shouldShowEditPanel = !node.shouldShowEditPanel;
         };
 
         $scope.editDone = function(node) {
-          return node.shouldShowEditPanel = false;
+            node.shouldShowEditPanel = false;
+            $scope.handleTreeChanges();
         };
 
         $scope.dotdotdotClicked = function(node) {
-          return node.shouldShowExtendedOptions = !node.shouldShowExtendedOptions;
+            return node.shouldShowExtendedOptions = !node.shouldShowExtendedOptions;
         };
 
         $scope.removeClicked = function(node) {
 
             // ToDo: prevent deletion of root node (very first)
-
+            var parent = idlookup[node.parentid];
+            if (parent){
+                // if no grandparent, this is root
+                if (parent.parentid==null||parent.parentid==undefined){
+                    // this is the last and first node, so refuse to remove
+                    if (parent.nodes.length==1) return;
+                }
+            }
             removeNodeFromParent(node);
+            $scope.handleTreeChanges();
             return true;
         };
 
         $scope.addPanelAtFirstSibling = function(node, index){
             var parent = idlookup[node.parentid];
             insertNewFrameInSequenceAt(parent, 0);
+            $scope.handleTreeChanges();
         };
 
         $scope.addPanelAfter = function(node, index){
             var parent = idlookup[node.parentid];
             insertNewFrameInSequenceAt(parent, index+1);
+            $scope.handleTreeChanges();
         };
 
         $scope.isIndexSelected = function(node, index){
@@ -69,6 +94,7 @@ angular.module('theApp.controllers', []).
             if (joint.children.length>2){
                 removeNodeFromParent(sequence);
             }
+            $scope.handleTreeChanges();
         };
 
         $scope.addJointClicked = function(){
@@ -78,6 +104,7 @@ angular.module('theApp.controllers', []).
             var found = $scope.findLastSequenceInNode($scope.root);
             var joint = makeBranchWith(2, 2, 'empty');
             addJointToSequence(joint, found);
+            $scope.handleTreeChanges();
         };
 
         $scope.findLastSequenceInNode = function(node){
@@ -109,6 +136,7 @@ angular.module('theApp.controllers', []).
         $scope.addNewBranchToJoint = function(joint){
             var newsequence = makeSequenceWith(1, "empty");
             addSequenceToJoint(newsequence, joint);
+            $scope.handleTreeChanges();
         };
 
     });

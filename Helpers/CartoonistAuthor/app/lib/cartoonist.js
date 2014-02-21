@@ -247,6 +247,38 @@ function parseAndIndex(node)
 
 }
 
+
+function parseAndClean(node, fcn)
+{
+    var type = node.type.toUpperCase();
+    if ( type == 'JOINT' )
+    {
+        console.log('parsing joint');
+        for ( var i = 0; i < node.children.length; i++ )
+        {
+            var c = node.children[i];
+            fcn(c);
+            parseAndIndex(c);
+        }
+    }
+    else if ( type == 'SEQUENCE' )
+    {
+        console.log('parsing sequence');
+        for ( var i = 0; i < node.nodes.length; i++ )
+        {
+            var c = node.nodes[i];
+            fcn(c);
+            parseAndIndex(c);
+
+        }
+    }
+    else if ( type=='FRAME')
+    {
+        console.log('parsing frame');
+    }
+
+}
+
 function makeSampleTree()
 {
     // make a root node sequence of 2 frames
