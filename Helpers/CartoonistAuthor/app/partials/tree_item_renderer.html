@@ -1,9 +1,22 @@
 <div ng-switch on="node.type">
     <!-- panel -->
     <div ng-switch-when="frame">
-        <div class="add" ng-hide="!$first"><button ng-click="addPanelAtFirstSibling(node)">add panel</button></div>
+        <!--<div class="add" ng-hide="!$first"><button ng-click="addPanelAtFirstSibling(node)">add panel</button></div>-->
+        //FIXME:rewire as hover mehtod
+        <div ng-hide="!$first" class="add" ng-mouseenter="setPropertyOnNode('shouldShowAddButtonsFirst', true, node)" ng-mouseleave="setPropertyOnNode('shouldShowAddButtonsFirst', false, node);isFirstCollapsed=true;" ng-style="{opacity: propertyOnNode('shouldShowAddButtonsFirst', node) ? 1 : 0}">
+        <button ng-click="addPanelAtFirstSibling(node)">add panel</button><button ng-click="isFirstCollapsed=!isFirstCollapsed" class="adddotdotdot"><i style="font-size:90%" class="fa fa-caret-down"></i></button>
+            <div class="addoptions" collapse="isFirstCollapsed">
+                <div class="well">
+                    <hr>
+                    <ul>
+                        <li ng-class="{{pasteboard==null?disabled:enabled}}">paste sequence</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <!-- display -->
-        <div class="panel" ng-mouseenter="hover(node)" ng-mouseleave="hover(node)">
+        <div class="panel" ng-mouseenter="enter(node)" ng-mouseleave="leave(node)">
             <div ng-switch on="node.celltype">
                 <!-- caption type -->
                 <div ng-switch-when="caption">
@@ -22,13 +35,14 @@
                 </div>
             </div>
             <!-- UI appears on hover -->
-            <div class="panelbuttons" ng-hide="!node.shouldShowEditButton">
+            <div class="panelbuttons" ng-hide="!propertyOnNode('shouldShowEditButton', node)">
                 <button class="editbutton" ng-click="editClicked(node)">edit</button><button ng-click="dotdotdotClicked(node)"><i style="font-size:90%" class="fa fa-caret-down"></i></button><div class="dotdotdotoptions">
-                <button ng-click="removeClicked(node)" ng-hide="!node.shouldShowExtendedOptions">remove</button>
+                <button ng-click="removeClicked(node)" ng-hide="!propertyOnNode('shouldShowExtendedOptions', node)">remove</button>
             </div>
         </div>
+
         <!-- edit -->
-        <div class="editpanel" ng-hide="!node.shouldShowEditPanel">
+        <div class="editpanel" ng-hide="!propertyOnNode('shouldShowEditPanel', node)">
             <div class="panelbuttons">
                 <button ng-click="editDone(node)">done</button>
             </div>
@@ -51,19 +65,21 @@
         </div>
 
         <!-- between panels UI -->
-        <div class="add dropdown" ng-mouseenter="connectionHover(node)" ng-mouseleave="isCollapsed=true;connectionHover(node);">
-            <div ng-style="{opacity: node.shouldShowAddButtons? 1 : 0}"><button class="addpanel" ng-click="addPanelAfter(node, $index)">add panel</button><button ng-click="isCollapsed=!isCollapsed" class="adddotdotdot"><i style="font-size:90%" class="fa fa-caret-down"></i></button>
+        <div ng-hide="isLastInSequence(node, $index)" class="add dropdown" ng-mouseenter="connectionHover(node)" ng-mouseleave="isCollapsed=true; connectionHover(node);">
+            <div ng-style="{opacity: propertyOnNode('shouldShowAddButtons', node) ? 1 : 0}"><button class="addpanel" ng-click="addPanelAfter(node, $index)">add panel</button><button ng-click="isCollapsed=!isCollapsed" class="adddotdotdot"><i style="font-size:90%" class="fa fa-caret-down"></i></button>
                 <div class="addoptions" collapse="isCollapsed">
                     <div class="well">
                        <hr>
                        <ul>
-                           <li>add joint</li>
-                           <li>paste sequence</li>
+                           <li ng-click="addJointAt(node, $index)">add joint</li>
+                           <li>pb : {{$scope.pasteboard}} / paste sequence</li>
                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+        <div ng-hide="!isLastInSequence(node, $index)" class="add"><button class="addpanel" ng-click="addPanelAfter(node, $index)">add panel</button></div>
+
     </div>
 
     <!-- joint -->
@@ -73,7 +89,7 @@
             <div class="comment">
                 joint with {{node.children.length}} branches
             </div>
-            <ul ng-hide="!node.shouldShowJointButtons">
+            <ul ng-hide="!propertyOnNode('shouldShowJointButtons', node)">
                 <li ng-click="addNewBranchToJoint(node)">add branch</li>
                 <li ng-click="removeClicked(node)">remove joint (and everything beneath it)</li>
             </ul>
@@ -83,7 +99,7 @@
                 height: node.children.length%2==0 ? 125 * node.children.length + 'px' : 125 * (node.children.length+1) + 'px'
             }">
             <!-- display each choice in joint -->
-            <div ng-style="{marginRight:($index%2==0) ? '4px' : '0px'}" class="sequenceHandle" ng-repeat="seq in node.children" ng-mouseenter="hover(seq)" ng-mouseleave="hover(seq)">
+            <div ng-style="{marginRight:($index%2==0) ? '4px' : '0px'}" class="sequenceHandle" ng-repeat="seq in node.children" ng-mouseenter="enter(seq)" ng-mouseleave="leave(seq)">
                 <!-- display -->
                 <img ng-click="selectedClicked(node, $index)" class="backgroundimage" ng-src="img/{{seq.image}}.png" err-src="{{errorImage}}" width="318" height="318">
                 <div style="pointer-events:none" class="text">{{seq.caption}}</div>
@@ -92,13 +108,13 @@
                         <small>selected</small>
                     </div>
                     <!-- UI -->
-                    <div class="panelbuttons" ng-hide="!seq.shouldShowEditButton">
-                        <button ng-click="editClicked(seq)">edit</button> <button ng-click="dotdotdotClicked(seq)"><i style="font-size:90%" class="fa fa-caret-down"></i></button><div style="margin-top:1px;" class="dotdotdotoptions" ng-hide="!seq.shouldShowExtendedOptions">
+                    <div class="panelbuttons" ng-hide="!propertyOnNode('shouldShowEditButton', seq)">
+                        <button ng-click="editClicked(seq)">edit</button> <button ng-click="dotdotdotClicked(seq)"><i style="font-size:90%" class="fa fa-caret-down"></i></button><div style="margin-top:1px;" class="dotdotdotoptions" ng-hide="!propertyOnNode('shouldShowExtendedOptions', seq)">
                         <button ng-click="removeSequence(seq)">remove</button>
                     </div>
                 </div>
                 <!-- edit -->
-                <div class="editpanel" ng-hide="!seq.shouldShowEditPanel">
+                <div class="editpanel" ng-hide="!propertyOnNode('shouldShowEditPanel', seq)">
                     <div class="panelbuttons">
                         <button ng-click="editDone(seq)">done</button>
                     </div>
@@ -119,11 +135,11 @@
         <div class="commentcontainer" ng-mouseenter="sequenceHover(node)" ng-mouseleave="sequenceHover(node)">
             <div class="comment">
                 panel sequence (beginning with the branch &ldquo;{{node.children[node.selected].caption}}&rdquo;)
-                <!--
-                <ul ng-hide="!node.shouldShowSequenceButtons">
-                    <li ng-click="removeClicked(node.children[node.selected])">remove sequence (and everything beneath it)</li>
+
+                <ul ng-hide="!propertyOnNode('shouldShowSequenceButtons', node)">
+                    <li>copy sequence</li>
                 </ul>
-                -->
+
             </div>
         </div>
         <ul>

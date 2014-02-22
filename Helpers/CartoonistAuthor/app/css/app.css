@@ -403,4 +403,17 @@ img.backgroundimage {
     background:#eee;
     border: 3px solid #222;
     margin-bottom: 0.5em;
+    cursor: pointer; cursor: hand;
+
+}
+.well li:hover{
+    background:#222;
+    color:#fff;
+}
+.well li.disabled {
+    text-decoration:line-through;
+}
+.well li.disabled:hover{
+    background:#eee;
+    color:#222;
 }
