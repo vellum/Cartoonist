@@ -10,10 +10,12 @@ angular.module('theApp.controllers', ['ui.bootstrap']).
         $scope.userInterfaceState = [];
         $scope.availableCellTypes = ['caption','nocaption', 'wireframe'];
         $scope.errorImage = 'img/img404.png';
+        $scope.pasteBoardSequence = null;
 
         // ui-bootstrap wants its state values at the scope level
         $scope.isCollapsed = true;
         $scope.isFirstCollapsed = true;
+
 
         // ui state management
         // lookup state by node id
@@ -106,6 +108,23 @@ angular.module('theApp.controllers', ['ui.bootstrap']).
             return true;
         };
 
+        $scope.removeClickedButPreserveChildren = function(node) {
+            var joint = node;
+            var sequencetopreserve = joint.children[joint.selected];
+            var parentsequence = idlookup[joint.parentid];
+
+            // remove joint from parent sequence
+            removeNodeFromParent(joint);
+
+            // transplant panels and nested joints, if any
+            for (var i = 0; i < sequencetopreserve.nodes.length; i++){
+                var item = sequencetopreserve.nodes[i];
+                addNodeToSequence(item, parentsequence);
+            }
+
+            $scope.handleTreeChanges();
+        };
+
         // utilities
         $scope.isLastInSequence = function(node, index){
             var parent = idlookup[node.parentid];
@@ -157,6 +176,72 @@ angular.module('theApp.controllers', ['ui.bootstrap']).
             var found = $scope.findLastSequenceInNode($scope.root);
             var joint = makeBranchWith(2, 2, 'empty');
             addJointToSequence(joint, found);
+            $scope.handleTreeChanges();
+        };
+
+        $scope.copyPanelsInSequenceToPasteboard = function(seq){
+            console.log('copy');
+            if (seq.type!='sequence'){
+                return;
+            }
+            console.log('copy');
+            var arrDuplicatePanels = [];
+            for (var i = 0; i<seq.nodes.length; i++) {
+                var original = seq.nodes[i];
+
+                // only copy panels, no joints
+                if (original.type=='frame'){
+                    var dupe = makeNode();
+                    dupe.type = original.type;
+                    dupe.celltype = original.celltype;
+                    dupe.caption = original.caption;
+                    dupe.image = original.image;
+                    arrDuplicatePanels.push(dupe);
+                }
+            }
+            console.log(arrDuplicatePanels);
+            $scope.pasteBoardSequence = arrDuplicatePanels;
+        };
+
+        $scope.applyPasteboardSequenceAt = function(node, index){
+
+            var parent = idlookup[node.parentid];
+            if (parent==null||parent==undefined) {
+                return;
+            }
+            if (parent.type!='sequence'){
+                return;
+            }
+
+            // step 1:
+            // split nodes into two lists
+            // remember that beginning is an alias to sequence's node array
+            var beginning = parent.nodes;
+            var end = [];
+            console.log(parent);
+
+            // move nodes from beginning to end
+            for (var i = index+1; i < beginning.length; i++){
+                var transplant = beginning[i];
+                end.push(transplant);
+            }
+            beginning.splice(index+1, end.length);
+
+            // step 2:
+            // copy pasteboard into the sequence
+            var pasteboard = $scope.pasteBoardSequence;
+            for ( var i = 0; i < pasteboard.length; i++ ){
+                var item = pasteboard[i];
+                addNodeToSequence(item, parent);
+            }
+
+            // step 3:
+            // copy spliced nodes back into the sequence
+            for ( var i = 0; i < end.length; i++ ){
+                var item = end[i];
+                addNodeToSequence(item, parent);
+            }
+            $scope.pasteBoardSequence = null;
             $scope.handleTreeChanges();
         };
 
@@ -232,8 +317,6 @@ angular.module('theApp.controllers', ['ui.bootstrap']).
 
             // insert new joint into the original sequence
             addJointToSequence(joint, parent);
-
-            console.log($scope.root);
 
             $scope.handleTreeChanges();
         };

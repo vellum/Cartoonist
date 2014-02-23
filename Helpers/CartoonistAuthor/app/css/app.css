@@ -412,8 +412,21 @@ img.backgroundimage {
 }
 .well li.disabled {
     text-decoration:line-through;
+    cursor: auto;
+    opacity: 0.25;
 }
 .well li.disabled:hover{
     background:#eee;
     color:#222;
+    cursor: auto;
+}
+button.disabled{
+    text-decoration:line-through;
+    cursor: auto;
+    opacity: 0.25;
+}
+button.disabled:hover{
+    background:#eee;
+    color:#222;
+    cursor: auto;
 }

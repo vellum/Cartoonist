@@ -1,15 +1,13 @@
 <div ng-switch on="node.type">
     <!-- panel -->
     <div ng-switch-when="frame">
-        <!--<div class="add" ng-hide="!$first"><button ng-click="addPanelAtFirstSibling(node)">add panel</button></div>-->
-        //FIXME:rewire as hover mehtod
         <div ng-hide="!$first" class="add" ng-mouseenter="setPropertyOnNode('shouldShowAddButtonsFirst', true, node)" ng-mouseleave="setPropertyOnNode('shouldShowAddButtonsFirst', false, node);isFirstCollapsed=true;" ng-style="{opacity: propertyOnNode('shouldShowAddButtonsFirst', node) ? 1 : 0}">
         <button ng-click="addPanelAtFirstSibling(node)">add panel</button><button ng-click="isFirstCollapsed=!isFirstCollapsed" class="adddotdotdot"><i style="font-size:90%" class="fa fa-caret-down"></i></button>
             <div class="addoptions" collapse="isFirstCollapsed">
                 <div class="well">
                     <hr>
                     <ul>
-                        <li ng-class="{{pasteboard==null?disabled:enabled}}">paste sequence</li>
+                        <li ng-click="applyPasteboardSequenceAt(node, -1)" ng-class="pasteBoardSequence==null?'disabled':'enabled'">paste sequence</li>
                     </ul>
                 </div>
             </div>
@@ -72,7 +70,7 @@
                        <hr>
                        <ul>
                            <li ng-click="addJointAt(node, $index)">add joint</li>
-                           <li>pb : {{$scope.pasteboard}} / paste sequence</li>
+                           <li ng-click="applyPasteboardSequenceAt(node, $index)" ng-class="pasteBoardSequence==null?'disabled':'enabled'">paste sequence</li>
                        </ul>
                     </div>
                 </div>
@@ -91,6 +89,7 @@
             </div>
             <ul ng-hide="!propertyOnNode('shouldShowJointButtons', node)">
                 <li ng-click="addNewBranchToJoint(node)">add branch</li>
+                <li ng-click="removeClickedButPreserveChildren(node)">remove joint</li>
                 <li ng-click="removeClicked(node)">remove joint (and everything beneath it)</li>
             </ul>
         </div>
@@ -137,7 +136,7 @@
                 panel sequence (beginning with the branch &ldquo;{{node.children[node.selected].caption}}&rdquo;)
 
                 <ul ng-hide="!propertyOnNode('shouldShowSequenceButtons', node)">
-                    <li>copy sequence</li>
+                    <li ng-click="copyPanelsInSequenceToPasteboard(node.children[node.selected])">copy sequence</li>
                 </ul>
 
             </div>
