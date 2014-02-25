@@ -96,6 +96,7 @@ controllers.controller('PanelCollectionCtrl', function($scope, $timeout, DataPro
     $scope.storyTitleClicked = function(){
         $scope.shouldShowTitleEditPanel = true;
         var el = document.getElementById('roottitle');
+        // give it a moment to get inserted back into the dom
         $timeout(function() {
             el.focus();
         }, 100);

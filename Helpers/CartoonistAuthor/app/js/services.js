@@ -103,6 +103,7 @@ cartoonistServices.factory('DataProviderService', ['$rootScope', function($rootS
 
             // make a dictionary lookup of models by id (for easy reference)
             // also, this prevents cyclical json structures (which is illegal)
+            idlookup = [];
             parseAndIndex(service.model);
 
             console.log(service.storyKeys);
@@ -151,6 +152,9 @@ cartoonistServices.factory('DataProviderService', ['$rootScope', function($rootS
             service.model = tree;
             service.modelkey = key;
 
+            idlookup = [];
+            parseAndIndex(service.model);
+
             $rootScope.$broadcast('SELECTED_MODEL_UPDATED', null);
         },
 
@@ -169,6 +173,10 @@ cartoonistServices.factory('DataProviderService', ['$rootScope', function($rootS
             var story = localStorage.getItem(storyKey);
             story = angular.fromJson(story);
             service.model = story;
+
+            idlookup = [];
+            parseAndIndex(service.model);
+
 
             $rootScope.$broadcast('SELECTED_MODEL_UPDATED', null);
         },
@@ -193,6 +201,10 @@ cartoonistServices.factory('DataProviderService', ['$rootScope', function($rootS
 
             service.modelkey = service.storyKeys[service.selectedStoryKeyIndex];
             service.model = angular.fromJson(localStorage.getItem(service.modelkey));
+
+            idlookup = [];
+            parseAndIndex(service.model);
+
             $rootScope.$broadcast('SELECTED_MODEL_UPDATED', null);
         }
     };
