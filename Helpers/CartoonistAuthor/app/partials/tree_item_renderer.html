@@ -2,7 +2,7 @@
     <!-- panel -->
     <div ng-switch-when="frame">
         <div ng-hide="!$first" class="add" ng-mouseenter="setPropertyOnNode('shouldShowAddButtonsFirst', true, node)" ng-mouseleave="setPropertyOnNode('shouldShowAddButtonsFirst', false, node);isFirstCollapsed=true;" ng-style="{opacity: propertyOnNode('shouldShowAddButtonsFirst', node) ? 1 : 0}">
-        <button ng-click="addPanelAtFirstSibling(node)">add panel</button><button ng-click="isFirstCollapsed=!isFirstCollapsed" class="adddotdotdot"><i style="font-size:90%" class="fa fa-caret-down"></i></button>
+            <button ng-click="addPanelAtFirstSibling(node)">add panel</button><button ng-click="isFirstCollapsed=!isFirstCollapsed" class="adddotdotdot"><i style="font-size:90%" class="fa fa-caret-down"></i></button>
             <div class="addoptions" collapse="isFirstCollapsed">
                 <div class="well">
                     <hr>
@@ -37,14 +37,14 @@
                 <button class="editbutton" ng-click="editClicked(node)">edit</button><button ng-click="dotdotdotClicked(node)"><i style="font-size:90%" class="fa fa-caret-down"></i></button><div class="dotdotdotoptions">
                 <button ng-click="removeClicked(node)" ng-hide="!propertyOnNode('shouldShowExtendedOptions', node)">remove</button>
             </div>
-        </div>
-
-        <!-- edit -->
-        <div class="editpanel" ng-hide="!propertyOnNode('shouldShowEditPanel', node)">
-            <div class="panelbuttons">
-                <button ng-click="editDone(node)">done</button>
             </div>
-            <form role="form">
+
+            <!-- edit -->
+            <div class="editpanel" ng-hide="!propertyOnNode('shouldShowEditPanel', node)">
+                <div class="panelbuttons">
+                    <button ng-click="editDone(node)">done</button>
+                </div>
+                <form role="form">
                     <div class="form-group">
                         <label>caption</label><br>
                         <textarea ng-model="node.caption"></textarea>
@@ -67,11 +67,11 @@
             <div ng-style="{opacity: propertyOnNode('shouldShowAddButtons', node) ? 1 : 0}"><button class="addpanel" ng-click="addPanelAfter(node, $index)">add panel</button><button ng-click="isCollapsed=!isCollapsed" class="adddotdotdot"><i style="font-size:90%" class="fa fa-caret-down"></i></button>
                 <div class="addoptions" collapse="isCollapsed">
                     <div class="well">
-                       <hr>
-                       <ul>
-                           <li ng-click="addJointAt(node, $index)">add joint</li>
-                           <li ng-click="applyPasteboardSequenceAt(node, $index)" ng-class="pasteBoardSequence==null?'disabled':'enabled'">paste sequence</li>
-                       </ul>
+                        <hr>
+                        <ul>
+                            <li ng-click="addJointAt(node, $index)">add joint</li>
+                            <li ng-click="applyPasteboardSequenceAt(node, $index)" ng-class="pasteBoardSequence==null?'disabled':'enabled'">paste sequence</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -104,13 +104,13 @@
                 <div style="pointer-events:none" class="text">{{seq.caption}}</div>
                 <div style="pointer-events:none" class="selected" ng-hide="!isIndexSelected(node, $index)">
                     <div class="selectedSign">&#x2715;</div>
-                        <small>selected</small>
-                    </div>
-                    <!-- UI -->
-                    <div class="panelbuttons" ng-hide="!propertyOnNode('shouldShowEditButton', seq)">
-                        <button ng-click="editClicked(seq)">edit</button> <button ng-click="dotdotdotClicked(seq)"><i style="font-size:90%" class="fa fa-caret-down"></i></button><div style="margin-top:1px;" class="dotdotdotoptions" ng-hide="!propertyOnNode('shouldShowExtendedOptions', seq)">
-                        <button ng-click="removeSequence(seq)">remove</button>
-                    </div>
+                    <small>selected</small>
+                </div>
+                <!-- UI -->
+                <div class="panelbuttons" ng-hide="!propertyOnNode('shouldShowEditButton', seq)">
+                    <button ng-click="editClicked(seq)">edit</button> <button ng-click="dotdotdotClicked(seq)"><i style="font-size:90%" class="fa fa-caret-down"></i></button><div style="margin-top:1px;" class="dotdotdotoptions" ng-hide="!propertyOnNode('shouldShowExtendedOptions', seq)">
+                    <button ng-click="removeSequence(seq)">remove</button>
+                </div>
                 </div>
                 <!-- edit -->
                 <div class="editpanel" ng-hide="!propertyOnNode('shouldShowEditPanel', seq)">

@@ -35,7 +35,6 @@ textarea {
     border:1px solid rgba(0,0,0,0.2);
 }
 
-
 button {
     font-family: 'Helvetica', sans-serif;
     font-size: 18px;
@@ -65,7 +64,6 @@ li div {
     text-align: center;
     padding:1em;
 }
-
 
 li h1 {
     background: #eee;
@@ -427,6 +425,185 @@ button.disabled{
 }
 button.disabled:hover{
     background:#eee;
+    background:#eee;
     color:#222;
     cursor: auto;
+}
+.beginning {
+    border: 3px solid #222;
+    padding:1em;
+    font-weight:bold;
+    text-align: center;
+    background:#eee;
+    left:0; right:0; margin:auto;
+    cursor: auto;
+}
+.beginning:hover {
+    background:#222;
+    color:#fff;
+    cursor: pointer; cursor: hand;
+}
+
+.panelcollectioncontrol{
+    margin-top:4em;margin-bottom:4em;
+}
+
+.StoryPickerCtrl{
+    position: fixed;
+    z-index: 99999999;
+    left: 0; top: 0;
+    background: transparent;
+    width: 320px;
+    padding: 1.5em;
+}
+
+.StoryPickerCtrl hr {
+    color: #222;
+    background-color: #222;
+    height: 3px;
+    margin-top:1em;
+    border:none;
+}
+
+.StoryPickerCtrl li {
+    margin-top:0.5em;
+    margin-bottom: 0.5em;
+    text-transform: Capitalize;
+    cursor:auto;
+}
+
+.StoryPickerCtrl .actions li:hover{
+    cursor: pointer; cursor: hand;
+    text-decoration: underline;
+}
+
+.StoryPickerCtrl small {
+    font-size: 50%;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+li .storyTitle:hover {
+    text-decoration: underline;
+    cursor: pointer; cursor: hand;
+}
+
+.remove {
+    /*
+    font-size:60%;
+    position:absolute; top:-1em; right:0;
+    padding: 1em;
+    border: 1px solid rgba(0,0,0,0.2);
+    */
+    cursor: auto;
+}
+
+.remove:hover {
+    text-decoration: underline;
+    cursor: pointer; cursor: hand;
+    border-bottom: 1px solid #222;
+}
+
+.storyinlist .remove {
+    display: none;
+}
+
+.storyinlist:hover .remove {
+    display: inline;
+}
+
+.storyinlist {
+}
+
+.storyinlist:hover{
+}
+
+/* animations */
+
+/*
+    animation examples
+*/
+.ng-hide-add,
+.ng-hide-remove {
+    /* ensure visibility during the transition */
+    display: block !important;
+}
+.cssFade {
+    transition: 0.5s linear all;
+    opacity: 1;
+}
+.cssFade.ng-hide {
+    opacity: 0;
+}
+.cssSlideUp {
+    transition: .5s linear all;
+    height: 80px;
+    overflow: hidden;
+}
+.cssSlideUp.ng-hide {
+    height: 0;
+}
+
+.storyTitleEditor{
+    border: 3px solid #222;
+    padding: 1em;
+    background: #eee;
+}
+
+/*
+    ng-trans
+*/
+/* transition property & duration */
+.ng-trans.ng-enter,
+.ng-trans.ng-leave {
+    -webkit-transition: 400ms all;
+    transition: 400ms all;
+}
+/* transition types */
+.ng-trans-fade.ng-enter {
+    opacity: 0;
+}
+.ng-trans-fade.ng-enter.ng-enter-active,
+.ng-trans-fade .ng-leave {
+    opacity: 1;
+}
+.ng-trans-fade.ng-leave.ng-leave-active {
+    opacity: 0;
+}
+.ng-trans-slide-left.ng-enter,
+.ng-trans-slide-left.ng-leave {
+    position: relative;
+}
+.ng-trans-slide-left.ng-enter {
+    opacity: 0;
+    right: -100%;
+}
+.ng-trans-slide-left.ng-enter.ng-enter-active,
+.ng-trans-slide-left .ng-leave {
+    opacity: 1;
+    right: 0;
+}
+.ng-trans-slide-left.ng-leave.ng-leave-active {
+    opacity: 0;
+    right: -100%;
+}
+.ng-trans-flip-x.ng-enter {
+    opacity: 0;
+    -webkit-transform: perspective(400px) rotateX(90deg);
+    -ms-transform: perspective(400px) rotateX(90deg);
+    transform: perspective(400px) rotateX(90deg);
+}
+.ng-trans-flip-x.ng-enter.ng-enter-active,
+.ng-trans-flip-x .ng-leave {
+    opacity: 1;
+    -webkit-transform: perspective(400px) rotateX(0deg);
+    -ms-transform: perspective(400px) rotateX(0deg);
+    transform: perspective(400px) rotateX(0deg);
+}
+.ng-trans-flip-x.ng-leave.ng-leave-active {
+    opacity: 0;
+    -webkit-transform: perspective(400px) rotateX(90deg);
+    -ms-transform: perspective(400px) rotateX(90deg);
+    transform: perspective(400px) rotateX(90deg);
 }
