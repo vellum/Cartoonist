@@ -9,6 +9,7 @@ controllers.controller('PanelCollectionCtrl', function($scope, $timeout, DataPro
     // boilerplate
     $scope.dataProvider = DataProviderService;
     $scope.root = DataProviderService.model;
+    $scope.json = angular.toJson($scope.root);
     $scope.userInterfaceState = [];
     $scope.availableCellTypes = ['caption','nocaption', 'wireframe'];
     $scope.errorImage = 'img/img404.png';
@@ -155,6 +156,8 @@ controllers.controller('PanelCollectionCtrl', function($scope, $timeout, DataPro
     $scope.handleTreeChanges = function(){
         //console.log('handle tree changes');
         DataProviderService.SaveState();
+
+        $scope.json = angular.toJson($scope.root);
     };
 
     // tree management

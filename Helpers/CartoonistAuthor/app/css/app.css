@@ -483,6 +483,11 @@ button.disabled:hover{
     letter-spacing: 2px;
     font-weight: bold;
 }
+.storyTitle {
+    max-width:10px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+}
 
 li .storyTitle:hover {
     text-decoration: underline;
@@ -517,6 +522,14 @@ li .storyTitle:hover {
 }
 
 .storyinlist:hover{
+}
+
+.json {
+    position: fixed;
+    bottom: 1em;
+    left:1em;
+    padding:1em;
+    font-size:50%;
 }
 
 /* animations */

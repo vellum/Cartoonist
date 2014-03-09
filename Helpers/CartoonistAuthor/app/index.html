@@ -29,6 +29,9 @@
 <!-- FIXME: when switching stories, we need to reset the scroll position -->
 <a id="verytop"></a>
 <div class="panelcollectioncontrol" ng-controller="PanelCollectionCtrl">
+    <div class="json">
+        <div class="jsondata"><textarea ng-model="json"></textarea></div>
+    </div>
     <ul>
         <li style="text-align:center">
             <div ng-hide="shouldShowTitleEditPanel">
