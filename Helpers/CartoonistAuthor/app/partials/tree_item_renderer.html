@@ -21,6 +21,7 @@
                     <div class="caption">
                         {{node.caption}}
                     </div>
+                    <div class="panelartdescription">{{node.paneldescription}}</div>
                     <div class="backgroundimage"><img ng-src="img/{{node.image}}.png" err-src="{{errorImage}}" width="500" height="500"></div>
                 </div>
                 <!-- no caption type -->
@@ -31,7 +32,9 @@
                 <div class="wireframecaption" ng-switch-when="wireframe">
                     {{node.caption}}
                 </div>
+                <div class="numnum">{{$index}}</div>
             </div>
+
             <!-- UI appears on hover -->
             <div class="panelbuttons" ng-hide="!propertyOnNode('shouldShowEditButton', node)">
                 <button class="editbutton" ng-click="editClicked(node)">edit</button><button ng-click="dotdotdotClicked(node)"><i style="font-size:90%" class="fa fa-caret-down"></i></button><div class="dotdotdotoptions">
@@ -52,6 +55,10 @@
                     <div class="form-group">
                         <label>image</label><br>
                         <input ng-model="node.image">
+                    </div>
+                    <div class="form-group">
+                        <label>panel description</label><br>
+                        <input ng-model="node.paneldescription">
                     </div>
                     <div class="form-group">
                         <label>cell type</label><br>
