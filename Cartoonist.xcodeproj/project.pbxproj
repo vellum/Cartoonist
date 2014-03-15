@@ -43,6 +43,7 @@
 		BD9B2BA918A0BF9B00756943 /* VLMZoomableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BD9B2BA818A0BF9B00756943 /* VLMZoomableImageView.m */; };
 		BD9E2EEA18AA97770064A70C /* Architect-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = BD9E2EE918AA97770064A70C /* Architect-Regular.otf */; };
 		BD9E2EEE18AAAD2A0064A70C /* Architect-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = BD9E2EED18AAAD2A0064A70C /* Architect-Bold.otf */; };
+		BDA1A72D18D4E17A0015156F /* QTouchposeApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = BDA1A72C18D4E17A0015156F /* QTouchposeApplication.m */; };
 		BDA1F987184E69F500C4AC57 /* VLMPanelModels.m in Sources */ = {isa = PBXBuildFile; fileRef = BDA1F986184E69F500C4AC57 /* VLMPanelModels.m */; };
 		BDB3BB8E1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB3BB8D1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m */; };
 		BDB3BB921849B6C600F59AE1 /* VLMDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BDB3BB911849B6C600F59AE1 /* VLMDataSource.m */; };
@@ -132,6 +133,8 @@
 		BD9B2BA818A0BF9B00756943 /* VLMZoomableImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMZoomableImageView.m; sourceTree = "<group>"; };
 		BD9E2EE918AA97770064A70C /* Architect-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Architect-Regular.otf"; sourceTree = "<group>"; };
 		BD9E2EED18AAAD2A0064A70C /* Architect-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Architect-Bold.otf"; sourceTree = "<group>"; };
+		BDA1A72B18D4E17A0015156F /* QTouchposeApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QTouchposeApplication.h; sourceTree = "<group>"; };
+		BDA1A72C18D4E17A0015156F /* QTouchposeApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QTouchposeApplication.m; sourceTree = "<group>"; };
 		BDA1F985184E69F500C4AC57 /* VLMPanelModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMPanelModels.h; sourceTree = "<group>"; };
 		BDA1F986184E69F500C4AC57 /* VLMPanelModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMPanelModels.m; sourceTree = "<group>"; };
 		BDB3BB8C1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMCollectionViewLayoutAttributes.h; sourceTree = "<group>"; };
@@ -182,6 +185,7 @@
 		BD1DCBD118A8451E00DD81E6 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				BDA1A72E18D4E1820015156F /* QTouchPose */,
 				BD1DCBFC18A845BA00DD81E6 /* SDWebImage */,
 				BD7C1C0118A6FA4100565F20 /* BDDRScrollView */,
 				BD1DCBE718A8451E00DD81E6 /* UIImage+Resize */,
@@ -294,6 +298,15 @@
 			);
 			name = Data;
 			path = ABCD;
+			sourceTree = "<group>";
+		};
+		BDA1A72E18D4E1820015156F /* QTouchPose */ = {
+			isa = PBXGroup;
+			children = (
+				BDA1A72B18D4E17A0015156F /* QTouchposeApplication.h */,
+				BDA1A72C18D4E17A0015156F /* QTouchposeApplication.m */,
+			);
+			name = QTouchPose;
 			sourceTree = "<group>";
 		};
 		BDB3BB93184A62D300F59AE1 /* Data Source */ = {
@@ -569,6 +582,7 @@
 				BD1DCC1B18A845BA00DD81E6 /* NSData+ImageContentType.m in Sources */,
 				BDB3BB8E1847226C00F59AE1 /* VLMCollectionViewLayoutAttributes.m in Sources */,
 				BDB3BB96184D484200F59AE1 /* VLMNarrationCaption.m in Sources */,
+				BDA1A72D18D4E17A0015156F /* QTouchposeApplication.m in Sources */,
 				BD1DCC3118A8475500DD81E6 /* BDDROneFingerZoomGestureRecognizer.m in Sources */,
 				BD1DCC2318A845BA00DD81E6 /* UIButton+WebCache.m in Sources */,
 				BD4F5C53187F38D300BAD2AB /* VLMWireframeCell.m in Sources */,

@@ -12,6 +12,11 @@
 #import "SDWebImageManager.h"
 #import "UIImage+Resize.h"
 #import "UIImage+Alpha.h"
+#import "VLMConstants.h"
+
+#ifdef PRESENT_TOUCHES
+#import "QTouchposeApplication.h"
+#endif
 
 #define PRINT_AVAILABLE_FONT_NAMES 1
 
@@ -29,8 +34,10 @@
     }
 #endif
     
-
-    
+#ifdef PRESENT_TOUCHES
+    QTouchposeApplication *touchposeApplication = (QTouchposeApplication *)application;
+    touchposeApplication.alwaysShowTouches = YES;
+#endif
     
     //Add a custom read-only cache path
     NSString *bundledPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Images"];
