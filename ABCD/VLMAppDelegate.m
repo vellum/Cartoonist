@@ -13,6 +13,7 @@
 #import "UIImage+Resize.h"
 #import "UIImage+Alpha.h"
 #import "VLMConstants.h"
+#import <HockeySDK/HockeySDK.h>
 
 #ifdef PRESENT_TOUCHES
 #import "QTouchposeApplication.h"
@@ -50,6 +51,10 @@
     self.window.rootViewController = self.viewController;
     
     [self.window makeKeyAndVisible];
+    
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"1183b58f88d8fda5b79b41b243075958"];
+    [[BITHockeyManager sharedHockeyManager] startManager];
+    [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
     
     return YES;
 }

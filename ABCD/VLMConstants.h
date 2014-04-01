@@ -5,7 +5,7 @@
 //  Created by David Lu on 12/21/13.
 //  Copyright (c) 2013 David Lu. All rights reserved.
 //
-#define PRESENT_TOUCHES 1
+//#define PRESENT_TOUCHES 1
 
 #define CHOICE_SCALE       0.9f
 #define ZOOM_DURATION      0.325f
