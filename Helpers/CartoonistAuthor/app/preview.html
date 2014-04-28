@@ -5,14 +5,24 @@
     <title>Cartoonist Preview</title>
     <script src="lib/jquery/dist/jquery.min.js"></script>
     <style>
-        body { padding: 0; margin:0; border:0; }
+        body {
+            padding: 0;
+            margin:0;
+            border:0;
+            background: #000;
+        }
         #content {
             transition-property:transform;
             transition-duration: 0.5s;
             transition-timing-function: cubic-bezier(0,0,0.58,1);
         }
-
-
+        .anim {
+            /*
+             transition-property:transform;
+             transition-duration: 0.4s;
+             transition-timing-function: cubic-bezier(0,0,0.58,1);
+             */
+         }
     </style>
 </head>
 <body>
@@ -24,6 +34,7 @@
         parsedbranch = [],
         curindex = 0,
         domnodelookup = [],
+        isRewritingDom = false,
         dimensions = {
             winw:0,
             winh:0,
@@ -31,8 +42,10 @@
             cellw:0,
             cellh:0,
             offsetx:0,
-            offsety:0
+            offsety:0,
+            imgw:0
         },
+        timerid = null,
 
         parseTreeInto = function(data, arr){
             //console.log(data);
@@ -64,10 +77,10 @@
         },
 
         updateScroll = function(){
-            console.log( 'updateScroll' );
+            //console.log( 'updateScroll' );
             var z = 0;
             if (getCurrentNode().type!='frame'){
-              z = -50;
+              z = -150;
             }
             $('#content').css({
                 'position':'absolute',
@@ -82,12 +95,30 @@
             dimensions.winh = window.innerHeight;
             dimensions.cellw = dimensions.winw - 2*dimensions.margin;
             dimensions.cellh = dimensions.winh - 4*dimensions.margin;
+
+            dimensions.imgw = dimensions.cellw > dimensions.cellh ? dimensions.cellw : dimensions.cellh;
+            dimensions.offsetx = (dimensions.cellw-dimensions.imgw)/2;
+            dimensions.offsety = (dimensions.cellh-dimensions.imgw)/2;
+
             writeDom();
             updateScroll();
 
         },
 
-        writeDom = function(){
+        reset = function(){
+            parsedbranch = [];
+            parseTreeInto(jsondata, parsedbranch);
+            //writeDom(true);
+            writeDom(false);
+        },
+
+        requestReset = function(){
+            if (timerid!=null) clearTimeout(timerid);
+            timerid = setTimeout(reset,250);
+        },
+
+        writeDom = function(shouldIgnoreExisting){
+            isRewritingDom = true;
 
             var d = dimensions;
 
@@ -104,7 +135,10 @@
             });
 
             var $content = $('#content');
-            $content.empty();
+
+            if ( shouldIgnoreExisting != true ){
+                $content.empty();
+            }
 
             var x = d.margin;
             var y = d.margin*2;
@@ -114,7 +148,7 @@
                var node = parsedbranch[i];
 
 
-                var $node = $('<div></div>');
+                var $node = node.type=='frame' ? $('<div></div>') : $('<div class="anim"></div>');
 
                 if ( i == 0 ) {
                     $node.css({
@@ -123,7 +157,7 @@
                         'left' : x + 'px',
                         'width' : d.cellw + 'px',
                         'height' : d.cellh + d.margin + 'px',
-                        'background' : '#ccc',
+                        //'background' : '#ccc',
                         'overflow' : 'hidden'
                     });
                 } else {
@@ -133,23 +167,27 @@
                         'left' : x + 'px',
                         'width' : d.cellw + 'px',
                         'height' : d.cellh + 'px',
-                        'background' : '#ccc',
+                        //'background' : '#ccc',
                         'overflow' : 'hidden'
                     });
                 }
 
                 if (node.type == 'frame'){
-                    $node.append(node.caption);
-                } else {
-                    $node.css({
-                        'background':'black',
-                        'overflow':'visible',
-                        'transition-property':'transform',
-                        'transition-duration': '0.5s',
-                        'transition-timing-function': 'cubic-bezier(0,0,0.58,1)'
+                    var $img = $('<img src="img/' + node.image + '.png">').css({
+                        'width' : d.imgw + 'px',
+                        'height' : d.imgw + 'px',
+                        'position':'absolute',
+                        'top': d.offsety + 'px',
+                        'left': d.offsetx + 'px'
                     });
 
-                    node.el = $node;
+                    $node.append($img).append(node.caption);
+                } else {
+                    $node.css({
+                        'background':'#000',
+                        'width':node.children.length*(d.cellw+ d.margin)+'px'
+                    });
+
 
                     $node.css('transform', 'translate3d(' + -node.selected * (d.cellw+ d.margin) + 'px, 0, 0)');
 
@@ -161,19 +199,48 @@
                             'left' : xx + 'px',
                             'width' : d.cellw + 'px',
                             'height' : d.cellh + 'px',
-                            'background' : 'hotpink',
+                            //'background' : 'hotpink',
                             'overflow' : 'hidden'
                         });
+                        var child = node.children[j];
+                        var $img = $('<img src="img/' + child.image + '.png">').css({
+                            'width' : d.imgw + 'px',
+                            'height' : d.imgw + 'px',
+                            'position':'absolute',
+                            'top': d.offsety + 'px',
+                            'left': d.offsetx + 'px'
+                        });
+                        $c.append($img);
                         $node.append($c);
                         xx += d.cellw + d.margin;
                     }
-                    console.log(node.children.length);
+                    //console.log(node.children.length);
                 }
 
-                $content.append($node);
+                if (shouldIgnoreExisting!=true){
+                    node.el = $node;
+                    $content.append($node);
+                } else {
+                    // ignore everything up through current node
+                    if (i > curindex ){
+
+                        // remove existing
+                        var $prevnode = node.el;
+                        if ( $prevnode != undefined && $prevnode != null){
+                            console.log('detaching prev');
+                            $content.remove( $prevnode );
+
+                        }
+                        node.el = $node;
+                        $content.append($node);
+                    } else {
+
+                    }
+                }
                 y += d.cellh + d.margin;
 
             }
+            isRewritingDom = false;
         };
 
 
@@ -193,8 +260,9 @@
     // in all cases, reset the view properties so that we have the 3 or so current images
     // keep memory clean
 
-    window.onkeyup = function(e) {
+    window.onkeydown = function(e) {
 
+        if (isRewritingDom) return;
         var key = e.keyCode ? e.keyCode : e.which,
             UP = 38,
             DOWN = 40,
@@ -220,41 +288,34 @@
                 break;
 
             case LEFT:
-                    var cur = getCurrentNode();
-                    if (cur.type!='joint') return;
-                    if (cur.el == undefined) return;
-                    var $node = cur.el;
+                var cur = getCurrentNode();
+                if (cur.type!='joint') return;
+                var $node = cur.el;
+                if ($node == undefined || $node == null) return;
+                if (cur.selected>0) {
+
+                    cur.selected--;
+
+                    console.log('new index: ' + cur.selected);
                     var d = dimensions;
-                    if (cur.selected>0) cur.selected--;
+                    $node.css('transform', 'translate3d(' + -cur.selected * (d.cellw+ d.margin) + 'px, 0px, 0)');
 
-                    $node.on('transitionend webkitTransitionEnd', function(e){
-                        console.log('*');
-                        parsedbranch = [];
-                        parseTreeInto(jsondata, parsedbranch);
-                        writeDom();
-                    });
-                    $node.css('transform', 'translate3d(' + -cur.selected * (d.cellw+ d.margin) + 'px, 0, 0)');
-
-                    console.log('left');
+                    requestReset();
+                    }
                 break;
 
             case RIGHT:
                     var cur = getCurrentNode();
                     if (cur.type!='joint') return;
-                    if (cur.el == undefined) return;
-                var $node = cur.el;
-                var d = dimensions;
+                    var $node = cur.el;
+                    if ($node == undefined || $node == null) return;
+                    if (cur.selected<cur.children.length-1) {
+                        cur.selected++;
+                        console.log('new index: ' + cur.selected);
+                        var d = dimensions;
+                        $node.css('transform', 'translate3d(' + -cur.selected * (d.cellw+ d.margin) + 'px, 0px, 0)');
+                        requestReset();                    }
 
-                if (cur.selected<cur.children.length-1) cur.selected++;
-                $node.on('transitionend webkitTransitionEnd', function(e){
-                    console.log('*');
-                    parsedbranch = [];
-                    parseTreeInto(jsondata, parsedbranch);
-                    writeDom();
-                });
-                $node.css('transform', 'translate3d(' + -cur.selected * (d.cellw+ d.margin) + 'px, 0, 0)');
-
-                console.log('right');
                 break;
         }
 
