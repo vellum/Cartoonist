@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en" ng-app="theApp">
+<head>
+    <meta charset="utf-8">
+    <title>Cartoonist Preview</title>
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <style>
+        body { padding: 0; margin:0; border:0; }
+        #content {
+            transition-property:transform;
+            transition-duration: 0.5s;
+            transition-timing-function: cubic-bezier(0,0,0.58,1);
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="content"></div>
+</div>
+<script language="JavaScript">
+    var jsondata = null,
+        parsedbranch = [],
+        curindex = 0,
+        domnodelookup = [],
+        dimensions = {
+            winw:0,
+            winh:0,
+            margin:12,
+            cellw:0,
+            cellh:0,
+            offsetx:0,
+            offsety:0
+        },
+
+        parseTreeInto = function(data, arr){
+            //console.log(data);
+            switch (data.type){
+
+                case 'sequence':
+                    for (var i = 0; i < data.nodes.length; i++){
+                        var o = data.nodes[i];
+                        parseTreeInto(o, arr);
+                    }
+                    break;
+
+                case 'frame':
+                    arr.push(data);
+                    break;
+
+                case 'joint':
+                    var selectedindex = data.selected;
+                    arr.push(data);
+                    var selectedchild = data.children[selectedindex];
+                    parseTreeInto(selectedchild, arr);
+                    break;
+
+            }
+        },
+
+        getCurrentNode = function(){
+            return parsedbranch[curindex];
+        },
+
+        updateScroll = function(){
+            console.log( 'updateScroll' );
+            var z = 0;
+            if (getCurrentNode().type!='frame'){
+              z = -50;
+            }
+            $('#content').css({
+                'position':'absolute',
+                'transform': 'translate3d(0px,' + (-(dimensions.cellh+dimensions.margin)*curindex) + 'px, ' + z + 'px)'
+            });
+        },
+
+        windowResized = function(){
+
+            console.log('resize');
+            dimensions.winw = window.innerWidth;
+            dimensions.winh = window.innerHeight;
+            dimensions.cellw = dimensions.winw - 2*dimensions.margin;
+            dimensions.cellh = dimensions.winh - 4*dimensions.margin;
+            writeDom();
+            updateScroll();
+
+        },
+
+        writeDom = function(){
+
+            var d = dimensions;
+
+            var $container = $('#container');
+            $container.css({
+                'position':'absolute',
+                'left':'0',
+                'top':'0',
+                'width': d.winw + 'px',
+                'height' : d.winh + 'px',
+                'overflow' : 'hidden',
+                'transform-style': 'preserve-3d',
+                'perspective' : '1000'
+            });
+
+            var $content = $('#content');
+            $content.empty();
+
+            var x = d.margin;
+            var y = d.margin*2;
+
+            for (var i = 0; i < parsedbranch.length; i++){
+
+               var node = parsedbranch[i];
+
+
+                var $node = $('<div></div>');
+
+                if ( i == 0 ) {
+                    $node.css({
+                        'position' : 'absolute',
+                        'top' : y - d.margin + 'px',
+                        'left' : x + 'px',
+                        'width' : d.cellw + 'px',
+                        'height' : d.cellh + d.margin + 'px',
+                        'background' : '#ccc',
+                        'overflow' : 'hidden'
+                    });
+                } else {
+                    $node.css({
+                        'position' : 'absolute',
+                        'top' : y + 'px',
+                        'left' : x + 'px',
+                        'width' : d.cellw + 'px',
+                        'height' : d.cellh + 'px',
+                        'background' : '#ccc',
+                        'overflow' : 'hidden'
+                    });
+                }
+
+                if (node.type == 'frame'){
+                    $node.append(node.caption);
+                } else {
+                    $node.css({
+                        'background':'black',
+                        'overflow':'visible',
+                        'transition-property':'transform',
+                        'transition-duration': '0.5s',
+                        'transition-timing-function': 'cubic-bezier(0,0,0.58,1)'
+                    });
+
+                    node.el = $node;
+
+                    $node.css('transform', 'translate3d(' + -node.selected * (d.cellw+ d.margin) + 'px, 0, 0)');
+
+                    var xx = 0;
+                    for (var j = 0; j<node.children.length; j++){
+                        var $c = $('<div></div>').css({
+                            'position' : 'absolute',
+                            'top' : 0 + 'px',
+                            'left' : xx + 'px',
+                            'width' : d.cellw + 'px',
+                            'height' : d.cellh + 'px',
+                            'background' : 'hotpink',
+                            'overflow' : 'hidden'
+                        });
+                        $node.append($c);
+                        xx += d.cellw + d.margin;
+                    }
+                    console.log(node.children.length);
+                }
+
+                $content.append($node);
+                y += d.cellh + d.margin;
+
+            }
+        };
+
+
+    jsondata = {"type":"sequence","nodes":[{"type":"frame","celltype":"nocaption","image":"panel-01","caption":"","id":"SLWWMWFNFPS2PJBSJKW2GGOXF6ROU8SC","parentid":"IM93P09D5EHDIUOOA0LMKBYSV9XO36HE"},{"type":"frame","celltype":"caption","image":"panel-02","caption":"Your morning ritual.","id":"R18P2RE6CWBTD2T2M6JXJGGE4W3JPTW7","parentid":"IM93P09D5EHDIUOOA0LMKBYSV9XO36HE"},{"type":"frame","celltype":"caption","image":"panel-03","caption":"One ceramic mug.","id":"UWYA2D017KWOF0118PAS8F9X48O8MDSI","parentid":"IM93P09D5EHDIUOOA0LMKBYSV9XO36HE"},{"type":"frame","celltype":"caption","image":"panel-05","caption":"One ceramic coffee dripper.","id":"EH2SGSXP2OQNBPQPDX5EI1OQDRSINR04","parentid":"IM93P09D5EHDIUOOA0LMKBYSV9XO36HE"},{"type":"frame","celltype":"caption","image":"panel-06","caption":"One paper filter.","id":"ABAFECGB3ACW8KAUO973EBG4BVEGAPX5","parentid":"IM93P09D5EHDIUOOA0LMKBYSV9XO36HE"},{"type":"frame","celltype":"caption","image":"panel-07","caption":"One zeroed tare.","id":"HNI0BMI7KDJ0Q58DPTM38OK78XFK0NPY","parentid":"IM93P09D5EHDIUOOA0LMKBYSV9XO36HE"},{"type":"frame","celltype":"caption","image":"panel-08","caption":"Hand-ground beans.","id":"LB25KMNWTXVXPAKI9U84HR5VKBPIV6JX","parentid":"IM93P09D5EHDIUOOA0LMKBYSV9XO36HE"},{"type":"frame","celltype":"nocaption","image":"panel-09","caption":"About 21 grams' worth.","id":"IKRUQV8A3RKFHXXV7MU0BG5FW9B0032W","parentid":"IM93P09D5EHDIUOOA0LMKBYSV9XO36HE"},{"type":"frame","celltype":"caption","image":"aggregate-alt-10","caption":"Surplus grounds in the grinder.","id":"S15X2BK710PEUYPGNLAJ9V6ONSR9EBHK","parentid":"IM93P09D5EHDIUOOA0LMKBYSV9XO36HE"},{"type":"joint","selected":0,"children":[{"type":"sequence","nodes":[{"type":"frame","celltype":"caption","image":"panel-10","caption":"One drip kettle, hot.","id":"H91JUYD2KG3D12TAC1IYB237LSHVV0L9","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"},{"type":"frame","celltype":"caption","image":"panel-11","caption":"A first pour.","id":"CX5A4VGKJGM8BOBX8D8UUEHQVRRA26QH","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"},{"type":"frame","celltype":"nocaption","image":"panel-12","caption":"A modest wait.","id":"Q4YIVI68KOID3BUJG14TOLNX5PIOCQG4","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"},{"type":"frame","celltype":"nocaption","image":"panel-13","caption":"A deep breath or two.","id":"GI437GHG3T84LA0WNFI7HBIFPBJTTNDN","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"},{"type":"frame","celltype":"caption","image":"panel-14","caption":"Another pour.","id":"BAMR0PB9PLF19D5IMIAY4NXHVNWFRG9A","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"},{"type":"frame","celltype":"nocaption","image":"panel-15","caption":"The water recedes. The mind wanders.","id":"M2YKWDMXXHCKOT9O9JKMW73USW14SCLR","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"},{"type":"frame","celltype":"nocaption","image":"panel-16","caption":"Another deep breath or two.","id":"K94TRFCPW8XNNBSQHIDER0AYOMMU9NUM","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"},{"type":"frame","celltype":"nocaption","image":"panel-17","caption":"You've done this hundreds of times, yet still wonder about the outcome.","id":"GRGUKIURGQCFIBMWD0R1UV00TNXFMX77","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"},{"type":"frame","celltype":"nocaption","image":"panel-18","caption":"Hands are fallible. Mistakes and happy accidents abound. ","id":"FE53MXLYL75MCYV7XDDYYM2P6VW7HSV2","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"},{"type":"frame","celltype":"nocaption","image":"panel-19","caption":"It's this push and pull that keeps you doing this.","id":"O9NPADMYWBA4EAJQ1C5ES839X69GK4G8","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"},{"type":"frame","celltype":"caption","image":"panel-20","caption":"You make making a ritual, and call it craft.","id":"VP43EKIE5THY585830PER783KE53X81I","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"},{"type":"frame","celltype":"nocaption","image":"panel-21","caption":"Here, people care about craft. You practice it.","id":"I3EAW7XHKWAQIJP9IDM6BPVJHHV9DS0N","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"},{"type":"frame","celltype":"caption","image":"panel-22","caption":"You nerd out on tiny details.","id":"OSE8XUPL69U2R38F8PPPW2HW4P7D0N33","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"},{"type":"frame","celltype":"caption","image":"panel-23","caption":"You once worked in studios set up like factories.","id":"JPTP6DXROWLR8PXUASMA028LLO67CPB5","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"},{"type":"frame","celltype":"caption","image":"panel-24","caption":"The quantity-over-quality thing was soul crushing. It's better here.","id":"F5T0DSF7G1CA3HDB9VYKKK786MISC4S4","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"},{"type":"frame","celltype":"caption","image":"panel-25","caption":"Your day looks low key. A bit of cartography here, a bit of --","id":"RKSL9T3MGYDHFUV8CI78TDEEBQJMYYW9","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"},{"type":"frame","celltype":"nocaption","image":"panel-26","caption":"","id":"E4AX75J7HEP2VH9BRGV0TNTBS586O45G","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"},{"type":"frame","celltype":"caption","image":"panel-27","caption":"You're meant to stop by the doctor to talk through those test results.","id":"H1W2M2L9EHPHV8D6UWK8FOH0FXJO3TEV","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"},{"type":"frame","celltype":"caption","image":"panel-28","caption":"You suspect that there's nothing to worry about. You'd have heard from her, otherwise.","id":"X36FRMRRVHWA7A3F9630DDIYC1EIRGXG","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"},{"type":"joint","selected":0,"children":[{"type":"sequence","nodes":[{"type":"frame","celltype":"nocaption","image":"driving-01","caption":"Parking lot, shot from above.","id":"JGNPBQUUASGVSBB233I9SMWLO5RC9NO2","parentid":"QJU1BGUKICK7CS83I0TCJJ10FTYTJNQG"},{"type":"frame","celltype":"nocaption","image":"driving-02","caption":"Traffic","id":"HXNJ8N9I5RAUP8LW8Q8SBBPFYKVN0LX6","parentid":"QJU1BGUKICK7CS83I0TCJJ10FTYTJNQG"},{"type":"frame","celltype":"nocaption","image":"driving-03","caption":"Traffic","id":"IL7J9N2Y4RS2PSU74BV6N7SH0KNVM6BM","parentid":"QJU1BGUKICK7CS83I0TCJJ10FTYTJNQG"},{"type":"frame","celltype":"nocaption","image":"driving-04","caption":"","id":"N90JBWVA99WO8JSFSA9NIPIBM1O0B3O2","parentid":"QJU1BGUKICK7CS83I0TCJJ10FTYTJNQG"},{"type":"frame","celltype":"nocaption","image":"driving-05","caption":"Waiting room","id":"TJLPO0OI2NI786UHEGLXI3MOC70XPSAD","parentid":"QJU1BGUKICK7CS83I0TCJJ10FTYTJNQG"},{"type":"frame","celltype":"nocaption","image":"driving-06","caption":"Waiting","id":"SBTB6VYM3WIKGY11U83XF5SB440MU9TO","parentid":"QJU1BGUKICK7CS83I0TCJJ10FTYTJNQG"}],"image":"panel-29","caption":"Leave now","id":"QJU1BGUKICK7CS83I0TCJJ10FTYTJNQG","parentid":"U0PTKSNXM0VH84Q56YMN9JWTPPW2QSXD"},{"type":"sequence","nodes":[{"type":"frame","celltype":"caption","image":"panel-31","caption":"As you enjoy your coffee, you decide to do a  run in Game of Drones.","id":"RQSCF2PXP7988ILD1Y4IS9679IVMPCW7","parentid":"XVA3JRVQGIUUSODIA52K6E5U2WC9WXUN"},{"type":"frame","celltype":"caption","image":"panel-32","caption":"These days, farming is mostly done by drone.","id":"HOX72C0AT86B6XMY1NQ2T7BIXTQWOE5Q","parentid":"XVA3JRVQGIUUSODIA52K6E5U2WC9WXUN"},{"type":"frame","celltype":"caption","image":"panel-33","caption":"A couple of ITP grads thought it would be funny if anyone could fly a drone.","id":"KNTUTV3PGTDPUY1W03DQD4OIEJDBBHPK","parentid":"XVA3JRVQGIUUSODIA52K6E5U2WC9WXUN"},{"type":"frame","celltype":"caption","image":"panel-34","caption":"They talked a couple of farms into partnering with them.","id":"P8C3W2C2R663JH8KW5VB8ONDVMR2Q9OF","parentid":"XVA3JRVQGIUUSODIA52K6E5U2WC9WXUN"},{"type":"frame","celltype":"caption","image":"panel-35","caption":"And made it a game.","id":"X16Q811OF7WKGVLRWKBHXMEV1UXCRFTY","parentid":"XVA3JRVQGIUUSODIA52K6E5U2WC9WXUN"},{"type":"frame","celltype":"caption","image":"panel-36","caption":"Now, anyone with a network connection can be a farmhand.","id":"DJJQFTTAM3LN3RRG2N8TI4VB3EVOYEQE","parentid":"XVA3JRVQGIUUSODIA52K6E5U2WC9WXUN"},{"type":"frame","celltype":"caption","image":"panel-37","caption":"They asked you to design cartography and assets for the game.","id":"B79UGXR75MBT0GFHOAHBKPD91IBIUK39","parentid":"XVA3JRVQGIUUSODIA52K6E5U2WC9WXUN"},{"type":"frame","celltype":"caption","image":"panel-38","caption":"Satellite imagery isn't great for telepresent farming. It doesn't reflect the realtime nuances of a farm's state.","id":"LOVX2LYC2Q6XFMN261PHNIUL9JNQNOC8","parentid":"XVA3JRVQGIUUSODIA52K6E5U2WC9WXUN"},{"type":"frame","celltype":"caption","image":"panel-39","caption":"You amplify quiet details, dampen noisy ones, and instill a spirit of play.","id":"H3EB8J3BY0G3Y2M9XFXE70WP1DITFUCE","parentid":"XVA3JRVQGIUUSODIA52K6E5U2WC9WXUN"},{"type":"frame","celltype":"caption","image":"panel-40","caption":"Should be a nice stream of work. They've asked you to work on sheep herding next.","id":"FST1D2Y2T93FLDX41SQI8BSVWLNU1QAV","parentid":"XVA3JRVQGIUUSODIA52K6E5U2WC9WXUN"},{"type":"frame","celltype":"caption","image":"panel-41","caption":"You'd better leave.","id":"LXNSGNBQ5J574XEIG3C9A8DFXTY6SR45","parentid":"XVA3JRVQGIUUSODIA52K6E5U2WC9WXUN"}],"image":"panel-30","caption":"Take your time","id":"XVA3JRVQGIUUSODIA52K6E5U2WC9WXUN","parentid":"U0PTKSNXM0VH84Q56YMN9JWTPPW2QSXD"}],"id":"U0PTKSNXM0VH84Q56YMN9JWTPPW2QSXD","parentid":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS"}],"image":"aggregate-alt-12","caption":"Put Aside","id":"MPUNJCSIQHTWUVML2TVEKKYXRJL55GGS","parentid":"BCL2KNCDPU87WSAJ49B85AQG3C7OY9RY"},{"type":"sequence","nodes":[{"type":"frame","celltype":"caption","image":"aggregate-alt-09","caption":"Nothing like a strong cup of coffee, you think.","id":"LILNVROH8OR5LYNWULRKNXI36VI7N2QE","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"frame","celltype":"caption","image":"panel-10","caption":"One drip kettle, hot.","id":"KT5XXJQUSGCU5CO25C9SH6F9ULH1KATI","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"frame","celltype":"caption","image":"panel-11","caption":"A first pour.","id":"VY16D5PVGK0P3VOGC3CIVG6CT2VKKHT8","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"frame","celltype":"nocaption","image":"panel-12","caption":"A lil' wait.","id":"WHJWBALU4FG02VQ2JNELYKEQU84E2E66","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"frame","celltype":"nocaption","image":"panel-13","caption":"A deep breath or two.","id":"HR7KXAKO94P9SJ5YP0PVCUY7NMHRDIT6","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"frame","celltype":"caption","image":"panel-14","caption":"Another pour.","id":"N49BX9BAV8NXQM9OFMTU9N5PT85NTJ1J","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"frame","celltype":"nocaption","image":"panel-15","caption":"You yawn as you watch the water recede.","id":"H8FP135GX2NTJ759SRM50UK9HATEMFJK","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"frame","celltype":"nocaption","image":"panel-16","caption":"Another deep breath or two.","id":"HWB4DRP11FFXHSTCNA55HKQP0CX0061B","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"frame","celltype":"nocaption","image":"panel-17","caption":"One heroic optimism about this outcome.","id":"YXNQ9WWOI99IEOQVIT6HFL0MAG9M95NW","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"frame","celltype":"caption","image":"panel-18","caption":"You hope those extra grounds haven't ruined this cup.","id":"YB316VH0B997BOVTWOTU2QEYC8STSRA5","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"frame","celltype":"nocaption","image":"panel-19","caption":"You like to make things with your hands. Mistakes and happy accidents are equally likely somehow.","id":"N074NPPF903CGT64VKEETKE9PW5PGQGL","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"frame","celltype":"caption","image":"panel-20","caption":"Wow, that's really good.","id":"TOQQ3TF3KHSRCYT9VMI8CGRL0FIW8YO5","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"frame","celltype":"caption","image":"panel-21","caption":"You make making a ritual and call it craft.","id":"I6A524WIH6KQ7QMGVHM7IEL14OO8LUOK","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"frame","celltype":"caption","image":"panel-22","caption":"Here, people care about craft.","id":"NY5P1K8JL32Y1O484PX6L3HB5B5T754M","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"frame","celltype":"caption","image":"panel-23","caption":"You nerd out on tiny details.","id":"ABO9YNW3CGDRJSR4BRMAA98V54YXMLYQ","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"frame","celltype":"caption","image":"panel-24","caption":"You used to work in studios set up like factories.","id":"M5Y36YO9GOC2XFC2Y2A5OBXD10EARBYM","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"frame","celltype":"caption","image":"panel-25","caption":"The quantity-over-quality thing was soul crushing. It's better here.","id":"U66387VBYIMXFC73BDDUSN60N8DLKIVQ","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"frame","celltype":"nocaption","image":"panel-26","caption":"","id":"M619RP1U59QN6AAC0I7G6LD01GCWY5I0","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"frame","celltype":"caption","image":"panel-27","caption":"You're meant to stop by the doctor to talk through those test results.","id":"PPOQ1BWWIIBWOIP0IRXI5PBGW3NGR0HD","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"frame","celltype":"caption","image":"panel-28","caption":"You suspect there's nothing to worry about. You'd have heard from her, if there were.","id":"H7YR334O8BDDHSEFSH1VM82PASGSAXT1","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"},{"type":"joint","selected":1,"children":[{"type":"sequence","nodes":[{"type":"frame","celltype":"nocaption","image":"driving-01","caption":"Parking lot, shot from above.","id":"H70HAS9Y8TGQBRWUKFH25RP6FJ5HP90O","parentid":"S1X34J2W6Q4DI6T6IC3AW7L8066DGTX8"},{"type":"frame","celltype":"nocaption","image":"driving-02","caption":"Traffic","id":"HVHH3M8M3KHUP994G3DKJB1VPJKPCXOF","parentid":"S1X34J2W6Q4DI6T6IC3AW7L8066DGTX8"},{"type":"frame","celltype":"nocaption","image":"driving-03","caption":"Traffic","id":"H7GRA3VTXB3WDHX1OKS8QV5ET1YOBXF9","parentid":"S1X34J2W6Q4DI6T6IC3AW7L8066DGTX8"},{"type":"frame","celltype":"nocaption","image":"driving-04","caption":"","id":"OPJTTU97250LBHGIPFEL5A5IRYAPFCMO","parentid":"S1X34J2W6Q4DI6T6IC3AW7L8066DGTX8"},{"type":"frame","celltype":"nocaption","image":"driving-05","caption":"Waiting room","id":"D2BL227RI8QTUG8FHEJ2UE62DN5TAMT6","parentid":"S1X34J2W6Q4DI6T6IC3AW7L8066DGTX8"},{"type":"frame","celltype":"nocaption","image":"driving-06","caption":"Waiting","id":"KIMKEMWEPST5P9JFIB9H3MU8MDJ9M4H9","parentid":"S1X34J2W6Q4DI6T6IC3AW7L8066DGTX8"}],"image":"panel-29","caption":"Leave now","id":"S1X34J2W6Q4DI6T6IC3AW7L8066DGTX8","parentid":"CNRSC04MF4LUCONRFOO35LIW1JD0TGHT"},{"type":"sequence","nodes":[{"type":"frame","celltype":"caption","image":"panel-31","caption":"As you enjoy your coffee, you decide to do a  run in Game of Drones.","id":"R10P5SKTT0IJO812K0LAFXW4JRSY0GEK","parentid":"IB5APNS0WD1P4IC5YXSGDFTB8PKU6AR1"},{"type":"frame","celltype":"caption","image":"panel-32","caption":"These days, farming is mostly done by drone.","id":"YJGDASYY89AYGY4510D8U20C6PDBTD3R","parentid":"IB5APNS0WD1P4IC5YXSGDFTB8PKU6AR1"},{"type":"frame","celltype":"caption","image":"panel-33","caption":"A couple of ITP grads thought it would be funny if anyone could fly a drone.","id":"RSG29X3S0HKMT9QWGKCGJN0RVJMLK0CI","parentid":"IB5APNS0WD1P4IC5YXSGDFTB8PKU6AR1"},{"type":"frame","celltype":"caption","image":"panel-34","caption":"They talked a couple of farms into partnering with them.","id":"B7V5TEA272DRDRCJG1Y5AYMCPIM0APDA","parentid":"IB5APNS0WD1P4IC5YXSGDFTB8PKU6AR1"},{"type":"frame","celltype":"caption","image":"panel-35","caption":"And made it a game.","id":"WK5QH28U9I55L5PV29BKRKQYBW6QYIAD","parentid":"IB5APNS0WD1P4IC5YXSGDFTB8PKU6AR1"},{"type":"frame","celltype":"caption","image":"panel-36","caption":"Now, anyone with a network connection can be a farmhand.","id":"SAHPAUMR2W2V8OARF4Q3WR6OKHUNSE9E","parentid":"IB5APNS0WD1P4IC5YXSGDFTB8PKU6AR1"},{"type":"frame","celltype":"caption","image":"panel-37","caption":"They asked you to design cartography and assets for the game.","id":"FE4XFL7C5GACB3SH7Y41AK4ST67EIPBN","parentid":"IB5APNS0WD1P4IC5YXSGDFTB8PKU6AR1"},{"type":"frame","celltype":"caption","image":"panel-38","caption":"Satellite imagery isn't great for telepresent farming. It doesn't reflect the realtime nuances of a farm's state.","id":"W22IQYFW0BBMMJGX5NNI9OUPGG5MOVP3","parentid":"IB5APNS0WD1P4IC5YXSGDFTB8PKU6AR1"},{"type":"frame","celltype":"caption","image":"panel-39","caption":"You amplify quiet details, dampen noisy ones, and instill a spirit of play.","id":"TJ3IGFHAUH64UEBC5O1045YHWFGNCYJ3","parentid":"IB5APNS0WD1P4IC5YXSGDFTB8PKU6AR1"},{"type":"frame","celltype":"caption","image":"panel-40","caption":"Should be a nice stream of work. They've asked you to work on sheep herding next.","id":"RRHYL58WKIIL2RPJ9S9Q64PFPT0E7LT1","parentid":"IB5APNS0WD1P4IC5YXSGDFTB8PKU6AR1"},{"type":"frame","celltype":"caption","image":"panel-41","caption":"You'd better leave.","id":"NQEPRFSIHSX00BPIT4LWOHIE04AUUW5T","parentid":"IB5APNS0WD1P4IC5YXSGDFTB8PKU6AR1"}],"image":"panel-30","caption":"Take your time","id":"IB5APNS0WD1P4IC5YXSGDFTB8PKU6AR1","parentid":"CNRSC04MF4LUCONRFOO35LIW1JD0TGHT"}],"id":"CNRSC04MF4LUCONRFOO35LIW1JD0TGHT","parentid":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN"}],"image":"aggregate-alt-11","caption":"Add","id":"GSHPEWH61D4WGUG7YWW6KBVXKWPQC9DN","parentid":"BCL2KNCDPU87WSAJ49B85AQG3C7OY9RY"}],"id":"BCL2KNCDPU87WSAJ49B85AQG3C7OY9RY","parentid":"IM93P09D5EHDIUOOA0LMKBYSV9XO36HE"}],"image":null,"caption":"r","id":"IM93P09D5EHDIUOOA0LMKBYSV9XO36HE","title":"Untitled"};
+    parseTreeInto(jsondata, parsedbranch);
+
+    console.log(parsedbranch);
+
+    windowResized();
+    $(window).resize(windowResized);
+
+
+    // need a key listener
+    // every time a key is pressed, figure out what the proper behavior is and reset the pointer
+    // if we've executed a choice, rather than a forward/backward movement, reset the tree
+
+    // in all cases, reset the view properties so that we have the 3 or so current images
+    // keep memory clean
+
+    window.onkeyup = function(e) {
+
+        var key = e.keyCode ? e.keyCode : e.which,
+            UP = 38,
+            DOWN = 40,
+            LEFT = 37,
+            RIGHT = 39;
+
+        //console.log('key: '+ key);
+
+        switch (key){
+
+            case DOWN:
+                if (curindex < parsedbranch.length - 2){
+                    curindex++;
+                }
+                updateScroll();
+                break;
+
+            case UP:
+                if (curindex > 0){
+                    curindex--;
+                }
+                updateScroll();
+                break;
+
+            case LEFT:
+                    var cur = getCurrentNode();
+                    if (cur.type!='joint') return;
+                    if (cur.el == undefined) return;
+                    var $node = cur.el;
+                    var d = dimensions;
+                    if (cur.selected>0) cur.selected--;
+
+                    $node.on('transitionend webkitTransitionEnd', function(e){
+                        console.log('*');
+                        parsedbranch = [];
+                        parseTreeInto(jsondata, parsedbranch);
+                        writeDom();
+                    });
+                    $node.css('transform', 'translate3d(' + -cur.selected * (d.cellw+ d.margin) + 'px, 0, 0)');
+
+                    console.log('left');
+                break;
+
+            case RIGHT:
+                    var cur = getCurrentNode();
+                    if (cur.type!='joint') return;
+                    if (cur.el == undefined) return;
+                var $node = cur.el;
+                var d = dimensions;
+
+                if (cur.selected<cur.children.length-1) cur.selected++;
+                $node.on('transitionend webkitTransitionEnd', function(e){
+                    console.log('*');
+                    parsedbranch = [];
+                    parseTreeInto(jsondata, parsedbranch);
+                    writeDom();
+                });
+                $node.css('transform', 'translate3d(' + -cur.selected * (d.cellw+ d.margin) + 'px, 0, 0)');
+
+                console.log('right');
+                break;
+        }
+
+    }
+
+
+</script>
+</body>
+</html>
