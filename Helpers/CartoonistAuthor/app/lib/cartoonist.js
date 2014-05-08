@@ -288,7 +288,7 @@ function makeSampleTree()
     var joint0 = makeBranchWith(2, 2, 'j');
     addJointToSequence(joint0, root);
 
-    for (var i = 0; i < 4; i++)
+    for (var i = 0; i < 2; i++)
     {
         makeAndAddBranchesToEnd(root);
     }
