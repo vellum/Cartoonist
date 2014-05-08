@@ -48,10 +48,10 @@
     [self setUserInteractionEnabled:NO];
     
     
-    [self.label setTextColor:[UIColor whiteColor]];
-    [self.label setBackgroundColor:[UIColor colorWithWhite:0.15f alpha:1.0f]];
+    [self.label setTextColor:[UIColor blackColor]];
+    [self.label setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:1.0f]];
 
-    self.layer.borderColor = [UIColor colorWithWhite:1.0f alpha:0.35f].CGColor;
+    self.layer.borderColor = [UIColor colorWithWhite:0.0f alpha:0.5f].CGColor;
     self.layer.borderWidth = 1.2f;
 }
 
