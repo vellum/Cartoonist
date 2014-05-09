@@ -81,7 +81,12 @@
 {
 	if ((UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad))
 	{
-		return kItemSizeIphone;
+        if([[UIScreen mainScreen] bounds].size.height < 568){
+            return kItemSizeIphoneOld;
+        } else {
+            return kItemSizeIphone;
+        }
+
 	}
 	return kItemSizeIpad;
 }

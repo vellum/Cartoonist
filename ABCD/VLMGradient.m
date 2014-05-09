@@ -55,7 +55,7 @@
             [self addSubview:self.next];
             
             [self setHeading:[[UILabel alloc] initWithFrame:CGRectMake(self.current.frame.origin.x, self.current.frame.origin.y - 6.0f, self.current.frame.size.width, 12.0f)]];
-            [self.heading setText:@"a story branch"];
+            [self.heading setText:@"a style branch"];
             [self.heading setFont:[UIFont fontWithName:@"Helvetica-Bold" size:10.0f]];
             [self.heading setTextColor:[UIColor colorWithWhite:1.0f alpha:0.25f]];
             [self.heading setTextAlignment:NSTextAlignmentCenter];
@@ -90,7 +90,7 @@
             [self addSubview:self.next];
             
             [self setHeading:[[UILabel alloc] initWithFrame:CGRectMake(self.current.frame.origin.x, self.current.frame.origin.y - 12.0f, self.current.frame.size.width, 12.0f)]];
-            [self.heading setText:@"a story branch"];
+            [self.heading setText:@"a style branch"];
             [self.heading setFont:[UIFont fontWithName:@"Helvetica-Bold" size:12.0f]];
             [self.heading setTextColor:[UIColor colorWithWhite:1.0f alpha:0.25f]];
             [self.heading setTextAlignment:NSTextAlignmentCenter];

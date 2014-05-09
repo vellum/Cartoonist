@@ -46,6 +46,7 @@
 
 // fill screen
 #define kItemSizeIphone    CGSizeMake(320, 568.0f - 2.0f * (9.0f + 9.0f) + 9.0f)
+#define kItemSizeIphoneOld CGSizeMake(320, 480.0f - 2.0f * (9.0f + 9.0f) + 9.0f)
 #define kItemSizeIpad      CGSizeMake(768.0f, 1024.0f - 2.0f * (18.0f + 18.0f) + 18.0f)
 
 // square items
